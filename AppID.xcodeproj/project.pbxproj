@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EFBBC7591DF99AFA000CE39A /* AppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBBC7571DF99AFA000CE39A /* AppID.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EFBBC7691DF99BF6000CE39A /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBC7681DF99BF6000CE39A /* AppIDTests.swift */; };
 		EFBBC76B1DF99BF6000CE39A /* AppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBBC7541DF99AFA000CE39A /* AppID.framework */; };
+		EFE8DBC51DF9A1BE0039A5F2 /* AppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBBC7571DF99AFA000CE39A /* AppID.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,7 +25,6 @@
 /* Begin PBXFileReference section */
 		EFBBC7541DF99AFA000CE39A /* AppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBBC7571DF99AFA000CE39A /* AppID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppID.h; sourceTree = "<group>"; };
-		EFBBC7581DF99AFA000CE39A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFBBC7601DF99BCB000CE39A /* Test1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test1.swift; sourceTree = "<group>"; };
 		EFBBC7661DF99BF6000CE39A /* AppIDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppIDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBBC7681DF99BF6000CE39A /* AppIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIDTests.swift; sourceTree = "<group>"; };
@@ -55,7 +54,7 @@
 			isa = PBXGroup;
 			children = (
 				EFBBC75F1DF99BBB000CE39A /* Tests */,
-				EFBBC7561DF99AFA000CE39A /* AppID */,
+				EFBBC7561DF99AFA000CE39A /* Source */,
 				EFBBC7671DF99BF6000CE39A /* AppIDTests */,
 				EFBBC7551DF99AFA000CE39A /* Products */,
 			);
@@ -70,12 +69,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		EFBBC7561DF99AFA000CE39A /* AppID */ = {
+		EFBBC7561DF99AFA000CE39A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				EFBBC7571DF99AFA000CE39A /* AppID.h */,
-				EFBBC7581DF99AFA000CE39A /* Info.plist */,
+				EFE8DBC61DF9A1E60039A5F2 /* Resources */,
 			);
+			name = Source;
 			path = AppID;
 			sourceTree = "<group>";
 		};
@@ -96,6 +95,14 @@
 			path = AppIDTests;
 			sourceTree = "<group>";
 		};
+		EFE8DBC61DF9A1E60039A5F2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EFBBC7571DF99AFA000CE39A /* AppID.h */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -103,7 +110,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFBBC7591DF99AFA000CE39A /* AppID.h in Headers */,
+				EFE8DBC51DF9A1BE0039A5F2 /* AppID.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,7 +344,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = AppID/Info.plist;
+				INFOPLIST_FILE = AppIDTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppID;
@@ -357,7 +364,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = AppID/Info.plist;
+				INFOPLIST_FILE = AppIDTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppID;
@@ -417,6 +424,7 @@
 				EFBBC7701DF99BF6000CE39A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

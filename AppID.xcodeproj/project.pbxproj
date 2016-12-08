@@ -9,7 +9,8 @@
 /* Begin PBXBuildFile section */
 		EFBBC7691DF99BF6000CE39A /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBC7681DF99BF6000CE39A /* AppIDTests.swift */; };
 		EFBBC76B1DF99BF6000CE39A /* AppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBBC7541DF99AFA000CE39A /* AppID.framework */; };
-		EFE8DBCE1DF9B1860039A5F2 /* stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBCD1DF9B1860039A5F2 /* stub.swift */; };
+		EFE8DBE31DF9BC960039A5F2 /* AppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE8DBE21DF9BC960039A5F2 /* AppID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EFE8DBE51DF9BC9D0039A5F2 /* stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBE41DF9BC9D0039A5F2 /* stub.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,12 +25,12 @@
 
 /* Begin PBXFileReference section */
 		EFBBC7541DF99AFA000CE39A /* AppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EFBBC7571DF99AFA000CE39A /* AppID.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppID.h; sourceTree = "<group>"; };
 		EFBBC7601DF99BCB000CE39A /* Test1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test1.swift; sourceTree = "<group>"; };
 		EFBBC7661DF99BF6000CE39A /* AppIDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppIDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBBC7681DF99BF6000CE39A /* AppIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIDTests.swift; sourceTree = "<group>"; };
 		EFBBC76A1DF99BF6000CE39A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EFE8DBCD1DF9B1860039A5F2 /* stub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = stub.swift; path = ../stub.swift; sourceTree = "<group>"; };
+		EFE8DBE21DF9BC960039A5F2 /* AppID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppID.h; path = Source/Resources/AppID.h; sourceTree = SOURCE_ROOT; };
+		EFE8DBE41DF9BC9D0039A5F2 /* stub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = stub.swift; path = Source/stub/stub.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +74,7 @@
 		EFBBC7561DF99AFA000CE39A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				EFE8DBCD1DF9B1860039A5F2 /* stub.swift */,
+				EFE8DBDE1DF9BC430039A5F2 /* stub */,
 				EFE8DBC61DF9A1E60039A5F2 /* Resources */,
 			);
 			name = Source;
@@ -100,9 +101,17 @@
 		EFE8DBC61DF9A1E60039A5F2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				EFBBC7571DF99AFA000CE39A /* AppID.h */,
+				EFE8DBE21DF9BC960039A5F2 /* AppID.h */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		EFE8DBDE1DF9BC430039A5F2 /* stub */ = {
+			isa = PBXGroup;
+			children = (
+				EFE8DBE41DF9BC9D0039A5F2 /* stub.swift */,
+			);
+			name = stub;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +121,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFE8DBE31DF9BC960039A5F2 /* AppID.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,7 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFE8DBCE1DF9B1860039A5F2 /* stub.swift in Sources */,
+				EFE8DBE51DF9BC9D0039A5F2 /* stub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

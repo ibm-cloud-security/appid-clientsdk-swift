@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		EFBBC7691DF99BF6000CE39A /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBC7681DF99BF6000CE39A /* AppIDTests.swift */; };
 		EFBBC76B1DF99BF6000CE39A /* AppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBBC7541DF99AFA000CE39A /* AppID.framework */; };
-		EFE8DBC51DF9A1BE0039A5F2 /* AppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBBC7571DF99AFA000CE39A /* AppID.h */; };
+		EFE8DBCE1DF9B1860039A5F2 /* stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBCD1DF9B1860039A5F2 /* stub.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +29,7 @@
 		EFBBC7661DF99BF6000CE39A /* AppIDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppIDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBBC7681DF99BF6000CE39A /* AppIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIDTests.swift; sourceTree = "<group>"; };
 		EFBBC76A1DF99BF6000CE39A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFE8DBCD1DF9B1860039A5F2 /* stub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = stub.swift; path = ../stub.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +73,7 @@
 		EFBBC7561DF99AFA000CE39A /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				EFE8DBCD1DF9B1860039A5F2 /* stub.swift */,
 				EFE8DBC61DF9A1E60039A5F2 /* Resources */,
 			);
 			name = Source;
@@ -110,7 +112,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFE8DBC51DF9A1BE0039A5F2 /* AppID.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFE8DBCE1DF9B1860039A5F2 /* stub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,11 +349,13 @@
 				INFOPLIST_FILE = AppIDTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppID;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				USE_HEADERMAP = YES;
 			};
 			name = Debug;
 		};
@@ -367,16 +371,19 @@
 				INFOPLIST_FILE = AppIDTests/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppID;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
+				USE_HEADERMAP = YES;
 			};
 			name = Release;
 		};
 		EFBBC76F1DF99BF6000CE39A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = AppIDTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppIDTests;
@@ -388,6 +395,7 @@
 		EFBBC7701DF99BF6000CE39A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				INFOPLIST_FILE = AppIDTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppIDTests;

@@ -10,7 +10,24 @@
 		EFBBC7691DF99BF6000CE39A /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBC7681DF99BF6000CE39A /* AppIDTests.swift */; };
 		EFBBC76B1DF99BF6000CE39A /* AppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBBC7541DF99AFA000CE39A /* AppID.framework */; };
 		EFE8DBE31DF9BC960039A5F2 /* AppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE8DBE21DF9BC960039A5F2 /* AppID.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EFE8DBE51DF9BC9D0039A5F2 /* stub.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBE41DF9BC9D0039A5F2 /* stub.swift */; };
+		EFE8DC081DFDADA50039A5F2 /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBF21DFDADA50039A5F2 /* AppID.swift */; };
+		EFE8DC091DFDADA50039A5F2 /* MCAAppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBF41DFDADA50039A5F2 /* MCAAppIdentity.swift */; };
+		EFE8DC0A1DFDADA50039A5F2 /* MCADeviceIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBF51DFDADA50039A5F2 /* MCADeviceIdentity.swift */; };
+		EFE8DC0B1DFDADA50039A5F2 /* MCAUserIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBF61DFDADA50039A5F2 /* MCAUserIdentity.swift */; };
+		EFE8DC0C1DFDADA50039A5F2 /* AppIDAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBF81DFDADA50039A5F2 /* AppIDAuthorizationManager.swift */; };
+		EFE8DC0D1DFDADA50039A5F2 /* AppIDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBF91DFDADA50039A5F2 /* AppIDError.swift */; };
+		EFE8DC0E1DFDADA50039A5F2 /* AuthorizationManagerPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBFA1DFDADA50039A5F2 /* AuthorizationManagerPreferences.swift */; };
+		EFE8DC0F1DFDADA50039A5F2 /* AuthorizationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBFB1DFDADA50039A5F2 /* AuthorizationRequest.swift */; };
+		EFE8DC101DFDADA50039A5F2 /* AuthorizationRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBFC1DFDADA50039A5F2 /* AuthorizationRequestManager.swift */; };
+		EFE8DC111DFDADA50039A5F2 /* BMSSecurityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBFD1DFDADA50039A5F2 /* BMSSecurityConstants.swift */; };
+		EFE8DC121DFDADA50039A5F2 /* SecurityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBFF1DFDADA50039A5F2 /* SecurityUtils.swift */; };
+		EFE8DC131DFDADA50039A5F2 /* BMSSecurityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DC021DFDADA50039A5F2 /* BMSSecurityError.swift */; };
+		EFE8DC141DFDADA50039A5F2 /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DC031DFDADA50039A5F2 /* RegistrationManager.swift */; };
+		EFE8DC151DFDADA50039A5F2 /* RequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DC041DFDADA50039A5F2 /* RequestOptions.swift */; };
+		EFE8DC161DFDADA50039A5F2 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DC051DFDADA50039A5F2 /* TokenManager.swift */; };
+		EFE8DC171DFDADA50039A5F2 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DC061DFDADA50039A5F2 /* Utils.swift */; };
+		EFE8DC181DFDADA50039A5F2 /* view.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DC071DFDADA50039A5F2 /* view.swift */; };
+		EFE8DC1D1DFDAE920039A5F2 /* BMSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,7 +47,24 @@
 		EFBBC7681DF99BF6000CE39A /* AppIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIDTests.swift; sourceTree = "<group>"; };
 		EFBBC76A1DF99BF6000CE39A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFE8DBE21DF9BC960039A5F2 /* AppID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppID.h; path = Source/Resources/AppID.h; sourceTree = SOURCE_ROOT; };
-		EFE8DBE41DF9BC9D0039A5F2 /* stub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = stub.swift; path = Source/stub/stub.swift; sourceTree = SOURCE_ROOT; };
+		EFE8DBF21DFDADA50039A5F2 /* AppID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppID.swift; sourceTree = "<group>"; };
+		EFE8DBF41DFDADA50039A5F2 /* MCAAppIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCAAppIdentity.swift; sourceTree = "<group>"; };
+		EFE8DBF51DFDADA50039A5F2 /* MCADeviceIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCADeviceIdentity.swift; sourceTree = "<group>"; };
+		EFE8DBF61DFDADA50039A5F2 /* MCAUserIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCAUserIdentity.swift; sourceTree = "<group>"; };
+		EFE8DBF81DFDADA50039A5F2 /* AppIDAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAuthorizationManager.swift; sourceTree = "<group>"; };
+		EFE8DBF91DFDADA50039A5F2 /* AppIDError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDError.swift; sourceTree = "<group>"; };
+		EFE8DBFA1DFDADA50039A5F2 /* AuthorizationManagerPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManagerPreferences.swift; sourceTree = "<group>"; };
+		EFE8DBFB1DFDADA50039A5F2 /* AuthorizationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequest.swift; sourceTree = "<group>"; };
+		EFE8DBFC1DFDADA50039A5F2 /* AuthorizationRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestManager.swift; sourceTree = "<group>"; };
+		EFE8DBFD1DFDADA50039A5F2 /* BMSSecurityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityConstants.swift; sourceTree = "<group>"; };
+		EFE8DBFF1DFDADA50039A5F2 /* SecurityUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityUtils.swift; sourceTree = "<group>"; };
+		EFE8DC021DFDADA50039A5F2 /* BMSSecurityError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityError.swift; sourceTree = "<group>"; };
+		EFE8DC031DFDADA50039A5F2 /* RegistrationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
+		EFE8DC041DFDADA50039A5F2 /* RequestOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestOptions.swift; sourceTree = "<group>"; };
+		EFE8DC051DFDADA50039A5F2 /* TokenManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		EFE8DC061DFDADA50039A5F2 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		EFE8DC071DFDADA50039A5F2 /* view.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = view.swift; sourceTree = "<group>"; };
+		EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BMSCore.framework; path = "../Library/Developer/Xcode/DerivedData/AppIDworkspace-ctfiojsausdyvabbauzbpkzomohi/Build/Products/Debug-iphonesimulator/BMSCore.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EFE8DC1D1DFDAE920039A5F2 /* BMSCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +94,7 @@
 				EFBBC7561DF99AFA000CE39A /* Source */,
 				EFBBC7671DF99BF6000CE39A /* AppIDTests */,
 				EFBBC7551DF99AFA000CE39A /* Products */,
+				EFE8DC1B1DFDAE920039A5F2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -74,7 +110,7 @@
 		EFBBC7561DF99AFA000CE39A /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				EFE8DBDE1DF9BC430039A5F2 /* stub */,
+				EFE8DBF01DFDADA50039A5F2 /* mca */,
 				EFE8DBC61DF9A1E60039A5F2 /* Resources */,
 			);
 			name = Source;
@@ -106,12 +142,85 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		EFE8DBDE1DF9BC430039A5F2 /* stub */ = {
+		EFE8DBF01DFDADA50039A5F2 /* mca */ = {
 			isa = PBXGroup;
 			children = (
-				EFE8DBE41DF9BC9D0039A5F2 /* stub.swift */,
+				EFE8DBF11DFDADA50039A5F2 /* api */,
+				EFE8DBF71DFDADA50039A5F2 /* internal */,
 			);
-			name = stub;
+			name = mca;
+			path = Source/mca;
+			sourceTree = SOURCE_ROOT;
+		};
+		EFE8DBF11DFDADA50039A5F2 /* api */ = {
+			isa = PBXGroup;
+			children = (
+				EFE8DBF21DFDADA50039A5F2 /* AppID.swift */,
+				EFE8DBF31DFDADA50039A5F2 /* identity */,
+			);
+			path = api;
+			sourceTree = "<group>";
+		};
+		EFE8DBF31DFDADA50039A5F2 /* identity */ = {
+			isa = PBXGroup;
+			children = (
+				EFE8DBF41DFDADA50039A5F2 /* MCAAppIdentity.swift */,
+				EFE8DBF51DFDADA50039A5F2 /* MCADeviceIdentity.swift */,
+				EFE8DBF61DFDADA50039A5F2 /* MCAUserIdentity.swift */,
+			);
+			path = identity;
+			sourceTree = "<group>";
+		};
+		EFE8DBF71DFDADA50039A5F2 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				EFE8DBF81DFDADA50039A5F2 /* AppIDAuthorizationManager.swift */,
+				EFE8DBF91DFDADA50039A5F2 /* AppIDError.swift */,
+				EFE8DBFA1DFDADA50039A5F2 /* AuthorizationManagerPreferences.swift */,
+				EFE8DBFB1DFDADA50039A5F2 /* AuthorizationRequest.swift */,
+				EFE8DBFC1DFDADA50039A5F2 /* AuthorizationRequestManager.swift */,
+				EFE8DBFD1DFDADA50039A5F2 /* BMSSecurityConstants.swift */,
+				EFE8DBFE1DFDADA50039A5F2 /* certificate */,
+				EFE8DC001DFDADA50039A5F2 /* challengehandlers */,
+				EFE8DC011DFDADA50039A5F2 /* Encryption */,
+				EFE8DC031DFDADA50039A5F2 /* RegistrationManager.swift */,
+				EFE8DC041DFDADA50039A5F2 /* RequestOptions.swift */,
+				EFE8DC051DFDADA50039A5F2 /* TokenManager.swift */,
+				EFE8DC061DFDADA50039A5F2 /* Utils.swift */,
+				EFE8DC071DFDADA50039A5F2 /* view.swift */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		EFE8DBFE1DFDADA50039A5F2 /* certificate */ = {
+			isa = PBXGroup;
+			children = (
+				EFE8DBFF1DFDADA50039A5F2 /* SecurityUtils.swift */,
+			);
+			path = certificate;
+			sourceTree = "<group>";
+		};
+		EFE8DC001DFDADA50039A5F2 /* challengehandlers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = challengehandlers;
+			sourceTree = "<group>";
+		};
+		EFE8DC011DFDADA50039A5F2 /* Encryption */ = {
+			isa = PBXGroup;
+			children = (
+				EFE8DC021DFDADA50039A5F2 /* BMSSecurityError.swift */,
+			);
+			path = Encryption;
+			sourceTree = "<group>";
+		};
+		EFE8DC1B1DFDAE920039A5F2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,7 +334,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFE8DBE51DF9BC9D0039A5F2 /* stub.swift in Sources */,
+				EFE8DC0D1DFDADA50039A5F2 /* AppIDError.swift in Sources */,
+				EFE8DC0F1DFDADA50039A5F2 /* AuthorizationRequest.swift in Sources */,
+				EFE8DC081DFDADA50039A5F2 /* AppID.swift in Sources */,
+				EFE8DC0A1DFDADA50039A5F2 /* MCADeviceIdentity.swift in Sources */,
+				EFE8DC131DFDADA50039A5F2 /* BMSSecurityError.swift in Sources */,
+				EFE8DC151DFDADA50039A5F2 /* RequestOptions.swift in Sources */,
+				EFE8DC0C1DFDADA50039A5F2 /* AppIDAuthorizationManager.swift in Sources */,
+				EFE8DC101DFDADA50039A5F2 /* AuthorizationRequestManager.swift in Sources */,
+				EFE8DC111DFDADA50039A5F2 /* BMSSecurityConstants.swift in Sources */,
+				EFE8DC171DFDADA50039A5F2 /* Utils.swift in Sources */,
+				EFE8DC161DFDADA50039A5F2 /* TokenManager.swift in Sources */,
+				EFE8DC141DFDADA50039A5F2 /* RegistrationManager.swift in Sources */,
+				EFE8DC121DFDADA50039A5F2 /* SecurityUtils.swift in Sources */,
+				EFE8DC0B1DFDADA50039A5F2 /* MCAUserIdentity.swift in Sources */,
+				EFE8DC0E1DFDADA50039A5F2 /* AuthorizationManagerPreferences.swift in Sources */,
+				EFE8DC181DFDADA50039A5F2 /* view.swift in Sources */,
+				EFE8DC091DFDADA50039A5F2 /* MCAAppIdentity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,7 +490,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 				USE_HEADERMAP = YES;
 			};
 			name = Debug;
@@ -387,7 +512,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppID;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 3.0.1;
 				USE_HEADERMAP = YES;
 			};
 			name = Release;
@@ -396,11 +521,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = AppIDTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppIDTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Debug;
 		};
@@ -408,11 +534,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = AppIDTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppIDTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 2.3;
 			};
 			name = Release;
 		};

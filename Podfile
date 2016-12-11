@@ -5,7 +5,7 @@ target ‘AppID' do
 	platform :ios, '9.0'
 end
 
-target 'AppID Tests' do
+target 'AppIDTests' do
 	platform :ios, '9.0'
 end
 

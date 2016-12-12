@@ -16,7 +16,6 @@ public class AppID {
     var preferences:AuthorizationManagerPreferences
     var tenantId:String?
     var bluemixRegion:String?
-    var userView : UIViewController?
     public static var overrideServerHost: String?
     
     public static var defaultProtocol: String = HTTPS_SCHEME
@@ -47,10 +46,9 @@ public class AppID {
     }
     
     
-    public func initialize(tenantId : String, bluemixRegion : String, userView : UIViewController) {
+    public func initialize(tenantId : String, bluemixRegion : String) {
         self.tenantId = tenantId
         self.bluemixRegion = bluemixRegion
-        self.userView = userView
     }
     
     internal var serverUrl:String {
@@ -87,7 +85,7 @@ public class AppID {
     }
     
     public func login(onTokenCompletion : BMSCompletionHandler?) {
-        func  showLoginWebView() -> Void {
+        func showLoginWebView() -> Void {
             if let unwrappedTenant = tenantId {
                 let params = [
                     BMSSecurityConstants.JSON_RESPONSE_TYPE_KEY : BMSSecurityConstants.JSON_CODE_KEY,
@@ -100,10 +98,10 @@ public class AppID {
                 ]
                 let url = AppID.sharedInstance.serverUrl + "/" + BMSSecurityConstants.V2_AUTH_PATH + BMSSecurityConstants.authorizationEndPoint + Utils.getQueryString(params: params)
                 
-                let v = view();
-                var completion = { (code: String?) -> Void in
+                let v = AppIDView(); 
+                let mainView  = UIApplication.shared.keyWindow?.rootViewController
+                let completion = { (code: String?) -> Void in
                     //deletes facebook cookie so one can login again
-                    let cookie = HTTPCookie.self
                     let cookieJar = HTTPCookieStorage.shared
                     if let cookies = cookieJar.cookies {
                         for cookie in  cookies{
@@ -119,16 +117,12 @@ public class AppID {
                     }
                     self.tokenManager.invokeTokenRequest(unWrappedCode, tenantId: unwrappedTenant, clientId: self.preferences.clientId.get()!, callback : onTokenCompletion)
                 }
+                
                 v.setUrl(url: url)
-                v.setCompletionHandle (completionHandler: completion)
-                
-                
-                var loadLoginWidget = { () -> Void in
-                    self.userView?.present(v, animated: true, completion: nil)
-                }
-                
+                v.setCompletionHandler(completionHandler: completion)
+            
                 DispatchQueue.main.async {
-                    loadLoginWidget()
+                    mainView?.present(v, animated: true, completion: nil)
                 };
             } else {
                 onTokenCompletion?(nil, AppIDError.AuthenticationError(msg: "Tenant Id is not defined"))
@@ -138,7 +132,7 @@ public class AppID {
         if (preferences.clientId.get() == nil) {
             do {
                 try registrationManager.registerDevice(callback: {(response: Response?, error: Error?) in
-                    if error == nil && response?.statusCode == 200{
+                    if error == nil && response?.statusCode == 200{ //TODO: maybe rotem should add it as well
                         showLoginWebView()
                     } else {
                         onTokenCompletion?(nil, error)

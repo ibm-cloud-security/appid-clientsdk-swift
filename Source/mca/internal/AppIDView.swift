@@ -9,7 +9,7 @@
 import UIKit
 
 
-class view: UIViewController, UIWebViewDelegate {
+class AppIDView: UIViewController, UIWebViewDelegate {
     
     var url:String = ""
     var completion: ((String?) -> Void)!
@@ -27,21 +27,29 @@ class view: UIViewController, UIWebViewDelegate {
         let webView:UIWebView = UIWebView(frame: CGRect(x:0, y:0, width: UIScreen.main.bounds.width, height:UIScreen.main.bounds.height))
         self.view.addSubview(webView)
         webView.delegate = self
+        var b = UIBarButtonItem(
+            title: "Continue",
+            style: .plain,
+            target: self,
+            action: #selector(sayHello(sender:))
+        )
+        
+       
+        self.navigationItem.rightBarButtonItem = b
+        self.view.addSubview(self.navigationController)
         let reqUrl = URL(string: url)
         var urlReq:URLRequest = URLRequest(url: reqUrl!)
         urlReq.httpMethod = "GET"
         webView.loadRequest(urlReq)
     }
-    
+    func sayHello(sender: UIBarButtonItem) {
+    }
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let url = request.url?.absoluteString  {
             if url.hasPrefix(BMSSecurityConstants.HTTP_LOCALHOST_CODE) == true {
+                //gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
+                let code = request.url?.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix("code")}).first?.components(separatedBy: "=")[1]
                 self.dismiss(animated: true, completion: {
-                    //gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
-                    guard let code = request.url?.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix("code")}).first?.components(separatedBy: "=")[1] else{
-                        self.completion(nil) //TODO : extract the code before dismiss
-                        return
-                    }
                     self.completion(code)
                 })
                 return false

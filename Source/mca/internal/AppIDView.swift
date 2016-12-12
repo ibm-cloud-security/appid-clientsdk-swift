@@ -18,7 +18,7 @@ class view: UIViewController, UIWebViewDelegate {
         self.url = url
     }
     
-    func setCompletionHandle(completionHandler : @escaping (String?) -> Void) {
+    func setCompletionHandler(completionHandler : @escaping (String?) -> Void) {
         self.completion = completionHandler
     }
     
@@ -31,8 +31,6 @@ class view: UIViewController, UIWebViewDelegate {
         var urlReq:URLRequest = URLRequest(url: reqUrl!)
         urlReq.httpMethod = "GET"
         webView.loadRequest(urlReq)
-        
-        
     }
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
@@ -41,7 +39,7 @@ class view: UIViewController, UIWebViewDelegate {
                 self.dismiss(animated: true, completion: {
                     //gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
                     guard let code = request.url?.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix("code")}).first?.components(separatedBy: "=")[1] else{
-                        self.completion(nil)
+                        self.completion(nil) //TODO : extract the code before dismiss
                         return
                     }
                     self.completion(code)

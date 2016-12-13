@@ -20,19 +20,42 @@ public class MCAUserIdentity : BaseUserIdentity{
    
     public override init() {
         super.init()
+        
     }
     
     public convenience init(map: [String:AnyObject]?) {
         self.init(map: map as [String:Any]?)
-        json = map
+        
     }
     
     public override init(map: [String : Any]?) {
         super.init(map: map)
+        json = map
     }
+    
+    
+    public var MCAID: String? {
+        get {
+            return json?[BaseUserIdentity.Key.ID] as? String
+        }
+    }
+    
+    public var MCAauthorizedBy: String? {
+        get {
+            return json?[BaseUserIdentity.Key.authorizedBy] as? String
+        }
+    }
+    
+    public var MCAdisplayName: String? {
+        get {
+            return json?[BaseUserIdentity.Key.displayName] as? String
+        }
+    }
+
+    
     public var picUrl : String? {
         get {
-            return (((jsonData["attributes"] as? [String:Any])?["picture"] as? [String:Any])?["data"] as? [String:Any])?["url"] as? String
+            return (((json?["attributes"] as? [String:Any])?["picture"] as? [String:Any])?["data"] as? [String:Any])?["url"] as? String
         }
     }
  }

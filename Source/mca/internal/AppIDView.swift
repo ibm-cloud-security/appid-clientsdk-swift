@@ -41,15 +41,15 @@ class AppIDView: UIViewController, UIWebViewDelegate {
         })
     }
     
-    //    func webViewDidFinishLoad(_ webView: UIWebView) {
-    //        //checks if body has error, if so dismisses view
-    //        guard let json = webView.stringByEvaluatingJavaScript(from: "document.body.innerHTML")?.components(separatedBy: "<")[1].components(separatedBy: ">")[1], let err = try? Utils.parseJsonStringtoDictionary(json)["error"] as? String else {
-    //            return
-    //        }
-    //        self.dismiss(animated: true, completion: {
-    //            self.completion(nil, err)
-    //        })
-    //    }
+//    func webViewDidFinishLoad(_ webView: UIWebView) {
+//        //checks if body has error, if so dismisses view
+//        guard let json = webView.stringByEvaluatingJavaScript(from: "document.body.innerHTML")?.components(separatedBy: "<")[1].components(separatedBy: ">")[1], let err = try? Utils.parseJsonStringtoDictionary(json)["error"] as? String else {
+//            return
+//        }
+//        self.dismiss(animated: true, completion: {
+//            self.completion(nil, err)
+//        })
+//    }
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if let url = request.url?.absoluteString  {

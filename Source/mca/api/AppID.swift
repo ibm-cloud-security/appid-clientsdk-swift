@@ -37,7 +37,7 @@ public class AppID {
         if preferences.appIdentity.get() == nil {
             preferences.appIdentity.set(MCAAppIdentity().jsonData as [String:Any])
         }
-
+        
         authorizationManager = AppIDAuthorizationManager(preferences: preferences)
         registrationManager = RegistrationManager(preferences: preferences)
         tokenManager = TokenManager(preferences: preferences, sessionId: registrationManager.sessionId)
@@ -98,9 +98,9 @@ public class AppID {
                 ]
                 let url = AppID.sharedInstance.serverUrl + "/" + BMSSecurityConstants.V2_AUTH_PATH + BMSSecurityConstants.authorizationEndPoint + Utils.getQueryString(params: params)
                 
-                let v = AppIDView(); 
+                let v = AppIDView();
                 let mainView  = UIApplication.shared.keyWindow?.rootViewController
-                let completion = { (code: String?) -> Void in
+                let completion = { (code: String?, errMsg:String?) -> Void in
                     //deletes facebook cookie so one can login again
                     let cookieJar = HTTPCookieStorage.shared
                     if let cookies = cookieJar.cookies {
@@ -112,7 +112,11 @@ public class AppID {
                     }
                     
                     guard let unWrappedCode = code else {
-                        onTokenCompletion?(nil, AppIDError.AuthenticationError(msg: "Failed to get grant code"))
+                        if (errMsg == nil){
+                            onTokenCompletion?(nil, AppIDError.AuthenticationError(msg: "General error"))
+                        } else {
+                            onTokenCompletion?(nil, AppIDError.AuthenticationError(msg: errMsg))
+                        }
                         return
                     }
                     self.tokenManager.invokeTokenRequest(unWrappedCode, tenantId: unwrappedTenant, clientId: self.preferences.clientId.get()!, callback : onTokenCompletion)
@@ -120,9 +124,12 @@ public class AppID {
                 
                 v.setUrl(url: url)
                 v.setCompletionHandler(completionHandler: completion)
-            
+                
                 DispatchQueue.main.async {
-                    mainView?.present(v, animated: true, completion: nil)
+                    
+                    let navigation = UINavigationController.init(rootViewController: v)
+                    
+                    mainView?.present(navigation, animated: true, completion: nil)
                 };
             } else {
                 onTokenCompletion?(nil, AppIDError.AuthenticationError(msg: "Tenant Id is not defined"))
@@ -132,7 +139,7 @@ public class AppID {
         if (preferences.clientId.get() == nil) {
             do {
                 try registrationManager.registerDevice(callback: {(response: Response?, error: Error?) in
-                    if error == nil && response?.statusCode == 200{ //TODO: maybe rotem should add it as well
+                    if error == nil && response?.statusCode == 200{ //TODO: maybe android should add it as well
                         showLoginWebView()
                     } else {
                         onTokenCompletion?(nil, error)

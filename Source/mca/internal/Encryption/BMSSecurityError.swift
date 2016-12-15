@@ -30,6 +30,7 @@ internal enum JsonUtilsErrors:Error {
 internal enum AuthorizationProcessManagerError : Error {
     case clientIdIsNil
     case callBackFunctionIsNil
+    case couldNotExtractClientId
     case couldNotExtractGrantCode
     case couldNotExtractLocationHeader
     case couldNotRetrieveUserIdentityFromToken

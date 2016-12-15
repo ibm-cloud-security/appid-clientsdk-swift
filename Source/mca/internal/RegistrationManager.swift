@@ -25,7 +25,6 @@ internal class RegistrationManager {
     
     internal func registerDevice(callback :@escaping BMSCompletionHandler) throws {
         preferences.clientId.clear()
-        SecurityUtils.deleteCertificateFromKeyChain(BMSSecurityConstants.certificateIdentifier)
         let options:RequestOptions = RequestOptions()
         options.parameters = try createRegistrationParams()
         options.headers = createRegistrationHeaders()
@@ -35,7 +34,7 @@ internal class RegistrationManager {
             if error == nil {
                 if let unWrappedResponse = response, unWrappedResponse.isSuccessful {
                     do {
-                        try self.saveCertificateFromResponse(response)
+                        try self.saveClientId(response)
                         callback(response, error);
                     } catch(let thrownError) {
                         callback(nil, thrownError)
@@ -64,15 +63,38 @@ internal class RegistrationManager {
             + BMSSecurityConstants.AUTH_PATH
             + AppID.sharedInstance.tenantId!
             + "/"
-            return registrationPath + BMSSecurityConstants.clientsInstanceEndPoint
+        return registrationPath + BMSSecurityConstants.clientsInstanceEndPoint
     }
+    
+    
     
     private func createRegistrationParams() throws -> [String:String]{
         do {
-            var params = [String:String]()
-            try SecurityUtils.generateKeyPair(512, publicTag: BMSSecurityConstants.publicKeyIdentifier, privateTag: BMSSecurityConstants.privateKeyIdentifier)
-            let csrValue:String = try SecurityUtils.signCsr(BMSSecurityConstants.deviceInfo, keyIds: (BMSSecurityConstants.publicKeyIdentifier, BMSSecurityConstants.privateKeyIdentifier), keySize: 512)
-            params[BMSSecurityConstants.JSON_CSR_KEY] = csrValue
+             try SecurityUtils.generateKeyPair(512, publicTag: BMSSecurityConstants.publicKeyIdentifier, privateTag: BMSSecurityConstants.privateKeyIdentifier)
+            let deviceIdentity = MCADeviceIdentity()
+            let appIdentity = MCAAppIdentity()
+            var params = [String : String]()
+            let b = ["https://" + deviceIdentity.ID! + "/mobile/callback"]
+            params["redirect_uris"] = try? Utils.JSONStringify(b as AnyObject)
+            params["token_endpoint_auth_method"] = "client_secret_basic"
+            let c = [BMSSecurityConstants.JSON_CODE_KEY]
+            params["response_types"] =  try? Utils.JSONStringify(c as AnyObject)
+            let d = [BMSSecurityConstants.authorization_code_String, "password"]
+            params["grant_types"] = try? Utils.JSONStringify(d as AnyObject)
+            params["client_name"] =  appIdentity.ID
+            params["software_id"] =  deviceIdentity.ID
+            params["software_version"] =  appIdentity.version
+            params["device_id"] = deviceIdentity.ID
+            params["device_model"] = deviceIdentity.model
+            params["device_os"] = deviceIdentity.OS
+            params["client_type"] = "mobileapp"
+            let jwks : [[String:Any]] = [try SecurityUtils.getJWKSHeader()]
+            let a = [
+                "keys" : jwks
+            ]
+
+            params["jwks"] =     try? Utils.JSONStringify(a as AnyObject)
+            params["software_statement"] = try SecurityUtils.signPayload(params, keyIds: (BMSSecurityConstants.publicKeyIdentifier, BMSSecurityConstants.privateKeyIdentifier), keySize: 512)
             return params
         } catch {
             throw AuthorizationProcessManagerError.failedToCreateRegistrationParams
@@ -87,28 +109,19 @@ internal class RegistrationManager {
     }
     
     
-    private func saveCertificateFromResponse(_ response:Response?) throws {
-        guard let responseBody:String? = response?.responseText, let data = responseBody?.data(using: String.Encoding.utf8) else {
+    private func saveClientId(_ response:Response?) throws {
+        guard let responseBody = response?.responseText, let data = responseBody.data(using: String.Encoding.utf8), let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] else {
             throw JsonUtilsErrors.jsonIsMalformed
         }
-        do {
-            if let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any], let certificateString = jsonResponse[caseInsensitive : BMSSecurityConstants.JSON_CERTIFICATE_KEY] as? String {
-                //handle certificate
-                let certificate =  try SecurityUtils.getCertificateFromString(certificateString)
-                try  SecurityUtils.checkCertificatePublicKeyValidity(certificate, publicKeyTag: BMSSecurityConstants.publicKeyIdentifier)
-                try SecurityUtils.saveCertificateToKeyChain(certificate, certificateLabel: BMSSecurityConstants.certificateIdentifier)
-                
-                //save the clientId separately
-                if let id = jsonResponse[caseInsensitive : BMSSecurityConstants.JSON_CLIENT_ID_KEY] as? String? {
-                    preferences.clientId.set(id)
-                } else {
-                    throw AuthorizationProcessManagerError.certificateDoesNotIncludeClientId                     }
-            }else {
-                throw AuthorizationProcessManagerError.responseDoesNotIncludeCertificate
-            }
+        //save the clientId
+        if let id = jsonResponse[caseInsensitive : "client_id"] as? String {
+            preferences.clientId.set(id)
+        } else {
+            throw AuthorizationProcessManagerError.couldNotExtractClientId
         }
-        AppID.logger.debug(message: "certificate successfully saved")
+        AppID.logger.debug(message: "client id successfully saved")
     }
+    
     private func addSessionIdHeader(_ headers:inout [String:String]) {
         headers[BMSSecurityConstants.X_WL_SESSION_HEADER_NAME] =  self.sessionId
     }

@@ -25,6 +25,7 @@ internal class AuthorizationManagerPreferences {
     
     internal var persistencePolicy:PolicyPreference
     internal var clientId:StringPreference
+    internal var registrationTenantId:StringPreference
     internal var accessToken:TokenPreference
     internal var idToken:TokenPreference
     internal var userIdentity:JSONPreference
@@ -36,6 +37,7 @@ internal class AuthorizationManagerPreferences {
         
         persistencePolicy = PolicyPreference(prefName: BMSSecurityConstants.PERSISTENCE_POLICY_LABEL, defaultValue: PersistencePolicy.always, idToken: nil, accessToken: nil)
         clientId = StringPreference(prefName: BMSSecurityConstants.clientIdLabel)
+        registrationTenantId = StringPreference(prefName: BMSSecurityConstants.tenantIdLabel)
         accessToken  = TokenPreference(prefName: BMSSecurityConstants.accessTokenLabel, persistencePolicy: persistencePolicy)
         idToken  = TokenPreference(prefName: BMSSecurityConstants.idTokenLabel, persistencePolicy: persistencePolicy)
         persistencePolicy.idToken = idToken

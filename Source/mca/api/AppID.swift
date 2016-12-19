@@ -136,10 +136,11 @@ public class AppID {
             }
         }
         
-        if (preferences.clientId.get() == nil) {
+        if (preferences.clientId.get() == nil || self.preferences.registrationTenantId.get() != self.tenantId) {
             do {
                 try registrationManager.registerDevice(callback: {(response: Response?, error: Error?) in
                     if error == nil && response?.statusCode == 200{ //TODO: maybe android should add it as well
+                        self.preferences.registrationTenantId.set(self.tenantId)
                         showLoginWebView()
                     } else {
                         onTokenCompletion?(nil, error)

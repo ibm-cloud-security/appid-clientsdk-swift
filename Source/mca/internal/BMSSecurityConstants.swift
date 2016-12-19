@@ -162,6 +162,7 @@ internal class BMSSecurityConstants {
     internal static let OAUTH_CERT_LABEL = "\(KEY_CHAIN_PREFIX).certificate"
     internal static let _PUBLIC_KEY_LABEL = "\(KEY_CHAIN_PREFIX).publickey"
     internal static let CLIENT_ID_KEY_LABEL = "\(KEY_CHAIN_PREFIX).clientid"
+    internal static let TENANT_ID_KEY_LABEL = "\(KEY_CHAIN_PREFIX).tenantId"
     internal static let _PRIVATE_KEY_LABEL = "\(KEY_CHAIN_PREFIX).privatekey"
     internal static let OAUTH_ACCESS_TOKEN_LABEL = "\(KEY_CHAIN_PREFIX).accesstoken"
     internal static let OAUTH_ID_TOKEN_LABEL = "\(KEY_CHAIN_PREFIX).idtoken"
@@ -177,6 +178,7 @@ internal class BMSSecurityConstants {
     internal static let idTokenLabel = "\(OAUTH_ID_TOKEN_LABEL):\(nameAndVer.name):\(nameAndVer.version)"
     internal static let accessTokenLabel = "\(OAUTH_ACCESS_TOKEN_LABEL):\(nameAndVer.name):\(nameAndVer.version)"
     internal static let clientIdLabel = "\(CLIENT_ID_KEY_LABEL):\(nameAndVer.name):\(nameAndVer.version)"
+    internal static let tenantIdLabel = "\(TENANT_ID_KEY_LABEL):\(nameAndVer.name):\(nameAndVer.version)"
     internal static let certificateIdentifier = "\(OAUTH_CERT_LABEL):\(nameAndVer.name):\(nameAndVer.version)"
     internal static let AuthorizationKeyChainTagsDictionary = [privateKeyIdentifier : kSecClassKey, publicKeyIdentifier : kSecClassKey, idTokenLabel : kSecClassGenericPassword, accessTokenLabel : kSecClassGenericPassword, certificateIdentifier : kSecClassCertificate]
     

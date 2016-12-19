@@ -47,6 +47,14 @@ internal class AuthorizationRequest : BaseRequest {
         networkSession = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }
     
+    
+    internal func sendJson( json : [String : Any], callback : BMSCompletionHandler?) {
+        headers[BaseRequest.contentType] = "application/json"
+        let jsonToSend = try? urlEncode(Utils.JSONStringify(json as AnyObject)).data(using: .utf8)
+        send(requestBody: jsonToSend != nil ? jsonToSend! : Data(), completionHandler: callback)
+    }
+
+    
     /**
      * Send this resource request asynchronously, with the given form parameters as the request body.
      * This method will set the content type header to "application/x-www-form-urlencoded".

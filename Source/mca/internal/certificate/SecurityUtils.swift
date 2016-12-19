@@ -127,9 +127,9 @@ internal class SecurityUtils {
             throw BMSSecurityError.generalError
         }
         
-        let mod:String = pkModulus.base64EncodedString(options: base64Options)
+        let mod:String = Utils.base64StringFromData(pkModulus, isSafeUrl: true)
         
-        let exp:String = pkExponent.base64EncodedString(options: base64Options)
+        let exp:String = Utils.base64StringFromData(pkExponent, isSafeUrl: true)
         
         let publicKeyJSON : [String:Any] = [
             "e" : exp as AnyObject,
@@ -204,7 +204,8 @@ internal class SecurityUtils {
     internal static func signPayload(_ payloadJSON:[String : Any], keyIds ids:(publicKey: String, privateKey: String), keySize: Int) throws -> String {
         do {
             let strPayloadJSON = try Utils.JSONStringify(payloadJSON as AnyObject)
-            return try signString(strPayloadJSON, keyIds: ids, keySize: keySize)
+            let strPayloadJSONBase64 = Utils.base64StringFromData(Data(strPayloadJSON.utf8), isSafeUrl: true)
+            return try signString(strPayloadJSONBase64, keyIds: ids, keySize: keySize)
         }
         catch (let err){
             throw err
@@ -221,7 +222,8 @@ internal class SecurityUtils {
             }
             let signedData = try signData(payloadData, privateKey:privateKeySec)
             
-            return signedData.base64EncodedString()
+            //return signedData.base64EncodedString()
+            return Utils.base64StringFromData(signedData, isSafeUrl: true)
         }
         catch {
             throw BMSSecurityError.generalError

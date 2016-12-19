@@ -22,6 +22,7 @@ internal class RequestOptions {
     internal var timeout : Double = 0
     internal var headers = [String : String]()
     internal var parameters = [String : String]()
+    internal var json = [String : Any]()
     
     internal init(requestMethod : HttpMethod = HttpMethod.GET) {
         self.requestMethod = requestMethod

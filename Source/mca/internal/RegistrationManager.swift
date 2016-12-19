@@ -26,7 +26,7 @@ internal class RegistrationManager {
     internal func registerDevice(callback :@escaping BMSCompletionHandler) throws {
         preferences.clientId.clear()
         let options:RequestOptions = RequestOptions()
-        options.parameters = try createRegistrationParams()
+        options.json = try createRegistrationParams()
         options.headers = createRegistrationHeaders()
         options.requestMethod = HttpMethod.POST
         
@@ -60,7 +60,7 @@ internal class RegistrationManager {
             + "/"
             + BMSSecurityConstants.AUTH_SERVER_NAME
             + "/"
-            + BMSSecurityConstants.AUTH_PATH
+            + "authorization/v3/apps/"
             + AppID.sharedInstance.tenantId!
             + "/"
         return registrationPath + BMSSecurityConstants.clientsInstanceEndPoint
@@ -68,30 +68,36 @@ internal class RegistrationManager {
     
     
     
-    private func createRegistrationParams() throws -> [String:String]{
+    private func createRegistrationParams() throws -> [String:Any]{
         do {
              try SecurityUtils.generateKeyPair(512, publicTag: BMSSecurityConstants.publicKeyIdentifier, privateTag: BMSSecurityConstants.privateKeyIdentifier)
             let deviceIdentity = MCADeviceIdentity()
             let appIdentity = MCAAppIdentity()
-            var params = [String : String]()
-            params["redirect_uris"] = try? Utils.JSONStringify(["https://" + appIdentity.ID! + "/mobile/callback"] as AnyObject)
+            var params = [String : Any]()
+            params["redirect_uris"] = ["https://" + appIdentity.ID! + "/mobile/callback"]
             params["token_endpoint_auth_method"] = "client_secret_basic"
-            params["response_types"] =  try? Utils.JSONStringify([BMSSecurityConstants.JSON_CODE_KEY] as AnyObject)
-            params["grant_types"] = try? Utils.JSONStringify([BMSSecurityConstants.authorization_code_String, "password"] as AnyObject)
-            params["client_name"] = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
+            params["response_types"] =  [BMSSecurityConstants.JSON_CODE_KEY]
+            params["grant_types"] = [BMSSecurityConstants.authorization_code_String, "password"]
+                params["client_name"] = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
             params["software_id"] =  appIdentity.ID
             params["software_version"] =  appIdentity.version
             params["device_id"] = deviceIdentity.ID
             params["device_model"] = deviceIdentity.model
             params["device_os"] = deviceIdentity.OS
+            
             params["client_type"] = "mobileapp"
+            
             let jwks : [[String:Any]] = [try SecurityUtils.getJWKSHeader()]
+            
             let a = [
                 "keys" : jwks
             ]
-
-            params["jwks"] =     try? Utils.JSONStringify(a as AnyObject)
-            params["software_statement"] = try SecurityUtils.signPayload(params, keyIds: (BMSSecurityConstants.publicKeyIdentifier, BMSSecurityConstants.privateKeyIdentifier), keySize: 512)
+            
+            params["jwks"] =  a
+            let strPayloadJSON = try Utils.JSONStringify(params as AnyObject)
+            let strPayloadJSONBase64 = Utils.base64StringFromData(Data(strPayloadJSON.utf8), isSafeUrl: true)
+            let signature = try SecurityUtils.signPayload(params, keyIds: (BMSSecurityConstants.publicKeyIdentifier, BMSSecurityConstants.privateKeyIdentifier), keySize: 512)
+            params["software_statement"] = strPayloadJSONBase64 + "." + signature
             return params
         } catch {
             throw AuthorizationProcessManagerError.failedToCreateRegistrationParams

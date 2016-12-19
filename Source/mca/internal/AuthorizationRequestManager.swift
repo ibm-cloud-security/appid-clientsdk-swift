@@ -85,8 +85,10 @@ import BMSAnalyticsAPI
             if let method = options?.requestMethod, method == HttpMethod.GET{
                 request.queryParameters = options?.parameters
                 request.send(defaultCompletionHandler)
-            } else {
-                request.sendWithCompletionHandler((options?.parameters)!, callback: defaultCompletionHandler)
+            } else if let params = options?.parameters, params.count > 0  {
+                request.sendWithCompletionHandler(params, callback: defaultCompletionHandler)
+            } else if let json = options?.json {
+                request.sendJson(json: json, callback: defaultCompletionHandler)
             }
         }
         

@@ -74,30 +74,30 @@ internal class RegistrationManager {
             let deviceIdentity = MCADeviceIdentity()
             let appIdentity = MCAAppIdentity()
             var params = [String : Any]()
-            params["redirect_uris"] = ["https://" + appIdentity.ID! + "/mobile/callback"]
-            params["token_endpoint_auth_method"] = "client_secret_basic"
-            params["response_types"] =  [BMSSecurityConstants.JSON_CODE_KEY]
-            params["grant_types"] = [BMSSecurityConstants.authorization_code_String, "password"]
-                params["client_name"] = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
-            params["software_id"] =  appIdentity.ID
-            params["software_version"] =  appIdentity.version
-            params["device_id"] = deviceIdentity.ID
-            params["device_model"] = deviceIdentity.model
-            params["device_os"] = deviceIdentity.OS
+            params[BMSSecurityConstants.JSON_REDIRECT_URIS_KEY] = ["https://" + appIdentity.ID! + "/mobile/callback"]
+            params[BMSSecurityConstants.JSON_TOKEN_ENDPOINT_AUTH_METHOD_KEY] = BMSSecurityConstants.CLIENT_SECRET_BASIC
+            params[BMSSecurityConstants.JSON_RESPONSE_TYPES_KEY] =  [BMSSecurityConstants.JSON_CODE_KEY]
+            params[BMSSecurityConstants.JSON_GRANT_TYPES_KEY] = [BMSSecurityConstants.authorization_code_String, BMSSecurityConstants.PASSWORD_STRING]
+            params[BMSSecurityConstants.JSON_CLIENT_NAME_KEY] = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
+            params[BMSSecurityConstants.JSON_SOFTWARE_ID_KEY] =  appIdentity.ID
+            params[BMSSecurityConstants.JSON_SOFTWARE_VERSION_KEY] =  appIdentity.version
+            params[BMSSecurityConstants.JSON_DEVICE_ID_KEY] = deviceIdentity.ID
+            params[BMSSecurityConstants.JSON_MODEL_KEY] = deviceIdentity.model
+            params[BMSSecurityConstants.JSON_OS_KEY] = deviceIdentity.OS
             
-            params["client_type"] = "mobileapp"
+            params[BMSSecurityConstants.JSON_CLIENT_TYPE_KEY] = BMSSecurityConstants.MOBILE_APP_TYPE
             
             let jwks : [[String:Any]] = [try SecurityUtils.getJWKSHeader()]
             
-            let a = [
-                "keys" : jwks
+            let keys = [
+                BMSSecurityConstants.JSON_KEYS_KEY : jwks
             ]
             
-            params["jwks"] =  a
+            params[BMSSecurityConstants.JSON_JWKS_KEY] =  keys
             let strPayloadJSON = try Utils.JSONStringify(params as AnyObject)
             let strPayloadJSONBase64 = Utils.base64StringFromData(Data(strPayloadJSON.utf8), isSafeUrl: true)
             let signature = try SecurityUtils.signPayload(params, keyIds: (BMSSecurityConstants.publicKeyIdentifier, BMSSecurityConstants.privateKeyIdentifier), keySize: 512)
-            params["software_statement"] = strPayloadJSONBase64 + "." + signature
+            params[BMSSecurityConstants.JSON_SOFTWARE_STATEMENT_KEY] = strPayloadJSONBase64 + "." + signature
             return params
         } catch {
             throw AuthorizationProcessManagerError.failedToCreateRegistrationParams
@@ -117,7 +117,7 @@ internal class RegistrationManager {
             throw JsonUtilsErrors.jsonIsMalformed
         }
         //save the clientId
-        if let id = jsonResponse[caseInsensitive : "client_id"] as? String {
+        if let id = jsonResponse[caseInsensitive : BMSSecurityConstants.client_id_String] as? String {
             preferences.clientId.set(id)
         } else {
             throw AuthorizationProcessManagerError.couldNotExtractClientId

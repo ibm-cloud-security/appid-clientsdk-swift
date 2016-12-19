@@ -19,8 +19,6 @@ internal class BMSSecurityConstants {
     
     
     
-    internal static let SECURE_PATTERN_START = "/*-secure-\n"
-    internal static let SECURE_PATTERN_END = "*/"
     
     internal static let  base64EncodingTable:[Character] = [
         "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
@@ -78,16 +76,15 @@ internal class BMSSecurityConstants {
     
    
     
-    internal static var deviceInfo = Utils.getDeviceDictionary()
     internal static let nameAndVer = Utils.getApplicationDetails()
     internal static var authorizationProcessManagerLoggerName = Logger.bmsLoggerPrefix + "AuthorizationProcessManager"
     internal static var authorizationRequestManagerLoggerName = Logger.bmsLoggerPrefix + "AuthorizationRequestManager"
     
-    internal static var authorizationEndPoint = "authorization"
     internal static var tokenEndPoint = "token"
     internal static var clientsInstanceEndPoint = "clients/instance"
     
     
+    internal static var authorizationEndPoint = "authorization"
     internal static var client_id_String = "client_id"
     
     internal static var authorization_code_String = "authorization_code"
@@ -102,7 +99,6 @@ internal class BMSSecurityConstants {
     internal static var X_WL_AUTHENTICATE_HEADER_NAME = "X-WL-Authenticate"
     
     internal static var JSON_RESPONSE_TYPE_KEY = "response_type"
-    internal static var JSON_CSR_KEY = "CSR"
     internal static var JSON_IMF_USER_KEY = "imf.user"
     internal static var JSON_REDIRECT_URI_KEY = "redirect_uri"
     internal static var JSON_CODE_KEY = "code"
@@ -121,33 +117,44 @@ internal class BMSSecurityConstants {
      * Parts of the path to authorization endpoint.
      */
     internal static let AUTH_SERVER_NAME = "imf-authserver"
-    internal static let AUTH_PATH = "authorization/v1/apps/"
     internal static let V2_AUTH_PATH = "oauth/v2/"
     
-    /**
-     * The name of "result" parameter returned from authorization endpoint.
-     */
-    internal static let WL_RESULT = "wl_result";
     
     
     /**
      * Name of the standard "www-authenticate" header.
      */
-    internal static let AUTHENTICATE_HEADER_NAME = "WWW-Authenticate"
     
     internal static var FACEBOOK_COOKIE_NAME =  "c_user"
     
 
     
     //JSON keys and values
-    internal static let JSON_CERTIFICATE_KEY = "certificate"
+    internal static let JSON_SOFTWARE_STATEMENT_KEY = "software_statement"
+    internal static let JSON_KEYS_KEY = "keys"
+    internal static let JSON_JWKS_KEY = "jwks"
     internal static let JSON_CLIENT_ID_KEY = "clientId"
-    internal static let JSON_DEVICE_ID_KEY = "deviceId"
-    internal static let JSON_OS_KEY = "deviceOs"
+    internal static let JSON_DEVICE_ID_KEY = "device_id"
+    internal static let JSON_OS_KEY = "device_os"
     internal static let JSON_ENVIRONMENT_KEY = "environment"
-    internal static let JSON_MODEL_KEY = "deviceModel"
-    internal static let JSON_APPLICATION_ID_KEY = "applicationId"
-    internal static let JSON_APPLICATION_VERSION_KEY = "applicationVersion"
+    internal static let JSON_MODEL_KEY = "device_model"
+    internal static let JSON_SOFTWARE_ID_KEY = "software_id"
+    internal static let JSON_SOFTWARE_VERSION_KEY = "software_version"
+    internal static let JSON_REDIRECT_URIS_KEY = "redirect_uris"
+    internal static let JSON_TOKEN_ENDPOINT_AUTH_METHOD_KEY = "token_endpoint_auth_method"
+    internal static let JSON_RESPONSE_TYPES_KEY = "response_types"
+    internal static let JSON_GRANT_TYPES_KEY = "grant_types"
+    internal static let JSON_CLIENT_NAME_KEY = "client_name"
+    internal static let JSON_CLIENT_TYPE_KEY = "client_type"
+    internal static let MOBILE_APP_TYPE = "mobileapp"
+    internal static let CLIENT_SECRET_BASIC = "client_secret_basic"
+    internal static let PASSWORD_STRING = "password"
+
+
+    
+    
+    
+    
     internal static let JSON_IOS_ENVIRONMENT_VALUE = "iOSnative"
     internal static let JSON_ACCESS_TOKEN_KEY = "access_token"
     internal static let JSON_ID_TOKEN_KEY = "id_token"

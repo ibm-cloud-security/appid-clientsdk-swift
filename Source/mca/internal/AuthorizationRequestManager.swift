@@ -72,7 +72,7 @@ import BMSAnalyticsAPI
             
             requestPath = Utils.concatenateUrls(rootUrl, path: path)
             
-            var request = AuthorizationRequest(url:requestPath!, method:self.requestOptions!.requestMethod)
+            let request = AuthorizationRequest(url:requestPath!, method:self.requestOptions!.requestMethod)
             
             request.timeout = requestOptions!.timeout != 0 ? requestOptions!.timeout : BMSClient.sharedInstance.requestTimeout
             

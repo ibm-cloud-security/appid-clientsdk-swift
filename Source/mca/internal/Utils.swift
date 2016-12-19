@@ -109,20 +109,6 @@ public class Utils {
         }
     }
     
-    internal static func extractSecureJson(_ response: Response?) throws -> [String:Any?] {
-        
-        guard let responseText:String = response?.responseText, (responseText.hasPrefix(BMSSecurityConstants.SECURE_PATTERN_START) && responseText.hasSuffix(BMSSecurityConstants.SECURE_PATTERN_END)) else {
-            throw JsonUtilsErrors.couldNotExtractJsonFromResponse
-        }
-        
-        let jsonString : String = responseText.substring(with: (responseText.characters.index(responseText.startIndex, offsetBy: BMSSecurityConstants.SECURE_PATTERN_START.characters.count) ..< responseText.characters.index(responseText.endIndex, offsetBy: -BMSSecurityConstants.SECURE_PATTERN_END.characters.count)))
-        
-        do {
-            let responseJson = try parseJsonStringtoDictionary(jsonString)
-            return responseJson
-        }
-    }
-    
     //Return the App Name and Version
     internal static func getApplicationDetails() -> (name:String, version:String) {
         var version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
@@ -139,20 +125,7 @@ public class Utils {
         
     }
     
-    internal static func getDeviceDictionary() -> [String : Any] {
-        let deviceIdentity = MCADeviceIdentity()
-        let appIdentity = MCAAppIdentity()
-        var device = [String : Any]()
-        device[BMSSecurityConstants.JSON_DEVICE_ID_KEY] = deviceIdentity.ID as AnyObject?
-        device[BMSSecurityConstants.JSON_MODEL_KEY] =  deviceIdentity.model as AnyObject?
-        device[BMSSecurityConstants.JSON_OS_KEY] = deviceIdentity.OS as AnyObject?
-        device[BMSSecurityConstants.JSON_APPLICATION_ID_KEY] =  appIdentity.ID as AnyObject?
-        device[BMSSecurityConstants.JSON_APPLICATION_VERSION_KEY] =  appIdentity.version as AnyObject?
-        device[BMSSecurityConstants.JSON_ENVIRONMENT_KEY] =  BMSSecurityConstants.JSON_IOS_ENVIRONMENT_VALUE as AnyObject?
         
-        return device
-    }
-    
     /**
      Decode base64 code
      

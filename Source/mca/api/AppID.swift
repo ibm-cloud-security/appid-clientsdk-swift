@@ -7,15 +7,23 @@
 //
 
 import Foundation
-
+import SafariServices
 import BMSCore
 public class AppID {
+    
+    
+    private var loginView:SFSafariViewController?
+    private var tokenRequest : ((_ code: String?, _ errMsg:String?) -> Void)?
+    
+    
     var authorizationManager:AppIDAuthorizationManager
     var registrationManager:RegistrationManager
     var tokenManager:TokenManager
     var preferences:AuthorizationManagerPreferences
     var tenantId:String?
     var bluemixRegion:String?
+    
+    
     public static var overrideServerHost: String?
     
     public static var defaultProtocol: String = HTTPS_SCHEME
@@ -84,6 +92,12 @@ public class AppID {
         }
     }
     
+    public func tokenRequest(code: String?, errMsg:String?) {
+        loginView?.dismiss(animated: true, completion: { () -> Void in
+        self.tokenRequest?(code, errMsg)
+        })
+    }
+    
     public func login(onTokenCompletion : BMSCompletionHandler?) {
         func showLoginWebView() -> Void {
             if let unwrappedTenant = tenantId {
@@ -98,19 +112,10 @@ public class AppID {
                 ]
                 let url = AppID.sharedInstance.serverUrl + "/" + BMSSecurityConstants.V2_AUTH_PATH + BMSSecurityConstants.authorizationEndPoint + Utils.getQueryString(params: params)
                 
-                let v = AppIDView();
+                loginView =  SFSafariViewController(url: URL(string: url )!)
+                
                 let mainView  = UIApplication.shared.keyWindow?.rootViewController
-                let completion = { (code: String?, errMsg:String?) -> Void in
-                    //deletes facebook cookie so one can login again
-                    let cookieJar = HTTPCookieStorage.shared
-                    if let cookies = cookieJar.cookies {
-                        for cookie in  cookies{
-                            if(cookie.name == BMSSecurityConstants.FACEBOOK_COOKIE_NAME){
-                                cookieJar.deleteCookie(cookie)
-                            }
-                        }
-                    }
-                    
+                tokenRequest = { (code: String?, errMsg:String?) -> Void in
                     guard let unWrappedCode = code else {
                         if (errMsg == nil){
                             onTokenCompletion?(nil, AppIDError.AuthenticationError(msg: "General error"))
@@ -121,15 +126,9 @@ public class AppID {
                     }
                     self.tokenManager.invokeTokenRequest(unWrappedCode, tenantId: unwrappedTenant, clientId: self.preferences.clientId.get()!, callback : onTokenCompletion)
                 }
-                
-                v.setUrl(url: url)
-                v.setCompletionHandler(completionHandler: completion)
-                
+        
                 DispatchQueue.main.async {
-                    
-                    let navigation = UINavigationController.init(rootViewController: v)
-                    
-                    mainView?.present(navigation, animated: true, completion: nil)
+                    mainView?.present(self.loginView!, animated: true, completion: nil)
                 };
             } else {
                 onTokenCompletion?(nil, AppIDError.AuthenticationError(msg: "Tenant Id is not defined"))

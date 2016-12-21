@@ -7,6 +7,7 @@ Pod::Spec.new do |s|
     s.author       = { "IBM Bluemix Services Mobile SDK" => "mobilsdk@us.ibm.com" }
 
     s.source       = { :git => 'https://github.com/ibm-bluemix-mobile-services/appid-clientsdk-swift.git', :tag => "v#{s.version}" }
+    s.dependency 'BMSAnalyticsAPI', '~> 2.2'
     s.requires_arc = true
     s.source_files = 'Source/**/*.swift', 'Source/Resources/BMSSecurity.h'
     s.ios.deployment_target = '8.0'

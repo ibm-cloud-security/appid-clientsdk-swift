@@ -103,13 +103,13 @@ public class AppID {
                 let params = [
                     BMSSecurityConstants.JSON_RESPONSE_TYPE_KEY : BMSSecurityConstants.JSON_CODE_KEY,
                     BMSSecurityConstants.client_id_String : unwrappedTenant,
-                    BMSSecurityConstants.JSON_REDIRECT_URI_KEY : BMSSecurityConstants.HTTP_LOCALHOST_CODE,
+                    BMSSecurityConstants.JSON_REDIRECT_URI_KEY : BMSSecurityConstants.REDIRECT_URI_VALUE,
                     BMSSecurityConstants.JSON_SCOPE_KEY : BMSSecurityConstants.OPEN_ID_VALUE,
                     BMSSecurityConstants.JSON_USE_LOGIN_WIDGET : BMSSecurityConstants.TRUE_VALUE,
                     BMSSecurityConstants.JSON_STATE_KEY : UUID().uuidString
                     
                 ]
-                let url = AppID.sharedInstance.serverUrl + "/" + BMSSecurityConstants.V2_AUTH_PATH + BMSSecurityConstants.authorizationEndPoint + Utils.getQueryString(params: params)
+                let url = AppID.sharedInstance.serverUrl + "/" + BMSSecurityConstants.V3_AUTH_PATH + BMSSecurityConstants.authorizationEndPoint + Utils.getQueryString(params: params)
                 
                 loginView =  SFSafariViewController(url: URL(string: url )!)
                 

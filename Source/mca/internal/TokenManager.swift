@@ -63,7 +63,7 @@ internal class TokenManager {
             BMSSecurityConstants.JSON_CODE_KEY : grantCode,
             BMSSecurityConstants.client_id_String :  tenantId,
             BMSSecurityConstants.JSON_GRANT_TYPE_KEY : BMSSecurityConstants.authorization_code_String,
-            BMSSecurityConstants.JSON_REDIRECT_URI_KEY :BMSSecurityConstants.HTTP_LOCALHOST + "/code"
+            BMSSecurityConstants.JSON_REDIRECT_URI_KEY :BMSSecurityConstants.REDIRECT_URI_VALUE
         ]
         return params;
     }
@@ -111,7 +111,7 @@ internal class TokenManager {
     private func getTokenUrl() -> String {
         let tokenUrl = AppID.sharedInstance.serverUrl
             + "/"
-            + BMSSecurityConstants.V2_AUTH_PATH
+            + BMSSecurityConstants.V3_AUTH_PATH
         return tokenUrl + BMSSecurityConstants.tokenEndPoint
     }
 

@@ -81,7 +81,7 @@ internal class BMSSecurityConstants {
     internal static var authorizationRequestManagerLoggerName = Logger.bmsLoggerPrefix + "AuthorizationRequestManager"
     
     internal static var tokenEndPoint = "token"
-    internal static var clientsInstanceEndPoint = "clients/instance"
+    internal static var clientsEndPoint = "clients"
     
     internal static var REDIRECT_URI_VALUE = "redirect://" + Utils.getApplicationDetails().name + "/mobile/callback"
     internal static var authorizationEndPoint = "authorization"
@@ -111,13 +111,11 @@ internal class BMSSecurityConstants {
     internal static let BASIC_AUTHORIZATION_STRING = "Basic"
     internal static let WWW_AUTHENTICATE_HEADER = "WWW-Authenticate"
     internal static let AUTH_REALM = "\"imfAuthentication\""
-    internal static let HTTP_LOCALHOST = "http://localhost"
-    internal static let HTTP_LOCALHOST_CODE = "http://localhost/code"
     /**
      * Parts of the path to authorization endpoint.
      */
     internal static let AUTH_SERVER_NAME = "imf-authserver"
-    internal static let V2_AUTH_PATH = "oauth/v2/"
+    internal static let V3_AUTH_PATH = "oauth/v3/"
     
     
     

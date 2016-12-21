@@ -56,14 +56,12 @@ internal class RegistrationManager {
         
     }
     private func getRegistrationUrl() -> String {
-        let registrationPath = AppID.sharedInstance.serverUrl
+        return AppID.sharedInstance.serverUrl
             + "/"
-            + BMSSecurityConstants.AUTH_SERVER_NAME
-            + "/"
-            + "authorization/v3/apps/"
+            + BMSSecurityConstants.V3_AUTH_PATH
             + AppID.sharedInstance.tenantId!
             + "/"
-        return registrationPath + BMSSecurityConstants.clientsInstanceEndPoint
+            + BMSSecurityConstants.clientsEndPoint
     }
     
     

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EF99069B1DFFD85400F61470 /* AppIDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF99069A1DFFD85400F61470 /* AppIDView.swift */; };
 		EFBBC7691DF99BF6000CE39A /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBC7681DF99BF6000CE39A /* AppIDTests.swift */; };
 		EFBBC76B1DF99BF6000CE39A /* AppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBBC7541DF99AFA000CE39A /* AppID.framework */; };
 		EFE8DBE31DF9BC960039A5F2 /* AppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE8DBE21DF9BC960039A5F2 /* AppID.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -347,7 +346,6 @@
 				EFE8DC161DFDADA50039A5F2 /* TokenManager.swift in Sources */,
 				EFE8DC141DFDADA50039A5F2 /* RegistrationManager.swift in Sources */,
 				EFE8DC121DFDADA50039A5F2 /* SecurityUtils.swift in Sources */,
-				EF99069B1DFFD85400F61470 /* AppIDView.swift in Sources */,
 				EFE8DC0B1DFDADA50039A5F2 /* MCAUserIdentity.swift in Sources */,
 				EFE8DC0E1DFDADA50039A5F2 /* AuthorizationManagerPreferences.swift in Sources */,
 				EFE8DC091DFDADA50039A5F2 /* MCAAppIdentity.swift in Sources */,
@@ -526,7 +524,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppIDTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Debug;
 		};
@@ -539,7 +537,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppIDTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 2.3;
+				SWIFT_VERSION = 3.0.1;
 			};
 			name = Release;
 		};

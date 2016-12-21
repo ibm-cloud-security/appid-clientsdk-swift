@@ -74,7 +74,7 @@ internal class RegistrationManager {
             let deviceIdentity = MCADeviceIdentity()
             let appIdentity = MCAAppIdentity()
             var params = [String : Any]()
-            params[BMSSecurityConstants.JSON_REDIRECT_URIS_KEY] = ["https://" + appIdentity.ID! + "/mobile/callback"]
+            params[BMSSecurityConstants.JSON_REDIRECT_URIS_KEY] = [BMSSecurityConstants.REDIRECT_URI_VALUE]
             params[BMSSecurityConstants.JSON_TOKEN_ENDPOINT_AUTH_METHOD_KEY] = BMSSecurityConstants.CLIENT_SECRET_BASIC
             params[BMSSecurityConstants.JSON_RESPONSE_TYPES_KEY] =  [BMSSecurityConstants.JSON_CODE_KEY]
             params[BMSSecurityConstants.JSON_GRANT_TYPES_KEY] = [BMSSecurityConstants.authorization_code_String, BMSSecurityConstants.PASSWORD_STRING]

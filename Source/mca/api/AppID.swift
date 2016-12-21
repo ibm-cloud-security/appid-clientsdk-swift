@@ -15,7 +15,6 @@ public class AppID {
     private var loginView:SFSafariViewController?
     private var tokenRequest : ((_ code: String?, _ errMsg:String?) -> Void)?
     
-    
     var authorizationManager:AppIDAuthorizationManager
     var registrationManager:RegistrationManager
     var tokenManager:TokenManager

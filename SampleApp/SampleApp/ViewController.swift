@@ -29,16 +29,16 @@ class ViewController: UIViewController {
     @IBAction func log_in(_ sender: AnyObject) {
         let callBack = {(response: Response?, error: Error?) in
             if error == nil {
-                let userId = AppID.sharedInstance.userIdentity
+                let userId = AppID.sharedInstance.userIdentity as! MCAUserIdentity
                 DispatchQueue.main.async {
                     self.msg.isHidden = false
-                    self.msg.text = "Hello " + (userId?.displayName)!
+                    self.msg.text = "Hello " + (userId.MCAdisplayName)!
                 }
-//                DispatchQueue.main.async {
-//                    let url = URL(string: ((userId as? MCAUserIdentity)?.picUrl)!)
-//                    let data = try? Data(contentsOf: url!)
-//                    self.imageView.image = UIImage(data: data!)
-//                }
+                //                DispatchQueue.main.async {
+                //                    let url = URL(string: ((userId as? MCAUserIdentity)?.picUrl)!)
+                //                    let data = try? Data(contentsOf: url!)
+                //                    self.imageView.image = UIImage(data: data!)
+                //                }
             }
         }
     

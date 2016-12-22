@@ -442,11 +442,11 @@ public class Utils {
         var version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String
         var name = NSBundle.mainBundle().bundleIdentifier
         if name == nil {
-            AuthorizationProcessManager.logger.error(message: "Could not retrieve application name. Application name is set to nil")
+            AppID.logger.error(message: "Could not retrieve application name. Application name is set to nil")
             name = "nil"
         }
         if version == nil {
-            AuthorizationProcessManager.logger.error(message: "Could not retrieve application version. Application version is set to nil")
+            AppID.logger.error(message: "Could not retrieve application version. Application version is set to nil")
             version = "nil"
         }
         return (name!, version!)

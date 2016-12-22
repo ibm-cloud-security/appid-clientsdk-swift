@@ -15,7 +15,7 @@
 import BMSCore
 
 
-internal class AuthorizationManagerPreferences {
+internal class AppIDPreferences {
     
     #if swift (>=3.0)
     internal static var sharedPreferences:UserDefaults = UserDefaults.standard
@@ -64,7 +64,7 @@ internal class StringPreference {
 #if swift (>=3.0)
     internal init(prefName:String, defaultValue:String?) {
         self.prefName = prefName
-        if let val = AuthorizationManagerPreferences.sharedPreferences.value(forKey: prefName) as? String {
+        if let val = AppIDPreferences.sharedPreferences.value(forKey: prefName) as? String {
             self.value = val
         } else {
             self.value = defaultValue
@@ -103,8 +103,8 @@ internal class StringPreference {
     }
     
     private func commit() {
-        AuthorizationManagerPreferences.sharedPreferences.setValue(value, forKey: prefName)
-        AuthorizationManagerPreferences.sharedPreferences.synchronize()
+        AppIDPreferences.sharedPreferences.setValue(value, forKey: prefName)
+        AppIDPreferences.sharedPreferences.synchronize()
     }
 }
 
@@ -172,7 +172,7 @@ internal class PolicyPreference {
         self.accessToken = accessToken
         self.idToken = idToken
         self.prefName = prefName
-        if let rawValue = AuthorizationManagerPreferences.sharedPreferences.value(forKey: prefName) as? String, let newValue = PersistencePolicy(rawValue: rawValue){
+        if let rawValue = AppIDPreferences.sharedPreferences.value(forKey: prefName) as? String, let newValue = PersistencePolicy(rawValue: rawValue){
             self.value = newValue
         } else {
             self.value = defaultValue
@@ -183,7 +183,7 @@ internal class PolicyPreference {
         self.accessToken = accessToken
         self.idToken = idToken
         self.prefName = prefName
-        if let rawValue = AuthorizationManagerPreferences.sharedPreferences.valueForKey(prefName) as? String, let newValue = PersistencePolicy(rawValue: rawValue){
+        if let rawValue = AppIDPreferences.sharedPreferences.valueForKey(prefName) as? String, let newValue = PersistencePolicy(rawValue: rawValue){
             self.value = newValue
         } else {
             self.value = defaultValue
@@ -201,8 +201,8 @@ internal class PolicyPreference {
             self.accessToken!.updateStateByPolicy()
             self.idToken!.updateStateByPolicy()
         }
-        AuthorizationManagerPreferences.sharedPreferences.setValue(value.rawValue, forKey: prefName)
-        AuthorizationManagerPreferences.sharedPreferences.synchronize()
+        AppIDPreferences.sharedPreferences.setValue(value.rawValue, forKey: prefName)
+        AppIDPreferences.sharedPreferences.synchronize()
     }
 #else
     internal func set(value:PersistencePolicy, shouldUpdateTokens:Bool) {

@@ -22,19 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    func application(_ application: UIApplication, open url: URL, options asd :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
-        let urlString = url.absoluteString
-        if urlString.hasPrefix(BMSSecurityConstants.REDIRECT_URI_VALUE) == true {
-            //gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
-            let code = url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(BMSSecurityConstants.JSON_CODE_KEY)}).first?.components(separatedBy: "=")[1]
-            if(code == nil){
-                AppID.sharedInstance.tokenRequest(code: code, errMsg: "Failed to extract grant code")
-            } else {
-                AppID.sharedInstance.tokenRequest(code: code, errMsg: nil)
-            }
-            return true
-        }
-        return false
+    func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+        return AppID.sharedInstance.application(application, open: url, options: options)
     }
     
     func applicationWillResignActive(_ application: UIApplication) {

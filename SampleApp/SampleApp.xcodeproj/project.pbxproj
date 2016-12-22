@@ -8,23 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		602765D74ED7B05CCAAA826A /* Pods_SampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E9DE678104259E6F61B0B01 /* Pods_SampleApp.framework */; };
+		EF58A0081E0BB7C1006C1A3E /* BMSSecurityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF58A0061E0BB7C1006C1A3E /* BMSSecurityError.swift */; };
+		EF58A0091E0BB7C1006C1A3E /* SecurityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF58A0071E0BB7C1006C1A3E /* SecurityUtils.swift */; };
+		EF617EC51E0BB46C00D6C389 /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB01E0BB46C00D6C389 /* AppID.swift */; };
+		EF617EC61E0BB46C00D6C389 /* AppIDAppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB21E0BB46C00D6C389 /* AppIDAppIdentity.swift */; };
+		EF617EC71E0BB46C00D6C389 /* AppIDDeviceIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB31E0BB46C00D6C389 /* AppIDDeviceIdentity.swift */; };
+		EF617EC81E0BB46C00D6C389 /* AppIDUserIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB41E0BB46C00D6C389 /* AppIDUserIdentity.swift */; };
+		EF617EC91E0BB46C00D6C389 /* AppIDAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB61E0BB46C00D6C389 /* AppIDAuthorizationManager.swift */; };
+		EF617ECA1E0BB46C00D6C389 /* AppIDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB71E0BB46C00D6C389 /* AppIDError.swift */; };
+		EF617ECB1E0BB46C00D6C389 /* AppIDPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB81E0BB46C00D6C389 /* AppIDPreferences.swift */; };
+		EF617ECC1E0BB46C00D6C389 /* AuthorizationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB91E0BB46C00D6C389 /* AuthorizationRequest.swift */; };
+		EF617ECD1E0BB46C00D6C389 /* AppIDRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EBA1E0BB46C00D6C389 /* AppIDRequestManager.swift */; };
+		EF617ECE1E0BB46C00D6C389 /* BMSSecurityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EBB1E0BB46C00D6C389 /* BMSSecurityConstants.swift */; };
+		EF617ED11E0BB46C00D6C389 /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EC11E0BB46C00D6C389 /* RegistrationManager.swift */; };
+		EF617ED21E0BB46C00D6C389 /* RequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EC21E0BB46C00D6C389 /* RequestOptions.swift */; };
+		EF617ED31E0BB46C00D6C389 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EC31E0BB46C00D6C389 /* TokenManager.swift */; };
+		EF617ED41E0BB46C00D6C389 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EC41E0BB46C00D6C389 /* Utils.swift */; };
 		EFB38FDF1E0A7DCA008F8FBA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EFB38FC51E0A7DCA008F8FBA /* Info.plist */; };
-		EFB38FE01E0A7DCA008F8FBA /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FC81E0A7DCA008F8FBA /* AppID.swift */; };
-		EFB38FE11E0A7DCA008F8FBA /* MCAAppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FCA1E0A7DCA008F8FBA /* MCAAppIdentity.swift */; };
-		EFB38FE21E0A7DCA008F8FBA /* MCADeviceIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FCB1E0A7DCA008F8FBA /* MCADeviceIdentity.swift */; };
-		EFB38FE31E0A7DCA008F8FBA /* MCAUserIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FCC1E0A7DCA008F8FBA /* MCAUserIdentity.swift */; };
-		EFB38FE41E0A7DCA008F8FBA /* AppIDAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FCE1E0A7DCA008F8FBA /* AppIDAuthorizationManager.swift */; };
-		EFB38FE51E0A7DCA008F8FBA /* AppIDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FCF1E0A7DCA008F8FBA /* AppIDError.swift */; };
-		EFB38FE61E0A7DCA008F8FBA /* AuthorizationManagerPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FD01E0A7DCA008F8FBA /* AuthorizationManagerPreferences.swift */; };
-		EFB38FE71E0A7DCA008F8FBA /* AuthorizationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FD11E0A7DCA008F8FBA /* AuthorizationRequest.swift */; };
-		EFB38FE81E0A7DCA008F8FBA /* AuthorizationRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FD21E0A7DCA008F8FBA /* AuthorizationRequestManager.swift */; };
-		EFB38FE91E0A7DCA008F8FBA /* BMSSecurityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FD31E0A7DCA008F8FBA /* BMSSecurityConstants.swift */; };
-		EFB38FEA1E0A7DCA008F8FBA /* SecurityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FD51E0A7DCA008F8FBA /* SecurityUtils.swift */; };
-		EFB38FEB1E0A7DCA008F8FBA /* BMSSecurityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FD81E0A7DCA008F8FBA /* BMSSecurityError.swift */; };
-		EFB38FEC1E0A7DCA008F8FBA /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FD91E0A7DCA008F8FBA /* RegistrationManager.swift */; };
-		EFB38FED1E0A7DCA008F8FBA /* RequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FDA1E0A7DCA008F8FBA /* RequestOptions.swift */; };
-		EFB38FEE1E0A7DCA008F8FBA /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FDB1E0A7DCA008F8FBA /* TokenManager.swift */; };
-		EFB38FEF1E0A7DCA008F8FBA /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB38FDC1E0A7DCA008F8FBA /* Utils.swift */; };
 		EFE8DCCE1DFEC0820039A5F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DCA91DFEC0820039A5F2 /* AppDelegate.swift */; };
 		EFE8DCCF1DFEC0820039A5F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EFE8DCAA1DFEC0820039A5F2 /* Assets.xcassets */; };
 		EFE8DCD01DFEC0820039A5F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EFE8DCAB1DFEC0820039A5F2 /* LaunchScreen.storyboard */; };
@@ -40,23 +40,23 @@
 		C2BEB010D1747D03BEB06C21 /* Pods-kituraDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kituraDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-kituraDemo/Pods-kituraDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		C368C682928A43ECF33F070F /* Pods_kituraDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kituraDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3DA4631CE0B04D007A2B0A /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF58A0061E0BB7C1006C1A3E /* BMSSecurityError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityError.swift; sourceTree = "<group>"; };
+		EF58A0071E0BB7C1006C1A3E /* SecurityUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityUtils.swift; sourceTree = "<group>"; };
+		EF617EB01E0BB46C00D6C389 /* AppID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppID.swift; sourceTree = "<group>"; };
+		EF617EB21E0BB46C00D6C389 /* AppIDAppIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAppIdentity.swift; sourceTree = "<group>"; };
+		EF617EB31E0BB46C00D6C389 /* AppIDDeviceIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDDeviceIdentity.swift; sourceTree = "<group>"; };
+		EF617EB41E0BB46C00D6C389 /* AppIDUserIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDUserIdentity.swift; sourceTree = "<group>"; };
+		EF617EB61E0BB46C00D6C389 /* AppIDAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAuthorizationManager.swift; sourceTree = "<group>"; };
+		EF617EB71E0BB46C00D6C389 /* AppIDError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDError.swift; sourceTree = "<group>"; };
+		EF617EB81E0BB46C00D6C389 /* AppIDPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDPreferences.swift; sourceTree = "<group>"; };
+		EF617EB91E0BB46C00D6C389 /* AuthorizationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequest.swift; sourceTree = "<group>"; };
+		EF617EBA1E0BB46C00D6C389 /* AppIDRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequestManager.swift; sourceTree = "<group>"; };
+		EF617EBB1E0BB46C00D6C389 /* BMSSecurityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityConstants.swift; sourceTree = "<group>"; };
+		EF617EC11E0BB46C00D6C389 /* RegistrationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
+		EF617EC21E0BB46C00D6C389 /* RequestOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestOptions.swift; sourceTree = "<group>"; };
+		EF617EC31E0BB46C00D6C389 /* TokenManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		EF617EC41E0BB46C00D6C389 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EFB38FC51E0A7DCA008F8FBA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EFB38FC81E0A7DCA008F8FBA /* AppID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppID.swift; sourceTree = "<group>"; };
-		EFB38FCA1E0A7DCA008F8FBA /* MCAAppIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCAAppIdentity.swift; sourceTree = "<group>"; };
-		EFB38FCB1E0A7DCA008F8FBA /* MCADeviceIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCADeviceIdentity.swift; sourceTree = "<group>"; };
-		EFB38FCC1E0A7DCA008F8FBA /* MCAUserIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCAUserIdentity.swift; sourceTree = "<group>"; };
-		EFB38FCE1E0A7DCA008F8FBA /* AppIDAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAuthorizationManager.swift; sourceTree = "<group>"; };
-		EFB38FCF1E0A7DCA008F8FBA /* AppIDError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDError.swift; sourceTree = "<group>"; };
-		EFB38FD01E0A7DCA008F8FBA /* AuthorizationManagerPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManagerPreferences.swift; sourceTree = "<group>"; };
-		EFB38FD11E0A7DCA008F8FBA /* AuthorizationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequest.swift; sourceTree = "<group>"; };
-		EFB38FD21E0A7DCA008F8FBA /* AuthorizationRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestManager.swift; sourceTree = "<group>"; };
-		EFB38FD31E0A7DCA008F8FBA /* BMSSecurityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityConstants.swift; sourceTree = "<group>"; };
-		EFB38FD51E0A7DCA008F8FBA /* SecurityUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityUtils.swift; sourceTree = "<group>"; };
-		EFB38FD81E0A7DCA008F8FBA /* BMSSecurityError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityError.swift; sourceTree = "<group>"; };
-		EFB38FD91E0A7DCA008F8FBA /* RegistrationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
-		EFB38FDA1E0A7DCA008F8FBA /* RequestOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestOptions.swift; sourceTree = "<group>"; };
-		EFB38FDB1E0A7DCA008F8FBA /* TokenManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
-		EFB38FDC1E0A7DCA008F8FBA /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EFB38FDE1E0A7DCA008F8FBA /* AppID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppID.h; sourceTree = "<group>"; };
 		EFE8DCA91DFEC0820039A5F2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EFE8DCAA1DFEC0820039A5F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -118,86 +118,62 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		EFB38FC41E0A7DCA008F8FBA /* Source */ = {
+		EF617EAE1E0BB46C00D6C389 /* AppID */ = {
 			isa = PBXGroup;
 			children = (
-				EFB38FC51E0A7DCA008F8FBA /* Info.plist */,
-				EFB38FC61E0A7DCA008F8FBA /* mca */,
-				EFB38FDD1E0A7DCA008F8FBA /* Resources */,
+				EF617EAF1E0BB46C00D6C389 /* api */,
+				EF617EB51E0BB46C00D6C389 /* internal */,
 			);
-			name = Source;
-			path = ../../Source;
+			path = AppID;
 			sourceTree = "<group>";
 		};
-		EFB38FC61E0A7DCA008F8FBA /* mca */ = {
+		EF617EAF1E0BB46C00D6C389 /* api */ = {
 			isa = PBXGroup;
 			children = (
-				EFB38FC71E0A7DCA008F8FBA /* api */,
-				EFB38FCD1E0A7DCA008F8FBA /* internal */,
-			);
-			path = mca;
-			sourceTree = "<group>";
-		};
-		EFB38FC71E0A7DCA008F8FBA /* api */ = {
-			isa = PBXGroup;
-			children = (
-				EFB38FC81E0A7DCA008F8FBA /* AppID.swift */,
-				EFB38FC91E0A7DCA008F8FBA /* identity */,
+				EF617EB01E0BB46C00D6C389 /* AppID.swift */,
+				EF617EB11E0BB46C00D6C389 /* identity */,
 			);
 			path = api;
 			sourceTree = "<group>";
 		};
-		EFB38FC91E0A7DCA008F8FBA /* identity */ = {
+		EF617EB11E0BB46C00D6C389 /* identity */ = {
 			isa = PBXGroup;
 			children = (
-				EFB38FCA1E0A7DCA008F8FBA /* MCAAppIdentity.swift */,
-				EFB38FCB1E0A7DCA008F8FBA /* MCADeviceIdentity.swift */,
-				EFB38FCC1E0A7DCA008F8FBA /* MCAUserIdentity.swift */,
+				EF617EB21E0BB46C00D6C389 /* AppIDAppIdentity.swift */,
+				EF617EB31E0BB46C00D6C389 /* AppIDDeviceIdentity.swift */,
+				EF617EB41E0BB46C00D6C389 /* AppIDUserIdentity.swift */,
 			);
 			path = identity;
 			sourceTree = "<group>";
 		};
-		EFB38FCD1E0A7DCA008F8FBA /* internal */ = {
+		EF617EB51E0BB46C00D6C389 /* internal */ = {
 			isa = PBXGroup;
 			children = (
-				EFB38FCE1E0A7DCA008F8FBA /* AppIDAuthorizationManager.swift */,
-				EFB38FCF1E0A7DCA008F8FBA /* AppIDError.swift */,
-				EFB38FD01E0A7DCA008F8FBA /* AuthorizationManagerPreferences.swift */,
-				EFB38FD11E0A7DCA008F8FBA /* AuthorizationRequest.swift */,
-				EFB38FD21E0A7DCA008F8FBA /* AuthorizationRequestManager.swift */,
-				EFB38FD31E0A7DCA008F8FBA /* BMSSecurityConstants.swift */,
-				EFB38FD41E0A7DCA008F8FBA /* certificate */,
-				EFB38FD61E0A7DCA008F8FBA /* challengehandlers */,
-				EFB38FD71E0A7DCA008F8FBA /* Encryption */,
-				EFB38FD91E0A7DCA008F8FBA /* RegistrationManager.swift */,
-				EFB38FDA1E0A7DCA008F8FBA /* RequestOptions.swift */,
-				EFB38FDB1E0A7DCA008F8FBA /* TokenManager.swift */,
-				EFB38FDC1E0A7DCA008F8FBA /* Utils.swift */,
+				EF58A0061E0BB7C1006C1A3E /* BMSSecurityError.swift */,
+				EF58A0071E0BB7C1006C1A3E /* SecurityUtils.swift */,
+				EF617EB61E0BB46C00D6C389 /* AppIDAuthorizationManager.swift */,
+				EF617EB71E0BB46C00D6C389 /* AppIDError.swift */,
+				EF617EB81E0BB46C00D6C389 /* AppIDPreferences.swift */,
+				EF617EB91E0BB46C00D6C389 /* AuthorizationRequest.swift */,
+				EF617EBA1E0BB46C00D6C389 /* AppIDRequestManager.swift */,
+				EF617EBB1E0BB46C00D6C389 /* BMSSecurityConstants.swift */,
+				EF617EC11E0BB46C00D6C389 /* RegistrationManager.swift */,
+				EF617EC21E0BB46C00D6C389 /* RequestOptions.swift */,
+				EF617EC31E0BB46C00D6C389 /* TokenManager.swift */,
+				EF617EC41E0BB46C00D6C389 /* Utils.swift */,
 			);
 			path = internal;
 			sourceTree = "<group>";
 		};
-		EFB38FD41E0A7DCA008F8FBA /* certificate */ = {
+		EFB38FC41E0A7DCA008F8FBA /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				EFB38FD51E0A7DCA008F8FBA /* SecurityUtils.swift */,
+				EF617EAE1E0BB46C00D6C389 /* AppID */,
+				EFB38FC51E0A7DCA008F8FBA /* Info.plist */,
+				EFB38FDD1E0A7DCA008F8FBA /* Resources */,
 			);
-			path = certificate;
-			sourceTree = "<group>";
-		};
-		EFB38FD61E0A7DCA008F8FBA /* challengehandlers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = challengehandlers;
-			sourceTree = "<group>";
-		};
-		EFB38FD71E0A7DCA008F8FBA /* Encryption */ = {
-			isa = PBXGroup;
-			children = (
-				EFB38FD81E0A7DCA008F8FBA /* BMSSecurityError.swift */,
-			);
-			path = Encryption;
+			name = Source;
+			path = ../../Source;
 			sourceTree = "<group>";
 		};
 		EFB38FDD1E0A7DCA008F8FBA /* Resources */ = {
@@ -354,24 +330,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFB38FEE1E0A7DCA008F8FBA /* TokenManager.swift in Sources */,
-				EFB38FEC1E0A7DCA008F8FBA /* RegistrationManager.swift in Sources */,
-				EFB38FE31E0A7DCA008F8FBA /* MCAUserIdentity.swift in Sources */,
-				EFB38FE81E0A7DCA008F8FBA /* AuthorizationRequestManager.swift in Sources */,
-				EFB38FE41E0A7DCA008F8FBA /* AppIDAuthorizationManager.swift in Sources */,
-				EFB38FED1E0A7DCA008F8FBA /* RequestOptions.swift in Sources */,
-				EFB38FE01E0A7DCA008F8FBA /* AppID.swift in Sources */,
-				EFB38FE51E0A7DCA008F8FBA /* AppIDError.swift in Sources */,
-				EFB38FEB1E0A7DCA008F8FBA /* BMSSecurityError.swift in Sources */,
-				EFB38FE61E0A7DCA008F8FBA /* AuthorizationManagerPreferences.swift in Sources */,
-				EFB38FE21E0A7DCA008F8FBA /* MCADeviceIdentity.swift in Sources */,
-				EFB38FEF1E0A7DCA008F8FBA /* Utils.swift in Sources */,
+				EF617ED31E0BB46C00D6C389 /* TokenManager.swift in Sources */,
+				EF58A0091E0BB7C1006C1A3E /* SecurityUtils.swift in Sources */,
+				EF617ED11E0BB46C00D6C389 /* RegistrationManager.swift in Sources */,
+				EF617EC81E0BB46C00D6C389 /* AppIDUserIdentity.swift in Sources */,
+				EF617ECD1E0BB46C00D6C389 /* AppIDRequestManager.swift in Sources */,
+				EF617EC91E0BB46C00D6C389 /* AppIDAuthorizationManager.swift in Sources */,
+				EF617ED21E0BB46C00D6C389 /* RequestOptions.swift in Sources */,
+				EF617EC51E0BB46C00D6C389 /* AppID.swift in Sources */,
+				EF617ECA1E0BB46C00D6C389 /* AppIDError.swift in Sources */,
+				EF617ECB1E0BB46C00D6C389 /* AppIDPreferences.swift in Sources */,
+				EF617EC71E0BB46C00D6C389 /* AppIDDeviceIdentity.swift in Sources */,
+				EF617ED41E0BB46C00D6C389 /* Utils.swift in Sources */,
 				EFE8DCE51DFEC0820039A5F2 /* ViewController.swift in Sources */,
-				EFB38FE91E0A7DCA008F8FBA /* BMSSecurityConstants.swift in Sources */,
+				EF617ECE1E0BB46C00D6C389 /* BMSSecurityConstants.swift in Sources */,
 				EFE8DCCE1DFEC0820039A5F2 /* AppDelegate.swift in Sources */,
-				EFB38FE11E0A7DCA008F8FBA /* MCAAppIdentity.swift in Sources */,
-				EFB38FEA1E0A7DCA008F8FBA /* SecurityUtils.swift in Sources */,
-				EFB38FE71E0A7DCA008F8FBA /* AuthorizationRequest.swift in Sources */,
+				EF617EC61E0BB46C00D6C389 /* AppIDAppIdentity.swift in Sources */,
+				EF58A0081E0BB7C1006C1A3E /* BMSSecurityError.swift in Sources */,
+				EF617ECC1E0BB46C00D6C389 /* AuthorizationRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -494,7 +470,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SampleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = oded.SampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = SampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/odedb/appid-clientsdk-swift/Source/Resources/AppID.h";
@@ -513,7 +489,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SampleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = oded.SampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = SampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/odedb/appid-clientsdk-swift/Source/Resources/AppID.h";

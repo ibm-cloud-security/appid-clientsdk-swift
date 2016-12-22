@@ -17,9 +17,9 @@ import BMSAnalyticsAPI
 
 #if swift(>=3.0)
     
-    // MARK: - AuthorizationRequestManager (Swift 3)
+    // MARK: - AppIDRequestManager (Swift 3)
     
-    public class AuthorizationRequestManager {
+    public class AppIDRequestManager {
         
         //MARK constants
         //MARK vars (private)
@@ -30,7 +30,7 @@ import BMSAnalyticsAPI
         
         public static var overrideServerHost: String?
         
-        private static let logger = Logger.logger(name: BMSSecurityConstants.authorizationRequestManagerLoggerName)
+        private static let logger = Logger.logger(name: BMSSecurityConstants.AppIDRequestManagerLoggerName)
         
         internal var defaultCompletionHandler : BMSCompletionHandler
         
@@ -40,12 +40,12 @@ import BMSAnalyticsAPI
                 defaultCompletionHandler = handler
             } else {
                 defaultCompletionHandler = {(response: Response?, error: Error?) in
-                    AuthorizationRequestManager.logger.debug(message: "ResponseListener is not specified. Defaulting to empty listener.")
+                    AppIDRequestManager.logger.debug(message: "ResponseListener is not specified. Defaulting to empty listener.")
                 }
                 
             }
             
-            AuthorizationRequestManager.logger.debug(message: "AuthorizationRequestAgent is initialized.")
+            AppIDRequestManager.logger.debug(message: "AppIDRequestManager is initialized.")
         }
         
         internal func send(_ path:String , options:RequestOptions) throws {
@@ -72,7 +72,7 @@ import BMSAnalyticsAPI
             
             requestPath = Utils.concatenateUrls(rootUrl, path: path)
             
-            let request = AuthorizationRequest(url:requestPath!, method:self.requestOptions!.requestMethod)
+            let request = AppIDRequest(url:requestPath!, method:self.requestOptions!.requestMethod)
             
             request.timeout = requestOptions!.timeout != 0 ? requestOptions!.timeout : BMSClient.sharedInstance.requestTimeout
             

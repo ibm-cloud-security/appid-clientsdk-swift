@@ -10,12 +10,11 @@ import Foundation
 import BMSCore
 internal class TokenManager {
     
-    internal var preferences:AuthorizationManagerPreferences
-    internal var sessionId:String
-    internal init(preferences:AuthorizationManagerPreferences, sessionId:String)
+    internal var preferences:AppIDPreferences
+    
+    internal init(preferences:AppIDPreferences)
     {
         self.preferences = preferences
-        self.sessionId = sessionId
     }
 
     
@@ -24,7 +23,6 @@ internal class TokenManager {
         do {
             options.parameters = createTokenRequestParams(grantCode, tenantId: tenantId)
             options.headers =  createTokenRequestHeaders(tenantId: tenantId, clientId: clientId)
-            addSessionIdHeader(&options.headers)
             options.requestMethod = HttpMethod.POST
             let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
                 if error == nil {
@@ -43,8 +41,8 @@ internal class TokenManager {
                     callback?(response, AppIDError.TokenRequestError(msg: error?.localizedDescription))
                 }
             }
-            let authorizationRequestManager:AuthorizationRequestManager = AuthorizationRequestManager(completionHandler: internalCallback)
-            try authorizationRequestManager.send(getTokenUrl(), options: options )
+            let appIDRequestManager:AppIDRequestManager = AppIDRequestManager(completionHandler: internalCallback)
+            try appIDRequestManager.send(getTokenUrl(), options: options )
         } catch (let err){
             callback?(nil, AppIDError.TokenRequestError(msg: err.localizedDescription))
         }
@@ -52,7 +50,7 @@ internal class TokenManager {
     }
     private func createTokenRequestHeaders(tenantId:String, clientId:String)  -> [String:String]{
         var headers = [String:String]()
-        let username = tenantId + "-" + clientId
+        let username = clientId
         let signed = try? SecurityUtils.signString(username, keyIds: (BMSSecurityConstants.publicKeyIdentifier, BMSSecurityConstants.privateKeyIdentifier), keySize: 512)
         headers[BMSSecurityConstants.AUTHORIZATION_HEADER] = BMSSecurityConstants.BASIC_AUTHORIZATION_STRING + " " + (username + ":" + signed!).data(using: .utf8)!.base64EncodedString()
         return headers
@@ -101,17 +99,12 @@ internal class TokenManager {
         }
         return nil
     }
-
-    private func addSessionIdHeader(_ headers:inout [String:String]) {
-        headers[BMSSecurityConstants.X_WL_SESSION_HEADER_NAME] =  self.sessionId
-    }
-    
-    
     
     private func getTokenUrl() -> String {
         let tokenUrl = AppID.sharedInstance.serverUrl
             + "/"
             + BMSSecurityConstants.V3_AUTH_PATH
+            + AppID.sharedInstance.tenantId!
         return tokenUrl + BMSSecurityConstants.tokenEndPoint
     }
 

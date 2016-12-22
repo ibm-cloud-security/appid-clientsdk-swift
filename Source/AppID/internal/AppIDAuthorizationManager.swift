@@ -26,12 +26,12 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
     
     public static let CONTENT_TYPE = "Content-Type"
     
-    private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "MCAAuthorizationManager")
+    private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationManager")
     
-    internal var preferences:AuthorizationManagerPreferences!
+    internal var preferences:AppIDPreferences!
     
     //lock constant
-    private var lockQueue = DispatchQueue(label: "MCAAuthorizationManagerQueue", attributes: DispatchQueue.Attributes.concurrent)
+    private var lockQueue = DispatchQueue(label: "AppIDAuthorizationManagerQueue", attributes: DispatchQueue.Attributes.concurrent)
     
    
     
@@ -52,7 +52,7 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
      - parameter tenantId:           The tenant id of the MCA service instance
      - parameter bluemixRegion:      The region where your MCA service instance is hosted. Use one of the `BMSClient.REGION` constants.
      */
-    public  init(preferences:AuthorizationManagerPreferences) {
+    public  init(preferences:AppIDPreferences) {
         self.preferences = preferences
     }
     
@@ -77,7 +77,7 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
     public var userIdentity:UserIdentity? {
         get{
             let userIdentityJson = preferences.userIdentity.getAsMap()
-            return MCAUserIdentity(map: userIdentityJson)
+            return AppIDUserIdentity(map: userIdentityJson)
         }
     }
     
@@ -87,7 +87,7 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
     public var deviceIdentity:DeviceIdentity {
         get{
             let deviceIdentityJson = preferences.deviceIdentity.getAsMap()
-            return MCADeviceIdentity(map: deviceIdentityJson)
+            return AppIDDeviceIdentity(map: deviceIdentityJson)
         }
     }
     
@@ -97,7 +97,7 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
     public var appIdentity:AppIdentity {
         get{
             let appIdentityJson = preferences.appIdentity.getAsMap()
-            return MCAAppIdentity(map: appIdentityJson)
+            return AppIDAppIdentity(map: appIdentityJson)
         }
     }
     

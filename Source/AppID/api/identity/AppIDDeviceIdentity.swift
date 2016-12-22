@@ -17,7 +17,7 @@ import BMSCore
 /// This class represents the base device identity class, with default methods and keys
 
 #if swift (>=3.0)
-public class MCADeviceIdentity : BaseDeviceIdentity {
+public class AppIDDeviceIdentity : BaseDeviceIdentity {
     
     public override init() {
         var dict:[String : String] = [:]

@@ -13,46 +13,63 @@
 import Foundation
 import BMSCore
 
-/// This class represents the base app identity class, with default methods and keys
+/// This class represents the base user identity class, with default methods and keys
 #if swift (>=3.0)
-public class MCAAppIdentity : BaseAppIdentity{
-    
+public class AppIDUserIdentity : BaseUserIdentity{
+    public var json:[String:Any]?
+   
     public override init() {
+        super.init()
         
-        let appInfo = Utils.getApplicationDetails()
-        let dict:[String : String] = [
-            BaseAppIdentity.Key.ID : appInfo.name,
-            BaseAppIdentity.Key.version : appInfo.version
-        ]
-        super.init(map: dict as [String : Any]?)
     }
     
     public convenience init(map: [String:AnyObject]?) {
         self.init(map: map as [String:Any]?)
+        
     }
     
     public override init(map: [String : Any]?) {
         super.init(map: map)
+        json = map
     }
     
-}
+    
+    public var AppIDID: String? {
+        get {
+            return json?[BaseUserIdentity.Key.ID] as? String
+        }
+    }
+    
+    public var AppIDauthorizedBy: String? {
+        get {
+            return json?[BaseUserIdentity.Key.authorizedBy] as? String
+        }
+    }
+    
+    public var AppIDdisplayName: String? {
+        get {
+            return json?[BaseUserIdentity.Key.displayName] as? String
+        }
+    }
+
+    
+    public var picUrl : String? {
+        get {
+            return (((json?["attributes"] as? [String:Any])?["picture"] as? [String:Any])?["data"] as? [String:Any])?["url"] as? String
+        }
+    }
+ }
 #else
-    public class MCAAppIdentity : BaseAppIdentity{
+public class MCAUserIdentity : BaseUserIdentity{
     
     public override init() {
-    
-        let appInfo = Utils.getApplicationDetails()
-        let dict:[String : String] = [
-            BaseAppIdentity.Key.ID : appInfo.name,
-            BaseAppIdentity.Key.version : appInfo.version
-        ]
-        super.init(map: dict as [String : AnyObject]?)
+        super.init()
     }
     
     public override init(map: [String : AnyObject]?) {
         super.init(map: map)
     }
-    
 }
-
+    
 #endif
+

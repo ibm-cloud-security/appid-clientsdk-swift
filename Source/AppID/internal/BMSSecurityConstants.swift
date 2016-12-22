@@ -77,9 +77,11 @@ internal class BMSSecurityConstants {
    
     
     internal static let nameAndVer = Utils.getApplicationDetails()
-    internal static var authorizationProcessManagerLoggerName = Logger.bmsLoggerPrefix + "AuthorizationProcessManager"
-    internal static var authorizationRequestManagerLoggerName = Logger.bmsLoggerPrefix + "AuthorizationRequestManager"
     
+    internal static var AppIDRequestManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDRequestManager"
+    internal static var RegistrationManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDRegistrationManager"
+    internal static var AppIDLoggerName = Logger.bmsLoggerPrefix + "AppID"
+
     internal static var tokenEndPoint = "token"
     internal static var clientsEndPoint = "clients"
     
@@ -95,8 +97,6 @@ internal class BMSSecurityConstants {
     internal static var JSON_EXP_KEY = "exp"
     internal static var JSON_JPK_KEY = "jpk"
     
-    internal static var X_WL_SESSION_HEADER_NAME = "X-WL-Session"
-    internal static var X_WL_AUTHENTICATE_HEADER_NAME = "X-WL-Authenticate"
     
     internal static var JSON_RESPONSE_TYPE_KEY = "response_type"
     internal static var JSON_IMF_USER_KEY = "imf.user"
@@ -128,7 +128,6 @@ internal class BMSSecurityConstants {
 
     
     //JSON keys and values
-    internal static let JSON_SOFTWARE_STATEMENT_KEY = "software_statement"
     internal static let JSON_KEYS_KEY = "keys"
     internal static let JSON_JWKS_KEY = "jwks"
     internal static let JSON_CLIENT_ID_KEY = "clientId"

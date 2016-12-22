@@ -10,24 +10,20 @@ import Foundation
 import BMSCore
 internal class RegistrationManager {
     
-    internal var sessionId:String = ""
-    private var preferences:AuthorizationManagerPreferences
-    internal static let logger = Logger.logger(name: BMSSecurityConstants.authorizationProcessManagerLoggerName)
+    private var preferences:AppIDPreferences
+    internal static let logger = Logger.logger(name: BMSSecurityConstants.RegistrationManagerLoggerName)
     
     
-    internal init(preferences:AuthorizationManagerPreferences)
+    internal init(preferences:AppIDPreferences)
     {
         self.preferences = preferences
         self.preferences.persistencePolicy.set(PersistencePolicy.never, shouldUpdateTokens: false);
-        //generate new random session id
-        sessionId = UUID().uuidString
     }
     
     internal func registerDevice(callback :@escaping BMSCompletionHandler) throws {
         preferences.clientId.clear()
         let options:RequestOptions = RequestOptions()
         options.json = try createRegistrationParams()
-        options.headers = createRegistrationHeaders()
         options.requestMethod = HttpMethod.POST
         
         let internalCallBack:BMSCompletionHandler = {(response: Response?, error: Error?) in
@@ -47,9 +43,9 @@ internal class RegistrationManager {
                 callback(response, error);
             }
         }
-        let authorizationRequestManager:AuthorizationRequestManager = AuthorizationRequestManager(completionHandler: internalCallBack)
+        let appIDRequestManager:AppIDRequestManager = AppIDRequestManager(completionHandler: internalCallBack)
         do {
-            try  authorizationRequestManager.send(getRegistrationUrl(), options: options )
+            try  appIDRequestManager.send(getRegistrationUrl(), options: options )
         } catch {
             callback(nil, error);
         }
@@ -65,12 +61,19 @@ internal class RegistrationManager {
     }
     
     
-    
+    /*
+ 
+
+ 
+ 
+ 
+ 
+ */
     private func createRegistrationParams() throws -> [String:Any]{
         do {
              try SecurityUtils.generateKeyPair(512, publicTag: BMSSecurityConstants.publicKeyIdentifier, privateTag: BMSSecurityConstants.privateKeyIdentifier)
-            let deviceIdentity = MCADeviceIdentity()
-            let appIdentity = MCAAppIdentity()
+            let deviceIdentity = AppIDDeviceIdentity()
+            let appIdentity = AppIDAppIdentity()
             var params = [String : Any]()
             params[BMSSecurityConstants.JSON_REDIRECT_URIS_KEY] = [BMSSecurityConstants.REDIRECT_URI_VALUE]
             params[BMSSecurityConstants.JSON_TOKEN_ENDPOINT_AUTH_METHOD_KEY] = BMSSecurityConstants.CLIENT_SECRET_BASIC
@@ -92,22 +95,12 @@ internal class RegistrationManager {
             ]
             
             params[BMSSecurityConstants.JSON_JWKS_KEY] =  keys
-            let strPayloadJSON = try Utils.JSONStringify(params as AnyObject)
-            let strPayloadJSONBase64 = Utils.base64StringFromData(Data(strPayloadJSON.utf8), isSafeUrl: true)
-            let signature = try SecurityUtils.signPayload(params, keyIds: (BMSSecurityConstants.publicKeyIdentifier, BMSSecurityConstants.privateKeyIdentifier), keySize: 512)
-            params[BMSSecurityConstants.JSON_SOFTWARE_STATEMENT_KEY] = strPayloadJSONBase64 + "." + signature
             return params
         } catch {
             throw AuthorizationProcessManagerError.failedToCreateRegistrationParams
         }
     }
     
-    private func createRegistrationHeaders() -> [String:String]{
-        var headers = [String:String]()
-        addSessionIdHeader(&headers)
-        
-        return headers
-    }
     
     
     private func saveClientId(_ response:Response?) throws {
@@ -121,10 +114,6 @@ internal class RegistrationManager {
             throw AuthorizationProcessManagerError.couldNotExtractClientId
         }
         AppID.logger.debug(message: "client id successfully saved")
-    }
-    
-    private func addSessionIdHeader(_ headers:inout [String:String]) {
-        headers[BMSSecurityConstants.X_WL_SESSION_HEADER_NAME] =  self.sessionId
     }
     
     

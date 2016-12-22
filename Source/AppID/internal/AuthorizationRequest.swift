@@ -17,10 +17,10 @@ import BMSCore
 
 #if swift(>=3.0)
     
-// MARK: - AuthorizationRequest (Swift 3)
+// MARK: - AppIDRequest (Swift 3)
 
-//AuthorizationRequest is used internally to send authorization requests.
-internal class AuthorizationRequest : BaseRequest {
+//AppID is used internally to send requests to AppID.
+internal class AppIDRequest : Request {
     
     internal func send(_ completionHandler: BMSCompletionHandler?) {
         super.send(completionHandler: completionHandler)
@@ -49,7 +49,7 @@ internal class AuthorizationRequest : BaseRequest {
     
     
     internal func sendJson( json : [String : Any], callback : BMSCompletionHandler?) {
-        headers[BaseRequest.contentType] = "application/json"
+        headers[Request.contentType] = "application/json"
         let jsonToSend = try? urlEncode(Utils.JSONStringify(json as AnyObject)).data(using: .utf8)
         send(requestBody: jsonToSend != nil ? jsonToSend! : Data(), completionHandler: callback)
     }
@@ -63,7 +63,7 @@ internal class AuthorizationRequest : BaseRequest {
      * @param listener       The listener whose onSuccess or onFailure methods will be called when this request finishes.
      */
     internal func sendWithCompletionHandler(_ formParamaters : [String : String], callback: BMSCompletionHandler?) {
-        headers[BaseRequest.contentType] = "application/x-www-form-urlencoded"
+        headers[Request.contentType] = "application/x-www-form-urlencoded"
         var body = ""
         var i = 0
         //creating body params

@@ -18,7 +18,7 @@ public class AppID {
     var authorizationManager:AppIDAuthorizationManager
     var registrationManager:RegistrationManager
     var tokenManager:TokenManager
-    var preferences:AuthorizationManagerPreferences
+    var preferences:AppIDPreferences
     var tenantId:String?
     var bluemixRegion:String?
     
@@ -31,23 +31,23 @@ public class AppID {
     
     public static let CONTENT_TYPE = "Content-Type"
     public static let sharedInstance = AppID()
-    internal static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppID")
+    internal static let logger =  Logger.logger(name: BMSSecurityConstants.AppIDLoggerName)
     
     private init() {
         self.tenantId = BMSClient.sharedInstance.bluemixAppGUID
         self.bluemixRegion = BMSClient.sharedInstance.bluemixRegion
-        self.preferences = AuthorizationManagerPreferences()
+        self.preferences = AppIDPreferences()
         
         if preferences.deviceIdentity.get() == nil {
-            preferences.deviceIdentity.set(MCADeviceIdentity().jsonData as [String:Any])
+            preferences.deviceIdentity.set(AppIDDeviceIdentity().jsonData as [String:Any])
         }
         if preferences.appIdentity.get() == nil {
-            preferences.appIdentity.set(MCAAppIdentity().jsonData as [String:Any])
+            preferences.appIdentity.set(AppIDAppIdentity().jsonData as [String:Any])
         }
         
         authorizationManager = AppIDAuthorizationManager(preferences: preferences)
         registrationManager = RegistrationManager(preferences: preferences)
-        tokenManager = TokenManager(preferences: preferences, sessionId: registrationManager.sessionId)
+        tokenManager = TokenManager(preferences: preferences)
         BMSClient.sharedInstance.authorizationManager = authorizationManager
         
     }
@@ -91,11 +91,27 @@ public class AppID {
         }
     }
     
-    public func tokenRequest(code: String?, errMsg:String?) {
-        loginView?.dismiss(animated: true, completion: { () -> Void in
-        self.tokenRequest?(code, errMsg)
-        })
+    func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+        func tokenRequest(code: String?, errMsg:String?) {
+            loginView?.dismiss(animated: true, completion: { () -> Void in
+                self.tokenRequest?(code, errMsg)
+            })
+        }
+        
+        let urlString = url.absoluteString
+        if urlString.hasPrefix(BMSSecurityConstants.REDIRECT_URI_VALUE) == true {
+            //gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
+            let code = url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(BMSSecurityConstants.JSON_CODE_KEY)}).first?.components(separatedBy: "=")[1]
+            if(code == nil){
+                tokenRequest(code: code, errMsg: "Failed to extract grant code")
+            } else {
+                tokenRequest(code: code, errMsg: nil)
+            }
+            return true
+        }
+        return false
     }
+    
     
     public func login(onTokenCompletion : BMSCompletionHandler?) {
         func showLoginWebView() -> Void {
@@ -125,7 +141,7 @@ public class AppID {
                     }
                     self.tokenManager.invokeTokenRequest(unWrappedCode, tenantId: unwrappedTenant, clientId: self.preferences.clientId.get()!, callback : onTokenCompletion)
                 }
-        
+                
                 DispatchQueue.main.async {
                     mainView?.present(self.loginView!, animated: true, completion: nil)
                 };

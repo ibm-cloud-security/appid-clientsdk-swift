@@ -112,7 +112,7 @@ internal class TokenManager {
             + "/"
             + BMSSecurityConstants.V3_AUTH_PATH
             + AppID.sharedInstance.tenantId!
-        return tokenUrl + BMSSecurityConstants.tokenEndPoint
+        return tokenUrl + "/" + BMSSecurityConstants.tokenEndPoint
     }
 
     

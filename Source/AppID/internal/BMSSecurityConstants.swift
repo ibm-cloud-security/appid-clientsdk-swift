@@ -85,7 +85,7 @@ internal class BMSSecurityConstants {
     internal static var tokenEndPoint = "token"
     internal static var clientsEndPoint = "clients"
     
-    internal static var REDIRECT_URI_VALUE = "redirect://" + Utils.getApplicationDetails().name + "/mobile/callback"
+    internal static var REDIRECT_URI_VALUE = Utils.getApplicationDetails().name + "://mobile/callback"
     internal static var authorizationEndPoint = "authorization"
     internal static var client_id_String = "client_id"
     

@@ -99,7 +99,7 @@ public class AppID {
         }
         
         let urlString = url.absoluteString
-        if urlString.hasPrefix(BMSSecurityConstants.REDIRECT_URI_VALUE) == true {
+        if urlString.lowercased().hasPrefix(BMSSecurityConstants.REDIRECT_URI_VALUE.lowercased()) == true {
             //gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
             let code = url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(BMSSecurityConstants.JSON_CODE_KEY)}).first?.components(separatedBy: "=")[1]
             if(code == nil){

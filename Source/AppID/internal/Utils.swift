@@ -90,11 +90,11 @@ public class Utils {
             do{
                 let data = try JSONSerialization.data(withJSONObject: value, options: options)
                 guard let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String else {
-                    throw JsonUtilsErrors.jsonIsMalformed
+                    throw AppIDError.jsonUtilsError(msg: "Json is malformed")
                 }
                 return string
             } catch {
-                throw JsonUtilsErrors.jsonIsMalformed
+                throw AppIDError.jsonUtilsError(msg: "Json is malformed")
             }
         }
         return ""
@@ -103,7 +103,7 @@ public class Utils {
     public static func parseJsonStringtoDictionary(_ jsonString:String) throws ->[String:Any] {
         do {
             guard let data = jsonString.data(using: String.Encoding.utf8), let responseJson =  try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] else {
-                throw JsonUtilsErrors.jsonIsMalformed
+                throw AppIDError.jsonUtilsError(msg: "Json is malformed")
             }
             return responseJson as [String:Any]
         }

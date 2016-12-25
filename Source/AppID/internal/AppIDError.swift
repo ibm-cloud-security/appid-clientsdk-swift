@@ -9,8 +9,10 @@
 import Foundation
 
 enum AppIDError : Error {
-    case AuthenticationError(msg : String?)
-    case RegistrationError(msg : String?)
-    case TokenRequestError(msg : String?)
+    case authenticationError(msg : String?)
+    case registrationError(msg : String?)
+    case tokenRequestError(msg : String?)
+    case jsonUtilsError(msg: String?)
+    case generalError
     
 }

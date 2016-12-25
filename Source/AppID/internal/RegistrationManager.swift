@@ -17,7 +17,7 @@ internal class RegistrationManager {
     internal init(preferences:AppIDPreferences)
     {
         self.preferences = preferences
-        self.preferences.persistencePolicy.set(PersistencePolicy.never, shouldUpdateTokens: false);
+        _ = self.preferences.persistencePolicy.set(PersistencePolicy.never, shouldUpdateTokens: false);
     }
     
     internal func registerDevice(callback :@escaping BMSCompletionHandler) throws {
@@ -97,7 +97,7 @@ internal class RegistrationManager {
             params[BMSSecurityConstants.JSON_JWKS_KEY] =  keys
             return params
         } catch {
-            throw AuthorizationProcessManagerError.failedToCreateRegistrationParams
+            throw AppIDError.registrationError(msg: "Failed to create registration params")
         }
     }
     
@@ -105,13 +105,13 @@ internal class RegistrationManager {
     
     private func saveClientId(_ response:Response?) throws {
         guard let responseBody = response?.responseText, let data = responseBody.data(using: String.Encoding.utf8), let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] else {
-            throw JsonUtilsErrors.jsonIsMalformed
+            throw AppIDError.jsonUtilsError(msg: "Json is malformed")
         }
         //save the clientId
         if let id = jsonResponse[caseInsensitive : BMSSecurityConstants.client_id_String] as? String {
             preferences.clientId.set(id)
         } else {
-            throw AuthorizationProcessManagerError.couldNotExtractClientId
+            throw AppIDError.registrationError(msg: "Could not extract client id from response")
         }
         AppID.logger.debug(message: "client id successfully saved")
     }

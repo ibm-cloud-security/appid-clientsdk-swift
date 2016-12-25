@@ -29,16 +29,16 @@ internal class SecurityUtils {
         let status = SecItemCopyMatching(keyAttr as CFDictionary, &result)
         
         guard status == errSecSuccess else {
-            throw BMSSecurityError.generalError
+            throw AppIDError.generalError
         }
         return result as! Data
         
     }
     
-    internal static func generateKeyPair(_ keySize:Int, publicTag:String, privateTag:String)throws -> (publicKey: SecKey, privateKey: SecKey) {
+    internal static func generateKeyPair(_ keySize:Int, publicTag:String, privateTag:String) throws {
         //make sure keys are deleted
-        SecurityUtils.deleteKeyFromKeyChain(publicTag)
-        SecurityUtils.deleteKeyFromKeyChain(privateTag)
+        _ = SecurityUtils.deleteKeyFromKeyChain(publicTag)
+        _ = SecurityUtils.deleteKeyFromKeyChain(privateTag)
         
         var status:OSStatus = noErr
         var privateKey:SecKey?
@@ -65,9 +65,7 @@ internal class SecurityUtils {
         
         status = SecKeyGeneratePair(keyPairAttr as CFDictionary, &publicKey, &privateKey)
         if (status != errSecSuccess) {
-            throw BMSSecurityError.generalError
-        } else {
-            return (publicKey!, privateKey!)
+            throw AppIDError.generalError
         }
     }
     
@@ -91,7 +89,7 @@ internal class SecurityUtils {
         let status = SecItemCopyMatching(keyAttr as CFDictionary, &result)
         
         guard status == errSecSuccess else {
-            throw BMSSecurityError.generalError
+            throw AppIDError.generalError
         }
         
         return result as! SecKey
@@ -121,10 +119,10 @@ internal class SecurityUtils {
     public static func getJWKSHeader() throws ->[String:Any] {
         
         let publicKey = try? SecurityUtils.getKeyBitsFromKeyChain(BMSSecurityConstants.publicKeyIdentifier)
-        let base64Options = NSData.Base64EncodingOptions(rawValue:0)
+    
         
         guard let unWrappedPublicKey = publicKey, let pkModulus : Data = getPublicKeyMod(unWrappedPublicKey), let pkExponent : Data = getPublicKeyExp(unWrappedPublicKey) else {
-            throw BMSSecurityError.generalError
+            throw AppIDError.generalError
         }
         
         let mod:String = Utils.base64StringFromData(pkModulus, isSafeUrl: true)
@@ -144,7 +142,7 @@ internal class SecurityUtils {
     private static func getPublicKeyMod(_ publicKeyBits: Data) -> Data? {
         var iterator : Int = 0
         iterator += 1 // TYPE - bit stream - mod + exp
-        derEncodingGetSizeFrom(publicKeyBits, at:&iterator) // Total size
+        _ = derEncodingGetSizeFrom(publicKeyBits, at:&iterator) // Total size
         
         iterator += 1 // TYPE - bit stream mod
         let mod_size : Int = derEncodingGetSizeFrom(publicKeyBits, at:&iterator)
@@ -158,7 +156,7 @@ internal class SecurityUtils {
     private static func getPublicKeyExp(_ publicKeyBits: Data) -> Data? {
         var iterator : Int = 0
         iterator += 1 // TYPE - bit stream - mod + exp
-        derEncodingGetSizeFrom(publicKeyBits, at:&iterator) // Total size
+        _ = derEncodingGetSizeFrom(publicKeyBits, at:&iterator) // Total size
         
         iterator += 1// TYPE - bit stream mod
         let mod_size : Int = derEncodingGetSizeFrom(publicKeyBits, at:&iterator)
@@ -218,7 +216,7 @@ internal class SecurityUtils {
             let privateKeySec = try getKeyPairRefFromKeyChain(ids.publicKey, privateTag: ids.privateKey).privateKey
             
             guard let payloadData : Data = payloadString.data(using: String.Encoding.utf8) else {
-                throw BMSSecurityError.generalError
+                throw AppIDError.generalError
             }
             let signedData = try signData(payloadData, privateKey:privateKeySec)
             
@@ -226,14 +224,14 @@ internal class SecurityUtils {
             return Utils.base64StringFromData(signedData, isSafeUrl: true)
         }
         catch {
-            throw BMSSecurityError.generalError
+            throw AppIDError.generalError
         }
     }
     
     
     private static func signData(_ payload:String, privateKey:SecKey) throws -> Data {
         guard let data:Data = payload.data(using: String.Encoding.utf8) else {
-            throw BMSSecurityError.generalError
+            throw AppIDError.generalError
         }
         do {
             return try SecurityUtils.signData(data, privateKey: privateKey)
@@ -253,7 +251,7 @@ internal class SecurityUtils {
         }
         
         guard let digest:Data = try? doSha256(data), let signedData: NSMutableData = NSMutableData(length: SecKeyGetBlockSize(privateKey))  else {
-            throw BMSSecurityError.generalError
+            throw AppIDError.generalError
         }
         
         var signedDataLength: Int = signedData.length
@@ -266,7 +264,7 @@ internal class SecurityUtils {
                                                 mutableBytes, &signedDataLength)
         
         guard signStatus == errSecSuccess else {
-            throw BMSSecurityError.generalError
+            throw AppIDError.generalError
         }
         
         return signedData as Data
@@ -314,9 +312,9 @@ internal class SecurityUtils {
     internal static func clearDictValuesFromKeyChain(_ dict : [String : NSString])  {
         for (tag, kSecClassName) in dict {
             if kSecClassName == kSecClassKey {
-                deleteKeyFromKeyChain(tag)
+                _ = deleteKeyFromKeyChain(tag)
             } else if kSecClassName == kSecClassGenericPassword {
-                removeItemFromKeyChain(tag)
+                _ = removeItemFromKeyChain(tag)
             }
         }
     }

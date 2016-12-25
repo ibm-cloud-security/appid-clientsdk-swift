@@ -233,9 +233,9 @@ internal class TokenPreference {
     internal func set(_ value:String) {
         runtimeValue = value
         if self.persistencePolicy.get() ==  PersistencePolicy.always {
-            SecurityUtils.saveItemToKeyChain(value, label: prefName)
+            _ = SecurityUtils.saveItemToKeyChain(value, label: prefName)
         } else {
-            SecurityUtils.removeItemFromKeyChain(prefName)
+            _ = SecurityUtils.removeItemFromKeyChain(prefName)
         }
     }
 #else
@@ -258,15 +258,15 @@ internal class TokenPreference {
     internal func updateStateByPolicy() {
         if (self.persistencePolicy.get() == PersistencePolicy.always) {
             if let unWrappedRuntimeValue = runtimeValue {
-                SecurityUtils.saveItemToKeyChain(unWrappedRuntimeValue, label: prefName)
+                _ = SecurityUtils.saveItemToKeyChain(unWrappedRuntimeValue, label: prefName)
             }
         } else {
-            SecurityUtils.removeItemFromKeyChain(prefName)
+            _ = SecurityUtils.removeItemFromKeyChain(prefName)
         }
     }
     
     internal func clear() {
-        SecurityUtils.removeItemFromKeyChain(prefName)
+        _ = SecurityUtils.removeItemFromKeyChain(prefName)
         runtimeValue = nil
     }
 }

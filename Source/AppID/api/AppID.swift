@@ -115,17 +115,17 @@ public class AppID {
     
     public func login(onTokenCompletion : BMSCompletionHandler?) {
         func showLoginWebView() -> Void {
-            if let unwrappedTenant = tenantId {
+            if let unwrappedTenant = tenantId, let clientId = preferences.clientId.get() {
                 let params = [
                     BMSSecurityConstants.JSON_RESPONSE_TYPE_KEY : BMSSecurityConstants.JSON_CODE_KEY,
-                    BMSSecurityConstants.client_id_String : unwrappedTenant,
+                    BMSSecurityConstants.client_id_String : clientId,
                     BMSSecurityConstants.JSON_REDIRECT_URI_KEY : BMSSecurityConstants.REDIRECT_URI_VALUE,
                     BMSSecurityConstants.JSON_SCOPE_KEY : BMSSecurityConstants.OPEN_ID_VALUE,
                     BMSSecurityConstants.JSON_USE_LOGIN_WIDGET : BMSSecurityConstants.TRUE_VALUE,
                     BMSSecurityConstants.JSON_STATE_KEY : UUID().uuidString
                     
                 ]
-                let url = AppID.sharedInstance.serverUrl + "/" + BMSSecurityConstants.V3_AUTH_PATH + BMSSecurityConstants.authorizationEndPoint + Utils.getQueryString(params: params)
+                let url = AppID.sharedInstance.serverUrl + "/" + BMSSecurityConstants.V3_AUTH_PATH + unwrappedTenant + "/" + BMSSecurityConstants.authorizationEndPoint + Utils.getQueryString(params: params)
                 
                 loginView =  SFSafariViewController(url: URL(string: url )!)
                 
@@ -133,20 +133,20 @@ public class AppID {
                 tokenRequest = { (code: String?, errMsg:String?) -> Void in
                     guard let unWrappedCode = code else {
                         if (errMsg == nil){
-                            onTokenCompletion?(nil, AppIDError.AuthenticationError(msg: "General error"))
+                            onTokenCompletion?(nil, AppIDError.authenticationError(msg: "General error"))
                         } else {
-                            onTokenCompletion?(nil, AppIDError.AuthenticationError(msg: errMsg))
+                            onTokenCompletion?(nil, AppIDError.authenticationError(msg: errMsg))
                         }
                         return
                     }
-                    self.tokenManager.invokeTokenRequest(unWrappedCode, tenantId: unwrappedTenant, clientId: self.preferences.clientId.get()!, callback : onTokenCompletion)
+                    self.tokenManager.invokeTokenRequest(unWrappedCode, callback : onTokenCompletion)
                 }
                 
                 DispatchQueue.main.async {
                     mainView?.present(self.loginView!, animated: true, completion: nil)
                 };
             } else {
-                onTokenCompletion?(nil, AppIDError.AuthenticationError(msg: "Tenant Id is not defined"))
+                onTokenCompletion?(nil, AppIDError.authenticationError(msg: "Failed to authorize client"))
             }
         }
         
@@ -161,7 +161,7 @@ public class AppID {
                     }
                 })
             } catch (let err){
-                onTokenCompletion?(nil, AppIDError.RegistrationError(msg: err.localizedDescription))
+                onTokenCompletion?(nil, AppIDError.registrationError(msg: err.localizedDescription))
             }
             
         } else {

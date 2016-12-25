@@ -18,11 +18,11 @@ internal class TokenManager {
     }
 
     
-    internal func invokeTokenRequest(_ grantCode:String, tenantId : String, clientId: String, callback: BMSCompletionHandler?){
+    internal func invokeTokenRequest(_ grantCode:String, callback: BMSCompletionHandler?){
         let options:RequestOptions  = RequestOptions()
         do {
-            options.parameters = createTokenRequestParams(grantCode, tenantId: tenantId)
-            options.headers =  createTokenRequestHeaders(tenantId: tenantId, clientId: clientId)
+            options.parameters = try createTokenRequestParams(grantCode)
+            options.headers =  try createTokenRequestHeaders()
             options.requestMethod = HttpMethod.POST
             let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
                 if error == nil {
@@ -31,35 +31,42 @@ internal class TokenManager {
                             try self.saveTokenFromResponse(unWrappedResponse)
                             callback?(response, nil)
                         } catch(let thrownError) {
-                            callback?(response, AppIDError.TokenRequestError(msg: thrownError.localizedDescription))
+                            callback?(response, AppIDError.tokenRequestError(msg: thrownError.localizedDescription))
                         }
                     }
                     else {
-                        callback?(nil, AppIDError.TokenRequestError(msg: "token request failed"))
+                        callback?(nil, AppIDError.tokenRequestError(msg: "token request failed"))
                     }
                 } else {
-                    callback?(response, AppIDError.TokenRequestError(msg: error?.localizedDescription))
+                    callback?(response, AppIDError.tokenRequestError(msg: error?.localizedDescription))
                 }
             }
             let appIDRequestManager:AppIDRequestManager = AppIDRequestManager(completionHandler: internalCallback)
             try appIDRequestManager.send(getTokenUrl(), options: options )
         } catch (let err){
-            callback?(nil, AppIDError.TokenRequestError(msg: err.localizedDescription))
+            callback?(nil, AppIDError.tokenRequestError(msg: err.localizedDescription))
         }
         
     }
-    private func createTokenRequestHeaders(tenantId:String, clientId:String)  -> [String:String]{
+    private func createTokenRequestHeaders()  throws -> [String:String] {
         var headers = [String:String]()
+        guard let clientId = preferences.clientId.get() else {
+            throw AppIDError.tokenRequestError(msg: "Client is not registered")
+        }
+
         let username = clientId
         let signed = try? SecurityUtils.signString(username, keyIds: (BMSSecurityConstants.publicKeyIdentifier, BMSSecurityConstants.privateKeyIdentifier), keySize: 512)
         headers[BMSSecurityConstants.AUTHORIZATION_HEADER] = BMSSecurityConstants.BASIC_AUTHORIZATION_STRING + " " + (username + ":" + signed!).data(using: .utf8)!.base64EncodedString()
         return headers
     }
     
-    private func createTokenRequestParams(_ grantCode:String, tenantId : String) -> [String : String]{
+    private func createTokenRequestParams(_ grantCode:String) throws -> [String : String]{
+        guard let clientId = preferences.clientId.get() else {
+            throw AppIDError.tokenRequestError(msg: "Client is not registered")
+        }
         let params : [String : String] = [
             BMSSecurityConstants.JSON_CODE_KEY : grantCode,
-            BMSSecurityConstants.client_id_String :  tenantId,
+            BMSSecurityConstants.client_id_String :  clientId,
             BMSSecurityConstants.JSON_GRANT_TYPE_KEY : BMSSecurityConstants.authorization_code_String,
             BMSSecurityConstants.JSON_REDIRECT_URI_KEY :BMSSecurityConstants.REDIRECT_URI_VALUE
         ]
@@ -73,8 +80,8 @@ internal class TokenManager {
                 if let accessTokenFromResponse = responseJson[caseInsensitive : BMSSecurityConstants.JSON_ACCESS_TOKEN_KEY] as? String, let idTokenFromResponse =
                     responseJson[caseInsensitive : BMSSecurityConstants.JSON_ID_TOKEN_KEY] as? String {
                     //save the tokens
-                    preferences.idToken.set(idTokenFromResponse)
-                    preferences.accessToken.set(accessTokenFromResponse)
+                    _ = preferences.idToken.set(idTokenFromResponse)
+                    _ = preferences.accessToken.set(accessTokenFromResponse)
                     AppID.logger.debug(message: "token successfully saved")
                     if let userIdentity = getUserIdentityFromToken(idTokenFromResponse)
                     {
@@ -83,7 +90,7 @@ internal class TokenManager {
                 }
             }
         } catch  {
-            throw AuthorizationProcessManagerError.could_NOT_SAVE_TOKEN(("\(error)"))
+            throw AppIDError.tokenRequestError(msg: "Could not save token")
         }
     }
     

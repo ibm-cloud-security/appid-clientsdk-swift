@@ -41,7 +41,8 @@ class ViewController: UIViewController {
                 //                }
             }
         }
-    
+        self.msg.text = ""
+        self.imageView.image = nil
         AppID.sharedInstance.login(onTokenCompletion: callBack)
     }
 }

@@ -12,7 +12,7 @@ import BMSCore
 public class AppID {
     
     
-    private var loginView:SFSafariViewController?
+    private var loginView:safariView?
     private var tokenRequest : ((_ code: String?, _ errMsg:String?) -> Void)?
     
     var authorizationManager:AppIDAuthorizationManager
@@ -127,8 +127,8 @@ public class AppID {
                 ]
                 let url = AppID.sharedInstance.serverUrl + "/" + BMSSecurityConstants.V3_AUTH_PATH + unwrappedTenant + "/" + BMSSecurityConstants.authorizationEndPoint + Utils.getQueryString(params: params)
                 
-                loginView =  SFSafariViewController(url: URL(string: url )!)
-                
+                loginView =  safariView(url: URL(string: url )!)
+                loginView?.setCallback(callback: onTokenCompletion)
                 let mainView  = UIApplication.shared.keyWindow?.rootViewController
                 tokenRequest = { (code: String?, errMsg:String?) -> Void in
                     guard let unWrappedCode = code else {

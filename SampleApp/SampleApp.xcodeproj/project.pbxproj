@@ -11,6 +11,7 @@
 		EF58A0081E0BB7C1006C1A3E /* BMSSecurityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF58A0061E0BB7C1006C1A3E /* BMSSecurityError.swift */; };
 		EF58A0091E0BB7C1006C1A3E /* SecurityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF58A0071E0BB7C1006C1A3E /* SecurityUtils.swift */; };
 		EF58A00A1E0FACDE006C1A3E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EFB38FC51E0A7DCA008F8FBA /* Info.plist */; };
+		EF58A00C1E1001ED006C1A3E /* safariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF58A00B1E1001ED006C1A3E /* safariView.swift */; };
 		EF617EC51E0BB46C00D6C389 /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB01E0BB46C00D6C389 /* AppID.swift */; };
 		EF617EC61E0BB46C00D6C389 /* AppIDAppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB21E0BB46C00D6C389 /* AppIDAppIdentity.swift */; };
 		EF617EC71E0BB46C00D6C389 /* AppIDDeviceIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB31E0BB46C00D6C389 /* AppIDDeviceIdentity.swift */; };
@@ -41,6 +42,7 @@
 		EF3DA4631CE0B04D007A2B0A /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF58A0061E0BB7C1006C1A3E /* BMSSecurityError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityError.swift; sourceTree = "<group>"; };
 		EF58A0071E0BB7C1006C1A3E /* SecurityUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityUtils.swift; sourceTree = "<group>"; };
+		EF58A00B1E1001ED006C1A3E /* safariView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = safariView.swift; sourceTree = "<group>"; };
 		EF617EB01E0BB46C00D6C389 /* AppID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppID.swift; sourceTree = "<group>"; };
 		EF617EB21E0BB46C00D6C389 /* AppIDAppIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAppIdentity.swift; sourceTree = "<group>"; };
 		EF617EB31E0BB46C00D6C389 /* AppIDDeviceIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDDeviceIdentity.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				EF617EC21E0BB46C00D6C389 /* RequestOptions.swift */,
 				EF617EC31E0BB46C00D6C389 /* TokenManager.swift */,
 				EF617EC41E0BB46C00D6C389 /* Utils.swift */,
+				EF58A00B1E1001ED006C1A3E /* safariView.swift */,
 			);
 			path = internal;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				EF617EC71E0BB46C00D6C389 /* AppIDDeviceIdentity.swift in Sources */,
 				EF617ED41E0BB46C00D6C389 /* Utils.swift in Sources */,
 				EFE8DCE51DFEC0820039A5F2 /* ViewController.swift in Sources */,
+				EF58A00C1E1001ED006C1A3E /* safariView.swift in Sources */,
 				EF617ECE1E0BB46C00D6C389 /* BMSSecurityConstants.swift in Sources */,
 				EFE8DCCE1DFEC0820039A5F2 /* AppDelegate.swift in Sources */,
 				EF617EC61E0BB46C00D6C389 /* AppIDAppIdentity.swift in Sources */,

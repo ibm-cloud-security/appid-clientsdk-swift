@@ -91,7 +91,7 @@ public class AppID {
         }
     }
     
-    func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+    public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         func tokenRequest(code: String?, errMsg:String?) {
             loginView?.dismiss(animated: true, completion: { () -> Void in
                 self.tokenRequest?(code, errMsg)

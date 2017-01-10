@@ -475,7 +475,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = SampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/odedb/appid-clientsdk-swift/Source/Resources/AppID.h";
+				SWIFT_OBJC_BRIDGING_HEADER = ../Source/Resources/AppID.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -494,7 +494,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = SampleApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/odedb/appid-clientsdk-swift/Source/Resources/AppID.h";
+				SWIFT_OBJC_BRIDGING_HEADER = ../Source/Resources/AppID.h;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

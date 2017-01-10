@@ -14,10 +14,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let backendGUID = "11111111-1111-1111-1111-111111111bbb" // the GUID you get from the dashboa
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        //Initialize the AppID instance with your tenant ID and region
         AppID.sharedInstance.initialize(tenantId: backendGUID, bluemixRegion: BMSClient.Region.unitedKingdom)
-        AppID.overrideServerHost =  "http://localhost:6005"
-        
-        
+        AppID.overrideServerHost =  "https://mobileclientaccess.stage1-dev.ng.bluemix.net"
         return true
     }
     

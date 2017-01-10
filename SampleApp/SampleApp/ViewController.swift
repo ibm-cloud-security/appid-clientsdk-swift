@@ -32,6 +32,7 @@ class ViewController: UIViewController {
                 let userId = AppID.sharedInstance.userIdentity as! AppIDUserIdentity
                 DispatchQueue.main.async {
                     self.msg.isHidden = false
+                    //Displays the user name returned from the idp
                     self.msg.text = "Hello " + (userId.AppIDdisplayName)!
                 }
                 //                DispatchQueue.main.async {
@@ -43,6 +44,7 @@ class ViewController: UIViewController {
         }
         self.msg.text = ""
         self.imageView.image = nil
+        //Invokes the login request
         AppID.sharedInstance.login(onTokenCompletion: callBack)
     }
 }

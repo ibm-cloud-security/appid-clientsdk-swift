@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
-               BuildableName = "AppID.framework"
-               BlueprintName = "AppID"
+               BlueprintIdentifier = "EF4D525C1E27EEEE00604D8B"
+               BuildableName = "dummyAppForKeyChain.app"
+               BlueprintName = "dummyAppForKeyChain"
                ReferencedContainer = "container:AppID.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,26 +26,15 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EFBBC7651DF99BF6000CE39A"
-               BuildableName = "AppIDTests.xctest"
-               BlueprintName = "AppIDTests"
-               ReferencedContainer = "container:AppID.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
-            BuildableName = "AppID.framework"
-            BlueprintName = "AppID"
+            BlueprintIdentifier = "EF4D525C1E27EEEE00604D8B"
+            BuildableName = "dummyAppForKeyChain.app"
+            BlueprintName = "dummyAppForKeyChain"
             ReferencedContainer = "container:AppID.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -62,15 +51,16 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
-            BuildableName = "AppID.framework"
-            BlueprintName = "AppID"
+            BlueprintIdentifier = "EF4D525C1E27EEEE00604D8B"
+            BuildableName = "dummyAppForKeyChain.app"
+            BlueprintName = "dummyAppForKeyChain"
             ReferencedContainer = "container:AppID.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -80,15 +70,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
-            BuildableName = "AppID.framework"
-            BlueprintName = "AppID"
+            BlueprintIdentifier = "EF4D525C1E27EEEE00604D8B"
+            BuildableName = "dummyAppForKeyChain.app"
+            BlueprintName = "dummyAppForKeyChain"
             ReferencedContainer = "container:AppID.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

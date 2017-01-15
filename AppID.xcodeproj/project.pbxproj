@@ -7,29 +7,46 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EFBBC7691DF99BF6000CE39A /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBC7681DF99BF6000CE39A /* AppIDTests.swift */; };
+		EF4D52411E27EC1B00604D8B /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522B1E27EC1B00604D8B /* AppID.swift */; };
+		EF4D52421E27EC1B00604D8B /* AppIDAppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522D1E27EC1B00604D8B /* AppIDAppIdentity.swift */; };
+		EF4D52431E27EC1B00604D8B /* AppIDDeviceIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522E1E27EC1B00604D8B /* AppIDDeviceIdentity.swift */; };
+		EF4D52441E27EC1B00604D8B /* AppIDUserIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522F1E27EC1B00604D8B /* AppIDUserIdentity.swift */; };
+		EF4D52451E27EC1B00604D8B /* AppIDAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */; };
+		EF4D52461E27EC1B00604D8B /* AppIDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52321E27EC1B00604D8B /* AppIDError.swift */; };
+		EF4D52471E27EC1B00604D8B /* AppIDPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52331E27EC1B00604D8B /* AppIDPreferences.swift */; };
+		EF4D52481E27EC1B00604D8B /* AppIDRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */; };
+		EF4D52491E27EC1B00604D8B /* AppIDRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52351E27EC1B00604D8B /* AppIDRequest.swift */; };
+		EF4D524A1E27EC1B00604D8B /* BMSSecurityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52361E27EC1B00604D8B /* BMSSecurityConstants.swift */; };
+		EF4D524B1E27EC1B00604D8B /* BMSSecurityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52371E27EC1B00604D8B /* BMSSecurityError.swift */; };
+		EF4D524C1E27EC1B00604D8B /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52381E27EC1B00604D8B /* RegistrationManager.swift */; };
+		EF4D524D1E27EC1B00604D8B /* RequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52391E27EC1B00604D8B /* RequestOptions.swift */; };
+		EF4D524E1E27EC1B00604D8B /* safariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D523A1E27EC1B00604D8B /* safariView.swift */; };
+		EF4D524F1E27EC1B00604D8B /* SecurityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D523B1E27EC1B00604D8B /* SecurityUtils.swift */; };
+		EF4D52501E27EC1B00604D8B /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D523C1E27EC1B00604D8B /* TokenManager.swift */; };
+		EF4D52511E27EC1B00604D8B /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D523D1E27EC1B00604D8B /* Utils.swift */; };
+		EF4D52521E27EC1B00604D8B /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF4D523E1E27EC1B00604D8B /* Info.plist */; };
+		EF4D52541E27EC3600604D8B /* AppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EF4D52401E27EC1B00604D8B /* AppID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EF4D52581E27EE8000604D8B /* AppIDSecurityUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52571E27EE8000604D8B /* AppIDSecurityUtilsTests.swift */; };
+		EF4D52601E27EEEE00604D8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D525F1E27EEEE00604D8B /* AppDelegate.swift */; };
+		EF4D52621E27EEEE00604D8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52611E27EEEE00604D8B /* ViewController.swift */; };
+		EF4D52651E27EEEE00604D8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF4D52631E27EEEE00604D8B /* Main.storyboard */; };
+		EF4D52671E27EEEE00604D8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF4D52661E27EEEE00604D8B /* Assets.xcassets */; };
+		EF4D526A1E27EEEE00604D8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF4D52681E27EEEE00604D8B /* LaunchScreen.storyboard */; };
+		EF4D52731E27EF5700604D8B /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52721E27EF5700604D8B /* UtilsTests.swift */; };
+		EF4D52771E27F1CA00604D8B /* AuthorizationRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52761E27F1CA00604D8B /* AuthorizationRequestTests.swift */; };
+		EFBBC7691DF99BF6000CE39A /* AppIDPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBC7681DF99BF6000CE39A /* AppIDPreferencesTests.swift */; };
 		EFBBC76B1DF99BF6000CE39A /* AppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBBC7541DF99AFA000CE39A /* AppID.framework */; };
-		EFE8DBE31DF9BC960039A5F2 /* AppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFE8DBE21DF9BC960039A5F2 /* AppID.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EFE8DC081DFDADA50039A5F2 /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBF21DFDADA50039A5F2 /* AppID.swift */; };
-		EFE8DC091DFDADA50039A5F2 /* MCAAppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBF41DFDADA50039A5F2 /* MCAAppIdentity.swift */; };
-		EFE8DC0A1DFDADA50039A5F2 /* MCADeviceIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBF51DFDADA50039A5F2 /* MCADeviceIdentity.swift */; };
-		EFE8DC0B1DFDADA50039A5F2 /* MCAUserIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBF61DFDADA50039A5F2 /* MCAUserIdentity.swift */; };
-		EFE8DC0C1DFDADA50039A5F2 /* AppIDAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBF81DFDADA50039A5F2 /* AppIDAuthorizationManager.swift */; };
-		EFE8DC0D1DFDADA50039A5F2 /* AppIDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBF91DFDADA50039A5F2 /* AppIDError.swift */; };
-		EFE8DC0E1DFDADA50039A5F2 /* AuthorizationManagerPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBFA1DFDADA50039A5F2 /* AuthorizationManagerPreferences.swift */; };
-		EFE8DC0F1DFDADA50039A5F2 /* AuthorizationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBFB1DFDADA50039A5F2 /* AuthorizationRequest.swift */; };
-		EFE8DC101DFDADA50039A5F2 /* AuthorizationRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBFC1DFDADA50039A5F2 /* AuthorizationRequestManager.swift */; };
-		EFE8DC111DFDADA50039A5F2 /* BMSSecurityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBFD1DFDADA50039A5F2 /* BMSSecurityConstants.swift */; };
-		EFE8DC121DFDADA50039A5F2 /* SecurityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DBFF1DFDADA50039A5F2 /* SecurityUtils.swift */; };
-		EFE8DC131DFDADA50039A5F2 /* BMSSecurityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DC021DFDADA50039A5F2 /* BMSSecurityError.swift */; };
-		EFE8DC141DFDADA50039A5F2 /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DC031DFDADA50039A5F2 /* RegistrationManager.swift */; };
-		EFE8DC151DFDADA50039A5F2 /* RequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DC041DFDADA50039A5F2 /* RequestOptions.swift */; };
-		EFE8DC161DFDADA50039A5F2 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DC051DFDADA50039A5F2 /* TokenManager.swift */; };
-		EFE8DC171DFDADA50039A5F2 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE8DC061DFDADA50039A5F2 /* Utils.swift */; };
 		EFE8DC1D1DFDAE920039A5F2 /* BMSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		EF4D52701E27EF2300604D8B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EFBBC74B1DF99AFA000CE39A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF4D525C1E27EEEE00604D8B;
+			remoteInfo = dummyAppForKeyChain;
+		};
 		EFBBC76C1DF99BF6000CE39A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EFBBC74B1DF99AFA000CE39A /* Project object */;
@@ -40,33 +57,51 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EF99069A1DFFD85400F61470 /* AppIDView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDView.swift; sourceTree = "<group>"; };
+		EF4D522B1E27EC1B00604D8B /* AppID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppID.swift; sourceTree = "<group>"; };
+		EF4D522D1E27EC1B00604D8B /* AppIDAppIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAppIdentity.swift; sourceTree = "<group>"; };
+		EF4D522E1E27EC1B00604D8B /* AppIDDeviceIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDDeviceIdentity.swift; sourceTree = "<group>"; };
+		EF4D522F1E27EC1B00604D8B /* AppIDUserIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDUserIdentity.swift; sourceTree = "<group>"; };
+		EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAuthorizationManager.swift; sourceTree = "<group>"; };
+		EF4D52321E27EC1B00604D8B /* AppIDError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDError.swift; sourceTree = "<group>"; };
+		EF4D52331E27EC1B00604D8B /* AppIDPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDPreferences.swift; sourceTree = "<group>"; };
+		EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequestManager.swift; sourceTree = "<group>"; };
+		EF4D52351E27EC1B00604D8B /* AppIDRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequest.swift; sourceTree = "<group>"; };
+		EF4D52361E27EC1B00604D8B /* BMSSecurityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityConstants.swift; sourceTree = "<group>"; };
+		EF4D52371E27EC1B00604D8B /* BMSSecurityError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityError.swift; sourceTree = "<group>"; };
+		EF4D52381E27EC1B00604D8B /* RegistrationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
+		EF4D52391E27EC1B00604D8B /* RequestOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestOptions.swift; sourceTree = "<group>"; };
+		EF4D523A1E27EC1B00604D8B /* safariView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = safariView.swift; sourceTree = "<group>"; };
+		EF4D523B1E27EC1B00604D8B /* SecurityUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityUtils.swift; sourceTree = "<group>"; };
+		EF4D523C1E27EC1B00604D8B /* TokenManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		EF4D523D1E27EC1B00604D8B /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		EF4D523E1E27EC1B00604D8B /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF4D52401E27EC1B00604D8B /* AppID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppID.h; sourceTree = "<group>"; };
+		EF4D52571E27EE8000604D8B /* AppIDSecurityUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDSecurityUtilsTests.swift; sourceTree = "<group>"; };
+		EF4D525D1E27EEEE00604D8B /* dummyAppForKeyChain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dummyAppForKeyChain.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF4D525F1E27EEEE00604D8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EF4D52611E27EEEE00604D8B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EF4D52641E27EEEE00604D8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EF4D52661E27EEEE00604D8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EF4D52691E27EEEE00604D8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EF4D526B1E27EEEE00604D8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF4D526F1E27EF0800604D8B /* dummyAppForKeyChain.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = dummyAppForKeyChain.entitlements; sourceTree = "<group>"; };
+		EF4D52721E27EF5700604D8B /* UtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilsTests.swift; sourceTree = "<group>"; };
+		EF4D52761E27F1CA00604D8B /* AuthorizationRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestTests.swift; sourceTree = "<group>"; };
 		EFBBC7541DF99AFA000CE39A /* AppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EFBBC7601DF99BCB000CE39A /* Test1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Test1.swift; sourceTree = "<group>"; };
 		EFBBC7661DF99BF6000CE39A /* AppIDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppIDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EFBBC7681DF99BF6000CE39A /* AppIDTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIDTests.swift; sourceTree = "<group>"; };
+		EFBBC7681DF99BF6000CE39A /* AppIDPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIDPreferencesTests.swift; sourceTree = "<group>"; };
 		EFBBC76A1DF99BF6000CE39A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EFE8DBE21DF9BC960039A5F2 /* AppID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppID.h; path = Source/Resources/AppID.h; sourceTree = SOURCE_ROOT; };
-		EFE8DBF21DFDADA50039A5F2 /* AppID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppID.swift; sourceTree = "<group>"; };
-		EFE8DBF41DFDADA50039A5F2 /* MCAAppIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCAAppIdentity.swift; sourceTree = "<group>"; };
-		EFE8DBF51DFDADA50039A5F2 /* MCADeviceIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCADeviceIdentity.swift; sourceTree = "<group>"; };
-		EFE8DBF61DFDADA50039A5F2 /* MCAUserIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MCAUserIdentity.swift; sourceTree = "<group>"; };
-		EFE8DBF81DFDADA50039A5F2 /* AppIDAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAuthorizationManager.swift; sourceTree = "<group>"; };
-		EFE8DBF91DFDADA50039A5F2 /* AppIDError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDError.swift; sourceTree = "<group>"; };
-		EFE8DBFA1DFDADA50039A5F2 /* AuthorizationManagerPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManagerPreferences.swift; sourceTree = "<group>"; };
-		EFE8DBFB1DFDADA50039A5F2 /* AuthorizationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequest.swift; sourceTree = "<group>"; };
-		EFE8DBFC1DFDADA50039A5F2 /* AuthorizationRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestManager.swift; sourceTree = "<group>"; };
-		EFE8DBFD1DFDADA50039A5F2 /* BMSSecurityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityConstants.swift; sourceTree = "<group>"; };
-		EFE8DBFF1DFDADA50039A5F2 /* SecurityUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityUtils.swift; sourceTree = "<group>"; };
-		EFE8DC021DFDADA50039A5F2 /* BMSSecurityError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityError.swift; sourceTree = "<group>"; };
-		EFE8DC031DFDADA50039A5F2 /* RegistrationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
-		EFE8DC041DFDADA50039A5F2 /* RequestOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestOptions.swift; sourceTree = "<group>"; };
-		EFE8DC051DFDADA50039A5F2 /* TokenManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
-		EFE8DC061DFDADA50039A5F2 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BMSCore.framework; path = "../Library/Developer/Xcode/DerivedData/AppIDworkspace-ctfiojsausdyvabbauzbpkzomohi/Build/Products/Debug-iphonesimulator/BMSCore.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		EF4D525A1E27EEEE00604D8B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EFBBC7501DF99AFA000CE39A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -86,12 +121,92 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EF4D52281E27EC1B00604D8B /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				EF4D52291E27EC1B00604D8B /* AppID */,
+				EF4D523E1E27EC1B00604D8B /* Info.plist */,
+				EF4D523F1E27EC1B00604D8B /* Resources */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		EF4D52291E27EC1B00604D8B /* AppID */ = {
+			isa = PBXGroup;
+			children = (
+				EF4D522A1E27EC1B00604D8B /* api */,
+				EF4D52301E27EC1B00604D8B /* internal */,
+			);
+			path = AppID;
+			sourceTree = "<group>";
+		};
+		EF4D522A1E27EC1B00604D8B /* api */ = {
+			isa = PBXGroup;
+			children = (
+				EF4D522B1E27EC1B00604D8B /* AppID.swift */,
+				EF4D522C1E27EC1B00604D8B /* identity */,
+			);
+			path = api;
+			sourceTree = "<group>";
+		};
+		EF4D522C1E27EC1B00604D8B /* identity */ = {
+			isa = PBXGroup;
+			children = (
+				EF4D522D1E27EC1B00604D8B /* AppIDAppIdentity.swift */,
+				EF4D522E1E27EC1B00604D8B /* AppIDDeviceIdentity.swift */,
+				EF4D522F1E27EC1B00604D8B /* AppIDUserIdentity.swift */,
+			);
+			path = identity;
+			sourceTree = "<group>";
+		};
+		EF4D52301E27EC1B00604D8B /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */,
+				EF4D52321E27EC1B00604D8B /* AppIDError.swift */,
+				EF4D52331E27EC1B00604D8B /* AppIDPreferences.swift */,
+				EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */,
+				EF4D52351E27EC1B00604D8B /* AppIDRequest.swift */,
+				EF4D52361E27EC1B00604D8B /* BMSSecurityConstants.swift */,
+				EF4D52371E27EC1B00604D8B /* BMSSecurityError.swift */,
+				EF4D52381E27EC1B00604D8B /* RegistrationManager.swift */,
+				EF4D52391E27EC1B00604D8B /* RequestOptions.swift */,
+				EF4D523A1E27EC1B00604D8B /* safariView.swift */,
+				EF4D523B1E27EC1B00604D8B /* SecurityUtils.swift */,
+				EF4D523C1E27EC1B00604D8B /* TokenManager.swift */,
+				EF4D523D1E27EC1B00604D8B /* Utils.swift */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		EF4D523F1E27EC1B00604D8B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EF4D52401E27EC1B00604D8B /* AppID.h */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EF4D525E1E27EEEE00604D8B /* dummyAppForKeyChain */ = {
+			isa = PBXGroup;
+			children = (
+				EF4D526F1E27EF0800604D8B /* dummyAppForKeyChain.entitlements */,
+				EF4D525F1E27EEEE00604D8B /* AppDelegate.swift */,
+				EF4D52611E27EEEE00604D8B /* ViewController.swift */,
+				EF4D52631E27EEEE00604D8B /* Main.storyboard */,
+				EF4D52661E27EEEE00604D8B /* Assets.xcassets */,
+				EF4D52681E27EEEE00604D8B /* LaunchScreen.storyboard */,
+				EF4D526B1E27EEEE00604D8B /* Info.plist */,
+			);
+			path = dummyAppForKeyChain;
+			sourceTree = "<group>";
+		};
 		EFBBC74A1DF99AFA000CE39A = {
 			isa = PBXGroup;
 			children = (
-				EFBBC75F1DF99BBB000CE39A /* Tests */,
-				EFBBC7561DF99AFA000CE39A /* Source */,
+				EF4D52281E27EC1B00604D8B /* Source */,
 				EFBBC7671DF99BF6000CE39A /* AppIDTests */,
+				EF4D525E1E27EEEE00604D8B /* dummyAppForKeyChain */,
 				EFBBC7551DF99AFA000CE39A /* Products */,
 				EFE8DC1B1DFDAE920039A5F2 /* Frameworks */,
 			);
@@ -102,116 +217,21 @@
 			children = (
 				EFBBC7541DF99AFA000CE39A /* AppID.framework */,
 				EFBBC7661DF99BF6000CE39A /* AppIDTests.xctest */,
+				EF4D525D1E27EEEE00604D8B /* dummyAppForKeyChain.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		EFBBC7561DF99AFA000CE39A /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				EFE8DBF01DFDADA50039A5F2 /* mca */,
-				EFE8DBC61DF9A1E60039A5F2 /* Resources */,
-			);
-			name = Source;
-			path = AppID;
-			sourceTree = "<group>";
-		};
-		EFBBC75F1DF99BBB000CE39A /* Tests */ = {
-			isa = PBXGroup;
-			children = (
-				EFBBC7601DF99BCB000CE39A /* Test1.swift */,
-			);
-			name = Tests;
 			sourceTree = "<group>";
 		};
 		EFBBC7671DF99BF6000CE39A /* AppIDTests */ = {
 			isa = PBXGroup;
 			children = (
-				EFBBC7681DF99BF6000CE39A /* AppIDTests.swift */,
+				EFBBC7681DF99BF6000CE39A /* AppIDPreferencesTests.swift */,
 				EFBBC76A1DF99BF6000CE39A /* Info.plist */,
+				EF4D52571E27EE8000604D8B /* AppIDSecurityUtilsTests.swift */,
+				EF4D52721E27EF5700604D8B /* UtilsTests.swift */,
+				EF4D52761E27F1CA00604D8B /* AuthorizationRequestTests.swift */,
 			);
 			path = AppIDTests;
-			sourceTree = "<group>";
-		};
-		EFE8DBC61DF9A1E60039A5F2 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				EFE8DBE21DF9BC960039A5F2 /* AppID.h */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		EFE8DBF01DFDADA50039A5F2 /* mca */ = {
-			isa = PBXGroup;
-			children = (
-				EFE8DBF11DFDADA50039A5F2 /* api */,
-				EFE8DBF71DFDADA50039A5F2 /* internal */,
-			);
-			name = mca;
-			path = Source/mca;
-			sourceTree = SOURCE_ROOT;
-		};
-		EFE8DBF11DFDADA50039A5F2 /* api */ = {
-			isa = PBXGroup;
-			children = (
-				EFE8DBF21DFDADA50039A5F2 /* AppID.swift */,
-				EFE8DBF31DFDADA50039A5F2 /* identity */,
-			);
-			path = api;
-			sourceTree = "<group>";
-		};
-		EFE8DBF31DFDADA50039A5F2 /* identity */ = {
-			isa = PBXGroup;
-			children = (
-				EFE8DBF41DFDADA50039A5F2 /* MCAAppIdentity.swift */,
-				EFE8DBF51DFDADA50039A5F2 /* MCADeviceIdentity.swift */,
-				EFE8DBF61DFDADA50039A5F2 /* MCAUserIdentity.swift */,
-			);
-			path = identity;
-			sourceTree = "<group>";
-		};
-		EFE8DBF71DFDADA50039A5F2 /* internal */ = {
-			isa = PBXGroup;
-			children = (
-				EF99069A1DFFD85400F61470 /* AppIDView.swift */,
-				EFE8DBF81DFDADA50039A5F2 /* AppIDAuthorizationManager.swift */,
-				EFE8DBF91DFDADA50039A5F2 /* AppIDError.swift */,
-				EFE8DBFA1DFDADA50039A5F2 /* AuthorizationManagerPreferences.swift */,
-				EFE8DBFB1DFDADA50039A5F2 /* AuthorizationRequest.swift */,
-				EFE8DBFC1DFDADA50039A5F2 /* AuthorizationRequestManager.swift */,
-				EFE8DBFD1DFDADA50039A5F2 /* BMSSecurityConstants.swift */,
-				EFE8DBFE1DFDADA50039A5F2 /* certificate */,
-				EFE8DC001DFDADA50039A5F2 /* challengehandlers */,
-				EFE8DC011DFDADA50039A5F2 /* Encryption */,
-				EFE8DC031DFDADA50039A5F2 /* RegistrationManager.swift */,
-				EFE8DC041DFDADA50039A5F2 /* RequestOptions.swift */,
-				EFE8DC051DFDADA50039A5F2 /* TokenManager.swift */,
-				EFE8DC061DFDADA50039A5F2 /* Utils.swift */,
-			);
-			path = internal;
-			sourceTree = "<group>";
-		};
-		EFE8DBFE1DFDADA50039A5F2 /* certificate */ = {
-			isa = PBXGroup;
-			children = (
-				EFE8DBFF1DFDADA50039A5F2 /* SecurityUtils.swift */,
-			);
-			path = certificate;
-			sourceTree = "<group>";
-		};
-		EFE8DC001DFDADA50039A5F2 /* challengehandlers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = challengehandlers;
-			sourceTree = "<group>";
-		};
-		EFE8DC011DFDADA50039A5F2 /* Encryption */ = {
-			isa = PBXGroup;
-			children = (
-				EFE8DC021DFDADA50039A5F2 /* BMSSecurityError.swift */,
-			);
-			path = Encryption;
 			sourceTree = "<group>";
 		};
 		EFE8DC1B1DFDAE920039A5F2 /* Frameworks */ = {
@@ -229,13 +249,30 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFE8DBE31DF9BC960039A5F2 /* AppID.h in Headers */,
+				EF4D52541E27EC3600604D8B /* AppID.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		EF4D525C1E27EEEE00604D8B /* dummyAppForKeyChain */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF4D526C1E27EEEE00604D8B /* Build configuration list for PBXNativeTarget "dummyAppForKeyChain" */;
+			buildPhases = (
+				EF4D52591E27EEEE00604D8B /* Sources */,
+				EF4D525A1E27EEEE00604D8B /* Frameworks */,
+				EF4D525B1E27EEEE00604D8B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dummyAppForKeyChain;
+			productName = dummyAppForKeyChain;
+			productReference = EF4D525D1E27EEEE00604D8B /* dummyAppForKeyChain.app */;
+			productType = "com.apple.product-type.application";
+		};
 		EFBBC7531DF99AFA000CE39A /* AppID */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EFBBC75C1DF99AFA000CE39A /* Build configuration list for PBXNativeTarget "AppID" */;
@@ -266,6 +303,7 @@
 			);
 			dependencies = (
 				EFBBC76D1DF99BF6000CE39A /* PBXTargetDependency */,
+				EF4D52711E27EF2300604D8B /* PBXTargetDependency */,
 			);
 			name = AppIDTests;
 			productName = AppIDTests;
@@ -282,6 +320,16 @@
 				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Oded Betzalel";
 				TargetAttributes = {
+					EF4D525C1E27EEEE00604D8B = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = M7XN3GW8UC;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
 					EFBBC7531DF99AFA000CE39A = {
 						CreatedOnToolsVersion = 8.1;
 						LastSwiftMigration = 0810;
@@ -290,6 +338,7 @@
 					EFBBC7651DF99BF6000CE39A = {
 						CreatedOnToolsVersion = 8.1;
 						ProvisioningStyle = Automatic;
+						TestTargetID = EF4D525C1E27EEEE00604D8B;
 					};
 				};
 			};
@@ -299,6 +348,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
 			mainGroup = EFBBC74A1DF99AFA000CE39A;
 			productRefGroup = EFBBC7551DF99AFA000CE39A /* Products */;
@@ -307,15 +357,27 @@
 			targets = (
 				EFBBC7531DF99AFA000CE39A /* AppID */,
 				EFBBC7651DF99BF6000CE39A /* AppIDTests */,
+				EF4D525C1E27EEEE00604D8B /* dummyAppForKeyChain */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		EF4D525B1E27EEEE00604D8B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF4D526A1E27EEEE00604D8B /* LaunchScreen.storyboard in Resources */,
+				EF4D52671E27EEEE00604D8B /* Assets.xcassets in Resources */,
+				EF4D52651E27EEEE00604D8B /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EFBBC7521DF99AFA000CE39A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF4D52521E27EC1B00604D8B /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,26 +391,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		EF4D52591E27EEEE00604D8B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF4D52621E27EEEE00604D8B /* ViewController.swift in Sources */,
+				EF4D52601E27EEEE00604D8B /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		EFBBC74F1DF99AFA000CE39A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFE8DC0D1DFDADA50039A5F2 /* AppIDError.swift in Sources */,
-				EFE8DC0F1DFDADA50039A5F2 /* AuthorizationRequest.swift in Sources */,
-				EFE8DC081DFDADA50039A5F2 /* AppID.swift in Sources */,
-				EFE8DC0A1DFDADA50039A5F2 /* MCADeviceIdentity.swift in Sources */,
-				EFE8DC131DFDADA50039A5F2 /* BMSSecurityError.swift in Sources */,
-				EFE8DC151DFDADA50039A5F2 /* RequestOptions.swift in Sources */,
-				EFE8DC0C1DFDADA50039A5F2 /* AppIDAuthorizationManager.swift in Sources */,
-				EFE8DC101DFDADA50039A5F2 /* AuthorizationRequestManager.swift in Sources */,
-				EFE8DC111DFDADA50039A5F2 /* BMSSecurityConstants.swift in Sources */,
-				EFE8DC171DFDADA50039A5F2 /* Utils.swift in Sources */,
-				EFE8DC161DFDADA50039A5F2 /* TokenManager.swift in Sources */,
-				EFE8DC141DFDADA50039A5F2 /* RegistrationManager.swift in Sources */,
-				EFE8DC121DFDADA50039A5F2 /* SecurityUtils.swift in Sources */,
-				EFE8DC0B1DFDADA50039A5F2 /* MCAUserIdentity.swift in Sources */,
-				EFE8DC0E1DFDADA50039A5F2 /* AuthorizationManagerPreferences.swift in Sources */,
-				EFE8DC091DFDADA50039A5F2 /* MCAAppIdentity.swift in Sources */,
+				EF4D52431E27EC1B00604D8B /* AppIDDeviceIdentity.swift in Sources */,
+				EF4D52491E27EC1B00604D8B /* AppIDRequest.swift in Sources */,
+				EF4D52441E27EC1B00604D8B /* AppIDUserIdentity.swift in Sources */,
+				EF4D52451E27EC1B00604D8B /* AppIDAuthorizationManager.swift in Sources */,
+				EF4D52471E27EC1B00604D8B /* AppIDPreferences.swift in Sources */,
+				EF4D524D1E27EC1B00604D8B /* RequestOptions.swift in Sources */,
+				EF4D52461E27EC1B00604D8B /* AppIDError.swift in Sources */,
+				EF4D524C1E27EC1B00604D8B /* RegistrationManager.swift in Sources */,
+				EF4D524A1E27EC1B00604D8B /* BMSSecurityConstants.swift in Sources */,
+				EF4D52511E27EC1B00604D8B /* Utils.swift in Sources */,
+				EF4D52501E27EC1B00604D8B /* TokenManager.swift in Sources */,
+				EF4D52421E27EC1B00604D8B /* AppIDAppIdentity.swift in Sources */,
+				EF4D524E1E27EC1B00604D8B /* safariView.swift in Sources */,
+				EF4D524B1E27EC1B00604D8B /* BMSSecurityError.swift in Sources */,
+				EF4D52481E27EC1B00604D8B /* AppIDRequestManager.swift in Sources */,
+				EF4D524F1E27EC1B00604D8B /* SecurityUtils.swift in Sources */,
+				EF4D52411E27EC1B00604D8B /* AppID.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,13 +428,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFBBC7691DF99BF6000CE39A /* AppIDTests.swift in Sources */,
+				EF4D52581E27EE8000604D8B /* AppIDSecurityUtilsTests.swift in Sources */,
+				EFBBC7691DF99BF6000CE39A /* AppIDPreferencesTests.swift in Sources */,
+				EF4D52731E27EF5700604D8B /* UtilsTests.swift in Sources */,
+				EF4D52771E27F1CA00604D8B /* AuthorizationRequestTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		EF4D52711E27EF2300604D8B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF4D525C1E27EEEE00604D8B /* dummyAppForKeyChain */;
+			targetProxy = EF4D52701E27EF2300604D8B /* PBXContainerItemProxy */;
+		};
 		EFBBC76D1DF99BF6000CE39A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EFBBC7531DF99AFA000CE39A /* AppID */;
@@ -370,7 +450,54 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		EF4D52631E27EEEE00604D8B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF4D52641E27EEEE00604D8B /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EF4D52681E27EEEE00604D8B /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF4D52691E27EEEE00604D8B /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		EF4D526D1E27EEEE00604D8B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = dummyAppForKeyChain/dummyAppForKeyChain.entitlements;
+				DEVELOPMENT_TEAM = M7XN3GW8UC;
+				INFOPLIST_FILE = dummyAppForKeyChain/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = oded.dummyAppForKeyChain;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		EF4D526E1E27EEEE00604D8B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = dummyAppForKeyChain/dummyAppForKeyChain.entitlements;
+				DEVELOPMENT_TEAM = M7XN3GW8UC;
+				INFOPLIST_FILE = dummyAppForKeyChain/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = oded.dummyAppForKeyChain;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 		EFBBC75A1DF99AFA000CE39A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -525,6 +652,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppIDTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0.1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dummyAppForKeyChain.app/dummyAppForKeyChain";
 			};
 			name = Debug;
 		};
@@ -538,12 +666,21 @@
 				PRODUCT_BUNDLE_IDENTIFIER = oded.AppIDTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0.1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dummyAppForKeyChain.app/dummyAppForKeyChain";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		EF4D526C1E27EEEE00604D8B /* Build configuration list for PBXNativeTarget "dummyAppForKeyChain" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF4D526D1E27EEEE00604D8B /* Debug */,
+				EF4D526E1E27EEEE00604D8B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		EFBBC74E1DF99AFA000CE39A /* Build configuration list for PBXProject "AppID" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

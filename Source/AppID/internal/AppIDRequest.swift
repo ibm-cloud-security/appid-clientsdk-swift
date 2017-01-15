@@ -13,12 +13,6 @@
 
 import Foundation
 import BMSCore
-
-
-#if swift(>=3.0)
-    
-// MARK: - AppIDRequest (Swift 3)
-
 //AppID is used internally to send requests to AppID.
 internal class AppIDRequest : Request {
     
@@ -100,80 +94,3 @@ internal class AppIDRequest : Request {
         }
     }
 }
-
-#else
-
-internal class AuthorizationRequest : BaseRequest {
-    
-    internal func send(completionHandler: BMSCompletionHandler?) {
-        super.send(requestBody: nil, completionHandler: completionHandler)
-    }
-    
-    //Add new header
-    internal func addHeader(key:String, val:String) {
-        headers[key] = val
-    }
-    
-    //Iterate and add all new headers
-    internal func addHeaders(newHeaders: [String:String]) {
-        for (key,value) in newHeaders {
-            addHeader(key, val: value)
-        }
-    }
-    
-    internal init(url:String, method:HttpMethod) {
-        super.init(url: url, headers: nil, queryParameters: nil, method: method, timeout: 0)
-        allowRedirects = false
-        
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.timeoutIntervalForRequest = timeout
-        networkSession = NSURLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-    }
-    
-    /**
-     * Send this resource request asynchronously, with the given form parameters as the request body.
-     * This method will set the content type header to "application/x-www-form-urlencoded".
-     *
-     * @param formParameters The parameters to put in the request body
-     * @param listener       The listener whose onSuccess or onFailure methods will be called when this request finishes.
-     */
-    internal func sendWithCompletionHandler(formParamaters : [String : String], callback: BMSCompletionHandler?) {
-        headers[BaseRequest.contentType] = "application/x-www-form-urlencoded"
-        var body = ""
-        var i = 0
-        //creating body params
-        for (key, val) in formParamaters {
-            body += "\(urlEncode(key))=\(urlEncode(val))"
-            if i < formParamaters.count - 1 {
-                body += "&"
-            }
-            i+=1
-        }
-        
-        send(requestBody: body.dataUsingEncoding(NSUTF8StringEncoding), completionHandler: callback)
-    }
-    private func urlEncode(str:String) -> String{
-        var encodedString = ""
-        var unchangedCharacters = ""
-        let FORM_ENCODE_SET = " \"':;<=>@[]^`{}|/\\?#&!$(),~%"
-        let range = NSMakeRange(0x20, 0x5f).toRange()!
-        range.forEach({(element:Int) in
-            if !FORM_ENCODE_SET.containsString(String(UnicodeScalar(element))) {
-                unchangedCharacters += String(Character(UnicodeScalar(element)))
-            }
-        })
-        encodedString = str.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\n\r\t"))
-        let charactersToRemove = ["\n", "\r", "\t"]
-        for char in charactersToRemove {
-            encodedString = encodedString.stringByReplacingOccurrencesOfString(char, withString: "")
-        }
-        if let encodedString = encodedString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet(charactersInString: unchangedCharacters)) {
-            return encodedString
-        }
-        else {
-            return "nil"
-        }
-    }
-}
-
-#endif

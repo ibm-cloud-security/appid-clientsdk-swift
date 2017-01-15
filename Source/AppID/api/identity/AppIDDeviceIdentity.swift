@@ -16,7 +16,7 @@ import BMSCore
 
 /// This class represents the base device identity class, with default methods and keys
 
-#if swift (>=3.0)
+
 public class AppIDDeviceIdentity : BaseDeviceIdentity {
     
     public override init() {
@@ -48,31 +48,3 @@ public class AppIDDeviceIdentity : BaseDeviceIdentity {
         super.init(map: map)
     }
 }
-#else
-    public class MCADeviceIdentity : BaseDeviceIdentity {
-        
-        public override init() {
-            var dict:[String : String] = [:]
-            #if os(watchOS)
-                dict = [
-                    BaseDeviceIdentity.Key.ID  : "Not Available",
-                    BaseDeviceIdentity.Key.OS :  WKInterfaceDevice.currentDevice().systemName,
-                    BaseDeviceIdentity.Key.OSVersion : WKInterfaceDevice.currentDevice().systemVersion,
-                    BaseDeviceIdentity.Key.model :  WKInterfaceDevice.currentDevice().model
-                ]
-            #else
-                dict = [
-                    BaseDeviceIdentity.Key.ID : (UIDevice.currentDevice().identifierForVendor?.UUIDString)!,
-                    BaseDeviceIdentity.Key.OS :  UIDevice.currentDevice().systemName,
-                    BaseDeviceIdentity.Key.OSVersion : UIDevice.currentDevice().systemVersion,
-                    BaseDeviceIdentity.Key.model :  UIDevice.currentDevice().model
-                ]
-            #endif
-            super.init(map: dict)
-        }
-        
-        public override init(map: [String : AnyObject]?) {
-            super.init(map: map)
-        }
-    }
-#endif

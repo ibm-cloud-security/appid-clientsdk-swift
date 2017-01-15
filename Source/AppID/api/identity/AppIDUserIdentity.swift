@@ -14,7 +14,7 @@ import Foundation
 import BMSCore
 
 /// This class represents the base user identity class, with default methods and keys
-#if swift (>=3.0)
+
 public class AppIDUserIdentity : BaseUserIdentity{
     public var json:[String:Any]?
    
@@ -59,17 +59,4 @@ public class AppIDUserIdentity : BaseUserIdentity{
         }
     }
  }
-#else
-public class MCAUserIdentity : BaseUserIdentity{
-    
-    public override init() {
-        super.init()
-    }
-    
-    public override init(map: [String : AnyObject]?) {
-        super.init(map: map)
-    }
-}
-    
-#endif
 

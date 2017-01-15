@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		602765D74ED7B05CCAAA826A /* Pods_SampleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E9DE678104259E6F61B0B01 /* Pods_SampleApp.framework */; };
+		EF4D52791E28EEEA00604D8B /* AppIDRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52781E28EEEA00604D8B /* AppIDRequest.swift */; };
 		EF58A0081E0BB7C1006C1A3E /* BMSSecurityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF58A0061E0BB7C1006C1A3E /* BMSSecurityError.swift */; };
 		EF58A0091E0BB7C1006C1A3E /* SecurityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF58A0071E0BB7C1006C1A3E /* SecurityUtils.swift */; };
 		EF58A00A1E0FACDE006C1A3E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EFB38FC51E0A7DCA008F8FBA /* Info.plist */; };
@@ -19,7 +20,6 @@
 		EF617EC91E0BB46C00D6C389 /* AppIDAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB61E0BB46C00D6C389 /* AppIDAuthorizationManager.swift */; };
 		EF617ECA1E0BB46C00D6C389 /* AppIDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB71E0BB46C00D6C389 /* AppIDError.swift */; };
 		EF617ECB1E0BB46C00D6C389 /* AppIDPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB81E0BB46C00D6C389 /* AppIDPreferences.swift */; };
-		EF617ECC1E0BB46C00D6C389 /* AuthorizationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EB91E0BB46C00D6C389 /* AuthorizationRequest.swift */; };
 		EF617ECD1E0BB46C00D6C389 /* AppIDRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EBA1E0BB46C00D6C389 /* AppIDRequestManager.swift */; };
 		EF617ECE1E0BB46C00D6C389 /* BMSSecurityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EBB1E0BB46C00D6C389 /* BMSSecurityConstants.swift */; };
 		EF617ED11E0BB46C00D6C389 /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF617EC11E0BB46C00D6C389 /* RegistrationManager.swift */; };
@@ -40,6 +40,7 @@
 		C2BEB010D1747D03BEB06C21 /* Pods-kituraDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kituraDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-kituraDemo/Pods-kituraDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		C368C682928A43ECF33F070F /* Pods_kituraDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kituraDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF3DA4631CE0B04D007A2B0A /* SampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF4D52781E28EEEA00604D8B /* AppIDRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequest.swift; sourceTree = "<group>"; };
 		EF58A0061E0BB7C1006C1A3E /* BMSSecurityError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityError.swift; sourceTree = "<group>"; };
 		EF58A0071E0BB7C1006C1A3E /* SecurityUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityUtils.swift; sourceTree = "<group>"; };
 		EF58A00B1E1001ED006C1A3E /* safariView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = safariView.swift; sourceTree = "<group>"; };
@@ -50,7 +51,6 @@
 		EF617EB61E0BB46C00D6C389 /* AppIDAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAuthorizationManager.swift; sourceTree = "<group>"; };
 		EF617EB71E0BB46C00D6C389 /* AppIDError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDError.swift; sourceTree = "<group>"; };
 		EF617EB81E0BB46C00D6C389 /* AppIDPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDPreferences.swift; sourceTree = "<group>"; };
-		EF617EB91E0BB46C00D6C389 /* AuthorizationRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequest.swift; sourceTree = "<group>"; };
 		EF617EBA1E0BB46C00D6C389 /* AppIDRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequestManager.swift; sourceTree = "<group>"; };
 		EF617EBB1E0BB46C00D6C389 /* BMSSecurityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityConstants.swift; sourceTree = "<group>"; };
 		EF617EC11E0BB46C00D6C389 /* RegistrationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
@@ -151,11 +151,11 @@
 			isa = PBXGroup;
 			children = (
 				EF58A0061E0BB7C1006C1A3E /* BMSSecurityError.swift */,
+				EF4D52781E28EEEA00604D8B /* AppIDRequest.swift */,
 				EF58A0071E0BB7C1006C1A3E /* SecurityUtils.swift */,
 				EF617EB61E0BB46C00D6C389 /* AppIDAuthorizationManager.swift */,
 				EF617EB71E0BB46C00D6C389 /* AppIDError.swift */,
 				EF617EB81E0BB46C00D6C389 /* AppIDPreferences.swift */,
-				EF617EB91E0BB46C00D6C389 /* AuthorizationRequest.swift */,
 				EF617EBA1E0BB46C00D6C389 /* AppIDRequestManager.swift */,
 				EF617EBB1E0BB46C00D6C389 /* BMSSecurityConstants.swift */,
 				EF617EC11E0BB46C00D6C389 /* RegistrationManager.swift */,
@@ -341,6 +341,7 @@
 				EF617EC51E0BB46C00D6C389 /* AppID.swift in Sources */,
 				EF617ECA1E0BB46C00D6C389 /* AppIDError.swift in Sources */,
 				EF617ECB1E0BB46C00D6C389 /* AppIDPreferences.swift in Sources */,
+				EF4D52791E28EEEA00604D8B /* AppIDRequest.swift in Sources */,
 				EF617EC71E0BB46C00D6C389 /* AppIDDeviceIdentity.swift in Sources */,
 				EF617ED41E0BB46C00D6C389 /* Utils.swift in Sources */,
 				EFE8DCE51DFEC0820039A5F2 /* ViewController.swift in Sources */,
@@ -349,7 +350,6 @@
 				EFE8DCCE1DFEC0820039A5F2 /* AppDelegate.swift in Sources */,
 				EF617EC61E0BB46C00D6C389 /* AppIDAppIdentity.swift in Sources */,
 				EF58A0081E0BB7C1006C1A3E /* BMSSecurityError.swift in Sources */,
-				EF617ECC1E0BB46C00D6C389 /* AuthorizationRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,23 +12,18 @@
 */
 
 import Foundation
-
-#if swift(>=3.0)
-
-
-#else
     
-internal enum BMSSecurityError:ErrorType {
+internal enum BMSSecurityError:Error {
     case generalError
 }
 
-internal enum JsonUtilsErrors:ErrorType {
+internal enum JsonUtilsErrors:Error {
     case JsonIsMalformed
     case CouldNotParseDictionaryToJson
     case CouldNotExtractJsonFromResponse
 }
 
-internal enum AuthorizationProcessManagerError : ErrorType {
+internal enum AuthorizationProcessManagerError : Error {
     case ClientIdIsNil
     case CallBackFunctionIsNil
     case CouldNotExtractGrantCode
@@ -43,8 +38,7 @@ internal enum AuthorizationProcessManagerError : ErrorType {
     
 }
 
-internal enum AuthorizationError : ErrorType {
+internal enum AuthorizationError : Error {
     case CANNOT_ADD_CHALLANGE_HANDLER(String)
 }
-    
-#endif
+

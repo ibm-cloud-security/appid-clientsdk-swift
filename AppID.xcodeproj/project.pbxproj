@@ -19,7 +19,6 @@
 		EF4D52481E27EC1B00604D8B /* AppIDRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */; };
 		EF4D52491E27EC1B00604D8B /* AppIDRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52351E27EC1B00604D8B /* AppIDRequest.swift */; };
 		EF4D524A1E27EC1B00604D8B /* AppIDConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52361E27EC1B00604D8B /* AppIDConstants.swift */; };
-		EF4D524B1E27EC1B00604D8B /* BMSSecurityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52371E27EC1B00604D8B /* BMSSecurityError.swift */; };
 		EF4D524C1E27EC1B00604D8B /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52381E27EC1B00604D8B /* RegistrationManager.swift */; };
 		EF4D524D1E27EC1B00604D8B /* RequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52391E27EC1B00604D8B /* RequestOptions.swift */; };
 		EF4D524E1E27EC1B00604D8B /* safariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D523A1E27EC1B00604D8B /* safariView.swift */; };
@@ -76,7 +75,6 @@
 		EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequestManager.swift; sourceTree = "<group>"; };
 		EF4D52351E27EC1B00604D8B /* AppIDRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequest.swift; sourceTree = "<group>"; };
 		EF4D52361E27EC1B00604D8B /* AppIDConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDConstants.swift; sourceTree = "<group>"; };
-		EF4D52371E27EC1B00604D8B /* BMSSecurityError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityError.swift; sourceTree = "<group>"; };
 		EF4D52381E27EC1B00604D8B /* RegistrationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
 		EF4D52391E27EC1B00604D8B /* RequestOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestOptions.swift; sourceTree = "<group>"; };
 		EF4D523A1E27EC1B00604D8B /* safariView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = safariView.swift; sourceTree = "<group>"; };
@@ -191,7 +189,6 @@
 				EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */,
 				EF4D52351E27EC1B00604D8B /* AppIDRequest.swift */,
 				EF4D52361E27EC1B00604D8B /* AppIDConstants.swift */,
-				EF4D52371E27EC1B00604D8B /* BMSSecurityError.swift */,
 				EF4D52381E27EC1B00604D8B /* RegistrationManager.swift */,
 				EF4D52391E27EC1B00604D8B /* RequestOptions.swift */,
 				EF4D523A1E27EC1B00604D8B /* safariView.swift */,
@@ -527,7 +524,6 @@
 				EF4D52501E27EC1B00604D8B /* TokenManager.swift in Sources */,
 				EF4D52421E27EC1B00604D8B /* AppIDAppIdentity.swift in Sources */,
 				EF4D524E1E27EC1B00604D8B /* safariView.swift in Sources */,
-				EF4D524B1E27EC1B00604D8B /* BMSSecurityError.swift in Sources */,
 				EF4D52481E27EC1B00604D8B /* AppIDRequestManager.swift in Sources */,
 				EF4D524F1E27EC1B00604D8B /* SecurityUtils.swift in Sources */,
 				EF4D52411E27EC1B00604D8B /* AppID.swift in Sources */,

@@ -1,10 +1,14 @@
-//
-//  AppIDAuthorizationManager.swift
-//  Pods
-//
-//  Created by Oded Betzalel on 08/12/2016.
-//
-//
+/* *     Copyright 2016, 2017 IBM Corp.
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
+ */
 
 import Foundation
 import BMSCore
@@ -20,10 +24,6 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
     
     
     /// Default scheme to use (default is https)
-    public static var defaultProtocol: String = HTTPS_SCHEME
-    public static let HTTP_SCHEME = "http"
-    public static let HTTPS_SCHEME = "https"
-    
     public static let CONTENT_TYPE = "Content-Type"
     
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationManager")
@@ -37,10 +37,10 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
     
     
     // Specifies the bluemix region of the MCA service instance
-    public private(set) var bluemixRegion: String?
+    internal private(set) var bluemixRegion: String?
     
     // Specifies the tenant id of the MCA service instance
-    public private(set) var tenantId: String?
+    internal private(set) var tenantId: String?
     
     /**
      - returns: The singelton instance
@@ -52,19 +52,19 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
      - parameter tenantId:           The tenant id of the MCA service instance
      - parameter bluemixRegion:      The region where your MCA service instance is hosted. Use one of the `BMSClient.REGION` constants.
      */
-    public  init(preferences:AppIDPreferences) {
+    internal  init(preferences:AppIDPreferences) {
         self.preferences = preferences
     }
     
     /**
      - returns: The locally stored authorization header or nil if the value does not exist.
      */
-    public var cachedAuthorizationHeader:String? {
+    internal var cachedAuthorizationHeader:String? {
         get{
             var returnedValue:String? = nil
             lockQueue.sync(flags: .barrier, execute: {
                 if let accessToken = self.preferences.accessToken.get(), let idToken = self.preferences.idToken.get() {
-                    returnedValue = "\(BMSSecurityConstants.BEARER) \(accessToken) \(idToken)"
+                    returnedValue = "\(AppIDConstants.BEARER) \(accessToken) \(idToken)"
                 }
             })
             return returnedValue
@@ -74,7 +74,7 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
     /**
      - returns: User identity
      */
-    public var userIdentity:UserIdentity? {
+    internal var userIdentity:UserIdentity? {
         get{
             let userIdentityJson = preferences.userIdentity.getAsMap()
             return AppIDUserIdentity(map: userIdentityJson)
@@ -84,7 +84,7 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
     /**
      - returns: Device identity
      */
-    public var deviceIdentity:DeviceIdentity {
+    internal var deviceIdentity:DeviceIdentity {
         get{
             let deviceIdentityJson = preferences.deviceIdentity.getAsMap()
             return AppIDDeviceIdentity(map: deviceIdentityJson)
@@ -94,7 +94,7 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
     /**
      - returns: Application identity
      */
-    public var appIdentity:AppIdentity {
+    internal var appIdentity:AppIdentity {
         get{
             let appIdentityJson = preferences.appIdentity.getAsMap()
             return AppIDAppIdentity(map: appIdentityJson)
@@ -115,8 +115,8 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
      */
     
     
-    public func isAuthorizationRequired(for httpResponse: Response) -> Bool {
-        if let header = httpResponse.headers![caseInsensitive : BMSSecurityConstants.WWW_AUTHENTICATE_HEADER], let authHeader : String = header as? String {
+    internal func isAuthorizationRequired(for httpResponse: Response) -> Bool {
+        if let header = httpResponse.headers![caseInsensitive : AppIDConstants.WWW_AUTHENTICATE_HEADER], let authHeader : String = header as? String {
             guard let statusCode = httpResponse.statusCode else {
                 return false
             }
@@ -136,11 +136,11 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
      */
     
     
-    public func isAuthorizationRequired(for statusCode: Int, httpResponseAuthorizationHeader responseAuthorizationHeader: String) -> Bool {
+    internal func isAuthorizationRequired(for statusCode: Int, httpResponseAuthorizationHeader responseAuthorizationHeader: String) -> Bool {
         
         if (statusCode == 401 || statusCode == 403) &&
-            responseAuthorizationHeader.lowercased().contains(BMSSecurityConstants.BEARER.lowercased()) &&
-            responseAuthorizationHeader.lowercased().contains(BMSSecurityConstants.AUTH_REALM.lowercased()) {
+            responseAuthorizationHeader.lowercased().contains(AppIDConstants.BEARER.lowercased()) &&
+            responseAuthorizationHeader.lowercased().contains(AppIDConstants.AUTH_REALM.lowercased()) {
             return true
         }
         
@@ -154,7 +154,7 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
      - Parameter request - The request to add the header to.
      */
     
-    public func addCachedAuthorizationHeader(_ request: NSMutableURLRequest) {
+    internal func addCachedAuthorizationHeader(_ request: NSMutableURLRequest) {
         addAuthorizationHeader(request, header: cachedAuthorizationHeader)
     }
     
@@ -162,11 +162,11 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
         guard let unWrappedHeader = header else {
             return
         }
-        request.setValue(unWrappedHeader, forHTTPHeaderField: BMSSecurityConstants.AUTHORIZATION_HEADER)
+        request.setValue(unWrappedHeader, forHTTPHeaderField: AppIDConstants.AUTHORIZATION_HEADER)
     }
     
     
-    public func authorizationPersistencePolicy() -> PersistencePolicy {
+    internal func authorizationPersistencePolicy() -> PersistencePolicy {
         return preferences.persistencePolicy.get()
     }
 

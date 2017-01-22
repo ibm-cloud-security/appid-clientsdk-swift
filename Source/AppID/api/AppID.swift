@@ -1,10 +1,14 @@
-//
-//  AppID.swift
-//  Pods
-//
-//  Created by Oded Betzalel on 08/12/2016.
-//
-//
+/* *     Copyright 2016, 2017 IBM Corp.
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
+ */
 
 import Foundation
 import SafariServices
@@ -12,26 +16,23 @@ import BMSCore
 public class AppID {
     
     
-    private var loginView:safariView?
-    private var tokenRequest : ((_ code: String?, _ errMsg:String?) -> Void)?
+    internal var loginView:safariView?
+    internal var tokenRequest : ((_ code: String?, _ errMsg:String?) -> Void)?
     
-    var authorizationManager:AppIDAuthorizationManager
-    var registrationManager:RegistrationManager
-    var tokenManager:TokenManager
-    var preferences:AppIDPreferences
-    var tenantId:String?
-    var bluemixRegion:String?
-    
+    internal var authorizationManager:AppIDAuthorizationManager
+    internal var registrationManager:RegistrationManager
+    internal var tokenManager:TokenManager
+    internal var preferences:AppIDPreferences
+    internal var tenantId:String?
+    internal var bluemixRegion:String?
     
     public static var overrideServerHost: String?
     
     public static var defaultProtocol: String = HTTPS_SCHEME
     public static let HTTP_SCHEME = "http"
     public static let HTTPS_SCHEME = "https"
-    
-    public static let CONTENT_TYPE = "Content-Type"
     public static let sharedInstance = AppID()
-    internal static let logger =  Logger.logger(name: BMSSecurityConstants.AppIDLoggerName)
+    internal static let logger =  Logger.logger(name: AppIDConstants.AppIDLoggerName)
     
     private init() {
         self.tenantId = BMSClient.sharedInstance.bluemixAppGUID
@@ -66,7 +67,7 @@ public class AppID {
             } else {
                 url =  AppID.defaultProtocol
                     + "://"
-                    + BMSSecurityConstants.AUTH_SERVER_NAME
+                    + AppIDConstants.AUTH_SERVER_NAME
                     + bluemixRegion!
                 
             }
@@ -82,12 +83,37 @@ public class AppID {
             return self.preferences.accessToken.get()
         }
     }
+    
+    public var idToken:String? {
+        get {
+            return self.preferences.idToken.get()
+        }
+    }
+    
+    /**
+     - returns: Device identity
+     */
+    public var deviceIdentity:AppIDDeviceIdentity? {
+        get{
+            return authorizationManager.deviceIdentity as? AppIDDeviceIdentity
+        }
+    }
+    
+    /**
+     - returns: Application identity
+     */
+    public var appIdentity:AppIDAppIdentity? {
+        get{
+            return authorizationManager.appIdentity as? AppIDAppIdentity
+        }
+    }
+
     /**
      - returns: User identity
      */
-    public var userIdentity:UserIdentity? {
+    public var userIdentity:AppIDUserIdentity? {
         get{
-            return authorizationManager.userIdentity
+            return authorizationManager.userIdentity as? AppIDUserIdentity
         }
     }
     
@@ -99,9 +125,9 @@ public class AppID {
         }
         
         let urlString = url.absoluteString
-        if urlString.lowercased().hasPrefix(BMSSecurityConstants.REDIRECT_URI_VALUE.lowercased()) == true {
+        if urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
             //gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
-            let code = url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(BMSSecurityConstants.JSON_CODE_KEY)}).first?.components(separatedBy: "=")[1]
+            let code = url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(AppIDConstants.JSON_CODE_KEY)}).first?.components(separatedBy: "=")[1]
             if(code == nil){
                 tokenRequest(code: code, errMsg: "Failed to extract grant code")
             } else {
@@ -117,15 +143,15 @@ public class AppID {
         func showLoginWebView() -> Void {
             if let unwrappedTenant = tenantId, let clientId = preferences.clientId.get() {
                 let params = [
-                    BMSSecurityConstants.JSON_RESPONSE_TYPE_KEY : BMSSecurityConstants.JSON_CODE_KEY,
-                    BMSSecurityConstants.client_id_String : clientId,
-                    BMSSecurityConstants.JSON_REDIRECT_URI_KEY : BMSSecurityConstants.REDIRECT_URI_VALUE,
-                    BMSSecurityConstants.JSON_SCOPE_KEY : BMSSecurityConstants.OPEN_ID_VALUE,
-                    BMSSecurityConstants.JSON_USE_LOGIN_WIDGET : BMSSecurityConstants.TRUE_VALUE,
-                    BMSSecurityConstants.JSON_STATE_KEY : UUID().uuidString
+                    AppIDConstants.JSON_RESPONSE_TYPE_KEY : AppIDConstants.JSON_CODE_KEY,
+                    AppIDConstants.client_id_String : clientId,
+                    AppIDConstants.JSON_REDIRECT_URI_KEY : AppIDConstants.REDIRECT_URI_VALUE,
+                    AppIDConstants.JSON_SCOPE_KEY : AppIDConstants.OPEN_ID_VALUE,
+                    AppIDConstants.JSON_USE_LOGIN_WIDGET : AppIDConstants.TRUE_VALUE,
+                    AppIDConstants.JSON_STATE_KEY : UUID().uuidString
                     
                 ]
-                let url = AppID.sharedInstance.serverUrl + "/" + BMSSecurityConstants.V3_AUTH_PATH + unwrappedTenant + "/" + BMSSecurityConstants.authorizationEndPoint + Utils.getQueryString(params: params)
+                let url = AppID.sharedInstance.serverUrl + "/" + AppIDConstants.V3_AUTH_PATH + unwrappedTenant + "/" + AppIDConstants.authorizationEndPoint + Utils.getQueryString(params: params)
                 
                 loginView =  safariView(url: URL(string: url )!)
                 loginView?.setCallback(callback: onTokenCompletion)
@@ -153,11 +179,11 @@ public class AppID {
         if (preferences.clientId.get() == nil || self.preferences.registrationTenantId.get() != self.tenantId) {
             do {
                 try registrationManager.registerDevice(callback: {(response: Response?, error: Error?) in
-                    if error == nil && response?.statusCode == 200{ //TODO: maybe android should add it as well
+                    if error == nil && response?.statusCode == 200 {
                         self.preferences.registrationTenantId.set(self.tenantId)
                         showLoginWebView()
                     } else {
-                        onTokenCompletion?(nil, error)
+                        onTokenCompletion?(nil, error == nil ? AppIDError.registrationError(msg: "Could not register device") : error)
                     }
                 })
             } catch (let err){

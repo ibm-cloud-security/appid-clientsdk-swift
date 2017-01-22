@@ -1,10 +1,14 @@
-//
-//  UtilsTests.swift
-//  AppID
-//
-//  Created by Oded Betzalel on 12/01/2017.
-//  Copyright © 2017 Oded Betzalel. All rights reserved.
-//
+/* *     Copyright 2016, 2017 IBM Corp.
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
+ */
 
 import Foundation
 import XCTest
@@ -80,12 +84,12 @@ class UtilsTest: XCTestCase {
 //        let deviceIdentity = AppIDDeviceIdentity()
 //        let appIdentity = AppIDAppIdentity()
 //        var dictionary = Utils.getDeviceDictionary()
-//        XCTAssertEqual(dictionary[BMSSecurityConstants.JSON_DEVICE_ID_KEY] as? String, deviceIdentity.ID)
-//        XCTAssertEqual(dictionary[BMSSecurityConstants.JSON_MODEL_KEY] as? String, deviceIdentity.model)
-//        XCTAssertEqual(dictionary[BMSSecurityConstants.JSON_OS_KEY] as? String, deviceIdentity.OS)
-//        XCTAssertEqual(dictionary[BMSSecurityConstants.JSON_APPLICATION_ID_KEY] as? String, appIdentity.ID)
-//        XCTAssertEqual(dictionary[BMSSecurityConstants.JSON_APPLICATION_VERSION_KEY] as? String, appIdentity.version)
-//        XCTAssertEqual(dictionary[BMSSecurityConstants.JSON_ENVIRONMENT_KEY] as? String, BMSSecurityConstants.JSON_IOS_ENVIRONMENT_VALUE)
+//        XCTAssertEqual(dictionary[AppIDConstants.JSON_DEVICE_ID_KEY] as? String, deviceIdentity.ID)
+//        XCTAssertEqual(dictionary[AppIDConstants.JSON_MODEL_KEY] as? String, deviceIdentity.model)
+//        XCTAssertEqual(dictionary[AppIDConstants.JSON_OS_KEY] as? String, deviceIdentity.OS)
+//        XCTAssertEqual(dictionary[AppIDConstants.JSON_APPLICATION_ID_KEY] as? String, appIdentity.ID)
+//        XCTAssertEqual(dictionary[AppIDConstants.JSON_APPLICATION_VERSION_KEY] as? String, appIdentity.version)
+//        XCTAssertEqual(dictionary[AppIDConstants.JSON_ENVIRONMENT_KEY] as? String, AppIDConstants.JSON_IOS_ENVIRONMENT_VALUE)
 //    }
     func testDecodeBase64WithString(){
         let str = "VGhpcyBpcyBhIFV0aWxzIHVuaXRUZXN0IHR+c/Q="

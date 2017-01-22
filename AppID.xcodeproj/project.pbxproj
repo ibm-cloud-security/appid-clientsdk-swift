@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2BA0C8AC954590040994C02C /* Pods_AppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D283A626C8D140B4A8EA025A /* Pods_AppID.framework */; };
+		B8B0871CEADC7488ED6FA2B8 /* Pods_AppIDTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E85962A21A6729F86A5D94F7 /* Pods_AppIDTests.framework */; };
 		EF4D52411E27EC1B00604D8B /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522B1E27EC1B00604D8B /* AppID.swift */; };
 		EF4D52421E27EC1B00604D8B /* AppIDAppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522D1E27EC1B00604D8B /* AppIDAppIdentity.swift */; };
 		EF4D52431E27EC1B00604D8B /* AppIDDeviceIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522E1E27EC1B00604D8B /* AppIDDeviceIdentity.swift */; };
@@ -16,7 +18,7 @@
 		EF4D52471E27EC1B00604D8B /* AppIDPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52331E27EC1B00604D8B /* AppIDPreferences.swift */; };
 		EF4D52481E27EC1B00604D8B /* AppIDRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */; };
 		EF4D52491E27EC1B00604D8B /* AppIDRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52351E27EC1B00604D8B /* AppIDRequest.swift */; };
-		EF4D524A1E27EC1B00604D8B /* BMSSecurityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52361E27EC1B00604D8B /* BMSSecurityConstants.swift */; };
+		EF4D524A1E27EC1B00604D8B /* AppIDConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52361E27EC1B00604D8B /* AppIDConstants.swift */; };
 		EF4D524B1E27EC1B00604D8B /* BMSSecurityError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52371E27EC1B00604D8B /* BMSSecurityError.swift */; };
 		EF4D524C1E27EC1B00604D8B /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52381E27EC1B00604D8B /* RegistrationManager.swift */; };
 		EF4D524D1E27EC1B00604D8B /* RequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52391E27EC1B00604D8B /* RequestOptions.swift */; };
@@ -33,7 +35,8 @@
 		EF4D52671E27EEEE00604D8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF4D52661E27EEEE00604D8B /* Assets.xcassets */; };
 		EF4D526A1E27EEEE00604D8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF4D52681E27EEEE00604D8B /* LaunchScreen.storyboard */; };
 		EF4D52731E27EF5700604D8B /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52721E27EF5700604D8B /* UtilsTests.swift */; };
-		EF4D52771E27F1CA00604D8B /* AuthorizationRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52761E27F1CA00604D8B /* AuthorizationRequestTests.swift */; };
+		EF4D52771E27F1CA00604D8B /* AppIDRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52761E27F1CA00604D8B /* AppIDRequestTests.swift */; };
+		EF4D52961E2E1BCB00604D8B /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52951E2E1BCB00604D8B /* AppIDTests.swift */; };
 		EFBBC7691DF99BF6000CE39A /* AppIDPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBC7681DF99BF6000CE39A /* AppIDPreferencesTests.swift */; };
 		EFBBC76B1DF99BF6000CE39A /* AppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBBC7541DF99AFA000CE39A /* AppID.framework */; };
 		EFE8DC1D1DFDAE920039A5F2 /* BMSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */; };
@@ -57,6 +60,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01FA9E1A8ED97A13F21394E3 /* Pods-AppID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppID/Pods-AppID.debug.xcconfig"; sourceTree = "<group>"; };
+		4B58980BB6762238599AB583 /* Pods-AppIDTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppIDTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppIDTests/Pods-AppIDTests.debug.xcconfig"; sourceTree = "<group>"; };
+		98737A275AB5B6B0D542A622 /* Pods-AppIDTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppIDTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppIDTests/Pods-AppIDTests.release.xcconfig"; sourceTree = "<group>"; };
+		D283A626C8D140B4A8EA025A /* Pods_AppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0FE4EAFD296A325904100A1 /* Pods-AppID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppID.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppID/Pods-AppID.release.xcconfig"; sourceTree = "<group>"; };
+		E85962A21A6729F86A5D94F7 /* Pods_AppIDTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppIDTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4D522B1E27EC1B00604D8B /* AppID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppID.swift; sourceTree = "<group>"; };
 		EF4D522D1E27EC1B00604D8B /* AppIDAppIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAppIdentity.swift; sourceTree = "<group>"; };
 		EF4D522E1E27EC1B00604D8B /* AppIDDeviceIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDDeviceIdentity.swift; sourceTree = "<group>"; };
@@ -66,7 +75,7 @@
 		EF4D52331E27EC1B00604D8B /* AppIDPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDPreferences.swift; sourceTree = "<group>"; };
 		EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequestManager.swift; sourceTree = "<group>"; };
 		EF4D52351E27EC1B00604D8B /* AppIDRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequest.swift; sourceTree = "<group>"; };
-		EF4D52361E27EC1B00604D8B /* BMSSecurityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityConstants.swift; sourceTree = "<group>"; };
+		EF4D52361E27EC1B00604D8B /* AppIDConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDConstants.swift; sourceTree = "<group>"; };
 		EF4D52371E27EC1B00604D8B /* BMSSecurityError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BMSSecurityError.swift; sourceTree = "<group>"; };
 		EF4D52381E27EC1B00604D8B /* RegistrationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
 		EF4D52391E27EC1B00604D8B /* RequestOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestOptions.swift; sourceTree = "<group>"; };
@@ -86,7 +95,8 @@
 		EF4D526B1E27EEEE00604D8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF4D526F1E27EF0800604D8B /* dummyAppForKeyChain.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = dummyAppForKeyChain.entitlements; sourceTree = "<group>"; };
 		EF4D52721E27EF5700604D8B /* UtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilsTests.swift; sourceTree = "<group>"; };
-		EF4D52761E27F1CA00604D8B /* AuthorizationRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestTests.swift; sourceTree = "<group>"; };
+		EF4D52761E27F1CA00604D8B /* AppIDRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequestTests.swift; sourceTree = "<group>"; };
+		EF4D52951E2E1BCB00604D8B /* AppIDTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDTests.swift; sourceTree = "<group>"; };
 		EFBBC7541DF99AFA000CE39A /* AppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBBC7661DF99BF6000CE39A /* AppIDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppIDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBBC7681DF99BF6000CE39A /* AppIDPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIDPreferencesTests.swift; sourceTree = "<group>"; };
@@ -107,6 +117,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFE8DC1D1DFDAE920039A5F2 /* BMSCore.framework in Frameworks */,
+				2BA0C8AC954590040994C02C /* Pods_AppID.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,12 +126,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFBBC76B1DF99BF6000CE39A /* AppID.framework in Frameworks */,
+				B8B0871CEADC7488ED6FA2B8 /* Pods_AppIDTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B255057605C97CFC91D97019 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				01FA9E1A8ED97A13F21394E3 /* Pods-AppID.debug.xcconfig */,
+				E0FE4EAFD296A325904100A1 /* Pods-AppID.release.xcconfig */,
+				4B58980BB6762238599AB583 /* Pods-AppIDTests.debug.xcconfig */,
+				98737A275AB5B6B0D542A622 /* Pods-AppIDTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		EF4D52281E27EC1B00604D8B /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,7 +190,7 @@
 				EF4D52331E27EC1B00604D8B /* AppIDPreferences.swift */,
 				EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */,
 				EF4D52351E27EC1B00604D8B /* AppIDRequest.swift */,
-				EF4D52361E27EC1B00604D8B /* BMSSecurityConstants.swift */,
+				EF4D52361E27EC1B00604D8B /* AppIDConstants.swift */,
 				EF4D52371E27EC1B00604D8B /* BMSSecurityError.swift */,
 				EF4D52381E27EC1B00604D8B /* RegistrationManager.swift */,
 				EF4D52391E27EC1B00604D8B /* RequestOptions.swift */,
@@ -209,6 +232,7 @@
 				EF4D525E1E27EEEE00604D8B /* dummyAppForKeyChain */,
 				EFBBC7551DF99AFA000CE39A /* Products */,
 				EFE8DC1B1DFDAE920039A5F2 /* Frameworks */,
+				B255057605C97CFC91D97019 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -229,7 +253,8 @@
 				EFBBC76A1DF99BF6000CE39A /* Info.plist */,
 				EF4D52571E27EE8000604D8B /* AppIDSecurityUtilsTests.swift */,
 				EF4D52721E27EF5700604D8B /* UtilsTests.swift */,
-				EF4D52761E27F1CA00604D8B /* AuthorizationRequestTests.swift */,
+				EF4D52761E27F1CA00604D8B /* AppIDRequestTests.swift */,
+				EF4D52951E2E1BCB00604D8B /* AppIDTests.swift */,
 			);
 			path = AppIDTests;
 			sourceTree = "<group>";
@@ -238,6 +263,8 @@
 			isa = PBXGroup;
 			children = (
 				EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */,
+				D283A626C8D140B4A8EA025A /* Pods_AppID.framework */,
+				E85962A21A6729F86A5D94F7 /* Pods_AppIDTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -277,10 +304,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EFBBC75C1DF99AFA000CE39A /* Build configuration list for PBXNativeTarget "AppID" */;
 			buildPhases = (
+				73339EA47910744DA0E21952 /* [CP] Check Pods Manifest.lock */,
 				EFBBC74F1DF99AFA000CE39A /* Sources */,
 				EFBBC7501DF99AFA000CE39A /* Frameworks */,
 				EFBBC7511DF99AFA000CE39A /* Headers */,
 				EFBBC7521DF99AFA000CE39A /* Resources */,
+				8C022937A99DB66B63900C21 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -295,9 +324,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EFBBC76E1DF99BF6000CE39A /* Build configuration list for PBXNativeTarget "AppIDTests" */;
 			buildPhases = (
+				C4BFD19D53E45B314022A8A6 /* [CP] Check Pods Manifest.lock */,
 				EFBBC7621DF99BF6000CE39A /* Sources */,
 				EFBBC7631DF99BF6000CE39A /* Frameworks */,
 				EFBBC7641DF99BF6000CE39A /* Resources */,
+				6111D1E3BBCD2A683ACB89C0 /* [CP] Embed Pods Frameworks */,
+				3DE235BF5E3812034A1BBBE2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -390,6 +422,84 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3DE235BF5E3812034A1BBBE2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppIDTests/Pods-AppIDTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6111D1E3BBCD2A683ACB89C0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppIDTests/Pods-AppIDTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		73339EA47910744DA0E21952 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8C022937A99DB66B63900C21 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppID/Pods-AppID-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C4BFD19D53E45B314022A8A6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		EF4D52591E27EEEE00604D8B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -412,7 +522,7 @@
 				EF4D524D1E27EC1B00604D8B /* RequestOptions.swift in Sources */,
 				EF4D52461E27EC1B00604D8B /* AppIDError.swift in Sources */,
 				EF4D524C1E27EC1B00604D8B /* RegistrationManager.swift in Sources */,
-				EF4D524A1E27EC1B00604D8B /* BMSSecurityConstants.swift in Sources */,
+				EF4D524A1E27EC1B00604D8B /* AppIDConstants.swift in Sources */,
 				EF4D52511E27EC1B00604D8B /* Utils.swift in Sources */,
 				EF4D52501E27EC1B00604D8B /* TokenManager.swift in Sources */,
 				EF4D52421E27EC1B00604D8B /* AppIDAppIdentity.swift in Sources */,
@@ -431,7 +541,8 @@
 				EF4D52581E27EE8000604D8B /* AppIDSecurityUtilsTests.swift in Sources */,
 				EFBBC7691DF99BF6000CE39A /* AppIDPreferencesTests.swift in Sources */,
 				EF4D52731E27EF5700604D8B /* UtilsTests.swift in Sources */,
-				EF4D52771E27F1CA00604D8B /* AuthorizationRequestTests.swift in Sources */,
+				EF4D52771E27F1CA00604D8B /* AppIDRequestTests.swift in Sources */,
+				EF4D52961E2E1BCB00604D8B /* AppIDTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -599,6 +710,7 @@
 		};
 		EFBBC75D1DF99AFA000CE39A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 01FA9E1A8ED97A13F21394E3 /* Pods-AppID.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -622,6 +734,7 @@
 		};
 		EFBBC75E1DF99AFA000CE39A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E0FE4EAFD296A325904100A1 /* Pods-AppID.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -644,6 +757,7 @@
 		};
 		EFBBC76F1DF99BF6000CE39A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B58980BB6762238599AB583 /* Pods-AppIDTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
@@ -658,6 +772,7 @@
 		};
 		EFBBC7701DF99BF6000CE39A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 98737A275AB5B6B0D542A622 /* Pods-AppIDTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
@@ -680,6 +795,7 @@
 				EF4D526E1E27EEEE00604D8B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EFBBC74E1DF99AFA000CE39A /* Build configuration list for PBXProject "AppID" */ = {
 			isa = XCConfigurationList;

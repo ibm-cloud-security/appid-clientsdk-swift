@@ -1,15 +1,14 @@
-/*
-*     Copyright 2015 IBM Corp.
-*     Licensed under the Apache License, Version 2.0 (the "License");
-*     you may not use this file except in compliance with the License.
-*     You may obtain a copy of the License at
-*     http://www.apache.org/licenses/LICENSE-2.0
-*     Unless required by applicable law or agreed to in writing, software
-*     distributed under the License is distributed on an "AS IS" BASIS,
-*     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-*     See the License for the specific language governing permissions and
-*     limitations under the License.
-*/
+/* *     Copyright 2016, 2017 IBM Corp.
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
+ */
 
 import Foundation
 import BMSCore
@@ -34,7 +33,7 @@ extension Dictionary where Key : Any {
     }
 }
 
-public class Utils {
+internal class Utils {
     internal static func concatenateUrls(_ rootUrl:String, path:String) -> String {
         guard !rootUrl.isEmpty else {
             return path
@@ -164,7 +163,7 @@ public class Utils {
             let stringCurrent = String(current)
             let singleValueArrayCurrent: [UInt8] = Array(stringCurrent.utf8)
             let intCurrent:Int = Int(singleValueArrayCurrent[0])
-            let int8Current = isSafeUrl ?  BMSSecurityConstants.base64DecodingTableUrlSafe[intCurrent] :BMSSecurityConstants.base64DecodingTable[intCurrent]
+            let int8Current = isSafeUrl ?  AppIDConstants.base64DecodingTableUrlSafe[intCurrent] :AppIDConstants.base64DecodingTable[intCurrent]
             
             if int8Current == -1 {
                 current = objPointer[objPointer.characters.index(objPointer.startIndex, offsetBy: count)]
@@ -261,7 +260,7 @@ public class Utils {
             }
             
             for i in 0..<ctcopy {
-                let toAppend = isSafeUrl ? BMSSecurityConstants.base64EncodingTableUrlSafe[output[i]]: BMSSecurityConstants.base64EncodingTable[output[i]]
+                let toAppend = isSafeUrl ? AppIDConstants.base64EncodingTableUrlSafe[output[i]]: AppIDConstants.base64EncodingTable[output[i]]
                 result.append(toAppend)
             }
             

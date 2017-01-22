@@ -12,5 +12,5 @@ script:
   - carthage update
   #- pod lib lint --allow-warnings
   - xcodebuild -workspace 'AppID.xcworkspace' -scheme 'AppID' clean build CODE_SIGN_IDENTITY= CODE_SIGNING_REQUIRED=NO
-  - travis_retry xcodebuild -workspace 'AppID.xcworkspace' test -scheme 'AppID Tests' -destination 'platform=iOS Simulator,name=iPhone 6' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+ # - travis_retry xcodebuild -workspace 'AppID.xcworkspace' test -scheme 'AppID Tests' -destination 'platform=iOS Simulator,name=iPhone 6' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 

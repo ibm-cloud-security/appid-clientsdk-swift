@@ -13,7 +13,7 @@ import XCTest
 import BMSCore
 @testable import AppID
 
-class AuthoirzationRequestTest: XCTestCase {
+class AppIDRequestTest: XCTestCase {
     var request = AppIDRequest(url: "www.test.com", method: HttpMethod.POST)
     override func setUp() {
         request = AppIDRequest(url: "www.test.com", method: HttpMethod.POST)

@@ -1,14 +1,13 @@
-/*
- *     Copyright 2015 IBM Corp.
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+/* *     Copyright 2016, 2017 IBM Corp.
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
  */
 
 
@@ -30,16 +29,16 @@ internal class AppIDPreferences {
     
     internal init() {
         
-        persistencePolicy = PolicyPreference(prefName: BMSSecurityConstants.PERSISTENCE_POLICY_LABEL, defaultValue: PersistencePolicy.always, idToken: nil, accessToken: nil)
-        clientId = StringPreference(prefName: BMSSecurityConstants.clientIdLabel)
-        registrationTenantId = StringPreference(prefName: BMSSecurityConstants.tenantIdLabel)
-        accessToken  = TokenPreference(prefName: BMSSecurityConstants.accessTokenLabel, persistencePolicy: persistencePolicy)
-        idToken  = TokenPreference(prefName: BMSSecurityConstants.idTokenLabel, persistencePolicy: persistencePolicy)
+        persistencePolicy = PolicyPreference(prefName: AppIDConstants.PERSISTENCE_POLICY_LABEL, defaultValue: PersistencePolicy.always, idToken: nil, accessToken: nil)
+        clientId = StringPreference(prefName: AppIDConstants.clientIdLabel)
+        registrationTenantId = StringPreference(prefName: AppIDConstants.tenantIdLabel)
+        accessToken  = TokenPreference(prefName: AppIDConstants.accessTokenLabel, persistencePolicy: persistencePolicy)
+        idToken  = TokenPreference(prefName: AppIDConstants.idTokenLabel, persistencePolicy: persistencePolicy)
         persistencePolicy.idToken = idToken
         persistencePolicy.accessToken = accessToken
-        userIdentity  = JSONPreference(prefName: BMSSecurityConstants.USER_IDENTITY_LABEL)
-        deviceIdentity  = JSONPreference(prefName : BMSSecurityConstants.DEVICE_IDENTITY_LABEL)
-        appIdentity  = JSONPreference(prefName: BMSSecurityConstants.APP_IDENTITY_LABEL)
+        userIdentity  = JSONPreference(prefName: AppIDConstants.USER_IDENTITY_LABEL)
+        deviceIdentity  = JSONPreference(prefName : AppIDConstants.DEVICE_IDENTITY_LABEL)
+        appIdentity  = JSONPreference(prefName: AppIDConstants.APP_IDENTITY_LABEL)
     }
 }
 

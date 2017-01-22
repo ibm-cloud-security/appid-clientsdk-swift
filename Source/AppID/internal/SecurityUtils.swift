@@ -1,14 +1,13 @@
-/*
- *     Copyright 2015 IBM Corp.
- *     Licensed under the Apache License, Version 2.0 (the "License");
- *     you may not use this file except in compliance with the License.
- *     You may obtain a copy of the License at
- *     http://www.apache.org/licenses/LICENSE-2.0
- *     Unless required by applicable law or agreed to in writing, software
- *     distributed under the License is distributed on an "AS IS" BASIS,
- *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *     See the License for the specific language governing permissions and
- *     limitations under the License.
+/* *     Copyright 2016, 2017 IBM Corp.
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
  */
 
 import Foundation
@@ -68,14 +67,6 @@ internal class SecurityUtils {
         }
     }
     
-    private static func getKeyPairBitsFromKeyChain(_ publicTag:String, privateTag:String) throws -> (publicKey: Data, privateKey: Data) {
-        return try (getKeyBitsFromKeyChain(publicTag),getKeyBitsFromKeyChain(privateTag))
-    }
-    
-    private static func getKeyPairRefFromKeyChain(_ publicTag:String, privateTag:String) throws -> (publicKey: SecKey, privateKey: SecKey) {
-        return try (getKeyRefFromKeyChain(publicTag),getKeyRefFromKeyChain(privateTag))
-    }
-    
     private static func getKeyRefFromKeyChain(_ tag:String) throws -> SecKey {
         let keyAttr : [NSString:AnyObject] = [
             kSecClass : kSecClassKey,
@@ -117,7 +108,7 @@ internal class SecurityUtils {
     
     public static func getJWKSHeader() throws ->[String:Any] {
         
-        let publicKey = try? SecurityUtils.getKeyBitsFromKeyChain(BMSSecurityConstants.publicKeyIdentifier)
+        let publicKey = try? SecurityUtils.getKeyBitsFromKeyChain(AppIDConstants.publicKeyIdentifier)
     
         
         guard let unWrappedPublicKey = publicKey, let pkModulus : Data = getPublicKeyMod(unWrappedPublicKey), let pkExponent : Data = getPublicKeyExp(unWrappedPublicKey) else {
@@ -131,7 +122,7 @@ internal class SecurityUtils {
         let publicKeyJSON : [String:Any] = [
             "e" : exp as AnyObject,
             "n" : mod as AnyObject,
-            "kty" : BMSSecurityConstants.JSON_RSA_VALUE
+            "kty" : AppIDConstants.JSON_RSA_VALUE
         ]
         
         return publicKeyJSON
@@ -198,21 +189,9 @@ internal class SecurityUtils {
     }
     
     
-    internal static func signPayload(_ payloadJSON:[String : Any], keyIds ids:(publicKey: String, privateKey: String), keySize: Int) throws -> String {
-        do {
-            let strPayloadJSON = try Utils.JSONStringify(payloadJSON as AnyObject)
-            let strPayloadJSONBase64 = Utils.base64StringFromData(Data(strPayloadJSON.utf8), isSafeUrl: true)
-            return try signString(strPayloadJSONBase64, keyIds: ids, keySize: keySize)
-        }
-        catch (let err){
-            throw err
-        }
-    }
-
-    
     internal static func signString(_ payloadString:String, keyIds ids:(publicKey: String, privateKey: String), keySize: Int) throws -> String {
         do {
-            let privateKeySec = try getKeyPairRefFromKeyChain(ids.publicKey, privateTag: ids.privateKey).privateKey
+            let privateKeySec = try getKeyRefFromKeyChain(ids.privateKey)
             
             guard let payloadData : Data = payloadString.data(using: String.Encoding.utf8) else {
                 throw AppIDError.generalError
@@ -224,18 +203,6 @@ internal class SecurityUtils {
         }
         catch {
             throw AppIDError.generalError
-        }
-    }
-    
-    
-    private static func signData(_ payload:String, privateKey:SecKey) throws -> Data {
-        guard let data:Data = payload.data(using: String.Encoding.utf8) else {
-            throw AppIDError.generalError
-        }
-        do {
-            return try SecurityUtils.signData(data, privateKey: privateKey)
-        } catch (let error) {
-            throw error
         }
     }
     
@@ -299,22 +266,12 @@ internal class SecurityUtils {
         
     }
     
-    private static func deleteKeyFromKeyChain(_ tag:String) -> Bool{
+    internal static func deleteKeyFromKeyChain(_ tag:String) -> Bool{
         let delQuery : [NSString:AnyObject] = [
             kSecClass  : kSecClassKey,
             kSecAttrApplicationTag : tag as AnyObject
         ]
         let delStatus:OSStatus = SecItemDelete(delQuery as CFDictionary)
         return delStatus == errSecSuccess
-    }
-    
-    internal static func clearDictValuesFromKeyChain(_ dict : [String : NSString])  {
-        for (tag, kSecClassName) in dict {
-            if kSecClassName == kSecClassKey {
-                _ = deleteKeyFromKeyChain(tag)
-            } else if kSecClassName == kSecClassGenericPassword {
-                _ = removeItemFromKeyChain(tag)
-            }
-        }
     }
 }

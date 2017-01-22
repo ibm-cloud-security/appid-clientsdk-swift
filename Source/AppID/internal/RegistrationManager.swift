@@ -1,17 +1,21 @@
-//
-//  RegistrationManager.swift
-//  Pods
-//
-//  Created by Oded Betzalel on 11/12/2016.
-//
-//
+/* *     Copyright 2016, 2017 IBM Corp.
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
+ */
 
 import Foundation
 import BMSCore
 internal class RegistrationManager {
     
     private var preferences:AppIDPreferences
-    internal static let logger = Logger.logger(name: BMSSecurityConstants.RegistrationManagerLoggerName)
+    internal static let logger = Logger.logger(name: AppIDConstants.RegistrationManagerLoggerName)
     
     
     internal init(preferences:AppIDPreferences)
@@ -54,10 +58,10 @@ internal class RegistrationManager {
     private func getRegistrationUrl() -> String {
         return AppID.sharedInstance.serverUrl
             + "/"
-            + BMSSecurityConstants.V3_AUTH_PATH
+            + AppIDConstants.V3_AUTH_PATH
             + AppID.sharedInstance.tenantId!
             + "/"
-            + BMSSecurityConstants.clientsEndPoint
+            + AppIDConstants.clientsEndPoint
     }
     
     
@@ -71,30 +75,30 @@ internal class RegistrationManager {
  */
     private func createRegistrationParams() throws -> [String:Any]{
         do {
-             try SecurityUtils.generateKeyPair(512, publicTag: BMSSecurityConstants.publicKeyIdentifier, privateTag: BMSSecurityConstants.privateKeyIdentifier)
+             try SecurityUtils.generateKeyPair(512, publicTag: AppIDConstants.publicKeyIdentifier, privateTag: AppIDConstants.privateKeyIdentifier)
             let deviceIdentity = AppIDDeviceIdentity()
             let appIdentity = AppIDAppIdentity()
             var params = [String : Any]()
-            params[BMSSecurityConstants.JSON_REDIRECT_URIS_KEY] = [BMSSecurityConstants.REDIRECT_URI_VALUE]
-            params[BMSSecurityConstants.JSON_TOKEN_ENDPOINT_AUTH_METHOD_KEY] = BMSSecurityConstants.CLIENT_SECRET_BASIC
-            params[BMSSecurityConstants.JSON_RESPONSE_TYPES_KEY] =  [BMSSecurityConstants.JSON_CODE_KEY]
-            params[BMSSecurityConstants.JSON_GRANT_TYPES_KEY] = [BMSSecurityConstants.authorization_code_String, BMSSecurityConstants.PASSWORD_STRING]
-            params[BMSSecurityConstants.JSON_CLIENT_NAME_KEY] = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
-            params[BMSSecurityConstants.JSON_SOFTWARE_ID_KEY] =  appIdentity.ID
-            params[BMSSecurityConstants.JSON_SOFTWARE_VERSION_KEY] =  appIdentity.version
-            params[BMSSecurityConstants.JSON_DEVICE_ID_KEY] = deviceIdentity.ID
-            params[BMSSecurityConstants.JSON_MODEL_KEY] = deviceIdentity.model
-            params[BMSSecurityConstants.JSON_OS_KEY] = deviceIdentity.OS
+            params[AppIDConstants.JSON_REDIRECT_URIS_KEY] = [AppIDConstants.REDIRECT_URI_VALUE]
+            params[AppIDConstants.JSON_TOKEN_ENDPOINT_AUTH_METHOD_KEY] = AppIDConstants.CLIENT_SECRET_BASIC
+            params[AppIDConstants.JSON_RESPONSE_TYPES_KEY] =  [AppIDConstants.JSON_CODE_KEY]
+            params[AppIDConstants.JSON_GRANT_TYPES_KEY] = [AppIDConstants.authorization_code_String, AppIDConstants.PASSWORD_STRING]
+            params[AppIDConstants.JSON_CLIENT_NAME_KEY] = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
+            params[AppIDConstants.JSON_SOFTWARE_ID_KEY] =  appIdentity.ID
+            params[AppIDConstants.JSON_SOFTWARE_VERSION_KEY] =  appIdentity.version
+            params[AppIDConstants.JSON_DEVICE_ID_KEY] = deviceIdentity.ID
+            params[AppIDConstants.JSON_MODEL_KEY] = deviceIdentity.model
+            params[AppIDConstants.JSON_OS_KEY] = deviceIdentity.OS
             
-            params[BMSSecurityConstants.JSON_CLIENT_TYPE_KEY] = BMSSecurityConstants.MOBILE_APP_TYPE
+            params[AppIDConstants.JSON_CLIENT_TYPE_KEY] = AppIDConstants.MOBILE_APP_TYPE
             
             let jwks : [[String:Any]] = [try SecurityUtils.getJWKSHeader()]
             
             let keys = [
-                BMSSecurityConstants.JSON_KEYS_KEY : jwks
+                AppIDConstants.JSON_KEYS_KEY : jwks
             ]
             
-            params[BMSSecurityConstants.JSON_JWKS_KEY] =  keys
+            params[AppIDConstants.JSON_JWKS_KEY] =  keys
             return params
         } catch {
             throw AppIDError.registrationError(msg: "Failed to create registration params")
@@ -108,7 +112,7 @@ internal class RegistrationManager {
             throw AppIDError.jsonUtilsError(msg: "Json is malformed")
         }
         //save the clientId
-        if let id = jsonResponse[caseInsensitive : BMSSecurityConstants.client_id_String] as? String {
+        if let id = jsonResponse[caseInsensitive : AppIDConstants.client_id_String] as? String {
             preferences.clientId.set(id)
         } else {
             throw AppIDError.registrationError(msg: "Could not extract client id from response")

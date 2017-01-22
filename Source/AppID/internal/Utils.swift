@@ -33,7 +33,7 @@ extension Dictionary where Key : Any {
     }
 }
 
-internal class Utils {
+public class Utils {
     internal static func concatenateUrls(_ rootUrl:String, path:String) -> String {
         guard !rootUrl.isEmpty else {
             return path
@@ -79,7 +79,7 @@ internal class Utils {
         return nil
     }
     
-    internal static func JSONStringify(_ value: AnyObject, prettyPrinted:Bool = false) throws -> String{
+    public static func JSONStringify(_ value: AnyObject, prettyPrinted:Bool = false) throws -> String{
         
         let options = prettyPrinted ? JSONSerialization.WritingOptions.prettyPrinted : JSONSerialization.WritingOptions(rawValue: 0)
         
@@ -132,7 +132,7 @@ internal class Utils {
      - returns: return decoded String
      */
     
-    internal static func decodeBase64WithString(_ strBase64:String, isSafeUrl:Bool) -> Data? {
+    public static func decodeBase64WithString(_ strBase64:String, isSafeUrl:Bool) -> Data? {
         
         guard let objPointerHelper = strBase64.cString(using: String.Encoding.ascii), let objPointer = String(validatingUTF8: objPointerHelper) else {
             return nil

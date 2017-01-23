@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
-    s.name         = "AppID"
-    s.version      = '0.0.2'
+    s.name         = "AppIDBluemix"
+    s.version      = '0.0.1'
     s.summary      = "AppID Swift SDK"
     s.homepage     = "https://github.com/ibm-bluemix-mobile-services/appid-clientsdk-swift"
     s.license      = 'Apache License, Version 2.0'

@@ -34,6 +34,7 @@
 		EF4D52731E27EF5700604D8B /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52721E27EF5700604D8B /* UtilsTests.swift */; };
 		EF4D52771E27F1CA00604D8B /* AppIDRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52761E27F1CA00604D8B /* AppIDRequestTests.swift */; };
 		EF4D52961E2E1BCB00604D8B /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52951E2E1BCB00604D8B /* AppIDTests.swift */; };
+		EF6B934A1E377C2A00AC364A /* TokenManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6B93491E377C2A00AC364A /* TokenManagerTests.swift */; };
 		EFBBC7691DF99BF6000CE39A /* AppIDPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBC7681DF99BF6000CE39A /* AppIDPreferencesTests.swift */; };
 		EFBBC76B1DF99BF6000CE39A /* AppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBBC7541DF99AFA000CE39A /* AppID.framework */; };
 		EFE8DC1D1DFDAE920039A5F2 /* BMSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */; };
@@ -93,6 +94,7 @@
 		EF4D52721E27EF5700604D8B /* UtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilsTests.swift; sourceTree = "<group>"; };
 		EF4D52761E27F1CA00604D8B /* AppIDRequestTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequestTests.swift; sourceTree = "<group>"; };
 		EF4D52951E2E1BCB00604D8B /* AppIDTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDTests.swift; sourceTree = "<group>"; };
+		EF6B93491E377C2A00AC364A /* TokenManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenManagerTests.swift; sourceTree = "<group>"; };
 		EFBBC7541DF99AFA000CE39A /* AppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBBC7661DF99BF6000CE39A /* AppIDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppIDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBBC7681DF99BF6000CE39A /* AppIDPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIDPreferencesTests.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				EF4D52721E27EF5700604D8B /* UtilsTests.swift */,
 				EF4D52761E27F1CA00604D8B /* AppIDRequestTests.swift */,
 				EF4D52951E2E1BCB00604D8B /* AppIDTests.swift */,
+				EF6B93491E377C2A00AC364A /* TokenManagerTests.swift */,
 			);
 			path = AppIDTests;
 			sourceTree = "<group>";
@@ -535,6 +538,7 @@
 				EF4D52731E27EF5700604D8B /* UtilsTests.swift in Sources */,
 				EF4D52771E27F1CA00604D8B /* AppIDRequestTests.swift in Sources */,
 				EF4D52961E2E1BCB00604D8B /* AppIDTests.swift in Sources */,
+				EF6B934A1E377C2A00AC364A /* TokenManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

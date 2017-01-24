@@ -10,7 +10,7 @@ cd ~/Documents
 git clone https://ibm-bluemix-mobile-services:${GITHUB_TOKEN}@github.com/ibm-bluemix-mobile-services/appid-clientsdk-swift.git
 cd appid-clientsdk-swift
 git remote rm origin
-git remote add origin https://ibm-bluemix-mobile-services:${GITHUB_TOKEN}@github.com/ibm-bluemix-mobile-services/ppid-clientsdk-swift.git
+git remote add origin https://ibm-bluemix-mobile-services:${GITHUB_TOKEN}@github.com/ibm-bluemix-mobile-services/appid-clientsdk-swift.git
 version=$(grep -o 'version.*=.*[0-9]' AppID.podspec | cut -f 2 -d "'")
 git fetch --tags
 if [[ ! "$(git tag)" =~ "${version}" ]]; then

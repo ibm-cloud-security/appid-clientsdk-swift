@@ -11,26 +11,18 @@
  */
 
 import Foundation
-import SafariServices
+import XCTest
 import BMSCore
+@testable import AppID
 
-internal class safariView : SFSafariViewController, SFSafariViewControllerDelegate{
-    
-    var callback:BMSCompletionHandler?
-    var url:URL?
-
-    public init(url URL: URL) {
-        super.init(url: URL, entersReaderIfAvailable: false)
-        self.url = URL
-        self.delegate = self
+class TokenManagerTests: XCTestCase {
+    var tokenManager:TokenManager = TokenManager(AppIDPreferences())
+    override func setUp() {
+        super.setUp();
     }
     
-    public func setCallback(callback:BMSCompletionHandler?){
-        self.callback = callback
-    }
-    public func safariViewControllerDidFinish(_ controller: SFSafariViewController)
-    {
-        callback?(nil, AppIDError.authenticationError(msg: "User canceled the operation"))
+    func testAddHeaders(){
+            tokenManager.invokeTokenRequest("grantCode", callback: callback)
     }
 
 }

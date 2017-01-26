@@ -66,18 +66,13 @@ internal class RegistrationManager {
     
     
     /*
- 
-
- 
- 
- 
- 
+  
  */
     private func createRegistrationParams() throws -> [String:Any]{
         do {
              try SecurityUtils.generateKeyPair(512, publicTag: AppIDConstants.publicKeyIdentifier, privateTag: AppIDConstants.privateKeyIdentifier)
-            let deviceIdentity = AppIDDeviceIdentity()
-            let appIdentity = AppIDAppIdentity()
+            let deviceIdentity = BaseDeviceIdentity()
+            let appIdentity = BaseAppIdentity()
             var params = [String : Any]()
             params[AppIDConstants.JSON_REDIRECT_URIS_KEY] = [AppIDConstants.REDIRECT_URI_VALUE]
             params[AppIDConstants.JSON_TOKEN_ENDPOINT_AUTH_METHOD_KEY] = AppIDConstants.CLIENT_SECRET_BASIC

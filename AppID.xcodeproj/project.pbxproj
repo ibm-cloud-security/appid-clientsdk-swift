@@ -7,10 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A007BA71E39924E006332E5 /* AbstractToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A007BA61E39924E006332E5 /* AbstractToken.swift */; };
+		3A007BAA1E399718006332E5 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A007BA91E399718006332E5 /* AccessToken.swift */; };
+		3A007BAC1E399776006332E5 /* IdentityToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A007BAB1E399776006332E5 /* IdentityToken.swift */; };
+		3A007BAE1E3997C7006332E5 /* OAuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A007BAD1E3997C7006332E5 /* OAuthClient.swift */; };
+		3A007BB01E39987D006332E5 /* LoginWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A007BAF1E39987D006332E5 /* LoginWidget.swift */; };
+		3A007BB21E3998E0006332E5 /* AccessTokenImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A007BB11E3998E0006332E5 /* AccessTokenImpl.swift */; };
+		3A007BB41E399958006332E5 /* IdentityTokenImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A007BB31E399957006332E5 /* IdentityTokenImpl.swift */; };
+		3A007BB61E399A1A006332E5 /* OAuthClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A007BB51E399A1A006332E5 /* OAuthClientImpl.swift */; };
+		3A007BB81E399BBE006332E5 /* AuthorizationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A007BB71E399BBE006332E5 /* AuthorizationDelegate.swift */; };
+		3A007BBA1E399CB0006332E5 /* AuthorizationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A007BB91E399CB0006332E5 /* AuthorizationError.swift */; };
 		EF4D52411E27EC1B00604D8B /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522B1E27EC1B00604D8B /* AppID.swift */; };
-		EF4D52421E27EC1B00604D8B /* AppIDAppIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522D1E27EC1B00604D8B /* AppIDAppIdentity.swift */; };
-		EF4D52431E27EC1B00604D8B /* AppIDDeviceIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522E1E27EC1B00604D8B /* AppIDDeviceIdentity.swift */; };
-		EF4D52441E27EC1B00604D8B /* AppIDUserIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522F1E27EC1B00604D8B /* AppIDUserIdentity.swift */; };
 		EF4D52451E27EC1B00604D8B /* AppIDAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */; };
 		EF4D52461E27EC1B00604D8B /* AppIDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52321E27EC1B00604D8B /* AppIDError.swift */; };
 		EF4D52471E27EC1B00604D8B /* AppIDPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52331E27EC1B00604D8B /* AppIDPreferences.swift */; };
@@ -59,16 +66,23 @@
 
 /* Begin PBXFileReference section */
 		01FA9E1A8ED97A13F21394E3 /* Pods-AppID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppID/Pods-AppID.debug.xcconfig"; sourceTree = "<group>"; };
+		3A007BA61E39924E006332E5 /* AbstractToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AbstractToken.swift; path = tokens/AbstractToken.swift; sourceTree = "<group>"; };
+		3A007BA91E399718006332E5 /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccessToken.swift; path = Tokens/AccessToken.swift; sourceTree = "<group>"; };
+		3A007BAB1E399776006332E5 /* IdentityToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityToken.swift; sourceTree = "<group>"; };
+		3A007BAD1E3997C7006332E5 /* OAuthClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OAuthClient.swift; path = Tokens/OAuthClient.swift; sourceTree = "<group>"; };
+		3A007BAF1E39987D006332E5 /* LoginWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWidget.swift; sourceTree = "<group>"; };
+		3A007BB11E3998E0006332E5 /* AccessTokenImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccessTokenImpl.swift; path = tokens/AccessTokenImpl.swift; sourceTree = "<group>"; };
+		3A007BB31E399957006332E5 /* IdentityTokenImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IdentityTokenImpl.swift; path = tokens/IdentityTokenImpl.swift; sourceTree = "<group>"; };
+		3A007BB51E399A1A006332E5 /* OAuthClientImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OAuthClientImpl.swift; path = tokens/OAuthClientImpl.swift; sourceTree = "<group>"; };
+		3A007BB71E399BBE006332E5 /* AuthorizationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationDelegate.swift; sourceTree = "<group>"; };
+		3A007BB91E399CB0006332E5 /* AuthorizationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationError.swift; sourceTree = "<group>"; };
 		4B58980BB6762238599AB583 /* Pods-AppIDTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppIDTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppIDTests/Pods-AppIDTests.debug.xcconfig"; sourceTree = "<group>"; };
 		98737A275AB5B6B0D542A622 /* Pods-AppIDTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppIDTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppIDTests/Pods-AppIDTests.release.xcconfig"; sourceTree = "<group>"; };
 		D283A626C8D140B4A8EA025A /* Pods_AppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0FE4EAFD296A325904100A1 /* Pods-AppID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppID.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppID/Pods-AppID.release.xcconfig"; sourceTree = "<group>"; };
 		E85962A21A6729F86A5D94F7 /* Pods_AppIDTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppIDTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4D522B1E27EC1B00604D8B /* AppID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppID.swift; sourceTree = "<group>"; };
-		EF4D522D1E27EC1B00604D8B /* AppIDAppIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAppIdentity.swift; sourceTree = "<group>"; };
-		EF4D522E1E27EC1B00604D8B /* AppIDDeviceIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDDeviceIdentity.swift; sourceTree = "<group>"; };
-		EF4D522F1E27EC1B00604D8B /* AppIDUserIdentity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDUserIdentity.swift; sourceTree = "<group>"; };
-		EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAuthorizationManager.swift; sourceTree = "<group>"; };
+		EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppIDAuthorizationManager.swift; path = ../internal/AppIDAuthorizationManager.swift; sourceTree = "<group>"; };
 		EF4D52321E27EC1B00604D8B /* AppIDError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDError.swift; sourceTree = "<group>"; };
 		EF4D52331E27EC1B00604D8B /* AppIDPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDPreferences.swift; sourceTree = "<group>"; };
 		EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequestManager.swift; sourceTree = "<group>"; };
@@ -129,6 +143,83 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A007B9D1E399183006332E5 /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				3A007BA61E39924E006332E5 /* AbstractToken.swift */,
+				3A007BB11E3998E0006332E5 /* AccessTokenImpl.swift */,
+				3A007BB31E399957006332E5 /* IdentityTokenImpl.swift */,
+				3A007BB51E399A1A006332E5 /* OAuthClientImpl.swift */,
+			);
+			name = Tokens;
+			sourceTree = "<group>";
+		};
+		3A007B9E1E3991B3006332E5 /* Authorization Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Authorization Manager";
+			sourceTree = "<group>";
+		};
+		3A007B9F1E3991C6006332E5 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
+		3A007BA01E3991D4006332E5 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		3A007BA11E3991E0006332E5 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		3A007BA21E3991EC006332E5 /* Registration Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Registration Manager";
+			sourceTree = "<group>";
+		};
+		3A007BA31E3991F8006332E5 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
+		3A007BA41E399208006332E5 /* Token Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Token Manager";
+			sourceTree = "<group>";
+		};
+		3A007BA51E399214006332E5 /* Login Widget */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Login Widget";
+			sourceTree = "<group>";
+		};
+		3A007BA81E399701006332E5 /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				3A007BA91E399718006332E5 /* AccessToken.swift */,
+				3A007BAB1E399776006332E5 /* IdentityToken.swift */,
+				3A007BAD1E3997C7006332E5 /* OAuthClient.swift */,
+			);
+			name = Tokens;
+			sourceTree = "<group>";
+		};
 		B255057605C97CFC91D97019 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,35 +244,38 @@
 		EF4D52291E27EC1B00604D8B /* AppID */ = {
 			isa = PBXGroup;
 			children = (
-				EF4D522A1E27EC1B00604D8B /* api */,
-				EF4D52301E27EC1B00604D8B /* internal */,
+				EF4D522A1E27EC1B00604D8B /* API */,
+				EF4D52301E27EC1B00604D8B /* Internal */,
 			);
 			path = AppID;
 			sourceTree = "<group>";
 		};
-		EF4D522A1E27EC1B00604D8B /* api */ = {
+		EF4D522A1E27EC1B00604D8B /* API */ = {
 			isa = PBXGroup;
 			children = (
+				3A007BA81E399701006332E5 /* Tokens */,
 				EF4D522B1E27EC1B00604D8B /* AppID.swift */,
-				EF4D522C1E27EC1B00604D8B /* identity */,
+				3A007BAF1E39987D006332E5 /* LoginWidget.swift */,
+				EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */,
+				3A007BB71E399BBE006332E5 /* AuthorizationDelegate.swift */,
+				3A007BB91E399CB0006332E5 /* AuthorizationError.swift */,
 			);
+			name = API;
 			path = api;
 			sourceTree = "<group>";
 		};
-		EF4D522C1E27EC1B00604D8B /* identity */ = {
+		EF4D52301E27EC1B00604D8B /* Internal */ = {
 			isa = PBXGroup;
 			children = (
-				EF4D522D1E27EC1B00604D8B /* AppIDAppIdentity.swift */,
-				EF4D522E1E27EC1B00604D8B /* AppIDDeviceIdentity.swift */,
-				EF4D522F1E27EC1B00604D8B /* AppIDUserIdentity.swift */,
-			);
-			path = identity;
-			sourceTree = "<group>";
-		};
-		EF4D52301E27EC1B00604D8B /* internal */ = {
-			isa = PBXGroup;
-			children = (
-				EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */,
+				3A007B9F1E3991C6006332E5 /* Config */,
+				3A007BA01E3991D4006332E5 /* Helpers */,
+				3A007BA11E3991E0006332E5 /* Network */,
+				3A007BA31E3991F8006332E5 /* Preferences */,
+				3A007BA21E3991EC006332E5 /* Registration Manager */,
+				3A007B9E1E3991B3006332E5 /* Authorization Manager */,
+				3A007BA41E399208006332E5 /* Token Manager */,
+				3A007BA51E399214006332E5 /* Login Widget */,
+				3A007B9D1E399183006332E5 /* Tokens */,
 				EF4D52321E27EC1B00604D8B /* AppIDError.swift */,
 				EF4D52331E27EC1B00604D8B /* AppIDPreferences.swift */,
 				EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */,
@@ -194,6 +288,7 @@
 				EF4D523C1E27EC1B00604D8B /* TokenManager.swift */,
 				EF4D523D1E27EC1B00604D8B /* Utils.swift */,
 			);
+			name = Internal;
 			path = internal;
 			sourceTree = "<group>";
 		};
@@ -510,22 +605,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF4D52431E27EC1B00604D8B /* AppIDDeviceIdentity.swift in Sources */,
 				EF4D52491E27EC1B00604D8B /* AppIDRequest.swift in Sources */,
-				EF4D52441E27EC1B00604D8B /* AppIDUserIdentity.swift in Sources */,
 				EF4D52451E27EC1B00604D8B /* AppIDAuthorizationManager.swift in Sources */,
 				EF4D52471E27EC1B00604D8B /* AppIDPreferences.swift in Sources */,
+				3A007BB41E399958006332E5 /* IdentityTokenImpl.swift in Sources */,
 				EF4D524D1E27EC1B00604D8B /* RequestOptions.swift in Sources */,
 				EF4D52461E27EC1B00604D8B /* AppIDError.swift in Sources */,
 				EF4D524C1E27EC1B00604D8B /* RegistrationManager.swift in Sources */,
+				3A007BA71E39924E006332E5 /* AbstractToken.swift in Sources */,
 				EF4D524A1E27EC1B00604D8B /* AppIDConstants.swift in Sources */,
 				EF4D52511E27EC1B00604D8B /* Utils.swift in Sources */,
+				3A007BB01E39987D006332E5 /* LoginWidget.swift in Sources */,
+				3A007BAC1E399776006332E5 /* IdentityToken.swift in Sources */,
 				EF4D52501E27EC1B00604D8B /* TokenManager.swift in Sources */,
-				EF4D52421E27EC1B00604D8B /* AppIDAppIdentity.swift in Sources */,
+				3A007BB21E3998E0006332E5 /* AccessTokenImpl.swift in Sources */,
+				3A007BB81E399BBE006332E5 /* AuthorizationDelegate.swift in Sources */,
+				3A007BBA1E399CB0006332E5 /* AuthorizationError.swift in Sources */,
 				EF4D524E1E27EC1B00604D8B /* safariView.swift in Sources */,
 				EF4D52481E27EC1B00604D8B /* AppIDRequestManager.swift in Sources */,
+				3A007BB61E399A1A006332E5 /* OAuthClientImpl.swift in Sources */,
 				EF4D524F1E27EC1B00604D8B /* SecurityUtils.swift in Sources */,
+				3A007BAE1E3997C7006332E5 /* OAuthClient.swift in Sources */,
 				EF4D52411E27EC1B00604D8B /* AppID.swift in Sources */,
+				3A007BAA1E399718006332E5 /* AccessToken.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

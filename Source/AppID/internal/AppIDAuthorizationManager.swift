@@ -13,7 +13,7 @@
 import Foundation
 import BMSCore
 
-internal class AppIDAuthorizationManager : AuthorizationManager{
+internal class AppIDAuthorizationManager : AuthorizationManager {
     public func obtainAuthorization(completionHandler callback: BMSCompletionHandler?) {
     AppID.sharedInstance.login(onTokenCompletion: callback)
     }
@@ -76,8 +76,8 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
      */
     internal var userIdentity:UserIdentity? {
         get{
-            let userIdentityJson = preferences.userIdentity.getAsMap()
-            return AppIDUserIdentity(map: userIdentityJson)
+//            let userIdentityJson = preferences.userIdentity.getAsMap()
+            return BaseUserIdentity()
         }
     }
     
@@ -86,8 +86,8 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
      */
     internal var deviceIdentity:DeviceIdentity {
         get{
-            let deviceIdentityJson = preferences.deviceIdentity.getAsMap()
-            return AppIDDeviceIdentity(map: deviceIdentityJson)
+//            let deviceIdentityJson = preferences.deviceIdentity.getAsMap()
+            return BaseDeviceIdentity()
         }
     }
     
@@ -96,8 +96,8 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
      */
     internal var appIdentity:AppIdentity {
         get{
-            let appIdentityJson = preferences.appIdentity.getAsMap()
-            return AppIDAppIdentity(map: appIdentityJson)
+//            let appIdentityJson = preferences.appIdentity.getAsMap()
+            return BaseAppIdentity()
         }
     }
     

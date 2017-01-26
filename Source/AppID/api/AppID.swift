@@ -15,109 +15,56 @@ import SafariServices
 import BMSCore
 public class AppID {
     
-    
-    internal var loginView:safariView?
+	public var tenantId: String?
+	public var bluemixRegion: String?
+
+	internal var loginView:safariView?
     internal var tokenRequest : ((_ code: String?, _ errMsg:String?) -> Void)?
     
-    internal var authorizationManager:AppIDAuthorizationManager
-    internal var registrationManager:RegistrationManager
-    internal var tokenManager:TokenManager
-    internal var preferences:AppIDPreferences
-    internal var tenantId:String?
-    internal var bluemixRegion:String?
-    
+    internal var authorizationManager:AppIDAuthorizationManager?
+    internal var registrationManager:RegistrationManager?
+    internal var tokenManager:TokenManager?
+    internal var preferences:AppIDPreferences?
+	
     public static var overrideServerHost: String?
     
-    public static var defaultProtocol: String = HTTPS_SCHEME
-    public static let HTTP_SCHEME = "http"
-    public static let HTTPS_SCHEME = "https"
     public static let sharedInstance = AppID()
     internal static let logger =  Logger.logger(name: AppIDConstants.AppIDLoggerName)
     
-    private init() {
-        self.tenantId = BMSClient.sharedInstance.bluemixAppGUID
-        self.bluemixRegion = BMSClient.sharedInstance.bluemixRegion
-        self.preferences = AppIDPreferences()
-        
-        if preferences.deviceIdentity.get() == nil {
-            preferences.deviceIdentity.set(AppIDDeviceIdentity().jsonData as [String:Any])
-        }
-        if preferences.appIdentity.get() == nil {
-            preferences.appIdentity.set(AppIDAppIdentity().jsonData as [String:Any])
-        }
-        
-        authorizationManager = AppIDAuthorizationManager(preferences: preferences)
-        registrationManager = RegistrationManager(preferences: preferences)
-        tokenManager = TokenManager(preferences: preferences)
-        BMSClient.sharedInstance.authorizationManager = authorizationManager
-        
-    }
+    private init() {}
     
     
     public func initialize(tenantId : String, bluemixRegion : String) {
         self.tenantId = tenantId
         self.bluemixRegion = bluemixRegion
+		
+		//        if preferences.deviceIdentity.get() == nil {
+		//            preferences.deviceIdentity.set(AppIDDeviceIdentity().jsonData as [String:Any])
+		//        }
+		//        if preferences.appIdentity.get() == nil {
+		//            preferences.appIdentity.set(AppIDAppIdentity().jsonData as [String:Any])
+		//        }
+		
+		self.preferences = AppIDPreferences()
+		self.authorizationManager = AppIDAuthorizationManager(preferences: preferences!)
+		self.registrationManager = RegistrationManager(preferences: preferences!)
+		self.tokenManager = TokenManager(preferences: preferences!)
     }
-    
+	
     internal var serverUrl:String {
-        get{
-            var url = "";
-            if let overrideServerHost = AppID.overrideServerHost {
-                url = overrideServerHost
-            } else {
-                url =  AppID.defaultProtocol
-                    + "://"
-                    + AppIDConstants.AUTH_SERVER_NAME
-                    + bluemixRegion!
-                
-            }
-            return url
-        }
-        
+		var url = "";
+		if let overrideServerHost = AppID.overrideServerHost {
+			url = overrideServerHost
+		} else {
+			url =  "https://"
+				+ AppIDConstants.AUTH_SERVER_NAME
+				+ bluemixRegion!
+			
+		}
+		return url
     }
-    
-    
-    
-    public var accessToken:String? {
-        get {
-            return self.preferences.accessToken.get()
-        }
-    }
-    
-    public var idToken:String? {
-        get {
-            return self.preferences.idToken.get()
-        }
-    }
-    
-    /**
-     - returns: Device identity
-     */
-    public var deviceIdentity:AppIDDeviceIdentity? {
-        get{
-            return authorizationManager.deviceIdentity as? AppIDDeviceIdentity
-        }
-    }
-    
-    /**
-     - returns: Application identity
-     */
-    public var appIdentity:AppIDAppIdentity? {
-        get{
-            return authorizationManager.appIdentity as? AppIDAppIdentity
-        }
-    }
-
-    /**
-     - returns: User identity
-     */
-    public var userIdentity:AppIDUserIdentity? {
-        get{
-            return authorizationManager.userIdentity as? AppIDUserIdentity
-        }
-    }
-    
-    public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+	
+	public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         func tokenRequest(code: String?, errMsg:String?) {
             loginView?.dismiss(animated: true, completion: { () -> Void in
                 self.tokenRequest?(code, errMsg)
@@ -141,7 +88,7 @@ public class AppID {
     
     public func login(onTokenCompletion : BMSCompletionHandler?) {
         func showLoginWebView() -> Void {
-            if let unwrappedTenant = tenantId, let clientId = preferences.clientId.get() {
+            if let unwrappedTenant = tenantId, let clientId = preferences!.clientId.get() {
                 let params = [
                     AppIDConstants.JSON_RESPONSE_TYPE_KEY : AppIDConstants.JSON_CODE_KEY,
                     AppIDConstants.client_id_String : clientId,
@@ -165,7 +112,7 @@ public class AppID {
                         }
                         return
                     }
-                    self.tokenManager.invokeTokenRequest(unWrappedCode, callback : onTokenCompletion)
+                    self.tokenManager!.invokeTokenRequest(unWrappedCode, callback : onTokenCompletion)
                 }
                 
                 DispatchQueue.main.async {
@@ -176,11 +123,11 @@ public class AppID {
             }
         }
         
-        if (preferences.clientId.get() == nil || self.preferences.registrationTenantId.get() != self.tenantId) {
+        if (preferences!.clientId.get() == nil || self.preferences!.registrationTenantId.get() != self.tenantId) {
             do {
-                try registrationManager.registerDevice(callback: {(response: Response?, error: Error?) in
+                try registrationManager!.registerDevice(callback: {(response: Response?, error: Error?) in
                     if error == nil && response?.statusCode == 200 {
-                        self.preferences.registrationTenantId.set(self.tenantId)
+                        self.preferences!.registrationTenantId.set(self.tenantId)
                         showLoginWebView()
                     } else {
                         onTokenCompletion?(nil, error == nil ? AppIDError.registrationError(msg: "Could not register device") : error)

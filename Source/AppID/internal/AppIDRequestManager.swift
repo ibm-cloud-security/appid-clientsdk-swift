@@ -47,7 +47,7 @@ internal class AppIDRequestManager {
         var rootUrl:String = ""
         var computedPath:String = path
         
-        if path.hasPrefix(AppID.HTTP_SCHEME) && path.characters.index(of: ":") != nil {
+        if path.hasPrefix("http") && path.characters.index(of: ":") != nil {
             let url = URL(string: path)
             if let pathTemp = url?.path {
                 rootUrl = (path as NSString).replacingOccurrences(of: pathTemp, with: "")

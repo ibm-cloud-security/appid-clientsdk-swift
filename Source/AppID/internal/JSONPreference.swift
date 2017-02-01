@@ -18,7 +18,6 @@ import Foundation
  */
 internal class JSONPreference:StringPreference {
     
-    //TODO: logger
     //TODO: should these be syncronized?
     
     override init(name:String, sharedPreferences: UserDefaults) {

@@ -12,12 +12,14 @@
 
 
 import Foundation
+import BMSCore
+
 public class AuthorizationUIManager {
     var oAuthManager:OAuthManager
     var authorizationDelegate:AuthorizationDelegate
     var authorizationUrl:String
     var redirectUri:String
-    
+    private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationUIManager")
     
     var loginView:safariView?
     init(oAuthManager : OAuthManager, authorizationDelegate: AuthorizationDelegate, authorizationUrl : String, redirectUri: String) {
@@ -28,7 +30,7 @@ public class AuthorizationUIManager {
     }
     
     public func launch() {
-        
+        AuthorizationUIManager.logger.debug(message: "Launching safari view")
         loginView =  safariView(url: URL(string: authorizationUrl )!)
         loginView?.authorizationDelegate = authorizationDelegate
         let mainView  = UIApplication.shared.keyWindow?.rootViewController
@@ -48,6 +50,8 @@ public class AuthorizationUIManager {
                     self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to extract grant code"))
                     return
                 }
+                AuthorizationUIManager.logger.debug(message: "Obtaining tokens")
+
                 self.oAuthManager.tokenManager?.obtainTokens(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
             })
         }
@@ -58,6 +62,7 @@ public class AuthorizationUIManager {
             if let code = url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(AppIDConstants.JSON_CODE_KEY)}).first?.components(separatedBy: "=")[1] {
                 tokenRequest(code: code, errMsg: nil)
             } else {
+                 AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")
                 tokenRequest(code: nil, errMsg: "Failed to extract grant code")
             }
             return true

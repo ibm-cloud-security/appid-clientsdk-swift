@@ -20,7 +20,6 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationManager")
     
     
-    
     init(appid:AppID) {
         //TODO: is this ok?
         self.oAuthManager = appid.oauthManager!
@@ -38,6 +37,7 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
     
     
     internal func isAuthorizationRequired(for httpResponse: Response) -> Bool {
+        AppIDAuthorizationManager.logger.debug(message: "isAuthorizationRequired")
         if let header = httpResponse.headers![caseInsensitive : AppIDConstants.WWW_AUTHENTICATE_HEADER], let authHeader : String = header as? String {
             guard let statusCode = httpResponse.statusCode else {
                 return false
@@ -58,8 +58,9 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
      */
     
     
-    internal func isAuthorizationRequired(for statusCode: Int, httpResponseAuthorizationHeader responseAuthorizationHeader: String) -> Bool {
-        
+    internal func isAuthorizationRequired(for statusCode: Int, httpResponseAuthorizationHeader
+        responseAuthorizationHeader: String) -> Bool {
+          AppIDAuthorizationManager.logger.debug(message: "isAuthorizationRequired")
         if (statusCode == 401 || statusCode == 403) &&
             responseAuthorizationHeader.lowercased().contains(AppIDConstants.BEARER.lowercased()) &&
             responseAuthorizationHeader.lowercased().contains(AppIDConstants.AUTH_REALM.lowercased()) {
@@ -73,7 +74,7 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
     
     
     public func obtainAuthorization(completionHandler callback: BMSCompletionHandler?) {
-        
+         AppIDAuthorizationManager.logger.debug(message: "obtainAuthorization")
         class innerAuthorizationDelegate: AuthorizationDelegate {
             var callback:BMSCompletionHandler?
             init(callback:BMSCompletionHandler?){
@@ -86,7 +87,7 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
                 callback?(nil, AuthorizationError.authorizationFailure("Authorization canceled"))
             }
             func onAuthorizationSuccess (accessToken:AccessToken, identityToken:IdentityToken ) {
-                //TODO: fix this
+                //TODO: what should we do here?
                 callback?(nil,nil);
             }
         }
@@ -95,6 +96,7 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
     }
     
     public func clearAuthorizationData() {
+        AppIDAuthorizationManager.logger.debug(message: "clearAuthorizationData")
         self.oAuthManager.tokenManager?.clearStoredToken()
     }
     
@@ -102,9 +104,6 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
     
     
     
-    internal  init(oAuthManager:OAuthManager) {
-        self.oAuthManager = oAuthManager
-    }
     
     /**
      - returns: The locally stored authorization header or nil if the value does not exist.
@@ -146,10 +145,12 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
      */
     
     internal func addCachedAuthorizationHeader(_ request: NSMutableURLRequest) {
+        AppIDAuthorizationManager.logger.debug(message: "addCachedAuthorizationHeader")
         addAuthorizationHeader(request, header: cachedAuthorizationHeader)
     }
     
     private func addAuthorizationHeader(_ request: NSMutableURLRequest, header:String?) {
+        AppIDAuthorizationManager.logger.debug(message: "addAuthorizationHeader")
         guard let unWrappedHeader = header else {
             return
         }

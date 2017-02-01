@@ -14,7 +14,6 @@ import Foundation
 import SafariServices
 import BMSCore
 public class AppID {
-    //TODO: add good logging to all files
     //TODO: how should someone access a protected resource
 	private(set) var tenantId: String?
 	private(set) var bluemixRegion: String?
@@ -24,7 +23,7 @@ public class AppID {
 
     private(set) var oauthManager:OAuthManager?
     private(set) var loginWidget:LoginWidgetImpl?
-    //TODO: user attr manager
+    //TODO: user attr manager - do we need it
     public static var overrideServerHost: String?
     //TODO: make this singleton correct
     public static let sharedInstance = AppID()

@@ -21,7 +21,6 @@ internal class StringPreference {
     private(set) final var sharedPreferences:UserDefaults = UserDefaults.standard
     private final var name:String
     
-    //TODO: logger
     //TODO: should these be syncronized?
     
     init(name:String, sharedPreferences: UserDefaults) {

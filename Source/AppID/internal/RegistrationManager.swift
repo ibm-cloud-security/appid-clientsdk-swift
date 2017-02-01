@@ -15,7 +15,7 @@ import BMSCore
 internal class RegistrationManager {
     private var appId:AppID
     private var preferenceManager:PreferenceManager
-    //TODO: no persistence policy?
+    //TODO : no persistence policy?
     //TODO : should we implement registaraion keyStore?
     //    private var registrationKeyPair:KeyPair
     //    private var registrationKeyStore:RegistrationKeyStore
@@ -29,8 +29,33 @@ internal class RegistrationManager {
         self.preferenceManager = oauthManager.preferenceManager
     }
     
+    
+    public func ensureRegistered(registrationDelegate:RegistrationDelegate) {
+        let storedClientId:String? = self.getRegistrationDataString(name: "client_id")
+        let storedTenantId:String? = self.preferenceManager.getStringPreference(name: "com.ibm.bluemix.appid.swift.tenantid").get();
+        if(storedClientId != nil && self.appId.tenantId == storedTenantId) {
+            RegistrationManager.logger.debug(message: "OAuth client is already registered.");
+            registrationDelegate.onRegistrationSuccess();
+        } else {
+            RegistrationManager.logger.info(message: "Registering a new OAuth client");
+            self.registerOAuthClient(callback: {(response: Response?, error: Error?) in
+                //TODO: check I did guards ok
+                guard error == nil else {
+                    RegistrationManager.logger.error(message: "Failed to register OAuth client");
+                    registrationDelegate.onRegistrationFailure(var1: "Failed to register OAuth client")
+                    return
+                }
+                
+                RegistrationManager.logger.info(message: "OAuth client successfully registered.");
+                registrationDelegate.onRegistrationSuccess();
+            });
+        }
+        
+    }
+
+    
+    
     internal func registerOAuthClient(callback :@escaping BMSCompletionHandler) {
-        //preferences.clientId.clear()
         let options:RequestOptions = RequestOptions()
         guard let registrationParams = try? createRegistrationParams() else {
             callback(nil, AppIDError.registrationError(msg: "Could not create registration params"))
@@ -96,28 +121,6 @@ internal class RegistrationManager {
         }
     }
     
-    public func ensureRegistered(registrationDelegate:RegistrationDelegate) {
-        let storedClientId:String? = self.getRegistrationDataString(name: "client_id")
-        let storedTenantId:String? = self.preferenceManager.getStringPreference(name: "com.ibm.bluemix.appid.swift.tenantid").get();
-        if(storedClientId != nil && self.appId.tenantId == storedTenantId) {
-            RegistrationManager.logger.debug(message: "OAuth client is already registered.");
-            registrationDelegate.onRegistrationSuccess();
-        } else {
-            RegistrationManager.logger.info(message: "Registering a new OAuth client");
-            self.registerOAuthClient(callback: {(response: Response?, error: Error?) in
-                //TODO: check I did guards ok
-                guard error == nil else {
-                    RegistrationManager.logger.error(message: "Failed to register OAuth client");
-                    registrationDelegate.onRegistrationFailure(var1: "Failed to register OAuth client")
-                    return
-                }
-
-                    RegistrationManager.logger.info(message: "OAuth client successfully registered.");
-                    registrationDelegate.onRegistrationSuccess();
-            });
-        }
-        
-    }
     
     public func getRegistrationData() -> [String:Any]? {
         return self.preferenceManager.getJSONPreference(name: "com.ibm.bluemix.appid.swift.REGISTRATION_DATA").getAsJSON();

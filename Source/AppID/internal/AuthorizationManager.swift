@@ -14,7 +14,7 @@
 import Foundation
 import BMSCore
 public class AuthorizationManager {
-    //TODO: do we need authorization UI manager?
+    //TODO: what is authorization header helper class?
     private static var OAUTH_AUTHORIZATION_PATH = "/authorization";
     static var logger = Logger.logger(name: AppIDConstants.RegistrationManagerLoggerName)
     

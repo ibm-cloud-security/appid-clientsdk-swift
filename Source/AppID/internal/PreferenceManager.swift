@@ -17,6 +17,7 @@ import BMSCore
 internal class PreferenceManager {
     
     private(set) final var sharedPreferences:UserDefaults = UserDefaults.standard
+    private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "PreferenceManager")
     
     public func getStringPreference(name:String) -> StringPreference {
         return StringPreference(name: name, sharedPreferences: sharedPreferences)

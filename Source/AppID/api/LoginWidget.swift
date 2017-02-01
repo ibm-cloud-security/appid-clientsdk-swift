@@ -15,6 +15,6 @@ import Foundation
 
 public protocol LoginWidget{
 	// interface to be defined
-    //TODO : is that interface ok?
+    //TODO: is that interface ok?
     func launch(delegate:AuthorizationDelegate)
 }

@@ -39,7 +39,6 @@ internal class RegistrationManager {
         } else {
             RegistrationManager.logger.info(message: "Registering a new OAuth client");
             self.registerOAuthClient(callback: {(response: Response?, error: Error?) in
-                //TODO: check I did guards ok
                 guard error == nil else {
                     RegistrationManager.logger.error(message: "Failed to register OAuth client");
                     registrationDelegate.onRegistrationFailure(var1: "Failed to register OAuth client")

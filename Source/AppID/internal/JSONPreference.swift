@@ -10,24 +10,37 @@
  *     limitations under the License.
  */
 
+
 import Foundation
-import SafariServices
-import BMSCore
 
-internal class safariView : SFSafariViewController, SFSafariViewControllerDelegate{
+/**
+ * Holds single JSON preference value
+ */
+internal class JSONPreference:StringPreference {
     
-    var authorizationDelegate:AuthorizationDelegate?
-    var url:URL?
-
-    public init(url URL: URL) {
-        super.init(url: URL, entersReaderIfAvailable: false)
-        self.url = URL
-        self.delegate = self
+    //TODO: logger
+    //TODO: should these be syncronized?
+    
+    override init(name:String, sharedPreferences: UserDefaults) {
+        super.init(name: name, sharedPreferences: sharedPreferences)
     }
     
-    public func safariViewControllerDidFinish(_ controller: SFSafariViewController)
-    {
-        authorizationDelegate?.onAuthorizationCanceled()
+    
+    public func set(_ value:[String:Any]?) {
+        try? super.set(Utils.JSONStringify(value as AnyObject))
+    }
+    
+    public func getAsJSON() -> [String:Any]? {
+        guard let stringValue = super.get() else {
+            return nil
+        }
+        return try? Utils.parseJsonStringtoDictionary(stringValue)
+        
     }
 
+
+
+    
 }
+
+

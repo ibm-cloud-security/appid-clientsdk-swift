@@ -13,96 +13,18 @@
 import Foundation
 import BMSCore
 
-internal class AppIDAuthorizationManager : AuthorizationManager {
-    public func obtainAuthorization(completionHandler callback: BMSCompletionHandler?) {
-    AppID.sharedInstance.login(onTokenCompletion: callback)
-    }
-    
-    public func clearAuthorizationData() {
-        return
-    }
+internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
     
     
-    /// Default scheme to use (default is https)
-    public static let CONTENT_TYPE = "Content-Type"
-    
+    private var oAuthManager:OAuthManager
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationManager")
     
-    internal var preferences:AppIDPreferences!
-    
-    //lock constant
-    private var lockQueue = DispatchQueue(label: "AppIDAuthorizationManagerQueue", attributes: DispatchQueue.Attributes.concurrent)
-    
-   
     
     
-    // Specifies the bluemix region of the MCA service instance
-    internal private(set) var bluemixRegion: String?
-    
-    // Specifies the tenant id of the MCA service instance
-    internal private(set) var tenantId: String?
-    
-    /**
-     - returns: The singelton instance
-     */
-    
-    /**
-     The intializer for the `MCAAuthorizationManager` class.
-     
-     - parameter tenantId:           The tenant id of the MCA service instance
-     - parameter bluemixRegion:      The region where your MCA service instance is hosted. Use one of the `BMSClient.REGION` constants.
-     */
-    internal  init(preferences:AppIDPreferences) {
-        self.preferences = preferences
+    init(appid:AppID) {
+        //TODO: is this ok?
+        self.oAuthManager = appid.oauthManager!
     }
-    
-    /**
-     - returns: The locally stored authorization header or nil if the value does not exist.
-     */
-    internal var cachedAuthorizationHeader:String? {
-        get{
-            var returnedValue:String? = nil
-            lockQueue.sync(flags: .barrier, execute: {
-                if let accessToken = self.preferences.accessToken.get(), let idToken = self.preferences.idToken.get() {
-                    returnedValue = "\(AppIDConstants.BEARER) \(accessToken) \(idToken)"
-                }
-            })
-            return returnedValue
-        }
-    }
-    
-    /**
-     - returns: User identity
-     */
-    internal var userIdentity:UserIdentity? {
-        get{
-//            let userIdentityJson = preferences.userIdentity.getAsMap()
-            return BaseUserIdentity()
-        }
-    }
-    
-    /**
-     - returns: Device identity
-     */
-    internal var deviceIdentity:DeviceIdentity {
-        get{
-//            let deviceIdentityJson = preferences.deviceIdentity.getAsMap()
-            return BaseDeviceIdentity()
-        }
-    }
-    
-    /**
-     - returns: Application identity
-     */
-    internal var appIdentity:AppIdentity {
-        get{
-//            let appIdentityJson = preferences.appIdentity.getAsMap()
-            return BaseAppIdentity()
-        }
-    }
-    
-    private init() {
-        }
     
     /**
      A response is an OAuth error response only if,
@@ -148,6 +70,75 @@ internal class AppIDAuthorizationManager : AuthorizationManager {
     }
     
     
+    
+    
+    public func obtainAuthorization(completionHandler callback: BMSCompletionHandler?) {
+        
+        class innerAuthorizationDelegate: AuthorizationDelegate {
+            var callback:BMSCompletionHandler?
+            init(callback:BMSCompletionHandler?){
+                self.callback = callback
+            }
+            func onAuthorizationFailure(error err:AuthorizationError) {
+                callback?(nil,err)
+            }
+            func onAuthorizationCanceled () {
+                callback?(nil, AuthorizationError.authorizationFailure("Authorization canceled"))
+            }
+            func onAuthorizationSuccess (accessToken:AccessToken, identityToken:IdentityToken ) {
+                //TODO: fix this
+                callback?(nil,nil);
+            }
+        }
+        
+        oAuthManager.authorizationManager?.launchAuthorizationUI(authorizationDelegate: innerAuthorizationDelegate(callback: callback))
+    }
+    
+    public func clearAuthorizationData() {
+        self.oAuthManager.tokenManager?.clearStoredToken()
+    }
+    
+    
+    
+    
+    
+    internal  init(oAuthManager:OAuthManager) {
+        self.oAuthManager = oAuthManager
+    }
+    
+    /**
+     - returns: The locally stored authorization header or nil if the value does not exist.
+     */
+    internal var cachedAuthorizationHeader:String? {
+        get{
+            AppIDAuthorizationManager.logger.debug(message: "getCachedAuthorizationHeader")
+            guard let accessToken = self.accessToken, let identityToken = self.identityToken else {
+                return nil
+            }
+            return "Bearer " + accessToken.raw + " " + identityToken.raw
+        }
+    }
+    
+    
+    //TODO: what should identities return
+    
+    internal var userIdentity:UserIdentity? {
+        return nil
+    }
+    internal var deviceIdentity:DeviceIdentity {
+        return BaseDeviceIdentity()
+    }
+    internal var appIdentity:AppIdentity {
+        return BaseAppIdentity()
+    }
+    public var accessToken:AccessToken? {
+        return self.oAuthManager.tokenManager?.latestAccessToken
+    }
+    
+    public var identityToken:IdentityToken? {
+        return self.oAuthManager.tokenManager?.latestIdentityToken
+    }
+    
     /**
      Adds the cached authorization header to the given URL connection object.
      If the cached authorization header is equal to nil then this operation has no effect.
@@ -165,9 +156,13 @@ internal class AppIDAuthorizationManager : AuthorizationManager {
         request.setValue(unWrappedHeader, forHTTPHeaderField: AppIDConstants.AUTHORIZATION_HEADER)
     }
     
-    
-    internal func authorizationPersistencePolicy() -> PersistencePolicy {
-        return preferences.persistencePolicy.get()
+    public func logout() {
+        //TODO: this is not really logout
+        self.clearAuthorizationData()
     }
-
+    
+    
+    
+    
+    
 }

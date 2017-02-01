@@ -13,12 +13,14 @@
 
 import Foundation
 
-public protocol IdentityToken: Token{
-	var name: String {get}
-	var email: String {get}
-	var gender: String {get}
-	var locale: String {get}
-	var picture: String {get}
-	var identities: Array<Dictionary<String, Any>> {get}
-	var oauthClient: OAuthClient {get}
+public class LoginWidgetImpl : LoginWidget {
+    
+    var oauthManager:OAuthManager
+    init(oauthManager:OAuthManager) {
+        self.oauthManager = oauthManager
+    }
+    //TODO: is this api OK?
+    public func launch(delegate: AuthorizationDelegate) {
+        self.oauthManager.authorizationManager?.launchAuthorizationUI(authorizationDelegate: delegate)
+    }
 }

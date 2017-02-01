@@ -13,12 +13,18 @@
 
 import Foundation
 
-public protocol IdentityToken: Token{
-	var name: String {get}
-	var email: String {get}
-	var gender: String {get}
-	var locale: String {get}
-	var picture: String {get}
-	var identities: Array<Dictionary<String, Any>> {get}
-	var oauthClient: OAuthClient {get}
+
+public class Config {
+    private static var serverUrlPrefix = "https://imf-authserver";
+    
+    //TODO: are the ! here correct?
+    public static func getServerUrl(appId:AppID) -> String{
+    var serverUrl = "https://imf-authserver" + appId.bluemixRegion! + "/oauth/v3/";
+        if let overrideServerHost = AppID.overrideServerHost {
+        serverUrl = overrideServerHost
+    }
+    
+    serverUrl = serverUrl + appId.tenantId!
+    return serverUrl;
+    }
 }

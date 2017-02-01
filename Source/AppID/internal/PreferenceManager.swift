@@ -11,14 +11,23 @@
  */
 
 
-import Foundation
+import BMSCore
 
-public protocol IdentityToken: Token{
-	var name: String {get}
-	var email: String {get}
-	var gender: String {get}
-	var locale: String {get}
-	var picture: String {get}
-	var identities: Array<Dictionary<String, Any>> {get}
-	var oauthClient: OAuthClient {get}
-}
+
+internal class PreferenceManager {
+    
+    private(set) final var sharedPreferences:UserDefaults = UserDefaults.standard
+    
+    public func getStringPreference(name:String) -> StringPreference {
+        return StringPreference(name: name, sharedPreferences: sharedPreferences)
+    }
+    
+    public func getJSONPreference(name:String) -> JSONPreference {
+        return JSONPreference(name: name, sharedPreferences: sharedPreferences)
+    }
+
+    
+    
+ }
+
+

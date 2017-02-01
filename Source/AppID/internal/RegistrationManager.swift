@@ -13,34 +13,39 @@
 import Foundation
 import BMSCore
 internal class RegistrationManager {
+    private var appId:AppID
+    private var preferenceManager:PreferenceManager
+    //TODO: no persistence policy?
+    //TODO : should we implement registaraion keyStore?
+    //    private var registrationKeyPair:KeyPair
+    //    private var registrationKeyStore:RegistrationKeyStore
     
-    private var preferences:AppIDPreferences
     internal static let logger = Logger.logger(name: AppIDConstants.RegistrationManagerLoggerName)
     
     
-    internal init(preferences:AppIDPreferences)
+    internal init(oauthManager:OAuthManager)
     {
-        self.preferences = preferences
-        _ = self.preferences.persistencePolicy.set(PersistencePolicy.never, shouldUpdateTokens: false);
+        self.appId = oauthManager.appId
+        self.preferenceManager = oauthManager.preferenceManager
     }
     
-    internal func registerDevice(callback :@escaping BMSCompletionHandler) throws {
-        preferences.clientId.clear()
+    internal func registerOAuthClient(callback :@escaping BMSCompletionHandler) {
+        //preferences.clientId.clear()
         let options:RequestOptions = RequestOptions()
-        options.json = try createRegistrationParams()
+        guard let registrationParams = try? createRegistrationParams() else {
+            callback(nil, AppIDError.registrationError(msg: "Could not create registration params"))
+            return
+        }
+        options.json = registrationParams
         options.requestMethod = HttpMethod.POST
         
         let internalCallBack:BMSCompletionHandler = {(response: Response?, error: Error?) in
             if error == nil {
-                if let unWrappedResponse = response, unWrappedResponse.isSuccessful {
-                    do {
-                        try self.saveClientId(response)
-                        callback(response, error);
-                    } catch(let thrownError) {
-                        callback(nil, thrownError)
-                    }
-                }
-                else {
+                if let unWrappedResponse = response, unWrappedResponse.isSuccessful, let responseText = unWrappedResponse.responseText {
+                        self.preferenceManager.getJSONPreference(name: "com.ibm.bluemix.appid.swift.REGISTRATION_DATA").set(try? Utils.parseJsonStringtoDictionary(responseText))
+                        self.preferenceManager.getStringPreference(name: "com.ibm.bluemix.appid.swift.tenantid").set(self.appId.tenantId)
+                        callback(response, nil);
+                } else {
                     callback(response, error);
                 }
             } else {
@@ -49,28 +54,19 @@ internal class RegistrationManager {
         }
         let appIDRequestManager:AppIDRequestManager = AppIDRequestManager(completionHandler: internalCallBack)
         do {
-            try  appIDRequestManager.send(getRegistrationUrl(), options: options )
+            try  appIDRequestManager.send(Config.getServerUrl(appId: self.appId) + "/clients", options: options )
         } catch {
             callback(nil, error);
         }
         
     }
-    private func getRegistrationUrl() -> String {
-        return AppID.sharedInstance.serverUrl
-            + "/"
-            + AppIDConstants.V3_AUTH_PATH
-            + AppID.sharedInstance.tenantId!
-            + "/"
-            + AppIDConstants.clientsEndPoint
-    }
-    
     
     /*
-  
- */
+     
+     */
     private func createRegistrationParams() throws -> [String:Any]{
         do {
-             try SecurityUtils.generateKeyPair(512, publicTag: AppIDConstants.publicKeyIdentifier, privateTag: AppIDConstants.privateKeyIdentifier)
+            try SecurityUtils.generateKeyPair(512, publicTag: AppIDConstants.publicKeyIdentifier, privateTag: AppIDConstants.privateKeyIdentifier)
             let deviceIdentity = BaseDeviceIdentity()
             let appIdentity = BaseAppIdentity()
             var params = [String : Any]()
@@ -100,19 +96,66 @@ internal class RegistrationManager {
         }
     }
     
-    
-    
-    private func saveClientId(_ response:Response?) throws {
-        guard let responseBody = response?.responseText, let data = responseBody.data(using: String.Encoding.utf8), let jsonResponse = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] else {
-            throw AppIDError.jsonUtilsError(msg: "Json is malformed")
-        }
-        //save the clientId
-        if let id = jsonResponse[caseInsensitive : AppIDConstants.client_id_String] as? String {
-            preferences.clientId.set(id)
+    public func ensureRegistered(registrationDelegate:RegistrationDelegate) {
+        let storedClientId:String? = self.getRegistrationDataString(name: "client_id")
+        let storedTenantId:String? = self.preferenceManager.getStringPreference(name: "com.ibm.bluemix.appid.swift.tenantid").get();
+        if(storedClientId != nil && self.appId.tenantId == storedTenantId) {
+            RegistrationManager.logger.debug(message: "OAuth client is already registered.");
+            registrationDelegate.onRegistrationSuccess();
         } else {
-            throw AppIDError.registrationError(msg: "Could not extract client id from response")
+            RegistrationManager.logger.info(message: "Registering a new OAuth client");
+            self.registerOAuthClient(callback: {(response: Response?, error: Error?) in
+                //TODO: check I did guards ok
+                guard error == nil else {
+                    RegistrationManager.logger.error(message: "Failed to register OAuth client");
+                    registrationDelegate.onRegistrationFailure(var1: "Failed to register OAuth client")
+                    return
+                }
+
+                    RegistrationManager.logger.info(message: "OAuth client successfully registered.");
+                    registrationDelegate.onRegistrationSuccess();
+            });
         }
-        AppID.logger.debug(message: "client id successfully saved")
+        
+    }
+    
+    public func getRegistrationData() -> [String:Any]? {
+        return self.preferenceManager.getJSONPreference(name: "com.ibm.bluemix.appid.swift.REGISTRATION_DATA").getAsJSON();
+    }
+    
+    public func getRegistrationDataString(name:String) -> String? {
+        guard let registrationData = self.getRegistrationData() else {
+            return nil
+        }
+        return registrationData[name] as? String;
+    }
+    
+    public func getRegistrationDataString(arrayName:String, arrayIndex:Int) -> String? {
+        guard let registrationData = self.getRegistrationData() else {
+            return nil
+        }
+        return (registrationData[arrayName] as? NSArray)?[arrayIndex] as? String
+    }
+    
+    
+    public func getRegistrationDataObject(name:String) -> [String:Any]? {
+        guard let registrationData = self.getRegistrationData() else {
+            return nil
+        }
+        return registrationData[name] as? [String:Any]
+    }
+    public func getRegistrationDataArray(name:String) -> NSArray? {
+        guard let registrationData = self.getRegistrationData() else {
+            return nil
+        }
+        return registrationData[name] as? NSArray
+    }
+    
+    
+    public func clearRegistrationData() {
+        self.preferenceManager.getStringPreference(name: "com.ibm.bluemix.appid.swift.tenantid").clear();
+        self.preferenceManager.getJSONPreference(name: "com.ibm.bluemix.appid.swift.REGISTRATION_DATA").clear();
+
     }
     
     

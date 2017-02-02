@@ -32,12 +32,11 @@ public class AppID {
     private init() {}
     
     
-    public func initialize(tenantId : String, bluemixRegion : String) -> AppID {
+    public func initialize(tenantId : String, bluemixRegion : String) {
         self.tenantId = tenantId
         self.bluemixRegion = bluemixRegion
 		self.oauthManager = OAuthManager(appId: self)
         self.loginWidget = LoginWidgetImpl(oauthManager: self.oauthManager!)
-        return self
     }
 	
     

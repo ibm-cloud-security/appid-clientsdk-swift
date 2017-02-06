@@ -103,7 +103,7 @@ internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     }
     
     
-    //TODO: what should identities return - should create them according to latest id token
+    //TODO: what should identities return - should create them according to latest id token - consult anton and vitaly
     
     internal var userIdentity:UserIdentity? {
         return nil

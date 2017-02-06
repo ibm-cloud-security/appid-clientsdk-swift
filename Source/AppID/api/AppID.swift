@@ -19,7 +19,8 @@ public class AppID {
 	private(set) var bluemixRegion: String?
     private(set) var oauthManager: OAuthManager?
     private(set) var loginWidget: LoginWidgetImpl?
-    //TODO: user attr manager - do we need it - yes, implement stub like android - sync with nitzan
+    private var userAttributeManager:UserAttributeManager?
+    
     public static var overrideServerHost: String?
     public static let sharedInstance = AppID()
     internal static let logger =  Logger.logger(name: AppIDConstants.AppIDLoggerName)

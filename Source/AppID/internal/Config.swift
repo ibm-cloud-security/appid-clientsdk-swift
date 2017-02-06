@@ -16,15 +16,21 @@ import Foundation
 
 internal class Config {
     private static var serverUrlPrefix = "https://mobileclientaccess"
- 
-    internal static func getServerUrl(appId:AppID) -> String{
-        //TODO: remove this !
-    var serverUrl = Config.serverUrlPrefix + appId.bluemixRegion! + "/oauth/v3/"
-        if let overrideServerHost = AppID.overrideServerHost {
-        serverUrl = overrideServerHost
-    }
     
-    serverUrl = serverUrl + appId.tenantId!
-    return serverUrl
+    
+    //TODO: ask vitaly and anton opinion
+    internal static func getServerUrl(appId:AppID) -> String{
+        
+        guard let region = appId.bluemixRegion, let tenant = appId.tenantId else {
+            return "could not create server url"
+        }
+        
+        var serverUrl = Config.serverUrlPrefix + region + "/oauth/v3/"
+        if let overrideServerHost = AppID.overrideServerHost {
+            serverUrl = overrideServerHost
+        }
+        
+        serverUrl = serverUrl + tenant
+        return serverUrl
     }
 }

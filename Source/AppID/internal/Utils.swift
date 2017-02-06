@@ -14,70 +14,8 @@ import Foundation
 import BMSCore
 
 
-extension Dictionary where Key : Any {
-    subscript(caseInsensitive key : Key) -> Value? {
-        get {
-            if let stringKey = key as? String {
-                let searchKeyLowerCase = stringKey.lowercased()
-                for currentKey in self.keys {
-                    if let stringCurrentKey = currentKey as? String {
-                        let currentKeyLowerCase = stringCurrentKey.lowercased()
-                        if currentKeyLowerCase == searchKeyLowerCase {
-                            return self[currentKey]
-                        }
-                    }
-                }
-            }
-            return nil
-        }
-    }
-}
-
 public class Utils {
-    internal static func concatenateUrls(_ rootUrl:String, path:String) -> String {
-        guard !rootUrl.isEmpty else {
-            return path
-        }
-        
-        var retUrl = rootUrl
-        if !retUrl.hasSuffix("/") {
-            retUrl += "/"
-        }
-        
-        if path.hasPrefix("/") {
-            retUrl += path.substring(from: path.index(path.startIndex, offsetBy: 1))
-        } else {
-            retUrl += path
-        }
-        
-        return retUrl
-    }
     
-    internal static func getParameterValueFromQuery(_ query:String?, paramName:String, caseSensitive:Bool) -> String? {
-        guard let myQuery = query  else {
-            return nil
-        }
-        
-        let paramaters = myQuery.components(separatedBy: "&")
-        
-        for val in paramaters {
-            let pairs = val.components(separatedBy: "=")
-            
-            if (pairs.endIndex != 2) {
-                continue
-            }
-            if(caseSensitive) {
-                if let normal = pairs[0].removingPercentEncoding, normal == paramName {
-                    return pairs[1].removingPercentEncoding
-                }
-            } else {
-                if let normal = pairs[0].removingPercentEncoding?.lowercased(), normal == paramName.lowercased() {
-                    return pairs[1].removingPercentEncoding
-                }
-            }
-        }
-        return nil
-    }
     
     public static func JSONStringify(_ value: AnyObject, prettyPrinted:Bool = false) throws -> String{
         
@@ -107,7 +45,7 @@ public class Utils {
         }
     }
     
-    // TODO: talk to anton why i didnt delete this method
+    // TODO: did not delete this method as it is used in appidconstants
     
     //Return the App Name and Version
     internal static func getApplicationDetails() -> (name:String, version:String) {

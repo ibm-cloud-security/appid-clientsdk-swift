@@ -17,12 +17,10 @@ import Foundation
 internal class Config {
     private static var serverUrlPrefix = "https://mobileclientaccess"
     
-    
-    //TODO: ask vitaly and anton opinion
     internal static func getServerUrl(appId:AppID) -> String{
         
         guard let region = appId.bluemixRegion, let tenant = appId.tenantId else {
-            return "could not create server url"
+            return serverUrlPrefix
         }
         
         var serverUrl = Config.serverUrlPrefix + region + "/oauth/v3/"

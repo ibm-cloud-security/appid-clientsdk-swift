@@ -52,14 +52,14 @@ internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     
     internal func isAuthorizationRequired(for statusCode: Int, httpResponseAuthorizationHeader
         responseAuthorizationHeader: String) -> Bool {
-            return AuthorizationHeaderHelper.isAuthorizationRequired(statusCode: statusCode, header: responseAuthorizationHeader)
+        return AuthorizationHeaderHelper.isAuthorizationRequired(statusCode: statusCode, header: responseAuthorizationHeader)
     }
     
     
     
     
     public func obtainAuthorization(completionHandler callback: BMSCompletionHandler?) {
-         AppIDAuthorizationManager.logger.debug(message: "obtainAuthorization")
+        AppIDAuthorizationManager.logger.debug(message: "obtainAuthorization")
         class innerAuthorizationDelegate: AuthorizationDelegate {
             var callback:BMSCompletionHandler?
             init(callback:BMSCompletionHandler?){
@@ -103,13 +103,22 @@ internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     }
     
     
-    //TODO: what should identities return - should create them according to latest id token - consult anton and vitaly
+    
     
     internal var userIdentity:UserIdentity? {
-        return nil
+        let idToken = self.identityToken
+        let identity:[String:Any] = [
+            BaseUserIdentity.Key.authorizedBy : idToken?.authBy ?? "",
+            BaseUserIdentity.Key.displayName : idToken?.name ?? "",
+            //TODO: what should be this value?
+            BaseUserIdentity.Key.ID : idToken?.name ?? ""
+        ]
+        return BaseUserIdentity(map: identity)
+        
     }
     internal var deviceIdentity:DeviceIdentity {
         return BaseDeviceIdentity()
+        
     }
     internal var appIdentity:AppIdentity {
         return BaseAppIdentity()

@@ -19,7 +19,7 @@ public class LoginWidgetImpl: LoginWidget {
     init(oauthManager:OAuthManager) {
         self.oauthManager = oauthManager
     }
-    //TODO: is this api OK?
+    
     public func launch(delegate: AuthorizationDelegate) {
         self.oauthManager.authorizationManager?.launchAuthorizationUI(authorizationDelegate: delegate)
     }

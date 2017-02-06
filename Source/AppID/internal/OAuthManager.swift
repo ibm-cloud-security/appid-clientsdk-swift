@@ -15,14 +15,14 @@ import Foundation
 
 
 public class OAuthManager {
-    private(set) var appId:AppID;
+    private(set) var appId:AppID
     private(set) var preferenceManager:PreferenceManager
     private(set) var registrationManager:RegistrationManager?
     private(set) var authorizationManager:AuthorizationManager?
     private(set) var tokenManager:TokenManager?
-    //TODO: do we like this solution for the init (making them optional)
+
     init(appId:AppID) {
-        self.appId = appId;
+        self.appId = appId
         self.preferenceManager = PreferenceManager()
         self.registrationManager = RegistrationManager(oauthManager: self)
         self.authorizationManager = AuthorizationManager(oAuthManager: self)

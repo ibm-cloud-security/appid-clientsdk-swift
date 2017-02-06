@@ -14,17 +14,17 @@
 import Foundation
 
 
-public class Config {
-    private static var serverUrlPrefix = "https://imf-authserver";
-    
-    //TODO: are the ! here correct?
-    public static func getServerUrl(appId:AppID) -> String{
-    var serverUrl = "https://imf-authserver" + appId.bluemixRegion! + "/oauth/v3/";
+internal class Config {
+    private static var serverUrlPrefix = "https://mobileclientaccess"
+ 
+    internal static func getServerUrl(appId:AppID) -> String{
+        //TODO: remove this !
+    var serverUrl = Config.serverUrlPrefix + appId.bluemixRegion! + "/oauth/v3/"
         if let overrideServerHost = AppID.overrideServerHost {
         serverUrl = overrideServerHost
     }
     
     serverUrl = serverUrl + appId.tenantId!
-    return serverUrl;
+    return serverUrl
     }
 }

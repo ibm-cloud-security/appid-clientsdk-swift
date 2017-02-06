@@ -13,7 +13,7 @@
 
 import Foundation
 
-public class LoginWidgetImpl : LoginWidget {
+public class LoginWidgetImpl: LoginWidget {
     
     var oauthManager:OAuthManager
     init(oauthManager:OAuthManager) {

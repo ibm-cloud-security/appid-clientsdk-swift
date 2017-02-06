@@ -107,16 +107,16 @@ public class Utils {
         }
     }
     
+    // TODO: talk to anton why i didnt delete this method
+    
     //Return the App Name and Version
     internal static func getApplicationDetails() -> (name:String, version:String) {
         var version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
         var name = Bundle.main.bundleIdentifier
         if name == nil {
-            AppID.logger.error(message: "Could not retrieve application name. Application name is set to nil")
             name = "nil"
         }
         if version == nil {
-            AppID.logger.error(message: "Could not retrieve application version. Application version is set to nil")
             version = "nil"
         }
         return (name!, version!)

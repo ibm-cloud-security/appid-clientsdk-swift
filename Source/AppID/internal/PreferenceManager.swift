@@ -15,7 +15,7 @@ import BMSCore
 
 
 internal class PreferenceManager {
-    
+    //TODO: can we save to something else then user defaults standard -- not finding something -- looks like its best practice
     private(set) final var sharedPreferences:UserDefaults = UserDefaults.standard
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "PreferenceManager")
     

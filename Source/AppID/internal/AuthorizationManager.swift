@@ -14,8 +14,8 @@
 import Foundation
 import BMSCore
 public class AuthorizationManager {
-    //TODO: what is authorization header helper class?
-    private static var OAUTH_AUTHORIZATION_PATH = "/authorization";
+
+    private static var OAUTH_AUTHORIZATION_PATH = "/authorization"
     static var logger = Logger.logger(name: AppIDConstants.RegistrationManagerLoggerName)
     
     var registrationManager:RegistrationManager
@@ -23,13 +23,12 @@ public class AuthorizationManager {
     var oAuthManager:OAuthManager
     var authorizationUIManager:AuthorizationUIManager?
     init(oAuthManager:OAuthManager) {
-        self.oAuthManager = oAuthManager;
+        self.oAuthManager = oAuthManager
         self.appid = oAuthManager.appId
         self.registrationManager = oAuthManager.registrationManager!
     }
     
-    
-    public func getAuthorizationUrl(useLoginWidget:Bool, idpName:String?) -> String {
+    public func getAuthorizationUrl(idpName:String?) -> String {
         var url = Config.getServerUrl(appId: self.appid) + "/authorization?response_type=code"
         if let clientId = self.registrationManager.getRegistrationDataString(name: "client_id") {
             url += "&client_id=" + clientId
@@ -37,7 +36,7 @@ public class AuthorizationManager {
         if let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: "redirect_uris", arrayIndex: 0) {
             url += "&redirect_uri=" + redirectUri
         }
-        url += "&scope=openid" + "&use_login_widget=" + useLoginWidget.description
+        url += "&scope=openid"
         if let unWrappedIdpName = idpName {
             url += "&idp=" + unWrappedIdpName
         }
@@ -45,44 +44,39 @@ public class AuthorizationManager {
     }
     
     public func launchAuthorizationUI(authorizationDelegate:AuthorizationDelegate) {
-        class registrationDelegateImpl:RegistrationDelegate {
-            var authorizationManager:AuthorizationManager
-            var authorizationDelegate:AuthorizationDelegate
-            init(authorizationManager:AuthorizationManager, authorizationDelegate:AuthorizationDelegate){
-                self.authorizationManager = authorizationManager
-                self.authorizationDelegate = authorizationDelegate
+        
+        self.registrationManager.ensureRegistered(callback: {(error:Error?) in
+            guard error == nil else {
+                AuthorizationManager.logger.error(message: error!.localizedDescription)
+                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.localizedDescription))
+                return
             }
-            func onRegistrationFailure(var1 message:String) {
-                AuthorizationManager.logger.error(message: message);
-                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(message))
-            }
-            func onRegistrationSuccess() {
-                let authorizationUrl = authorizationManager.getAuthorizationUrl(useLoginWidget: true, idpName: nil)
-                let redirectUri = authorizationManager.registrationManager.getRegistrationDataString(arrayName: "redirect_uris", arrayIndex: 0);
-                authorizationManager.authorizationUIManager = AuthorizationUIManager(oAuthManager: authorizationManager.oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: authorizationUrl, redirectUri: redirectUri!);
-                authorizationManager.authorizationUIManager?.launch();
-            }
-        }
-        self.registrationManager.ensureRegistered(registrationDelegate: registrationDelegateImpl(authorizationManager: self, authorizationDelegate: authorizationDelegate))
+            let authorizationUrl = self.getAuthorizationUrl(idpName: nil)
+            let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: "redirect_uris", arrayIndex: 0)
+            self.authorizationUIManager = AuthorizationUIManager(oAuthManager: self.oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: authorizationUrl, redirectUri: redirectUri!)
+            self.authorizationUIManager?.launch()
+            
+        })
     }
     
     
     public func loginAnonymously(accessTokenString:String?, authorizationDelegate:AuthorizationDelegate) {
+        //TODO: not fully implemented yet
         if let unwrappedAccessTokenString = accessTokenString {
             AccessTokenImpl(with: unwrappedAccessTokenString)
         } else {
             let accessToken = self.oAuthManager.tokenManager?.latestAccessToken
         }
-        let authorizationUrl = self.getAuthorizationUrl(useLoginWidget: false, idpName: "anon")
+        let authorizationUrl = self.getAuthorizationUrl(idpName: "appid_anon")
     }
     
     
     public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         return (self.authorizationUIManager?.application(application, open: url, options: options))!
     }
-
     
-        
+    
+    
     
     
 }

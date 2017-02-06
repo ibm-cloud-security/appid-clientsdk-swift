@@ -13,7 +13,7 @@
 import Foundation
 import BMSCore
 
-internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
+internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     
     
     private var oAuthManager:OAuthManager
@@ -21,7 +21,6 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
     
     
     init(appid:AppID) {
-        //TODO: is this ok?
         self.oAuthManager = appid.oauthManager!
     }
     
@@ -38,14 +37,7 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
     
     internal func isAuthorizationRequired(for httpResponse: Response) -> Bool {
         AppIDAuthorizationManager.logger.debug(message: "isAuthorizationRequired")
-        if let header = httpResponse.headers![caseInsensitive : AppIDConstants.WWW_AUTHENTICATE_HEADER], let authHeader : String = header as? String {
-            guard let statusCode = httpResponse.statusCode else {
-                return false
-            }
-            return isAuthorizationRequired(for: statusCode, httpResponseAuthorizationHeader: authHeader)
-        }
-        
-        return false
+        return AuthorizationHeaderHelper.isAuthorizationRequired(for: httpResponse)
     }
     
     /**
@@ -60,14 +52,7 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
     
     internal func isAuthorizationRequired(for statusCode: Int, httpResponseAuthorizationHeader
         responseAuthorizationHeader: String) -> Bool {
-          AppIDAuthorizationManager.logger.debug(message: "isAuthorizationRequired")
-        if (statusCode == 401 || statusCode == 403) &&
-            responseAuthorizationHeader.lowercased().contains(AppIDConstants.BEARER.lowercased()) &&
-            responseAuthorizationHeader.lowercased().contains(AppIDConstants.AUTH_REALM.lowercased()) {
-            return true
-        }
-        
-        return false
+            return AuthorizationHeaderHelper.isAuthorizationRequired(statusCode: statusCode, header: responseAuthorizationHeader)
     }
     
     
@@ -87,7 +72,6 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
                 callback?(nil, AuthorizationError.authorizationFailure("Authorization canceled"))
             }
             func onAuthorizationSuccess (accessToken:AccessToken, identityToken:IdentityToken ) {
-                //TODO: what should we do here?
                 callback?(nil,nil);
             }
         }
@@ -119,7 +103,7 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
     }
     
     
-    //TODO: what should identities return
+    //TODO: what should identities return - should create them according to latest id token
     
     internal var userIdentity:UserIdentity? {
         return nil
@@ -158,7 +142,6 @@ internal class AppIDAuthorizationManager : BMSCore.AuthorizationManager {
     }
     
     public func logout() {
-        //TODO: this is not really logout
         self.clearAuthorizationData()
     }
     

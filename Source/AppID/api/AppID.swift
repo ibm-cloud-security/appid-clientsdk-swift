@@ -14,43 +14,36 @@ import Foundation
 import SafariServices
 import BMSCore
 public class AppID {
-    //TODO: how should someone access a protected resource
+    //TODO: check access a protected resource
 	private(set) var tenantId: String?
 	private(set) var bluemixRegion: String?
-
-	internal var loginView:safariView?
-    internal var tokenRequest : ((_ code: String?, _ errMsg:String?) -> Void)?
-
-    private(set) var oauthManager:OAuthManager?
-    private(set) var loginWidget:LoginWidgetImpl?
-    //TODO: user attr manager - do we need it
+    private(set) var oauthManager: OAuthManager?
+    private(set) var loginWidget: LoginWidgetImpl?
+    //TODO: user attr manager - do we need it - yes, implement stub like android - sync with nitzan
     public static var overrideServerHost: String?
-    //TODO: make this singleton correct
     public static let sharedInstance = AppID()
     internal static let logger =  Logger.logger(name: AppIDConstants.AppIDLoggerName)
     
     private init() {}
     
     
-    public func initialize(tenantId : String, bluemixRegion : String) {
+    public func initialize(tenantId: String, bluemixRegion: String) {
         self.tenantId = tenantId
         self.bluemixRegion = bluemixRegion
 		self.oauthManager = OAuthManager(appId: self)
         self.loginWidget = LoginWidgetImpl(oauthManager: self.oauthManager!)
     }
 	
-    
-    
-    //TODO: what should these two functions do?
     public func loginAnonymously(authorizationDelegate:AuthorizationDelegate) {
+        //TODO: we need to complete this
         self.loginAnonymously(accessToken: nil, authorizationDelegate: authorizationDelegate)
     }
     
     public func loginAnonymously(accessToken:String?, authorizationDelegate:AuthorizationDelegate) {
-        
+        //TODO: we need to complete this
     }
     
-	public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+	public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {
             return (self.oauthManager?.authorizationManager?.application(application, open: url, options: options))!
     }
     

@@ -22,7 +22,7 @@ public class AuthorizationUIManager {
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationUIManager")
     
     var loginView:safariView?
-    init(oAuthManager : OAuthManager, authorizationDelegate: AuthorizationDelegate, authorizationUrl : String, redirectUri: String) {
+    init(oAuthManager: OAuthManager, authorizationDelegate: AuthorizationDelegate, authorizationUrl: String, redirectUri: String) {
         self.oAuthManager = oAuthManager
         self.authorizationDelegate = authorizationDelegate
         self.authorizationUrl = authorizationUrl
@@ -39,7 +39,7 @@ public class AuthorizationUIManager {
         }
     }
     
-    public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
+    public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {
         func tokenRequest(code: String?, errMsg:String?) {
             loginView?.dismiss(animated: true, completion: { () -> Void in
                 guard errMsg == nil else {

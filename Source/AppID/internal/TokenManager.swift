@@ -28,21 +28,22 @@ internal class TokenManager {
     
     public func obtainTokens(code:String, authorizationDelegate:AuthorizationDelegate) {
         TokenManager.logger.debug(message: "obtainTokens")
-        let options:RequestOptions  = RequestOptions()
         let tokenUrl = Config.getServerUrl(appId: self.appid) + "/token"
-        options.requestMethod = HttpMethod.POST
         
         guard let clientId = self.registrationManager.getRegistrationDataString(name: "client_id"), let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: "redirect_uris", arrayIndex: 0) else {
          return
         }
         
+        var headers:[String:String] = [:]
+        
         do {
-        options.headers = ["Authorization" : try createAuthenticationHeader(clientId: clientId)]
-        } catch (let e) {
+        headers = ["Authorization" : try createAuthenticationHeader(clientId: clientId),
+                   Request.contentType : "application/x-www-form-urlencoded"]
+        } catch (_) {
             TokenManager.logger.error(message: "Failed to create authentication header")
            return
         }
-        options.parameters = [
+        let bodyParams = [
             "code" : code,
             "client_id" : clientId,
             "grant_type" : "authorization_code",
@@ -61,24 +62,32 @@ internal class TokenManager {
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
             }
         }
-        let appIDRequestManager:AppIDRequestManager = AppIDRequestManager(completionHandler: internalCallback)
-        //TODO: handle err
-        try! appIDRequestManager.send(tokenUrl, options: options )
-
         
-        
+    
+        let request:Request = Request(url: tokenUrl,method: HttpMethod.POST, headers: headers, queryParameters: nil, timeout: 0)
+        request.timeout = BMSClient.sharedInstance.requestTimeout
+        var body = ""
+        var i=0
+        for (key, val) in bodyParams {
+            body += "\(Utils.urlEncode(key))=\(Utils.urlEncode(val))"
+            if i < bodyParams.count - 1 {
+                body += "&"
+            }
+            i+=1
+        }
+        request.send(requestBody: body.data(using: .utf8), completionHandler: internalCallback)
     }
     
     
     public func extractTokens(response:Response, authorizationDelegate:AuthorizationDelegate) {
-        TokenManager.logger.debug(message: "Extracting tokens from server response");
+        TokenManager.logger.debug(message: "Extracting tokens from server response")
         
         guard let responseText = response.responseText else {
             TokenManager.logger.error(message: "Failed to parse server response")
             return
         }
         do {
-        var responseJson =  try Utils.parseJsonStringtoDictionary(responseText);
+        var responseJson =  try Utils.parseJsonStringtoDictionary(responseText)
         
             guard let accessTokenString = (responseJson["access_token"] as? String), let idTokenString = (responseJson["id_token"] as? String) else {
                 TokenManager.logger.error(message: "Failed to parse server response")
@@ -88,9 +97,9 @@ internal class TokenManager {
                 TokenManager.logger.error(message: "Failed to parse tokens")
                 return
             }
-            self.latestAccessToken = accessToken;
-            self.latestIdentityToken = identityToken;
-            authorizationDelegate.onAuthorizationSuccess(accessToken: accessToken, identityToken: identityToken);
+            self.latestAccessToken = accessToken
+            self.latestIdentityToken = identityToken
+            authorizationDelegate.onAuthorizationSuccess(accessToken: accessToken, identityToken: identityToken)
         } catch (_) {
             TokenManager.logger.error(message: "Failed to parse server response")
             return

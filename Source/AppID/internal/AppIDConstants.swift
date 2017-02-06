@@ -111,7 +111,7 @@ internal class AppIDConstants {
     internal static let AUTHORIZATION_HEADER = "Authorization"
     internal static let BASIC_AUTHORIZATION_STRING = "Basic"
     internal static let WWW_AUTHENTICATE_HEADER = "WWW-Authenticate"
-    internal static let AUTH_REALM = "\"imfAuthentication\""
+    internal static let AUTH_REALM = "\"appid_default\""
     /**
      * Parts of the path to authorization endpoint.
      */

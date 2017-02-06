@@ -17,8 +17,7 @@ import Foundation
  * Holds single string preference value
  */
 internal class StringPreference {
-    
-    private(set) final var sharedPreferences:UserDefaults = UserDefaults.standard
+    private(set) final var sharedPreferences:UserDefaults
     private final var name:String
     
     //TODO: should these be syncronized?

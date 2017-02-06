@@ -20,15 +20,16 @@
 		EF1DEB9C1E40B22F0082A159 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DEB9B1E40B22F0082A159 /* Config.swift */; };
 		EF1DEB9E1E40B5710082A159 /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DEB9D1E40B5710082A159 /* AuthorizationManager.swift */; };
 		EF1DEBA01E40D4AD0082A159 /* AuthorizationUIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DEB9F1E40D4AD0082A159 /* AuthorizationUIManager.swift */; };
+		EF1DEC321E4862B70082A159 /* AuthorizationHeaderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DEC311E4862B70082A159 /* AuthorizationHeaderHelper.swift */; };
+		EF1DEC381E4880CF0082A159 /* UserAttributeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DEC371E4880CF0082A159 /* UserAttributeManager.swift */; };
+		EF1DEC3A1E4883B70082A159 /* UserAttributeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DEC391E4883B70082A159 /* UserAttributeDelegate.swift */; };
+		EF1DEC3C1E4884120082A159 /* UserAttributeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DEC3B1E4884120082A159 /* UserAttributeError.swift */; };
 		EF4D52411E27EC1B00604D8B /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522B1E27EC1B00604D8B /* AppID.swift */; };
 		EF4D52451E27EC1B00604D8B /* AppIDAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */; };
 		EF4D52461E27EC1B00604D8B /* AppIDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52321E27EC1B00604D8B /* AppIDError.swift */; };
 		EF4D52471E27EC1B00604D8B /* PreferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52331E27EC1B00604D8B /* PreferenceManager.swift */; };
-		EF4D52481E27EC1B00604D8B /* AppIDRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */; };
-		EF4D52491E27EC1B00604D8B /* AppIDRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52351E27EC1B00604D8B /* AppIDRequest.swift */; };
 		EF4D524A1E27EC1B00604D8B /* AppIDConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52361E27EC1B00604D8B /* AppIDConstants.swift */; };
 		EF4D524C1E27EC1B00604D8B /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52381E27EC1B00604D8B /* RegistrationManager.swift */; };
-		EF4D524D1E27EC1B00604D8B /* RequestOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52391E27EC1B00604D8B /* RequestOptions.swift */; };
 		EF4D524E1E27EC1B00604D8B /* safariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D523A1E27EC1B00604D8B /* safariView.swift */; };
 		EF4D524F1E27EC1B00604D8B /* SecurityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D523B1E27EC1B00604D8B /* SecurityUtils.swift */; };
 		EF4D52501E27EC1B00604D8B /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D523C1E27EC1B00604D8B /* TokenManager.swift */; };
@@ -45,11 +46,10 @@
 		EF4D52771E27F1CA00604D8B /* AppIDRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52761E27F1CA00604D8B /* AppIDRequestTests.swift */; };
 		EF4D52961E2E1BCB00604D8B /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52951E2E1BCB00604D8B /* AppIDTests.swift */; };
 		EF6B934A1E377C2A00AC364A /* TokenManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF6B93491E377C2A00AC364A /* TokenManagerTests.swift */; };
-		EFBBC7691DF99BF6000CE39A /* AppIDPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBC7681DF99BF6000CE39A /* AppIDPreferencesTests.swift */; };
+		EFBBC7691DF99BF6000CE39A /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBBC7681DF99BF6000CE39A /* PreferencesTests.swift */; };
 		EFBBC76B1DF99BF6000CE39A /* AppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBBC7541DF99AFA000CE39A /* AppID.framework */; };
 		EFD103571E40878E0076B068 /* LoginWidgetImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD103561E40878E0076B068 /* LoginWidgetImpl.swift */; };
 		EFD103591E408B210076B068 /* OAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD103581E408B210076B068 /* OAuthManager.swift */; };
-		EFD1035B1E408D930076B068 /* RegistrationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD1035A1E408D930076B068 /* RegistrationDelegate.swift */; };
 		EFD1035D1E4094210076B068 /* StringPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD1035C1E4094210076B068 /* StringPreference.swift */; };
 		EFD1035F1E4094350076B068 /* JSONPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD1035E1E4094350076B068 /* JSONPreference.swift */; };
 		EFE8DC1D1DFDAE920039A5F2 /* BMSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */; };
@@ -92,15 +92,16 @@
 		EF1DEB9B1E40B22F0082A159 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		EF1DEB9D1E40B5710082A159 /* AuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManager.swift; sourceTree = "<group>"; };
 		EF1DEB9F1E40D4AD0082A159 /* AuthorizationUIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationUIManager.swift; sourceTree = "<group>"; };
+		EF1DEC311E4862B70082A159 /* AuthorizationHeaderHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationHeaderHelper.swift; sourceTree = "<group>"; };
+		EF1DEC371E4880CF0082A159 /* UserAttributeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeManager.swift; sourceTree = "<group>"; };
+		EF1DEC391E4883B70082A159 /* UserAttributeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeDelegate.swift; sourceTree = "<group>"; };
+		EF1DEC3B1E4884120082A159 /* UserAttributeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeError.swift; sourceTree = "<group>"; };
 		EF4D522B1E27EC1B00604D8B /* AppID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppID.swift; sourceTree = "<group>"; };
 		EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppIDAuthorizationManager.swift; path = ../internal/AppIDAuthorizationManager.swift; sourceTree = "<group>"; };
 		EF4D52321E27EC1B00604D8B /* AppIDError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDError.swift; sourceTree = "<group>"; };
 		EF4D52331E27EC1B00604D8B /* PreferenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceManager.swift; sourceTree = "<group>"; };
-		EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequestManager.swift; sourceTree = "<group>"; };
-		EF4D52351E27EC1B00604D8B /* AppIDRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDRequest.swift; sourceTree = "<group>"; };
 		EF4D52361E27EC1B00604D8B /* AppIDConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDConstants.swift; sourceTree = "<group>"; };
 		EF4D52381E27EC1B00604D8B /* RegistrationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
-		EF4D52391E27EC1B00604D8B /* RequestOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestOptions.swift; sourceTree = "<group>"; };
 		EF4D523A1E27EC1B00604D8B /* safariView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = safariView.swift; sourceTree = "<group>"; };
 		EF4D523B1E27EC1B00604D8B /* SecurityUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityUtils.swift; sourceTree = "<group>"; };
 		EF4D523C1E27EC1B00604D8B /* TokenManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
@@ -122,11 +123,10 @@
 		EF6B93491E377C2A00AC364A /* TokenManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenManagerTests.swift; sourceTree = "<group>"; };
 		EFBBC7541DF99AFA000CE39A /* AppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBBC7661DF99BF6000CE39A /* AppIDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppIDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		EFBBC7681DF99BF6000CE39A /* AppIDPreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIDPreferencesTests.swift; sourceTree = "<group>"; };
+		EFBBC7681DF99BF6000CE39A /* PreferencesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesTests.swift; sourceTree = "<group>"; };
 		EFBBC76A1DF99BF6000CE39A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EFD103561E40878E0076B068 /* LoginWidgetImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWidgetImpl.swift; sourceTree = "<group>"; };
 		EFD103581E408B210076B068 /* OAuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthManager.swift; sourceTree = "<group>"; };
-		EFD1035A1E408D930076B068 /* RegistrationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationDelegate.swift; sourceTree = "<group>"; };
 		EFD1035C1E4094210076B068 /* StringPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringPreference.swift; sourceTree = "<group>"; };
 		EFD1035E1E4094350076B068 /* JSONPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONPreference.swift; sourceTree = "<group>"; };
 		EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BMSCore.framework; path = "../Library/Developer/Xcode/DerivedData/AppIDworkspace-ctfiojsausdyvabbauzbpkzomohi/Build/Products/Debug-iphonesimulator/BMSCore.framework"; sourceTree = "<group>"; };
@@ -192,6 +192,7 @@
 			children = (
 				EF4D523D1E27EC1B00604D8B /* Utils.swift */,
 				EF4D523B1E27EC1B00604D8B /* SecurityUtils.swift */,
+				EF1DEC311E4862B70082A159 /* AuthorizationHeaderHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -199,9 +200,6 @@
 		3A007BA11E3991E0006332E5 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				EF4D52341E27EC1B00604D8B /* AppIDRequestManager.swift */,
-				EF4D52351E27EC1B00604D8B /* AppIDRequest.swift */,
-				EF4D52391E27EC1B00604D8B /* RequestOptions.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
@@ -210,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				EF4D52381E27EC1B00604D8B /* RegistrationManager.swift */,
-				EFD1035A1E408D930076B068 /* RegistrationDelegate.swift */,
 			);
 			name = "Registration Manager";
 			sourceTree = "<group>";
@@ -262,6 +259,23 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		EF1DEC351E4880790082A159 /* UserAttributes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = UserAttributes;
+			sourceTree = "<group>";
+		};
+		EF1DEC361E4880BB0082A159 /* UserAttributes */ = {
+			isa = PBXGroup;
+			children = (
+				EF1DEC371E4880CF0082A159 /* UserAttributeManager.swift */,
+				EF1DEC391E4883B70082A159 /* UserAttributeDelegate.swift */,
+				EF1DEC3B1E4884120082A159 /* UserAttributeError.swift */,
+			);
+			name = UserAttributes;
+			sourceTree = "<group>";
+		};
 		EF4D52281E27EC1B00604D8B /* Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,6 +298,7 @@
 		EF4D522A1E27EC1B00604D8B /* API */ = {
 			isa = PBXGroup;
 			children = (
+				EF1DEC361E4880BB0082A159 /* UserAttributes */,
 				3A007BA81E399701006332E5 /* Tokens */,
 				EF4D522B1E27EC1B00604D8B /* AppID.swift */,
 				3A007BAF1E39987D006332E5 /* LoginWidget.swift */,
@@ -298,6 +313,7 @@
 		EF4D52301E27EC1B00604D8B /* Internal */ = {
 			isa = PBXGroup;
 			children = (
+				EF1DEC351E4880790082A159 /* UserAttributes */,
 				3A007B9F1E3991C6006332E5 /* Config */,
 				3A007BA01E3991D4006332E5 /* Helpers */,
 				3A007BA11E3991E0006332E5 /* Network */,
@@ -363,7 +379,7 @@
 		EFBBC7671DF99BF6000CE39A /* AppIDTests */ = {
 			isa = PBXGroup;
 			children = (
-				EFBBC7681DF99BF6000CE39A /* AppIDPreferencesTests.swift */,
+				EFBBC7681DF99BF6000CE39A /* PreferencesTests.swift */,
 				EFBBC76A1DF99BF6000CE39A /* Info.plist */,
 				EF4D52571E27EE8000604D8B /* AppIDSecurityUtilsTests.swift */,
 				EF4D52721E27EF5700604D8B /* UtilsTests.swift */,
@@ -630,32 +646,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFD1035D1E4094210076B068 /* StringPreference.swift in Sources */,
-				EF4D52491E27EC1B00604D8B /* AppIDRequest.swift in Sources */,
 				EF4D52451E27EC1B00604D8B /* AppIDAuthorizationManager.swift in Sources */,
 				EF4D52471E27EC1B00604D8B /* PreferenceManager.swift in Sources */,
 				3A007BB41E399958006332E5 /* IdentityTokenImpl.swift in Sources */,
-				EF4D524D1E27EC1B00604D8B /* RequestOptions.swift in Sources */,
 				EF4D52461E27EC1B00604D8B /* AppIDError.swift in Sources */,
 				EF4D524C1E27EC1B00604D8B /* RegistrationManager.swift in Sources */,
 				EFD1035F1E4094350076B068 /* JSONPreference.swift in Sources */,
 				EFD103571E40878E0076B068 /* LoginWidgetImpl.swift in Sources */,
+				EF1DEC381E4880CF0082A159 /* UserAttributeManager.swift in Sources */,
 				3A007BA71E39924E006332E5 /* AbstractToken.swift in Sources */,
 				EF4D524A1E27EC1B00604D8B /* AppIDConstants.swift in Sources */,
 				EF4D52511E27EC1B00604D8B /* Utils.swift in Sources */,
 				3A007BB01E39987D006332E5 /* LoginWidget.swift in Sources */,
+				EF1DEC321E4862B70082A159 /* AuthorizationHeaderHelper.swift in Sources */,
 				3A007BAC1E399776006332E5 /* IdentityToken.swift in Sources */,
 				EF4D52501E27EC1B00604D8B /* TokenManager.swift in Sources */,
+				EF1DEC3C1E4884120082A159 /* UserAttributeError.swift in Sources */,
 				3A007BB21E3998E0006332E5 /* AccessTokenImpl.swift in Sources */,
 				EF1DEB9E1E40B5710082A159 /* AuthorizationManager.swift in Sources */,
-				EFD1035B1E408D930076B068 /* RegistrationDelegate.swift in Sources */,
 				3A007BB81E399BBE006332E5 /* AuthorizationDelegate.swift in Sources */,
 				3A007BBA1E399CB0006332E5 /* AuthorizationError.swift in Sources */,
 				EF4D524E1E27EC1B00604D8B /* safariView.swift in Sources */,
-				EF4D52481E27EC1B00604D8B /* AppIDRequestManager.swift in Sources */,
 				EF1DEB9C1E40B22F0082A159 /* Config.swift in Sources */,
 				3A007BB61E399A1A006332E5 /* OAuthClientImpl.swift in Sources */,
 				EFD103591E408B210076B068 /* OAuthManager.swift in Sources */,
 				EF4D524F1E27EC1B00604D8B /* SecurityUtils.swift in Sources */,
+				EF1DEC3A1E4883B70082A159 /* UserAttributeDelegate.swift in Sources */,
 				3A007BAE1E3997C7006332E5 /* OAuthClient.swift in Sources */,
 				EF4D52411E27EC1B00604D8B /* AppID.swift in Sources */,
 				3A007BAA1E399718006332E5 /* AccessToken.swift in Sources */,
@@ -668,7 +684,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF4D52581E27EE8000604D8B /* AppIDSecurityUtilsTests.swift in Sources */,
-				EFBBC7691DF99BF6000CE39A /* AppIDPreferencesTests.swift in Sources */,
+				EFBBC7691DF99BF6000CE39A /* PreferencesTests.swift in Sources */,
 				EF4D52731E27EF5700604D8B /* UtilsTests.swift in Sources */,
 				EF4D52771E27F1CA00604D8B /* AppIDRequestTests.swift in Sources */,
 				EF4D52961E2E1BCB00604D8B /* AppIDTests.swift in Sources */,

@@ -9,28 +9,13 @@
  *     See the License for the specific language governing permissions and
  *     limitations under the License.
  */
+
+
 import Foundation
 import BMSCore
 
-/// This class represents the base app identity class, with default methods and keys
-public class AppIDAppIdentity : BaseAppIdentity{
-    
-    public override init() {
-        
-        let appInfo = Utils.getApplicationDetails()
-        let dict:[String : String] = [
-            BaseAppIdentity.Key.ID : appInfo.name,
-            BaseAppIdentity.Key.version : appInfo.version
-        ]
-        super.init(map: dict as [String : Any]?)
-    }
-    
-    public convenience init(map: [String:AnyObject]?) {
-        self.init(map: map as [String:Any]?)
-    }
-    
-    public override init(map: [String : Any]?) {
-        super.init(map: map)
-    }
-    
+public protocol AuthorizationDelegate{
+	func onAuthorizationFailure(error: AuthorizationError)
+	func onAuthorizationCanceled()
+    func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?)
 }

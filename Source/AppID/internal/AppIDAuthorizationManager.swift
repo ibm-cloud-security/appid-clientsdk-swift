@@ -13,96 +13,16 @@
 import Foundation
 import BMSCore
 
-internal class AppIDAuthorizationManager : AuthorizationManager{
-    public func obtainAuthorization(completionHandler callback: BMSCompletionHandler?) {
-    AppID.sharedInstance.login(onTokenCompletion: callback)
-    }
-    
-    public func clearAuthorizationData() {
-        return
-    }
+internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     
     
-    /// Default scheme to use (default is https)
-    public static let CONTENT_TYPE = "Content-Type"
-    
+    private var oAuthManager:OAuthManager
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationManager")
     
-    internal var preferences:AppIDPreferences!
     
-    //lock constant
-    private var lockQueue = DispatchQueue(label: "AppIDAuthorizationManagerQueue", attributes: DispatchQueue.Attributes.concurrent)
-    
-   
-    
-    
-    // Specifies the bluemix region of the MCA service instance
-    internal private(set) var bluemixRegion: String?
-    
-    // Specifies the tenant id of the MCA service instance
-    internal private(set) var tenantId: String?
-    
-    /**
-     - returns: The singelton instance
-     */
-    
-    /**
-     The intializer for the `MCAAuthorizationManager` class.
-     
-     - parameter tenantId:           The tenant id of the MCA service instance
-     - parameter bluemixRegion:      The region where your MCA service instance is hosted. Use one of the `BMSClient.REGION` constants.
-     */
-    internal  init(preferences:AppIDPreferences) {
-        self.preferences = preferences
+    init(appid:AppID) {
+        self.oAuthManager = appid.oauthManager!
     }
-    
-    /**
-     - returns: The locally stored authorization header or nil if the value does not exist.
-     */
-    internal var cachedAuthorizationHeader:String? {
-        get{
-            var returnedValue:String? = nil
-            lockQueue.sync(flags: .barrier, execute: {
-                if let accessToken = self.preferences.accessToken.get(), let idToken = self.preferences.idToken.get() {
-                    returnedValue = "\(AppIDConstants.BEARER) \(accessToken) \(idToken)"
-                }
-            })
-            return returnedValue
-        }
-    }
-    
-    /**
-     - returns: User identity
-     */
-    internal var userIdentity:UserIdentity? {
-        get{
-            let userIdentityJson = preferences.userIdentity.getAsMap()
-            return AppIDUserIdentity(map: userIdentityJson)
-        }
-    }
-    
-    /**
-     - returns: Device identity
-     */
-    internal var deviceIdentity:DeviceIdentity {
-        get{
-            let deviceIdentityJson = preferences.deviceIdentity.getAsMap()
-            return AppIDDeviceIdentity(map: deviceIdentityJson)
-        }
-    }
-    
-    /**
-     - returns: Application identity
-     */
-    internal var appIdentity:AppIdentity {
-        get{
-            let appIdentityJson = preferences.appIdentity.getAsMap()
-            return AppIDAppIdentity(map: appIdentityJson)
-        }
-    }
-    
-    private init() {
-        }
     
     /**
      A response is an OAuth error response only if,
@@ -116,14 +36,8 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
     
     
     internal func isAuthorizationRequired(for httpResponse: Response) -> Bool {
-        if let header = httpResponse.headers![caseInsensitive : AppIDConstants.WWW_AUTHENTICATE_HEADER], let authHeader : String = header as? String {
-            guard let statusCode = httpResponse.statusCode else {
-                return false
-            }
-            return isAuthorizationRequired(for: statusCode, httpResponseAuthorizationHeader: authHeader)
-        }
-        
-        return false
+        AppIDAuthorizationManager.logger.debug(message: "isAuthorizationRequired")
+        return AuthorizationHeaderHelper.isAuthorizationRequired(for: httpResponse)
     }
     
     /**
@@ -136,17 +50,86 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
      */
     
     
-    internal func isAuthorizationRequired(for statusCode: Int, httpResponseAuthorizationHeader responseAuthorizationHeader: String) -> Bool {
-        
-        if (statusCode == 401 || statusCode == 403) &&
-            responseAuthorizationHeader.lowercased().contains(AppIDConstants.BEARER.lowercased()) &&
-            responseAuthorizationHeader.lowercased().contains(AppIDConstants.AUTH_REALM.lowercased()) {
-            return true
-        }
-        
-        return false
+    internal func isAuthorizationRequired(for statusCode: Int, httpResponseAuthorizationHeader
+        responseAuthorizationHeader: String) -> Bool {
+        return AuthorizationHeaderHelper.isAuthorizationRequired(statusCode: statusCode, header: responseAuthorizationHeader)
     }
     
+    
+    
+    
+    public func obtainAuthorization(completionHandler callback: BMSCompletionHandler?) {
+        AppIDAuthorizationManager.logger.debug(message: "obtainAuthorization")
+        class innerAuthorizationDelegate: AuthorizationDelegate {
+            var callback:BMSCompletionHandler?
+            init(callback:BMSCompletionHandler?){
+                self.callback = callback
+            }
+            func onAuthorizationFailure(error err:AuthorizationError) {
+                callback?(nil,err)
+            }
+            func onAuthorizationCanceled () {
+                callback?(nil, AuthorizationError.authorizationFailure("Authorization canceled"))
+            }
+            func onAuthorizationSuccess (accessToken:AccessToken, identityToken:IdentityToken, response:Response?) {
+                callback?(response,nil)
+            }
+        }
+        
+        oAuthManager.authorizationManager?.launchAuthorizationUI(authorizationDelegate: innerAuthorizationDelegate(callback: callback))
+    }
+    
+    public func clearAuthorizationData() {
+        AppIDAuthorizationManager.logger.debug(message: "clearAuthorizationData")
+        self.oAuthManager.tokenManager?.clearStoredToken()
+    }
+    
+    
+    
+    
+    
+    
+    /**
+     - returns: The locally stored authorization header or nil if the value does not exist.
+     */
+    internal var cachedAuthorizationHeader:String? {
+        get{
+            AppIDAuthorizationManager.logger.debug(message: "getCachedAuthorizationHeader")
+            guard let accessToken = self.accessToken, let identityToken = self.identityToken else {
+                return nil
+            }
+            return "Bearer " + accessToken.raw + " " + identityToken.raw
+        }
+    }
+    
+    
+    
+    
+    internal var userIdentity:UserIdentity? {
+        let idToken = self.identityToken
+        let identity:[String:Any] = [
+            BaseUserIdentity.Key.authorizedBy : idToken?.authBy ?? "",
+            BaseUserIdentity.Key.displayName : idToken?.name ?? "",
+            //TODO: what should be this value? - not implemted in android
+            BaseUserIdentity.Key.ID : idToken?.name ?? ""
+        ]
+        return BaseUserIdentity(map: identity)
+        
+    }
+    internal var deviceIdentity:DeviceIdentity {
+        return BaseDeviceIdentity()
+        
+    }
+    internal var appIdentity:AppIdentity {
+        return BaseAppIdentity()
+    }
+    public var accessToken:AccessToken? {
+        return self.oAuthManager.tokenManager?.latestAccessToken
+    }
+    
+    public var identityToken:IdentityToken? {
+        return self.oAuthManager.tokenManager?.latestIdentityToken
+    }
     
     /**
      Adds the cached authorization header to the given URL connection object.
@@ -155,19 +138,24 @@ internal class AppIDAuthorizationManager : AuthorizationManager{
      */
     
     internal func addCachedAuthorizationHeader(_ request: NSMutableURLRequest) {
+        AppIDAuthorizationManager.logger.debug(message: "addCachedAuthorizationHeader")
         addAuthorizationHeader(request, header: cachedAuthorizationHeader)
     }
     
     private func addAuthorizationHeader(_ request: NSMutableURLRequest, header:String?) {
+        AppIDAuthorizationManager.logger.debug(message: "addAuthorizationHeader")
         guard let unWrappedHeader = header else {
             return
         }
         request.setValue(unWrappedHeader, forHTTPHeaderField: AppIDConstants.AUTHORIZATION_HEADER)
     }
     
-    
-    internal func authorizationPersistencePolicy() -> PersistencePolicy {
-        return preferences.persistencePolicy.get()
+    public func logout() {
+        self.clearAuthorizationData()
     }
-
+    
+    
+    
+    
+    
 }

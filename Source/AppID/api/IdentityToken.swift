@@ -12,17 +12,13 @@
 
 
 import Foundation
-import BMSCore
 
-internal class RequestOptions {
-    
-    internal var requestMethod : HttpMethod
-    internal var timeout : Double = 0
-    internal var headers = [String : String]()
-    internal var parameters = [String : String]()
-    internal var json = [String : Any]()
-    
-    internal init(requestMethod : HttpMethod = HttpMethod.GET) {
-        self.requestMethod = requestMethod
-    }
+public protocol IdentityToken: Token{
+	var name: String {get}
+	var email: String {get}
+	var gender: String {get}
+	var locale: String {get}
+	var picture: String {get}
+	var identities: Array<Dictionary<String, Any>> {get}
+	var oauthClient: OAuthClient {get}
 }

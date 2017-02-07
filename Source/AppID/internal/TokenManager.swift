@@ -14,109 +14,112 @@ import Foundation
 import BMSCore
 internal class TokenManager {
     
-    internal var preferences:AppIDPreferences
-    
-    internal init(preferences:AppIDPreferences)
+    private final var appid:AppID
+    private final var registrationManager:RegistrationManager
+    private(set) var latestAccessToken:AccessToken?
+    private(set) var latestIdentityToken:IdentityToken?
+    internal static let logger = Logger.logger(name: AppIDConstants.TokenManagerLoggerName)
+    internal init(oAuthManager:OAuthManager)
     {
-        self.preferences = preferences
+        self.appid = oAuthManager.appId
+        self.registrationManager = oAuthManager.registrationManager!
     }
 
     
-    internal func invokeTokenRequest(_ grantCode:String, callback: BMSCompletionHandler?){
-        let options:RequestOptions  = RequestOptions()
-        do {
-            options.parameters = try createTokenRequestParams(grantCode)
-            options.headers =  try createTokenRequestHeaders()
-            options.requestMethod = HttpMethod.POST
-            let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
-                if error == nil {
-                    if let unWrappedResponse = response, unWrappedResponse.isSuccessful {
-                        do {
-                            try self.saveTokenFromResponse(unWrappedResponse)
-                            callback?(response, nil)
-                        } catch(let thrownError) {
-                            callback?(response, AppIDError.tokenRequestError(msg: thrownError.localizedDescription))
-                        }
-                    }
-                    else {
-                        callback?(nil, AppIDError.tokenRequestError(msg: "token request failed"))
-                    }
-                } else {
-                    callback?(response, AppIDError.tokenRequestError(msg: error?.localizedDescription))
-                }
-            }
-            let appIDRequestManager:AppIDRequestManager = AppIDRequestManager(completionHandler: internalCallback)
-            try appIDRequestManager.send(getTokenUrl(), options: options )
-        } catch (let err){
-            callback?(nil, AppIDError.tokenRequestError(msg: err.localizedDescription))
+    public func obtainTokens(code:String, authorizationDelegate:AuthorizationDelegate) {
+        TokenManager.logger.debug(message: "obtainTokens")
+        let tokenUrl = Config.getServerUrl(appId: self.appid) + "/token"
+        
+        guard let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String), let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0) else {
+         return
         }
         
-    }
-    private func createTokenRequestHeaders()  throws -> [String:String] {
-        var headers = [String:String]()
-        guard let clientId = preferences.clientId.get() else {
-            throw AppIDError.tokenRequestError(msg: "Client is not registered")
+        var headers:[String:String] = [:]
+        
+        do {
+        headers = [AppIDConstants.AUTHORIZATION_HEADER : try createAuthenticationHeader(clientId: clientId),
+                   Request.contentType : "application/x-www-form-urlencoded"]
+        } catch (_) {
+            TokenManager.logger.error(message: "Failed to create authentication header")
+            authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to create authentication header"))
+            return
         }
-
-        let username = clientId
-        let signed = try? SecurityUtils.signString(username, keyIds: (AppIDConstants.publicKeyIdentifier, AppIDConstants.privateKeyIdentifier), keySize: 512)
-        headers[AppIDConstants.AUTHORIZATION_HEADER] = AppIDConstants.BASIC_AUTHORIZATION_STRING + " " + (username + ":" + signed!).data(using: .utf8)!.base64EncodedString()
-        return headers
-    }
-    
-    private func createTokenRequestParams(_ grantCode:String) throws -> [String : String]{
-        guard let clientId = preferences.clientId.get() else {
-            throw AppIDError.tokenRequestError(msg: "Client is not registered")
-        }
-        let params : [String : String] = [
-            AppIDConstants.JSON_CODE_KEY : grantCode,
+        let bodyParams = [
+            AppIDConstants.JSON_CODE_KEY : code,
             AppIDConstants.client_id_String :  clientId,
             AppIDConstants.JSON_GRANT_TYPE_KEY : AppIDConstants.authorization_code_String,
-            AppIDConstants.JSON_REDIRECT_URI_KEY :AppIDConstants.REDIRECT_URI_VALUE
+            AppIDConstants.JSON_REDIRECT_URI_KEY : redirectUri
         ]
-        return params;
-    }
-    
-    
-    private func saveTokenFromResponse(_ response:Response) throws {
-        do {
-            if let data = response.responseData, let responseJson =  try JSONSerialization.jsonObject(with: data as Data, options: []) as? [String:Any]{
-                if let accessTokenFromResponse = responseJson[caseInsensitive : AppIDConstants.JSON_ACCESS_TOKEN_KEY] as? String, let idTokenFromResponse =
-                    responseJson[caseInsensitive : AppIDConstants.JSON_ID_TOKEN_KEY] as? String {
-                    //save the tokens
-                    _ = preferences.idToken.set(idTokenFromResponse)
-                    _ = preferences.accessToken.set(accessTokenFromResponse)
-                    AppID.logger.debug(message: "token successfully saved")
-                    if let userIdentity = getUserIdentityFromToken(idTokenFromResponse)
-                    {
-                        preferences.userIdentity.set(userIdentity)
-                    }
+        
+        let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
+            if error == nil {
+                if let unWrappedResponse = response, unWrappedResponse.isSuccessful {
+                    self.extractTokens(response: unWrappedResponse, authorizationDelegate: authorizationDelegate)
                 }
+                else {
+                    authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
+                }
+            } else {
+                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
             }
-        } catch  {
-            throw AppIDError.tokenRequestError(msg: "Could not save token")
         }
+        
+        let request:Request = Request(url: tokenUrl,method: HttpMethod.POST, headers: headers, queryParameters: nil, timeout: 0)
+        request.timeout = BMSClient.sharedInstance.requestTimeout
+        var body = ""
+        var i = 0
+        for (key, val) in bodyParams {
+            body += "\(Utils.urlEncode(key))=\(Utils.urlEncode(val))"
+            if i < bodyParams.count - 1 {
+                body += "&"
+            }
+            i += 1
+        }
+        request.send(requestBody: body.data(using: .utf8), completionHandler: internalCallback)
     }
     
     
-    private func getUserIdentityFromToken(_ idToken:String) -> [String:Any]?
-    {
+    public func extractTokens(response:Response, authorizationDelegate:AuthorizationDelegate) {
+        TokenManager.logger.debug(message: "Extracting tokens from server response")
+        
+        guard let responseText = response.responseText else {
+            TokenManager.logger.error(message: "Failed to parse server response")
+            authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response"))
+            return
+        }
         do {
-            if let decodedIdTokenData = Utils.decodeBase64WithString(idToken.components(separatedBy: ".")[1], isSafeUrl: true), let _ = String(data: decodedIdTokenData, encoding: String.Encoding.utf8), let decodedIdTokenString = String(data: decodedIdTokenData, encoding: String.Encoding.utf8), let userIdentity = try Utils.parseJsonStringtoDictionary(decodedIdTokenString)[caseInsensitive : AppIDConstants.JSON_IMF_USER_KEY] as? [String:Any] {
-                return userIdentity
+        var responseJson =  try Utils.parseJsonStringtoDictionary(responseText)
+        
+            guard let accessTokenString = (responseJson["access_token"] as? String), let idTokenString = (responseJson["id_token"] as? String) else {
+                TokenManager.logger.error(message: "Failed to parse server response")
+                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response"))
+                return
             }
-        } catch {
-            return nil
+            guard let accessToken = AccessTokenImpl(with: accessTokenString), let identityToken:IdentityTokenImpl = IdentityTokenImpl(with: idTokenString) else {
+                TokenManager.logger.error(message: "Failed to parse tokens")
+                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse tokens"))
+                return
+            }
+            self.latestAccessToken = accessToken
+            self.latestIdentityToken = identityToken
+            authorizationDelegate.onAuthorizationSuccess(accessToken: accessToken, identityToken: identityToken, response:response)
+        } catch (_) {
+            TokenManager.logger.error(message: "Failed to parse server response")
+            authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response"))
+            return
         }
-        return nil
+       
+        
     }
     
-    private func getTokenUrl() -> String {
-        let tokenUrl = AppID.sharedInstance.serverUrl
-            + "/"
-            + AppIDConstants.V3_AUTH_PATH
-            + AppID.sharedInstance.tenantId!
-        return tokenUrl + "/" + AppIDConstants.tokenEndPoint
+    public func createAuthenticationHeader(clientId:String) throws -> String {
+        let signed = try SecurityUtils.signString(clientId, keyIds: (AppIDConstants.publicKeyIdentifier, AppIDConstants.privateKeyIdentifier), keySize: 512)
+        return AppIDConstants.BASIC_AUTHORIZATION_STRING + " " + (clientId + ":" + signed).data(using: .utf8)!.base64EncodedString()
+    }
+    
+    public func clearStoredToken() {
+        self.latestAccessToken = nil
+        self.latestIdentityToken = nil
     }
 
     

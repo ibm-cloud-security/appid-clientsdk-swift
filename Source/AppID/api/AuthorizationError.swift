@@ -10,13 +10,9 @@
  *     limitations under the License.
  */
 
+
 import Foundation
 
-internal enum AppIDError: Error {
-    case authenticationError(msg: String?)
-    case registrationError(msg: String?)
-    case tokenRequestError(msg: String?)
-    case jsonUtilsError(msg: String?)
-    case generalError
-    
+public enum AuthorizationError: Error{
+	case authorizationFailure(String)
 }

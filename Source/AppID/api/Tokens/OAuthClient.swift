@@ -11,25 +11,13 @@
  */
 
 import Foundation
-import BMSCore
 
-/// This class represents the base user identity class, with default methods and keys
-
-public class AppIDUserIdentity : BaseUserIdentity{
-   
-    public override init() {
-        super.init()
-        
-    }
-    
-    public convenience init(map: [String:AnyObject]?) {
-        self.init(map: map as [String:Any]?)
-        
-    }
-    
-    public override init(map: [String : Any]?) {
-        super.init(map: map)
-    }
-    
+public protocol OAuthClient {
+	var type: String {get}
+	var name: String {get}
+	var softwareId: String {get}
+	var softwareVersion: String {get}
+	var deviceId: String {get}
+	var devideModel: String {get}
+	var deviceOS: String {get}
 }
-

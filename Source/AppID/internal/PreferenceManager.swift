@@ -10,13 +10,25 @@
  *     limitations under the License.
  */
 
-import Foundation
 
-internal enum AppIDError: Error {
-    case authenticationError(msg: String?)
-    case registrationError(msg: String?)
-    case tokenRequestError(msg: String?)
-    case jsonUtilsError(msg: String?)
-    case generalError
+import BMSCore
+
+
+internal class PreferenceManager {
+
+    private(set) final var sharedPreferences:UserDefaults = UserDefaults.standard
+    private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "PreferenceManager")
     
-}
+    public func getStringPreference(name:String) -> StringPreference {
+        return StringPreference(name: name, sharedPreferences: sharedPreferences)
+    }
+    
+    public func getJSONPreference(name:String) -> JSONPreference {
+        return JSONPreference(name: name, sharedPreferences: sharedPreferences)
+    }
+
+    
+    
+ }
+
+

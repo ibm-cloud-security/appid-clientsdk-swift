@@ -14,23 +14,17 @@ import Foundation
 import SafariServices
 import BMSCore
 
-internal class safariView : SFSafariViewController, SFSafariViewControllerDelegate{
+internal class safariView : SFSafariViewController, SFSafariViewControllerDelegate {
     
-    var callback:BMSCompletionHandler?
-    var url:URL?
+    var authorizationDelegate:AuthorizationDelegate?
 
     public init(url URL: URL) {
         super.init(url: URL, entersReaderIfAvailable: false)
-        self.url = URL
         self.delegate = self
     }
     
-    public func setCallback(callback:BMSCompletionHandler?){
-        self.callback = callback
-    }
-    public func safariViewControllerDidFinish(_ controller: SFSafariViewController)
-    {
-        callback?(nil, AppIDError.authenticationError(msg: "User canceled the operation"))
+    public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
+        authorizationDelegate?.onAuthorizationCanceled()
     }
 
 }

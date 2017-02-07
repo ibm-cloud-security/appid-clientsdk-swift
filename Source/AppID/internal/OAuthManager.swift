@@ -10,13 +10,22 @@
  *     limitations under the License.
  */
 
+
 import Foundation
 
-internal enum AppIDError: Error {
-    case authenticationError(msg: String?)
-    case registrationError(msg: String?)
-    case tokenRequestError(msg: String?)
-    case jsonUtilsError(msg: String?)
-    case generalError
-    
+
+public class OAuthManager {
+    private(set) var appId:AppID
+    private(set) var preferenceManager:PreferenceManager
+    private(set) var registrationManager:RegistrationManager?
+    private(set) var authorizationManager:AuthorizationManager?
+    private(set) var tokenManager:TokenManager?
+
+    init(appId:AppID) {
+        self.appId = appId
+        self.preferenceManager = PreferenceManager()
+        self.registrationManager = RegistrationManager(oauthManager: self)
+        self.authorizationManager = AuthorizationManager(oAuthManager: self)
+        self.tokenManager = TokenManager(oAuthManager: self)
+    }
 }

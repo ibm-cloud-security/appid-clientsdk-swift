@@ -10,13 +10,36 @@
  *     limitations under the License.
  */
 
+
 import Foundation
 
-internal enum AppIDError: Error {
-    case authenticationError(msg: String?)
-    case registrationError(msg: String?)
-    case tokenRequestError(msg: String?)
-    case jsonUtilsError(msg: String?)
-    case generalError
+/**
+ * Holds single JSON preference value
+ */
+internal class JSONPreference:StringPreference {
+    
+    //TODO: should these be syncronized?
+    
+    override init(name:String, sharedPreferences: UserDefaults) {
+        super.init(name: name, sharedPreferences: sharedPreferences)
+    }
+    
+    
+    public func set(_ value:[String:Any]?) {
+        try? super.set(Utils.JSONStringify(value as AnyObject))
+    }
+    
+    public func getAsJSON() -> [String:Any]? {
+        guard let stringValue = super.get() else {
+            return nil
+        }
+        return try? Utils.parseJsonStringtoDictionary(stringValue)
+        
+    }
+
+
+
     
 }
+
+

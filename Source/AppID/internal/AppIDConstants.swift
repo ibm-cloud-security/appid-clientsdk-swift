@@ -79,7 +79,10 @@ internal class AppIDConstants {
     
     internal static var AppIDRequestManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDRequestManager"
     internal static var RegistrationManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDRegistrationManager"
+    internal static var TokenManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDTokenManager"
+     internal static var AuthorizationManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDAuthorizationManager"
     internal static var AppIDLoggerName = Logger.bmsLoggerPrefix + "AppID"
+    internal static var ConfigLoggerName = Logger.bmsLoggerPrefix + "Config"
 
     internal static var tokenEndPoint = "token"
     internal static var clientsEndPoint = "clients"
@@ -109,13 +112,13 @@ internal class AppIDConstants {
     internal static let AUTHORIZATION_HEADER = "Authorization"
     internal static let BASIC_AUTHORIZATION_STRING = "Basic"
     internal static let WWW_AUTHENTICATE_HEADER = "WWW-Authenticate"
-    internal static let AUTH_REALM = "\"imfAuthentication\""
+    internal static let AUTH_REALM = "\"appid_default\""
     /**
      * Parts of the path to authorization endpoint.
      */
     internal static let AUTH_SERVER_NAME = "imf-authserver"
     internal static let V3_AUTH_PATH = "oauth/v3/"
-    
+    internal static let OAUTH_AUTHORIZATION_PATH = "/authorization"
     
     
     /**
@@ -129,7 +132,6 @@ internal class AppIDConstants {
     //JSON keys and values
     internal static let JSON_KEYS_KEY = "keys"
     internal static let JSON_JWKS_KEY = "jwks"
-    internal static let JSON_CLIENT_ID_KEY = "clientId"
     internal static let JSON_DEVICE_ID_KEY = "device_id"
     internal static let JSON_OS_KEY = "device_os"
     internal static let JSON_ENVIRONMENT_KEY = "environment"
@@ -148,7 +150,8 @@ internal class AppIDConstants {
 
 
     
-    
+    internal static let tenantPrefName = "com.ibm.bluemix.appid.swift.tenantid"
+    internal static let registrationDataPref = "com.ibm.bluemix.appid.swift.REGISTRATION_DATA"
     
     
     internal static let JSON_IOS_ENVIRONMENT_VALUE = "iOSnative"

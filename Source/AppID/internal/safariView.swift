@@ -14,19 +14,16 @@ import Foundation
 import SafariServices
 import BMSCore
 
-internal class safariView : SFSafariViewController, SFSafariViewControllerDelegate{
+internal class safariView : SFSafariViewController, SFSafariViewControllerDelegate {
     
     var authorizationDelegate:AuthorizationDelegate?
-    var url:URL?
 
     public init(url URL: URL) {
         super.init(url: URL, entersReaderIfAvailable: false)
-        self.url = URL
         self.delegate = self
     }
     
-    public func safariViewControllerDidFinish(_ controller: SFSafariViewController)
-    {
+    public func safariViewControllerDidFinish(_ controller: SFSafariViewController) {
         authorizationDelegate?.onAuthorizationCanceled()
     }
 

@@ -35,7 +35,7 @@ public class AuthorizationUIManager {
         loginView?.authorizationDelegate = authorizationDelegate
         let mainView  = UIApplication.shared.keyWindow?.rootViewController
         DispatchQueue.main.async {
-            mainView?.present(self.loginView!, animated: true, completion: nil)
+            mainView?.present(self.loginView!, animated: true, completion:  nil)
         }
     }
     
@@ -51,7 +51,7 @@ public class AuthorizationUIManager {
                     return
                 }
                 AuthorizationUIManager.logger.debug(message: "Obtaining tokens")
-
+                
                 self.oAuthManager.tokenManager?.obtainTokens(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
             })
         }
@@ -62,7 +62,7 @@ public class AuthorizationUIManager {
             if let code = url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(AppIDConstants.JSON_CODE_KEY)}).first?.components(separatedBy: "=")[1] {
                 tokenRequest(code: code, errMsg: nil)
             } else {
-                 AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")
+                AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")
                 tokenRequest(code: nil, errMsg: "Failed to extract grant code")
             }
             return true
@@ -70,7 +70,7 @@ public class AuthorizationUIManager {
         return false
         
     }
-
+    
     
     
 }

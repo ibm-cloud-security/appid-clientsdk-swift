@@ -14,7 +14,7 @@ import Foundation
 import SafariServices
 import BMSCore
 public class AppID {
-    //TODO: check access a protected resource
+
 	private(set) var tenantId: String?
 	private(set) var bluemixRegion: String?
     private(set) var oauthManager: OAuthManager?

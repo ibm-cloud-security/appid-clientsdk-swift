@@ -30,24 +30,25 @@ internal class TokenManager {
         TokenManager.logger.debug(message: "obtainTokens")
         let tokenUrl = Config.getServerUrl(appId: self.appid) + "/token"
         
-        guard let clientId = self.registrationManager.getRegistrationDataString(name: "client_id"), let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: "redirect_uris", arrayIndex: 0) else {
+        guard let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String), let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0) else {
          return
         }
         
         var headers:[String:String] = [:]
         
         do {
-        headers = ["Authorization" : try createAuthenticationHeader(clientId: clientId),
+        headers = [AppIDConstants.AUTHORIZATION_HEADER : try createAuthenticationHeader(clientId: clientId),
                    Request.contentType : "application/x-www-form-urlencoded"]
         } catch (_) {
             TokenManager.logger.error(message: "Failed to create authentication header")
-           return
+            authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to create authentication header"))
+            return
         }
         let bodyParams = [
-            "code" : code,
-            "client_id" : clientId,
-            "grant_type" : "authorization_code",
-            "redirect_uri" : redirectUri
+            AppIDConstants.JSON_CODE_KEY : code,
+            AppIDConstants.client_id_String :  clientId,
+            AppIDConstants.JSON_GRANT_TYPE_KEY : AppIDConstants.authorization_code_String,
+            AppIDConstants.JSON_REDIRECT_URI_KEY : redirectUri
         ]
         
         let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
@@ -63,17 +64,16 @@ internal class TokenManager {
             }
         }
         
-    
         let request:Request = Request(url: tokenUrl,method: HttpMethod.POST, headers: headers, queryParameters: nil, timeout: 0)
         request.timeout = BMSClient.sharedInstance.requestTimeout
         var body = ""
-        var i=0
+        var i = 0
         for (key, val) in bodyParams {
             body += "\(Utils.urlEncode(key))=\(Utils.urlEncode(val))"
             if i < bodyParams.count - 1 {
                 body += "&"
             }
-            i+=1
+            i += 1
         }
         request.send(requestBody: body.data(using: .utf8), completionHandler: internalCallback)
     }
@@ -84,6 +84,7 @@ internal class TokenManager {
         
         guard let responseText = response.responseText else {
             TokenManager.logger.error(message: "Failed to parse server response")
+            authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response"))
             return
         }
         do {
@@ -91,17 +92,20 @@ internal class TokenManager {
         
             guard let accessTokenString = (responseJson["access_token"] as? String), let idTokenString = (responseJson["id_token"] as? String) else {
                 TokenManager.logger.error(message: "Failed to parse server response")
+                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response"))
                 return
             }
             guard let accessToken = AccessTokenImpl(with: accessTokenString), let identityToken:IdentityTokenImpl = IdentityTokenImpl(with: idTokenString) else {
                 TokenManager.logger.error(message: "Failed to parse tokens")
+                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse tokens"))
                 return
             }
             self.latestAccessToken = accessToken
             self.latestIdentityToken = identityToken
-            authorizationDelegate.onAuthorizationSuccess(accessToken: accessToken, identityToken: identityToken)
+            authorizationDelegate.onAuthorizationSuccess(accessToken: accessToken, identityToken: identityToken, response:response)
         } catch (_) {
             TokenManager.logger.error(message: "Failed to parse server response")
+            authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response"))
             return
         }
        

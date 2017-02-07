@@ -12,14 +12,16 @@
 
 
 import Foundation
-
+import BMSCore
 
 internal class Config {
     private static var serverUrlPrefix = "https://mobileclientaccess"
-    
+    internal static let logger =  Logger.logger(name: AppIDConstants.ConfigLoggerName)
+
     internal static func getServerUrl(appId:AppID) -> String{
         
         guard let region = appId.bluemixRegion, let tenant = appId.tenantId else {
+            logger.error(message: "Could not set server url properly, no tenantId or no region set")
             return serverUrlPrefix
         }
         

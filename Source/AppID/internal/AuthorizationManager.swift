@@ -15,7 +15,6 @@ import Foundation
 import BMSCore
 public class AuthorizationManager {
 
-    private static var OAUTH_AUTHORIZATION_PATH = "/authorization"
     static var logger = Logger.logger(name: AppIDConstants.RegistrationManagerLoggerName)
     
     var registrationManager:RegistrationManager
@@ -29,14 +28,14 @@ public class AuthorizationManager {
     }
     
     public func getAuthorizationUrl(idpName:String?) -> String {
-        var url = Config.getServerUrl(appId: self.appid) + "/authorization?response_type=code"
-        if let clientId = self.registrationManager.getRegistrationDataString(name: "client_id") {
-            url += "&client_id=" + clientId
+        var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY
+        if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
+            url += "&" + AppIDConstants.client_id_String + "=" + clientId
         }
-        if let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: "redirect_uris", arrayIndex: 0) {
-            url += "&redirect_uri=" + redirectUri
+        if let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0) {
+            url +=  "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=" + redirectUri
         }
-        url += "&scope=openid"
+        url += "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE
         if let unWrappedIdpName = idpName {
             url += "&idp=" + unWrappedIdpName
         }
@@ -52,7 +51,7 @@ public class AuthorizationManager {
                 return
             }
             let authorizationUrl = self.getAuthorizationUrl(idpName: nil)
-            let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: "redirect_uris", arrayIndex: 0)
+            let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0)
             self.authorizationUIManager = AuthorizationUIManager(oAuthManager: self.oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: authorizationUrl, redirectUri: redirectUri!)
             self.authorizationUIManager?.launch()
             

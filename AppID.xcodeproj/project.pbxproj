@@ -197,13 +197,6 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
-		3A007BA11E3991E0006332E5 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Network;
-			sourceTree = "<group>";
-		};
 		3A007BA21E3991EC006332E5 /* Registration Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,7 +309,6 @@
 				EF1DEC351E4880790082A159 /* UserAttributes */,
 				3A007B9F1E3991C6006332E5 /* Config */,
 				3A007BA01E3991D4006332E5 /* Helpers */,
-				3A007BA11E3991E0006332E5 /* Network */,
 				3A007BA31E3991F8006332E5 /* Preferences */,
 				3A007BA21E3991EC006332E5 /* Registration Manager */,
 				3A007B9E1E3991B3006332E5 /* Authorization Manager */,

@@ -25,10 +25,10 @@ internal class RegistrationManager {
         self.preferenceManager = oauthManager.preferenceManager
     }
     
-    
+ 
     public func ensureRegistered(callback : @escaping (Error?) -> Void) {
-        let storedClientId:String? = self.getRegistrationDataString(name: "client_id")
-        let storedTenantId:String? = self.preferenceManager.getStringPreference(name: "com.ibm.bluemix.appid.swift.tenantid").get()
+        let storedClientId:String? = self.getRegistrationDataString(name: AppIDConstants.client_id_String)
+        let storedTenantId:String? = self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).get()
         if(storedClientId != nil && self.appId.tenantId == storedTenantId) {
             RegistrationManager.logger.debug(message: "OAuth client is already registered.")
             callback(nil)
@@ -37,7 +37,6 @@ internal class RegistrationManager {
             self.registerOAuthClient(callback: {(error: Error?) in
                 guard error == nil else {
                     RegistrationManager.logger.error(message: "Failed to register OAuth client")
-                    //TODO: how do we want to arrange errors? here is appiderror
                     callback(AppIDError.registrationError(msg: "Failed to register OAuth client"))
                     return
                 }
@@ -57,8 +56,8 @@ internal class RegistrationManager {
         let internalCallBack:BMSCompletionHandler = {(response: Response?, error: Error?) in
             if error == nil {
                 if let unWrappedResponse = response, unWrappedResponse.isSuccessful, let responseText = unWrappedResponse.responseText {
-                        self.preferenceManager.getJSONPreference(name: "com.ibm.bluemix.appid.swift.REGISTRATION_DATA").set(try? Utils.parseJsonStringtoDictionary(responseText))
-                        self.preferenceManager.getStringPreference(name: "com.ibm.bluemix.appid.swift.tenantid").set(self.appId.tenantId)
+                        self.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set(try? Utils.parseJsonStringtoDictionary(responseText))
+                        self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).set(self.appId.tenantId)
                         callback(nil)
                 } else {
                     callback(AppIDError.registrationError(msg: "Could not register client"))
@@ -111,7 +110,7 @@ internal class RegistrationManager {
     
     
     public func getRegistrationData() -> [String:Any]? {
-        return self.preferenceManager.getJSONPreference(name: "com.ibm.bluemix.appid.swift.REGISTRATION_DATA").getAsJSON()
+        return self.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).getAsJSON()
     }
     
     public func getRegistrationDataString(name:String) -> String? {
@@ -144,8 +143,8 @@ internal class RegistrationManager {
     
     
     public func clearRegistrationData() {
-        self.preferenceManager.getStringPreference(name: "com.ibm.bluemix.appid.swift.tenantid").clear()
-        self.preferenceManager.getJSONPreference(name: "com.ibm.bluemix.appid.swift.REGISTRATION_DATA").clear()
+        self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).clear()
+        self.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).clear()
 
     }
     

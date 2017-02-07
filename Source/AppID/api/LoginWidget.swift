@@ -14,6 +14,5 @@
 import Foundation
 
 public protocol LoginWidget{
-	// interface to be defined
     func launch(delegate:AuthorizationDelegate)
 }

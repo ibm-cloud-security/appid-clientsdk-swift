@@ -71,8 +71,8 @@ internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
             func onAuthorizationCanceled () {
                 callback?(nil, AuthorizationError.authorizationFailure("Authorization canceled"))
             }
-            func onAuthorizationSuccess (accessToken:AccessToken, identityToken:IdentityToken ) {
-                callback?(nil,nil);
+            func onAuthorizationSuccess (accessToken:AccessToken, identityToken:IdentityToken, response:Response?) {
+                callback?(response,nil)
             }
         }
         
@@ -110,7 +110,7 @@ internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
         let identity:[String:Any] = [
             BaseUserIdentity.Key.authorizedBy : idToken?.authBy ?? "",
             BaseUserIdentity.Key.displayName : idToken?.name ?? "",
-            //TODO: what should be this value?
+            //TODO: what should be this value? - not implemted in android
             BaseUserIdentity.Key.ID : idToken?.name ?? ""
         ]
         return BaseUserIdentity(map: identity)

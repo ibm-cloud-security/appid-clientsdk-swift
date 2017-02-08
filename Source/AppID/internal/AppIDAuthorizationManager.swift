@@ -20,7 +20,7 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationManager")
     
     
-    init(appid:AppID) {
+    public init(appid:AppID) {
         self.oAuthManager = appid.oauthManager!
     }
     

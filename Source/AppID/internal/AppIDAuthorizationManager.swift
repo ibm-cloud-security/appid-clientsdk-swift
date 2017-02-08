@@ -13,7 +13,7 @@
 import Foundation
 import BMSCore
 
-internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
+public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     
     
     private var oAuthManager:OAuthManager
@@ -35,7 +35,7 @@ internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
      */
     
     
-    internal func isAuthorizationRequired(for httpResponse: Response) -> Bool {
+    public func isAuthorizationRequired(for httpResponse: Response) -> Bool {
         AppIDAuthorizationManager.logger.debug(message: "isAuthorizationRequired")
         return AuthorizationHeaderHelper.isAuthorizationRequired(for: httpResponse)
     }
@@ -50,7 +50,7 @@ internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
      */
     
     
-    internal func isAuthorizationRequired(for statusCode: Int, httpResponseAuthorizationHeader
+    public func isAuthorizationRequired(for statusCode: Int, httpResponseAuthorizationHeader
         responseAuthorizationHeader: String) -> Bool {
         return AuthorizationHeaderHelper.isAuthorizationRequired(statusCode: statusCode, header: responseAuthorizationHeader)
     }
@@ -92,7 +92,7 @@ internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     /**
      - returns: The locally stored authorization header or nil if the value does not exist.
      */
-    internal var cachedAuthorizationHeader:String? {
+    public var cachedAuthorizationHeader:String? {
         get{
             AppIDAuthorizationManager.logger.debug(message: "getCachedAuthorizationHeader")
             guard let accessToken = self.accessToken, let identityToken = self.identityToken else {
@@ -105,7 +105,7 @@ internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     
     
     
-    internal var userIdentity:UserIdentity? {
+    public var userIdentity:UserIdentity? {
         let idToken = self.identityToken
         let identity:[String:Any] = [
             BaseUserIdentity.Key.authorizedBy : idToken?.authBy ?? "",
@@ -116,11 +116,11 @@ internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
         return BaseUserIdentity(map: identity)
         
     }
-    internal var deviceIdentity:DeviceIdentity {
+    public var deviceIdentity:DeviceIdentity {
         return BaseDeviceIdentity()
         
     }
-    internal var appIdentity:AppIdentity {
+    public var appIdentity:AppIdentity {
         return BaseAppIdentity()
     }
     public var accessToken:AccessToken? {
@@ -137,7 +137,7 @@ internal class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
      - Parameter request - The request to add the header to.
      */
     
-    internal func addCachedAuthorizationHeader(_ request: NSMutableURLRequest) {
+    public func addCachedAuthorizationHeader(_ request: NSMutableURLRequest) {
         AppIDAuthorizationManager.logger.debug(message: "addCachedAuthorizationHeader")
         addAuthorizationHeader(request, header: cachedAuthorizationHeader)
     }

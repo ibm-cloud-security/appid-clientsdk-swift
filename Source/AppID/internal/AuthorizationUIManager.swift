@@ -55,20 +55,35 @@ public class AuthorizationUIManager {
                 self.oAuthManager.tokenManager?.obtainTokens(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
             })
         }
-        
-        let urlString = url.absoluteString
-        if urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
-            //gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
-            if let code = url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(AppIDConstants.JSON_CODE_KEY)}).first?.components(separatedBy: "=")[1] {
-                tokenRequest(code: code, errMsg: nil)
-            } else {
-                AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")
-                tokenRequest(code: nil, errMsg: "Failed to extract grant code")
+        if let err = getParamFromQuery(url: url, paramName: "error") {
+            loginView?.dismiss(animated: true, completion: { () -> Void in
+                let errorDescription = self.getParamFromQuery(url: url, paramName: "error_description")
+                let errorCode = self.getParamFromQuery(url: url, paramName: "error_code")
+                AuthorizationUIManager.logger.error(message: "error: " + err)
+                AuthorizationUIManager.logger.error(message: "errorCode: " + (errorCode ?? "not available"))
+                AuthorizationUIManager.logger.error(message: "errorDescription: " + (errorDescription ?? "not available"))
+                self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to obtain access and identity tokens"))
+            })
+            return false
+        } else {
+            let urlString = url.absoluteString
+            if urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
+                //gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
+                if let code =  getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY){
+                    tokenRequest(code: code, errMsg: nil)
+                } else {
+                    AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")
+                    tokenRequest(code: nil, errMsg: "Failed to extract grant code")
+                }
+                return true
             }
-            return true
+            return false
         }
-        return false
         
+    }
+    
+    private func getParamFromQuery(url:URL, paramName: String) -> String? {
+        return url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(paramName)}).first?.components(separatedBy: "=")[1]
     }
     
     

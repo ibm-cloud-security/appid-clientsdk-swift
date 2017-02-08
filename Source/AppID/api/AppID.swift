@@ -18,7 +18,7 @@ public class AppID {
 	private(set) var tenantId: String?
 	private(set) var bluemixRegion: String?
     private(set) var oauthManager: OAuthManager?
-    private(set) var loginWidget: LoginWidgetImpl?
+    public var loginWidget: LoginWidgetImpl?
     private var userAttributeManager:UserAttributeManager?
     
     public static var overrideServerHost: String?

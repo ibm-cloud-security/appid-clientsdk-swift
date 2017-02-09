@@ -25,7 +25,6 @@
 		EF1DEC3A1E4883B70082A159 /* UserAttributeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DEC391E4883B70082A159 /* UserAttributeDelegate.swift */; };
 		EF1DEC3C1E4884120082A159 /* UserAttributeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF1DEC3B1E4884120082A159 /* UserAttributeError.swift */; };
 		EF4D52411E27EC1B00604D8B /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D522B1E27EC1B00604D8B /* AppID.swift */; };
-		EF4D52451E27EC1B00604D8B /* AppIDAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */; };
 		EF4D52461E27EC1B00604D8B /* AppIDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52321E27EC1B00604D8B /* AppIDError.swift */; };
 		EF4D52471E27EC1B00604D8B /* PreferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52331E27EC1B00604D8B /* PreferenceManager.swift */; };
 		EF4D524A1E27EC1B00604D8B /* AppIDConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52361E27EC1B00604D8B /* AppIDConstants.swift */; };
@@ -53,6 +52,7 @@
 		EFD1035D1E4094210076B068 /* StringPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD1035C1E4094210076B068 /* StringPreference.swift */; };
 		EFD1035F1E4094350076B068 /* JSONPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFD1035E1E4094350076B068 /* JSONPreference.swift */; };
 		EFE8DC1D1DFDAE920039A5F2 /* BMSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */; };
+		EFEC92091E4B80C400E37D19 /* AppIDAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEC92081E4B80C400E37D19 /* AppIDAuthorizationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,7 +97,6 @@
 		EF1DEC391E4883B70082A159 /* UserAttributeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeDelegate.swift; sourceTree = "<group>"; };
 		EF1DEC3B1E4884120082A159 /* UserAttributeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeError.swift; sourceTree = "<group>"; };
 		EF4D522B1E27EC1B00604D8B /* AppID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppID.swift; sourceTree = "<group>"; };
-		EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppIDAuthorizationManager.swift; path = ../internal/AppIDAuthorizationManager.swift; sourceTree = "<group>"; };
 		EF4D52321E27EC1B00604D8B /* AppIDError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDError.swift; sourceTree = "<group>"; };
 		EF4D52331E27EC1B00604D8B /* PreferenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceManager.swift; sourceTree = "<group>"; };
 		EF4D52361E27EC1B00604D8B /* AppIDConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDConstants.swift; sourceTree = "<group>"; };
@@ -130,6 +129,7 @@
 		EFD1035C1E4094210076B068 /* StringPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringPreference.swift; sourceTree = "<group>"; };
 		EFD1035E1E4094350076B068 /* JSONPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONPreference.swift; sourceTree = "<group>"; };
 		EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BMSCore.framework; path = "../Library/Developer/Xcode/DerivedData/AppIDworkspace-ctfiojsausdyvabbauzbpkzomohi/Build/Products/Debug-iphonesimulator/BMSCore.framework"; sourceTree = "<group>"; };
+		EFEC92081E4B80C400E37D19 /* AppIDAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAuthorizationManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,11 +291,11 @@
 		EF4D522A1E27EC1B00604D8B /* API */ = {
 			isa = PBXGroup;
 			children = (
+				EFEC92081E4B80C400E37D19 /* AppIDAuthorizationManager.swift */,
 				EF1DEC361E4880BB0082A159 /* UserAttributes */,
 				3A007BA81E399701006332E5 /* Tokens */,
 				EF4D522B1E27EC1B00604D8B /* AppID.swift */,
 				3A007BAF1E39987D006332E5 /* LoginWidget.swift */,
-				EF4D52311E27EC1B00604D8B /* AppIDAuthorizationManager.swift */,
 				3A007BB71E399BBE006332E5 /* AuthorizationDelegate.swift */,
 				3A007BB91E399CB0006332E5 /* AuthorizationError.swift */,
 			);
@@ -638,7 +638,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFD1035D1E4094210076B068 /* StringPreference.swift in Sources */,
-				EF4D52451E27EC1B00604D8B /* AppIDAuthorizationManager.swift in Sources */,
 				EF4D52471E27EC1B00604D8B /* PreferenceManager.swift in Sources */,
 				3A007BB41E399958006332E5 /* IdentityTokenImpl.swift in Sources */,
 				EF4D52461E27EC1B00604D8B /* AppIDError.swift in Sources */,
@@ -654,6 +653,7 @@
 				3A007BAC1E399776006332E5 /* IdentityToken.swift in Sources */,
 				EF4D52501E27EC1B00604D8B /* TokenManager.swift in Sources */,
 				EF1DEC3C1E4884120082A159 /* UserAttributeError.swift in Sources */,
+				EFEC92091E4B80C400E37D19 /* AppIDAuthorizationManager.swift in Sources */,
 				3A007BB21E3998E0006332E5 /* AccessTokenImpl.swift in Sources */,
 				EF1DEB9E1E40B5710082A159 /* AuthorizationManager.swift in Sources */,
 				3A007BB81E399BBE006332E5 /* AuthorizationDelegate.swift in Sources */,

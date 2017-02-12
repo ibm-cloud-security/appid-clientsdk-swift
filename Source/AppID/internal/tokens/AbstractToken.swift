@@ -10,14 +10,14 @@ public protocol Token{
 	var issuer: String? {get}
 	var subject: String? {get}
 	var audience: String? {get}
-	var expiration: Date {get}
-	var issuedAt: Date {get}
+	var expiration: Date? {get}
+	var issuedAt: Date? {get}
 	var tenant: String? {get}
 	var authBy: String? {get}
 	var isExpired: Bool {get}
 }
 
-internal class AbstractToken: Token{
+internal class AbstractToken: Token {
 	
 	private static let ISSUER = "iss"
 	private static let SUBJECT = "sub"
@@ -80,16 +80,16 @@ internal class AbstractToken: Token{
 		return payload[AbstractToken.AUDIENCE] as? String
 	}
 	
-    var expiration: Date {
+    var expiration: Date? {
         guard let exp = payload[AbstractToken.EXPIRATION] as? Double else {
-            return Date()
+            return nil
         }
         return Date(timeIntervalSince1970: exp)
     }
     
-    var issuedAt: Date {
+    var issuedAt: Date? {
         guard let iat = payload[AbstractToken.ISSUED_AT] as? Double else {
-            return Date()
+            return nil
         }
         return Date(timeIntervalSince1970: iat)
     }
@@ -102,7 +102,10 @@ internal class AbstractToken: Token{
 	}
 	
     var isExpired: Bool {
-        return self.expiration < Date()
+        guard let exp = self.expiration else {
+            return true
+        }
+        return exp < Date()
     }
 	
 }

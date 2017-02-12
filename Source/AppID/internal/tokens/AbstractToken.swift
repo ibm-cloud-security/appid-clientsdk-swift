@@ -15,6 +15,7 @@ public protocol Token{
 	var tenant: String? {get}
 	var authBy: String? {get}
 	var isExpired: Bool {get}
+    var isAnonymous: Bool {get}
 }
 
 internal class AbstractToken: Token {
@@ -106,6 +107,11 @@ internal class AbstractToken: Token {
             return true
         }
         return exp < Date()
+    }
+    
+    var isAnonymous: Bool {
+        // TODO: complete this
+        return false
     }
 	
 }

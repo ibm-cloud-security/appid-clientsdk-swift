@@ -7,13 +7,13 @@ public protocol Token{
 	var payload: Dictionary<String, Any> {get}
 	var signature: String {get}
 	
-	var issuer: String {get}
-	var subject: String {get}
-	var audience: String {get}
+	var issuer: String? {get}
+	var subject: String? {get}
+	var audience: String? {get}
 	var expiration: Date {get}
 	var issuedAt: Date {get}
-	var tenant: String {get}
-	var authBy: String {get}
+	var tenant: String? {get}
+	var authBy: String? {get}
 	var isExpired: Bool {get}
 }
 
@@ -68,16 +68,16 @@ internal class AbstractToken: Token{
 		self.payload = payloadDictionary
 	}
 	
-	var issuer: String {
-		return payload[AbstractToken.ISSUER] as! String
+	var issuer: String? {
+		return payload[AbstractToken.ISSUER] as? String
 	}
 
-	var subject: String {
-		return payload[AbstractToken.SUBJECT] as! String
+	var subject: String? {
+		return payload[AbstractToken.SUBJECT] as? String
 	}
 	
-	var audience: String {
-		return payload[AbstractToken.AUDIENCE] as! String
+	var audience: String? {
+		return payload[AbstractToken.AUDIENCE] as? String
 	}
 	
 	var expiration: Date {
@@ -88,12 +88,12 @@ internal class AbstractToken: Token{
 		return Date()
 	}
 	
-	var tenant: String {
-		return payload[AbstractToken.TENANT] as! String
+	var tenant: String? {
+		return payload[AbstractToken.TENANT] as? String
 	}
 	
-	var authBy: String {
-		return payload[AbstractToken.AUTH_BY] as! String
+	var authBy: String? {
+		return payload[AbstractToken.AUTH_BY] as? String
 	}
 	
 	var isExpired: Bool {

@@ -1,4 +1,4 @@
-///* *     Copyright 2016, 2017 IBM Corp.
+/// * *     Copyright 2016, 2017 IBM Corp.
 // *     Licensed under the Apache License, Version 2.0 (the "License");
 // *     you may not use this file except in compliance with the License.
 // *     You may obtain a copy of the License at
@@ -10,19 +10,19 @@
 // *     limitations under the License.
 // */
 //
-//import Foundation
-//import XCTest
-//import BMSCore
-//@testable import AppID
+// import Foundation
+// import XCTest
+// import BMSCore
+// @testable import AppID
 //
-//class TokenManagerTests: XCTestCase {
-////    var tokenManager:TokenManager = TokenManager(oAuthManager: OAuthManager())
+// class TokenManagerTests: XCTestCase {
+// //    var tokenManager:TokenManager = TokenManager(oAuthManager: OAuthManager())
 //    override func setUp() {
 //        super.setUp();
 //    }
 //    
 //    func testAddHeaders(){
-////            tokenManager.invokeTokenRequest("grantCode", callback: callback)
+// //            tokenManager.invokeTokenRequest("grantCode", callback: callback)
 //    }
 //
-//}
+// }

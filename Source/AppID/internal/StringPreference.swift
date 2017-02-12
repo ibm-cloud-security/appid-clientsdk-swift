@@ -19,8 +19,8 @@ import Foundation
 internal class StringPreference {
     private(set) final var sharedPreferences:UserDefaults
     private final var name:String
-    
-    //TODO: should these be syncronized?
+
+    // TODO: should these be syncronized?
     
     init(name:String, sharedPreferences: UserDefaults) {
      self.name = name

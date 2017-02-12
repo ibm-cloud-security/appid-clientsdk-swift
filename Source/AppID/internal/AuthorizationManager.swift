@@ -16,7 +16,6 @@ import BMSCore
 public class AuthorizationManager {
 
     static var logger = Logger.logger(name: AppIDConstants.RegistrationManagerLoggerName)
-    
     var registrationManager:RegistrationManager
     var appid:AppID
     var oAuthManager:OAuthManager
@@ -60,7 +59,7 @@ public class AuthorizationManager {
     
     
     public func loginAnonymously(accessTokenString:String?, authorizationDelegate:AuthorizationDelegate) {
-        //TODO: not fully implemented yet
+        // TODO: not fully implemented yet
         if let unwrappedAccessTokenString = accessTokenString {
             AccessTokenImpl(with: unwrappedAccessTokenString)
         } else {

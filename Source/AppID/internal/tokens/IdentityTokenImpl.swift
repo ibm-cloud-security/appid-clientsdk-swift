@@ -1,6 +1,6 @@
 import Foundation
 
-internal class IdentityTokenImpl: AbstractToken, IdentityToken{
+internal class IdentityTokenImpl: AbstractToken, IdentityToken {
 
 	private static let NAME = "name"
 	private static let EMAIL = "email"
@@ -9,31 +9,32 @@ internal class IdentityTokenImpl: AbstractToken, IdentityToken{
 	private static let PICTURE = "picture"
 	private static let IDENTITIES = "identities"
 
-	var name: String {
-		return payload[IdentityTokenImpl.NAME] as! String
+	var name: String? {
+		return payload[IdentityTokenImpl.NAME] as? String
 	}
 	
-	var email: String {
-		return payload[IdentityTokenImpl.EMAIL] as! String
+	var email: String? {
+		return payload[IdentityTokenImpl.EMAIL] as? String
 	}
 	
-	var gender: String {
-		return payload[IdentityTokenImpl.GENDER] as! String
+	var gender: String? {
+		return payload[IdentityTokenImpl.GENDER] as? String
 	}
 	
-	var locale: String {
-		return payload[IdentityTokenImpl.LOCALE] as! String
+	var locale: String? {
+		return payload[IdentityTokenImpl.LOCALE] as? String
 	}
 	
-	var picture: String {
-		return payload[IdentityTokenImpl.PICTURE] as! String
+	var picture: String? {
+		return payload[IdentityTokenImpl.PICTURE] as? String
 	}
 	
-	var identities: Array<Dictionary<String, Any>> {
+	var identities: Array<Dictionary<String, Any>>? {
+        // TODO: implement when server supports it
 		return Array()
 	}
 	
-	var oauthClient: OAuthClient {
-		return OAuthClientImpl(with: self)!
+	var oauthClient: OAuthClient? {
+		return OAuthClientImpl(with: self)
 	}
 }

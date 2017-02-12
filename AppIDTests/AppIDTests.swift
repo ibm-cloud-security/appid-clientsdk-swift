@@ -1,4 +1,4 @@
-///* *     Copyright 2016, 2017 IBM Corp.
+/// * *     Copyright 2016, 2017 IBM Corp.
 // *     Licensed under the Apache License, Version 2.0 (the "License");
 // *     you may not use this file except in compliance with the License.
 // *     You may obtain a copy of the License at
@@ -10,13 +10,13 @@
 // *     limitations under the License.
 // */
 //
-//import Foundation
+// import Foundation
 //
-//import XCTest
-//import BMSCore
-//@testable import AppID
+// import XCTest
+// import BMSCore
+// @testable import AppID
 //
-//class AppIDTests: XCTestCase {
+// class AppIDTests: XCTestCase {
 //    static var appId = AppID.sharedInstance
 //    static let tenantId = "1"
 //    static let clientId = "2"
@@ -150,14 +150,14 @@
 //    func testTokens() {
 //        let accessToken = "thisIsAccessToken"
 //        let idToken = "thisIsAccessToken"
-////        XCTAssertEqual(AppIDTests.appId.accessToken, AppIDTests.appId.preferences.accessToken.get())
-////        XCTAssertEqual(AppIDTests.appId.idToken, AppIDTests.appId.preferences.idToken.get())
-////        AppIDTests.appId.preferences.accessToken.set(accessToken)
-////        AppIDTests.appId.preferences.idToken.set(idToken)
-////        XCTAssertEqual(AppIDTests.appId.accessToken, AppIDTests.appId.preferences.accessToken.get())
-////        XCTAssertEqual(AppIDTests.appId.idToken, AppIDTests.appId.preferences.idToken.get())
-////        XCTAssertEqual(AppIDTests.appId.accessToken, accessToken)
-////        XCTAssertEqual(AppIDTests.appId.idToken, idToken)
+// //        XCTAssertEqual(AppIDTests.appId.accessToken, AppIDTests.appId.preferences.accessToken.get())
+// //        XCTAssertEqual(AppIDTests.appId.idToken, AppIDTests.appId.preferences.idToken.get())
+// //        AppIDTests.appId.preferences.accessToken.set(accessToken)
+// //        AppIDTests.appId.preferences.idToken.set(idToken)
+// //        XCTAssertEqual(AppIDTests.appId.accessToken, AppIDTests.appId.preferences.accessToken.get())
+// //        XCTAssertEqual(AppIDTests.appId.idToken, AppIDTests.appId.preferences.idToken.get())
+// //        XCTAssertEqual(AppIDTests.appId.accessToken, accessToken)
+// //        XCTAssertEqual(AppIDTests.appId.idToken, idToken)
 //    }
 //    
 //    func testApplication() {
@@ -196,5 +196,5 @@
 //    }
 //    
 //    
-//}
+// }
 //

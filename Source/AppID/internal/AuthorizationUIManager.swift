@@ -20,7 +20,6 @@ public class AuthorizationUIManager {
     var authorizationUrl:String
     var redirectUri:String
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationUIManager")
-    
     var loginView:safariView?
     init(oAuthManager: OAuthManager, authorizationDelegate: AuthorizationDelegate, authorizationUrl: String, redirectUri: String) {
         self.oAuthManager = oAuthManager
@@ -40,6 +39,7 @@ public class AuthorizationUIManager {
     }
     
     public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {
+        
         func tokenRequest(code: String?, errMsg:String?) {
             loginView?.dismiss(animated: true, completion: { () -> Void in
                 guard errMsg == nil else {
@@ -55,6 +55,7 @@ public class AuthorizationUIManager {
                 self.oAuthManager.tokenManager?.obtainTokens(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
             })
         }
+        
         if let err = getParamFromQuery(url: url, paramName: "error") {
             loginView?.dismiss(animated: true, completion: { () -> Void in
                 let errorDescription = self.getParamFromQuery(url: url, paramName: "error_description")
@@ -68,8 +69,8 @@ public class AuthorizationUIManager {
         } else {
             let urlString = url.absoluteString
             if urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
-                //gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
-                if let code =  getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY){
+                // gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
+                if let code =  getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) {
                     tokenRequest(code: code, errMsg: nil)
                 } else {
                     AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")

@@ -15,7 +15,7 @@ import XCTest
 import BMSCore
 @testable import AppID
 class PreferencesTests: XCTestCase {
-    
+
     override func setUp() {
     }
     
@@ -48,4 +48,4 @@ class PreferencesTests: XCTestCase {
     }
     
 }
-
+    

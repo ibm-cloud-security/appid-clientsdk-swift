@@ -7,17 +7,18 @@ public protocol Token{
 	var payload: Dictionary<String, Any> {get}
 	var signature: String {get}
 	
-	var issuer: String {get}
-	var subject: String {get}
-	var audience: String {get}
-	var expiration: Date {get}
-	var issuedAt: Date {get}
-	var tenant: String {get}
-	var authBy: String {get}
+	var issuer: String? {get}
+	var subject: String? {get}
+	var audience: String? {get}
+	var expiration: Date? {get}
+	var issuedAt: Date? {get}
+	var tenant: String? {get}
+	var authBy: String? {get}
 	var isExpired: Bool {get}
+    var isAnonymous: Bool {get}
 }
 
-internal class AbstractToken: Token{
+internal class AbstractToken: Token {
 	
 	private static let ISSUER = "iss"
 	private static let SUBJECT = "sub"
@@ -68,36 +69,49 @@ internal class AbstractToken: Token{
 		self.payload = payloadDictionary
 	}
 	
-	var issuer: String {
-		return payload[AbstractToken.ISSUER] as! String
+	var issuer: String? {
+		return payload[AbstractToken.ISSUER] as? String
 	}
 
-	var subject: String {
-		return payload[AbstractToken.SUBJECT] as! String
+	var subject: String? {
+		return payload[AbstractToken.SUBJECT] as? String
 	}
 	
-	var audience: String {
-		return payload[AbstractToken.AUDIENCE] as! String
+	var audience: String? {
+		return payload[AbstractToken.AUDIENCE] as? String
 	}
 	
-	var expiration: Date {
-		return Date()
+    var expiration: Date? {
+        guard let exp = payload[AbstractToken.EXPIRATION] as? Double else {
+            return nil
+        }
+        return Date(timeIntervalSince1970: exp)
+    }
+    
+    var issuedAt: Date? {
+        guard let iat = payload[AbstractToken.ISSUED_AT] as? Double else {
+            return nil
+        }
+        return Date(timeIntervalSince1970: iat)
+    }
+	var tenant: String? {
+		return payload[AbstractToken.TENANT] as? String
 	}
 	
-	var issuedAt: Date {
-		return Date()
+	var authBy: String? {
+		return payload[AbstractToken.AUTH_BY] as? String
 	}
 	
-	var tenant: String {
-		return payload[AbstractToken.TENANT] as! String
-	}
-	
-	var authBy: String {
-		return payload[AbstractToken.AUTH_BY] as! String
-	}
-	
-	var isExpired: Bool {
-		return false
-	}
+    var isExpired: Bool {
+        guard let exp = self.expiration else {
+            return true
+        }
+        return exp < Date()
+    }
+    
+    var isAnonymous: Bool {
+        // TODO: complete this
+        return false
+    }
 	
 }

@@ -17,31 +17,31 @@ internal class OAuthClientImpl: OAuthClient{
 		self.oauthClient = identityToken.payload[OAuthClientImpl.OAUTH_CLIENT] as! Dictionary<String, Any>
 	}
 	
-	var type: String {
-		return oauthClient[OAuthClientImpl.TYPE] as! String
+	var type: String? {
+		return oauthClient[OAuthClientImpl.TYPE] as? String
 	}
 	
-	var name: String {
-		return oauthClient[OAuthClientImpl.NAME] as! String
+	var name: String? {
+		return oauthClient[OAuthClientImpl.NAME] as? String
 	}
 	
-	var softwareId: String {
-		return oauthClient[OAuthClientImpl.SOFTWARE_ID] as! String
+	var softwareId: String? {
+		return oauthClient[OAuthClientImpl.SOFTWARE_ID] as? String
 	}
 
-	var softwareVersion: String {
-		return oauthClient[OAuthClientImpl.SOFTWARE_VERSION] as! String
+	var softwareVersion: String? {
+		return oauthClient[OAuthClientImpl.SOFTWARE_VERSION] as? String
 	}
 
-	var deviceId: String {
-		return oauthClient[OAuthClientImpl.DEVICE_ID] as! String
+	var deviceId: String? {
+		return oauthClient[OAuthClientImpl.DEVICE_ID] as? String
 	}
 
-	var devideModel: String {
-		return oauthClient[OAuthClientImpl.DEVICE_MODEL] as! String
+	var deviceModel: String? {
+		return oauthClient[OAuthClientImpl.DEVICE_MODEL] as? String
 	}
 
-	var deviceOS: String {
-		return oauthClient[OAuthClientImpl.DEVICE_OS] as! String
+	var deviceOS: String? {
+		return oauthClient[OAuthClientImpl.DEVICE_OS] as? String
 	}
 }

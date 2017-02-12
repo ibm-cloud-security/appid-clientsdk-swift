@@ -80,14 +80,19 @@ internal class AbstractToken: Token{
 		return payload[AbstractToken.AUDIENCE] as? String
 	}
 	
-	var expiration: Date {
-		return Date()
-	}
-	
-	var issuedAt: Date {
-		return Date()
-	}
-	
+    var expiration: Date {
+        guard let exp = payload[AbstractToken.EXPIRATION] as? Double else {
+            return Date()
+        }
+        return Date(timeIntervalSince1970: exp)
+    }
+    
+    var issuedAt: Date {
+        guard let iat = payload[AbstractToken.ISSUED_AT] as? Double else {
+            return Date()
+        }
+        return Date(timeIntervalSince1970: iat)
+    }
 	var tenant: String? {
 		return payload[AbstractToken.TENANT] as? String
 	}
@@ -96,8 +101,8 @@ internal class AbstractToken: Token{
 		return payload[AbstractToken.AUTH_BY] as? String
 	}
 	
-	var isExpired: Bool {
-		return false
-	}
+    var isExpired: Bool {
+        return self.expiration < Date()
+    }
 	
 }

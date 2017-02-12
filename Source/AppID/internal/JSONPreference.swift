@@ -18,7 +18,7 @@ import Foundation
  */
 internal class JSONPreference:StringPreference {
     
-    //TODO: should these be syncronized?
+    // TODO: should these be syncronized?
     
     override init(name:String, sharedPreferences: UserDefaults) {
         super.init(name: name, sharedPreferences: sharedPreferences)
@@ -37,9 +37,4 @@ internal class JSONPreference:StringPreference {
         
     }
 
-
-
-    
 }
-
-

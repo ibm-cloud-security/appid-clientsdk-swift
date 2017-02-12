@@ -26,11 +26,12 @@ public class AuthorizationHeaderHelper {
             return false
         }
         
-        if(code == 401 || code == 403) {
+        if code == 401 || code == 403 {
             if unwrappedHeader.lowercased().hasPrefix(AppIDConstants.BEARER.lowercased()) && unwrappedHeader.lowercased().contains(AppIDConstants.AUTH_REALM.lowercased()) {
                 return true
             }
         }
         return false
     }
+    
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0810"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E4808FAA325A2BF3A2A7DBE9D711DF24"
-               BuildableName = "Pods_AppID.framework"
-               BlueprintName = "Pods-AppID"
-               ReferencedContainer = "container:Pods.xcodeproj">
+               BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
+               BuildableName = "BluemixAppID.framework"
+               BlueprintName = "BluemixAppID"
+               ReferencedContainer = "container:BluemixAppID.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -26,9 +26,29 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EFBBC7651DF99BF6000CE39A"
+               BuildableName = "BluemixAppIDTests.xctest"
+               BlueprintName = "BluemixAppIDTests"
+               ReferencedContainer = "container:BluemixAppID.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
+            BuildableName = "BluemixAppID.framework"
+            BlueprintName = "BluemixAppID"
+            ReferencedContainer = "container:BluemixAppID.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -45,10 +65,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E4808FAA325A2BF3A2A7DBE9D711DF24"
-            BuildableName = "Pods_AppID.framework"
-            BlueprintName = "Pods-AppID"
-            ReferencedContainer = "container:Pods.xcodeproj">
+            BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
+            BuildableName = "BluemixAppID.framework"
+            BlueprintName = "BluemixAppID"
+            ReferencedContainer = "container:BluemixAppID.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -60,6 +80,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
+            BuildableName = "BluemixAppID.framework"
+            BlueprintName = "BluemixAppID"
+            ReferencedContainer = "container:BluemixAppID.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

@@ -1,7 +1,7 @@
 import Foundation
 
-public protocol Token{
-	
+public protocol Token {
+
 	var raw: String {get}
 	var header: Dictionary<String, Any> {get}
 	var payload: Dictionary<String, Any> {get}
@@ -33,7 +33,7 @@ internal class AbstractToken: Token {
 	var payload: Dictionary<String, Any>
 	var signature: String
 	
-	internal init? (with raw: String){
+	internal init? (with raw: String) {
 		self.raw = raw
 		let tokenComponents = self.raw.components(separatedBy: ".")
 		guard tokenComponents.count==3 else {

@@ -14,7 +14,7 @@ import Foundation
 import BMSCore
 
 public class AuthorizationHeaderHelper {
-    
+
     public static func isAuthorizationRequired(for httpResponse: Response) -> Bool {
         return AuthorizationHeaderHelper.isAuthorizationRequired(statusCode: httpResponse.statusCode, header: (httpResponse.headers?[AppIDConstants.WWW_AUTHENTICATE_HEADER] as? String))
     }

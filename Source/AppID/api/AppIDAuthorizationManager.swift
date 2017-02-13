@@ -14,8 +14,8 @@ import Foundation
 import BMSCore
 
 public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
-    
-    
+
+
     private var oAuthManager:OAuthManager
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationManager")
     
@@ -62,18 +62,22 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
         AppIDAuthorizationManager.logger.debug(message: "obtainAuthorization")
         class innerAuthorizationDelegate: AuthorizationDelegate {
             var callback:BMSCompletionHandler?
-            init(callback:BMSCompletionHandler?){
+            init(callback:BMSCompletionHandler?) {
                 self.callback = callback
             }
+            
             func onAuthorizationFailure(error err:AuthorizationError) {
                 callback?(nil,err)
             }
+            
             func onAuthorizationCanceled () {
                 callback?(nil, AuthorizationError.authorizationFailure("Authorization canceled"))
             }
+            
             func onAuthorizationSuccess (accessToken:AccessToken, identityToken:IdentityToken, response:Response?) {
                 callback?(response,nil)
             }
+            
         }
         
         oAuthManager.authorizationManager?.launchAuthorizationUI(authorizationDelegate: innerAuthorizationDelegate(callback: callback))
@@ -93,7 +97,7 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
      - returns: The locally stored authorization header or nil if the value does not exist.
      */
     public var cachedAuthorizationHeader:String? {
-        get{
+        get {
             AppIDAuthorizationManager.logger.debug(message: "getCachedAuthorizationHeader")
             guard let accessToken = self.accessToken, let identityToken = self.identityToken else {
                 return nil
@@ -110,7 +114,7 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
         let identity:[String:Any] = [
             BaseUserIdentity.Key.authorizedBy : idToken?.authBy ?? "",
             BaseUserIdentity.Key.displayName : idToken?.name ?? "",
-            //TODO: what should be this value? - not implemted in android
+            // TODO: what should be this value? - not implemted in android
             BaseUserIdentity.Key.ID : idToken?.name ?? ""
         ]
         return BaseUserIdentity(map: identity)

@@ -36,12 +36,12 @@ public class AppID {
     }
 	
     public func loginAnonymously(authorizationDelegate:AuthorizationDelegate) {
-        //TODO: we need to complete this
+        // TODO: we need to complete this
         self.loginAnonymously(accessToken: nil, authorizationDelegate: authorizationDelegate)
     }
     
     public func loginAnonymously(accessToken:String?, authorizationDelegate:AuthorizationDelegate) {
-        //TODO: we need to complete this
+        // TODO: we need to complete this
     }
     
 	public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {

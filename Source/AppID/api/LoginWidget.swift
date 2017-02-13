@@ -13,6 +13,6 @@
 
 import Foundation
 
-public protocol LoginWidget{
+public protocol LoginWidget {
     func launch(delegate:AuthorizationDelegate)
 }

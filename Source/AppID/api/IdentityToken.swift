@@ -13,7 +13,7 @@
 
 import Foundation
 
-public protocol IdentityToken: Token{
+public protocol IdentityToken: Token {
 	var name: String? {get}
 	var email: String? {get}
 	var gender: String? {get}

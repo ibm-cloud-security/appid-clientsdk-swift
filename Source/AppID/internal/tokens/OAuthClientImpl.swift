@@ -1,7 +1,7 @@
 import Foundation
 
 internal class OAuthClientImpl: OAuthClient {
-	
+
 	private static let OAUTH_CLIENT = "oauth_client"
 	private static let TYPE = "type"
 	private static let NAME = "name"
@@ -13,7 +13,7 @@ internal class OAuthClientImpl: OAuthClient {
 	
 	let oauthClient: Dictionary<String, Any>?
 	
-	internal init?(with identityToken: IdentityToken){
+	internal init?(with identityToken: IdentityToken) {
 		self.oauthClient = identityToken.payload[OAuthClientImpl.OAUTH_CLIENT] as? Dictionary<String, Any>
 	}
 	

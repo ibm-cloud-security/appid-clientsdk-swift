@@ -24,7 +24,7 @@ internal class Config {
             logger.error(message: "Could not set server url properly, no tenantId or no region set")
             return serverUrlPrefix
         }
-        
+
         var serverUrl = Config.serverUrlPrefix + region + "/oauth/v3/"
         if let overrideServerHost = AppID.overrideServerHost {
             serverUrl = overrideServerHost

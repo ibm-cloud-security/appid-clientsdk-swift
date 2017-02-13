@@ -25,7 +25,7 @@ public class AuthorizationManager {
         self.appid = oAuthManager.appId
         self.registrationManager = oAuthManager.registrationManager!
     }
-    
+
     public func getAuthorizationUrl(idpName:String?) -> String {
         var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY
         if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {

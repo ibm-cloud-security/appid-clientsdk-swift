@@ -18,7 +18,7 @@ class PreferencesTests: XCTestCase {
 
     override func setUp() {
     }
-    
+
     func testStringPreference() {
         
         let s = StringPreference(name: "testPref", sharedPreferences: UserDefaults.standard)

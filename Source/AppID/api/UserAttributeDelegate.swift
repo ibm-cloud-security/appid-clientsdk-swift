@@ -10,7 +10,7 @@ import Foundation
 
 
 public protocol UserAttributeDelegate {
-    
+
     func onSuccess(var1: [String:Any])
     func onFailure(var1: UserAttributeError)
     

@@ -14,5 +14,12 @@
 import Foundation
 
 public enum AuthorizationError: Error {
-	case authorizationFailure(String)
+    case authorizationFailure(String)
+    
+    var description: String {
+        switch self {
+        case .authorizationFailure(let msg) :
+            return msg
+        }
+    }
 }

@@ -16,8 +16,8 @@ internal class TokenManager {
     
     private final var appid:AppID
     private final var registrationManager:RegistrationManager
-    private(set) var latestAccessToken:AccessToken?
-    private(set) var latestIdentityToken:IdentityToken?
+    internal var latestAccessToken:AccessToken?
+    internal var latestIdentityToken:IdentityToken?
     internal static let logger = Logger.logger(name: AppIDConstants.TokenManagerLoggerName)
     internal init(oAuthManager:OAuthManager)
     {
@@ -83,16 +83,16 @@ internal class TokenManager {
         TokenManager.logger.debug(message: "Extracting tokens from server response")
         
         guard let responseText = response.responseText else {
-            TokenManager.logger.error(message: "Failed to parse server response")
-            authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response"))
+            TokenManager.logger.error(message: "Failed to parse server response - no response text")
+            authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response - no response text"))
             return
         }
         do {
         var responseJson =  try Utils.parseJsonStringtoDictionary(responseText)
         
             guard let accessTokenString = (responseJson["access_token"] as? String), let idTokenString = (responseJson["id_token"] as? String) else {
-                TokenManager.logger.error(message: "Failed to parse server response")
-                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response"))
+                TokenManager.logger.error(message: "Failed to parse server response - no access or identity token")
+                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response - no access or identity token"))
                 return
             }
             guard let accessToken = AccessTokenImpl(with: accessTokenString), let identityToken:IdentityTokenImpl = IdentityTokenImpl(with: idTokenString) else {
@@ -104,8 +104,8 @@ internal class TokenManager {
             self.latestIdentityToken = identityToken
             authorizationDelegate.onAuthorizationSuccess(accessToken: accessToken, identityToken: identityToken, response:response)
         } catch (_) {
-            TokenManager.logger.error(message: "Failed to parse server response")
-            authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response"))
+            TokenManager.logger.error(message: "Failed to parse server response - failed to parse json")
+            authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response - failed to parse json"))
             return
         }
        

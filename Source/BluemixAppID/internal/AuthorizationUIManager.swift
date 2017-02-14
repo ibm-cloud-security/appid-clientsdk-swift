@@ -72,11 +72,12 @@ public class AuthorizationUIManager {
                 // gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
                 if let code =  getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) {
                     tokenRequest(code: code, errMsg: nil)
+                    return true
                 } else {
                     AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")
                     tokenRequest(code: nil, errMsg: "Failed to extract grant code")
+                    return false
                 }
-                return true
             }
             return false
         }

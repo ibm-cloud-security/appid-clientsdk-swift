@@ -26,7 +26,7 @@ internal class RegistrationManager {
     }
     
  
-    public func ensureRegistered(callback : @escaping (Error?) -> Void) {
+    public func ensureRegistered(callback : @escaping (AppIDError?) -> Void) {
         let storedClientId:String? = self.getRegistrationDataString(name: AppIDConstants.client_id_String)
         let storedTenantId:String? = self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).get()
         if(storedClientId != nil && self.appId.tenantId == storedTenantId) {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF37F8BA1E534C2D0020E998 /* AuthorizationUIManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */; };
 		EF4D52601E27EEEE00604D8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D525F1E27EEEE00604D8B /* AppDelegate.swift */; };
 		EF4D52621E27EEEE00604D8B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4D52611E27EEEE00604D8B /* ViewController.swift */; };
 		EF4D52651E27EEEE00604D8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF4D52631E27EEEE00604D8B /* Main.storyboard */; };
@@ -14,7 +15,7 @@
 		EF4D526A1E27EEEE00604D8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF4D52681E27EEEE00604D8B /* LaunchScreen.storyboard */; };
 		EF77D52A1E51F92100C4B87F /* BluemixAppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBA20181E51F7D9000EB3F5 /* BluemixAppID.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EF77D52D1E51F9C600C4B87F /* AppIDAuthorizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE71E51F7D9000EB3F5 /* AppIDAuthorizationManagerTests.swift */; };
-		EF77D52E1E51F9C600C4B87F /* AppIDSecurityUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE81E51F7D9000EB3F5 /* AppIDSecurityUtilsTests.swift */; };
+		EF77D52E1E51F9C600C4B87F /* SecurityUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE81E51F7D9000EB3F5 /* SecurityUtilsTests.swift */; };
 		EF77D52F1E51F9C600C4B87F /* AppIDTestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */; };
 		EF77D5301E51F9C600C4B87F /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEA1E51F7D9000EB3F5 /* AppIDTests.swift */; };
 		EF77D5311E51F9C600C4B87F /* AuthorizationHeaderHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEB1E51F7D9000EB3F5 /* AuthorizationHeaderHelperTests.swift */; };
@@ -24,6 +25,9 @@
 		EF77D5351E51F9C600C4B87F /* TokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEF1E51F7D9000EB3F5 /* TokenTests.swift */; };
 		EF77D5361E51F9C600C4B87F /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF01E51F7D9000EB3F5 /* UtilsTests.swift */; };
 		EF77D5381E52085800C4B87F /* RegistrationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF77D5371E52085800C4B87F /* RegistrationManagerTests.swift */; };
+		EFB7F3B21E5307F20099BEDC /* AuthorizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7F3B11E5307F20099BEDC /* AuthorizationManagerTests.swift */; };
+		EFB876371E533E9400E017FA /* ConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB876361E533E9400E017FA /* ConfigTests.swift */; };
+		EFB876391E53434800E017FA /* OAuthClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB876381E53434800E017FA /* OAuthClientTests.swift */; };
 		EFBA201E1E51F7D9000EB3F5 /* AppIDTestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */; };
 		EFBA20241E51F7D9000EB3F5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EFBA1FEC1E51F7D9000EB3F5 /* Info.plist */; };
 		EFBA20251E51F7D9000EB3F5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EFBA1FEC1E51F7D9000EB3F5 /* Info.plist */; };
@@ -90,6 +94,7 @@
 		D283A626C8D140B4A8EA025A /* Pods_AppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0FE4EAFD296A325904100A1 /* Pods-AppID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppID.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppID/Pods-AppID.release.xcconfig"; sourceTree = "<group>"; };
 		E85962A21A6729F86A5D94F7 /* Pods_AppIDTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppIDTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationUIManagerTests.swift; sourceTree = "<group>"; };
 		EF4D525D1E27EEEE00604D8B /* dummyAppForKeyChain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dummyAppForKeyChain.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF4D525F1E27EEEE00604D8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF4D52611E27EEEE00604D8B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -99,8 +104,11 @@
 		EF4D526B1E27EEEE00604D8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF4D526F1E27EF0800604D8B /* dummyAppForKeyChain.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = dummyAppForKeyChain.entitlements; sourceTree = "<group>"; };
 		EF77D5371E52085800C4B87F /* RegistrationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManagerTests.swift; sourceTree = "<group>"; };
+		EFB7F3B11E5307F20099BEDC /* AuthorizationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManagerTests.swift; sourceTree = "<group>"; };
+		EFB876361E533E9400E017FA /* ConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
+		EFB876381E53434800E017FA /* OAuthClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthClientTests.swift; sourceTree = "<group>"; };
 		EFBA1FE71E51F7D9000EB3F5 /* AppIDAuthorizationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAuthorizationManagerTests.swift; sourceTree = "<group>"; };
-		EFBA1FE81E51F7D9000EB3F5 /* AppIDSecurityUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDSecurityUtilsTests.swift; sourceTree = "<group>"; };
+		EFBA1FE81E51F7D9000EB3F5 /* SecurityUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityUtilsTests.swift; sourceTree = "<group>"; };
 		EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDTestConstants.swift; sourceTree = "<group>"; };
 		EFBA1FEA1E51F7D9000EB3F5 /* AppIDTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDTests.swift; sourceTree = "<group>"; };
 		EFBA1FEB1E51F7D9000EB3F5 /* AuthorizationHeaderHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationHeaderHelperTests.swift; sourceTree = "<group>"; };
@@ -204,7 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				EFBA1FE71E51F7D9000EB3F5 /* AppIDAuthorizationManagerTests.swift */,
-				EFBA1FE81E51F7D9000EB3F5 /* AppIDSecurityUtilsTests.swift */,
+				EFBA1FE81E51F7D9000EB3F5 /* SecurityUtilsTests.swift */,
 				EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */,
 				EFBA1FEA1E51F7D9000EB3F5 /* AppIDTests.swift */,
 				EFBA1FEB1E51F7D9000EB3F5 /* AuthorizationHeaderHelperTests.swift */,
@@ -214,6 +222,10 @@
 				EFBA1FEF1E51F7D9000EB3F5 /* TokenTests.swift */,
 				EFBA1FF01E51F7D9000EB3F5 /* UtilsTests.swift */,
 				EF77D5371E52085800C4B87F /* RegistrationManagerTests.swift */,
+				EFB7F3B11E5307F20099BEDC /* AuthorizationManagerTests.swift */,
+				EFB876361E533E9400E017FA /* ConfigTests.swift */,
+				EFB876381E53434800E017FA /* OAuthClientTests.swift */,
+				EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */,
 			);
 			path = BluemixAppIDTests;
 			sourceTree = "<group>";
@@ -629,14 +641,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				EF77D52D1E51F9C600C4B87F /* AppIDAuthorizationManagerTests.swift in Sources */,
-				EF77D52E1E51F9C600C4B87F /* AppIDSecurityUtilsTests.swift in Sources */,
+				EF77D52E1E51F9C600C4B87F /* SecurityUtilsTests.swift in Sources */,
 				EF77D52F1E51F9C600C4B87F /* AppIDTestConstants.swift in Sources */,
 				EF77D5301E51F9C600C4B87F /* AppIDTests.swift in Sources */,
+				EFB876391E53434800E017FA /* OAuthClientTests.swift in Sources */,
+				EFB876371E533E9400E017FA /* ConfigTests.swift in Sources */,
 				EF77D5381E52085800C4B87F /* RegistrationManagerTests.swift in Sources */,
 				EF77D5311E51F9C600C4B87F /* AuthorizationHeaderHelperTests.swift in Sources */,
 				EF77D5321E51F9C600C4B87F /* Info.plist in Sources */,
 				EF77D5331E51F9C600C4B87F /* PreferencesTests.swift in Sources */,
+				EF37F8BA1E534C2D0020E998 /* AuthorizationUIManagerTests.swift in Sources */,
 				EF77D5341E51F9C600C4B87F /* TokenManagerTests.swift in Sources */,
+				EFB7F3B21E5307F20099BEDC /* AuthorizationManagerTests.swift in Sources */,
 				EF77D5351E51F9C600C4B87F /* TokenTests.swift in Sources */,
 				EF77D5361E51F9C600C4B87F /* UtilsTests.swift in Sources */,
 			);

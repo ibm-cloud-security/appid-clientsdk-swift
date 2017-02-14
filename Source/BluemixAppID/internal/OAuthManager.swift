@@ -19,7 +19,7 @@ public class OAuthManager {
     private(set) var preferenceManager:PreferenceManager
     private(set) var registrationManager:RegistrationManager?
     internal var authorizationManager:AuthorizationManager?
-    private(set) var tokenManager:TokenManager?
+    internal var tokenManager:TokenManager?
 
     init(appId:AppID) {
         self.appId = appId

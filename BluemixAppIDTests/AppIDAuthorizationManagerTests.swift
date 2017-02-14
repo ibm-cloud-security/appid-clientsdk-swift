@@ -15,7 +15,6 @@ import Foundation
 import XCTest
 import BMSCore
 @testable import BluemixAppID
-import Foundation
 
 public class AppIDAuthorizationManagerTests: XCTestCase {
     

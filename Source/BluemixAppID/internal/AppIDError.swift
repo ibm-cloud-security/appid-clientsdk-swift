@@ -19,4 +19,15 @@ internal enum AppIDError: Error {
     case jsonUtilsError(msg: String?)
     case generalError
     
+    
+    var description: String {
+        switch self {
+        case .authenticationError(let msg), .jsonUtilsError(let msg), .registrationError(let msg), .tokenRequestError(let msg) :
+            return msg ?? "error"
+        case .generalError :
+            return "General Error"
+        }
+    }
+
+    
 }

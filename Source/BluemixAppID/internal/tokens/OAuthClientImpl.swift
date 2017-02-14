@@ -11,7 +11,7 @@ internal class OAuthClientImpl: OAuthClient {
 	private static let DEVICE_MODEL = "device_model"
 	private static let DEVICE_OS = "device_os"
 	
-	let oauthClient: Dictionary<String, Any>?
+	internal var oauthClient: Dictionary<String, Any>?
 	
 	internal init?(with identityToken: IdentityToken) {
 		self.oauthClient = identityToken.payload[OAuthClientImpl.OAUTH_CLIENT] as? Dictionary<String, Any>

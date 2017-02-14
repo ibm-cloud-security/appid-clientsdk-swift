@@ -16,8 +16,8 @@ import BMSCore
 @testable import BluemixAppID
 class SecurityUtilsTest: XCTestCase {
     var keySize = 512
-    var publicKeyTag = "publicKeyTag"
-    var privateKeyTag = "privateKeyTag"
+    var publicKeyTag = AppIDConstants.publicKeyIdentifier
+    var privateKeyTag = AppIDConstants.privateKeyIdentifier
     func clearDictValuesFromKeyChain(_ dict : [String : NSString])  {
         for (tag, kSecClassName) in dict {
            if kSecClassName == kSecClassKey {
@@ -49,12 +49,33 @@ class SecurityUtilsTest: XCTestCase {
     }
     
     
-    func testSaveItemToKeyChain(){
+    func testSaveItemToKeyChain() {
         SecurityUtils.saveItemToKeyChain(itemData, label: itemLabel)
         XCTAssertEqual(SecurityUtils.getItemFromKeyChain(itemLabel), itemData)
         SecurityUtils.removeItemFromKeyChain(itemLabel)
         XCTAssertNil(SecurityUtils.getItemFromKeyChain(itemLabel))
     }
+    
+    
+    func testGetJwksHeader() {
+        // happy flow
+        var jwks:[String:Any]? = try? SecurityUtils.getJWKSHeader()
+        XCTAssertNotNil(jwks)
+        XCTAssertEqual(jwks?["e"] as? String, "AQAB")
+         XCTAssertEqual(jwks?["kty"] as? String, "RSA")
+         XCTAssertEqual(jwks?["n"] as? String, "AOH-nACU3cCopAz6_SzJuDtUyN4nHhnk9yfF9DFiGPctXPbwMXofZvd9WcYQqtw-w3WV_yhui9PrOVfVBhk6CmM=")
+        
+        // no public key
+        clearDictValuesFromKeyChain([AppIDConstants.publicKeyIdentifier : kSecClassKey])
+        do {
+            jwks = try SecurityUtils.getJWKSHeader()
+            XCTFail()
+        } catch (let e) {
+            XCTAssertEqual((e as? AppIDError)?.description, "General Error")
+        }
+    }
+    
+    
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()

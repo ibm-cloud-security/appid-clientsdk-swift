@@ -43,10 +43,10 @@ public class AuthorizationManager {
     
     public func launchAuthorizationUI(authorizationDelegate:AuthorizationDelegate) {
         
-        self.registrationManager.ensureRegistered(callback: {(error:Error?) in
+        self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {
-                AuthorizationManager.logger.error(message: error!.localizedDescription)
-                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.localizedDescription))
+                AuthorizationManager.logger.error(message: error!.description)
+                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
             let authorizationUrl = self.getAuthorizationUrl(idpName: nil)

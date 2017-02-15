@@ -31,6 +31,8 @@ internal class TokenManager {
         let tokenUrl = Config.getServerUrl(appId: self.appid) + "/token"
         
         guard let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String), let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0) else {
+            TokenManager.logger.error(message: "Client not registered")
+            authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Client not registered"))
          return
         }
         
@@ -57,7 +59,7 @@ internal class TokenManager {
                     self.extractTokens(response: unWrappedResponse, authorizationDelegate: authorizationDelegate)
                 }
                 else {
-                    authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
+                    authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to extract tokens"))
                 }
             } else {
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
@@ -75,7 +77,11 @@ internal class TokenManager {
             }
             i += 1
         }
-        request.send(requestBody: body.data(using: .utf8), completionHandler: internalCallback)
+        sendRequest(request: request, body: body.data(using: .utf8), internalCallBack: internalCallback)
+    }
+    
+    internal func sendRequest(request:Request, body:Data?, internalCallBack: @escaping BMSCompletionHandler) {
+        request.send(requestBody: body, completionHandler: internalCallBack)
     }
     
     

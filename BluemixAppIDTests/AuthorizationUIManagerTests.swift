@@ -83,7 +83,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
         let expectation1 = expectation(description: "Obtained tokens")
         let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: "Failed to extract grant code"), authorizationUrl: "someurl", redirectUri: "someredirect")
         manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
-        XCTAssertTrue(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?nocode=something")!, options: [:]))
+        XCTAssertFalse(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?nocode=something")!, options: [:]))
         //TODO: why is this true?
         waitForExpectations(timeout: 1) { error in
             if let error = error {

@@ -222,6 +222,7 @@ public class Utils {
         let length = data.count
         return base64StringFromData(data, length: length, isSafeUrl: isSafeUrl)
     }
+    
     internal static func urlEncode(_ str:String) -> String{
         var encodedString = ""
         var unchangedCharacters = ""
@@ -244,20 +245,6 @@ public class Utils {
         else {
             return "nil"
         }
-    }
-    
-    internal static func getQueryString(params: [String : String]) -> String {
-        var ans:String = "?"
-        var i = 0
-        for (key, val) in params {
-            ans += "\(Utils.urlEncode(key))=\(Utils.urlEncode(val))"
-            if i < params.count - 1 {
-                ans += "&"
-            }
-            i+=1
-        }
-        return ans
-        
     }
     
 }

@@ -25,7 +25,7 @@ internal class RegistrationManager {
         self.preferenceManager = oauthManager.preferenceManager
     }
     
- 
+    
     public func ensureRegistered(callback : @escaping (AppIDError?) -> Void) {
         let storedClientId:String? = self.getRegistrationDataString(name: AppIDConstants.client_id_String)
         let storedTenantId:String? = self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).get()
@@ -47,7 +47,7 @@ internal class RegistrationManager {
         }
         
     }
-
+    
     internal func registerOAuthClient(callback :@escaping (Error?) -> Void) {
         guard let registrationParams = try? createRegistrationParams() else {
             callback(AppIDError.registrationError(msg: "Could not create registration params"))
@@ -56,9 +56,9 @@ internal class RegistrationManager {
         let internalCallBack:BMSCompletionHandler = {(response: Response?, error: Error?) in
             if error == nil {
                 if let unWrappedResponse = response, unWrappedResponse.isSuccessful, let responseText = unWrappedResponse.responseText {
-                        self.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set(try? Utils.parseJsonStringtoDictionary(responseText))
-                        self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).set(self.appId.tenantId)
-                        callback(nil)
+                    self.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set(try? Utils.parseJsonStringtoDictionary(responseText))
+                    self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).set(self.appId.tenantId)
+                    callback(nil)
                 } else {
                     callback(AppIDError.registrationError(msg: "Could not register client"))
                 }
@@ -66,19 +66,27 @@ internal class RegistrationManager {
                 callback(error)
             }
         }
-    
+        
         let request:Request = Request(url: Config.getServerUrl(appId: self.appId) + "/clients",method: HttpMethod.POST, headers: [Request.contentType : "application/json"], queryParameters: nil, timeout: 0)
-       request.timeout = BMSClient.sharedInstance.requestTimeout
-        let registrationParamsAsData = try? Utils.urlEncode(Utils.JSONStringify(registrationParams as AnyObject)).data(using: .utf8)
-        request.send(requestBody: registrationParamsAsData ?? Data(), completionHandler: internalCallBack)
+        request.timeout = BMSClient.sharedInstance.requestTimeout
+        let registrationParamsAsData = try? Utils.urlEncode(Utils.JSONStringify(registrationParams as AnyObject)).data(using: .utf8) ?? Data()
+        sendRequest(request: request, registrationParamsAsData: registrationParamsAsData, internalCallBack: internalCallBack)
+       
     }
     
-    /*
-     
-     */
-    private func createRegistrationParams() throws -> [String:Any]{
+    
+    internal func sendRequest(request:Request, registrationParamsAsData:Data?, internalCallBack: @escaping BMSCompletionHandler) {
+        request.send(requestBody: registrationParamsAsData, completionHandler: internalCallBack)
+    }
+    
+    internal func generateKeyPair() throws {
+        try SecurityUtils.generateKeyPair(512, publicTag: AppIDConstants.publicKeyIdentifier, privateTag: AppIDConstants.privateKeyIdentifier)
+    }
+    
+    
+    private func createRegistrationParams() throws -> [String:Any] {
         do {
-            try SecurityUtils.generateKeyPair(512, publicTag: AppIDConstants.publicKeyIdentifier, privateTag: AppIDConstants.privateKeyIdentifier)
+            try generateKeyPair()
             let deviceIdentity = BaseDeviceIdentity()
             let appIdentity = BaseAppIdentity()
             var params = [String:Any]()
@@ -145,7 +153,7 @@ internal class RegistrationManager {
     public func clearRegistrationData() {
         self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).clear()
         self.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).clear()
-
+        
     }
     
     

@@ -66,7 +66,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
         AppIDAuthorizationManagerTests.manager?.oAuthManager.authorizationManager = MockAuthorizationManager(oAuthManager: (AppIDAuthorizationManagerTests.manager?.oAuthManager)!)
         let callback:BMSCompletionHandler = {(response:Response?, error:Error?) in
             XCTAssertNil(response)
-            XCTAssertNotNil(error as? AuthorizationError) // TODO: test it better
+            XCTAssertEqual((error as? AuthorizationError)?.description, "Authorization canceled")
         }
         AppIDAuthorizationManagerTests.manager?.obtainAuthorization(completionHandler: callback)
         
@@ -94,7 +94,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
         AppIDAuthorizationManagerTests.manager?.oAuthManager.authorizationManager = MockAuthorizationManager(oAuthManager: (AppIDAuthorizationManagerTests.manager?.oAuthManager)!)
         let callback:BMSCompletionHandler = {(response:Response?, error:Error?) in
             XCTAssertNil(response)
-            XCTAssertNotNil(error as? AuthorizationError) // TODO: test it better
+            XCTAssertEqual((error as? AuthorizationError)?.description, "someerr")
         }
         AppIDAuthorizationManagerTests.manager?.obtainAuthorization(completionHandler: callback)
         

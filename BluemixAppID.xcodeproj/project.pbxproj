@@ -28,7 +28,6 @@
 		EF49948D1E55F7BE008ACC27 /* OAuthClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB876381E53434800E017FA /* OAuthClientTests.swift */; };
 		EF49948E1E55F7BE008ACC27 /* AuthorizationUIManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */; };
 		EF49948F1E55F7BE008ACC27 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37F8BB1E5487C40020E998 /* TestHelpers.swift */; };
-		EF77D52A1E51F92100C4B87F /* BluemixAppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBA20181E51F7D9000EB3F5 /* BluemixAppID.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EFBA201E1E51F7D9000EB3F5 /* AppIDTestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */; };
 		EFBA202E1E51F7D9000EB3F5 /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF41E51F7D9000EB3F5 /* AppID.swift */; };
 		EFBA20301E51F7D9000EB3F5 /* AppIDAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF51E51F7D9000EB3F5 /* AppIDAuthorizationManager.swift */; };
@@ -63,8 +62,8 @@
 		EFBA206A1E51F7D9000EB3F5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20151E51F7D9000EB3F5 /* Utils.swift */; };
 		EFBA206C1E51F7D9000EB3F5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EFBA20161E51F7D9000EB3F5 /* Info.plist */; };
 		EFBA206D1E51F7D9000EB3F5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EFBA20161E51F7D9000EB3F5 /* Info.plist */; };
-		EFBA20701E51F7D9000EB3F5 /* dump.rdb in Resources */ = {isa = PBXBuildFile; fileRef = EFBA20191E51F7D9000EB3F5 /* dump.rdb */; };
 		EFBBC76B1DF99BF6000CE39A /* BluemixAppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBBC7541DF99AFA000CE39A /* BluemixAppID.framework */; };
+		EFD0251B1E55FC8D00AE1803 /* BluemixAppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFD0251A1E55FC8D00AE1803 /* BluemixAppID.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EFE8DC1D1DFDAE920039A5F2 /* BMSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -145,10 +144,9 @@
 		EFBA20141E51F7D9000EB3F5 /* OAuthClientImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthClientImpl.swift; sourceTree = "<group>"; };
 		EFBA20151E51F7D9000EB3F5 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		EFBA20161E51F7D9000EB3F5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EFBA20181E51F7D9000EB3F5 /* BluemixAppID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluemixAppID.h; sourceTree = "<group>"; };
-		EFBA20191E51F7D9000EB3F5 /* dump.rdb */ = {isa = PBXFileReference; lastKnownFileType = file; path = dump.rdb; sourceTree = "<group>"; };
 		EFBBC7541DF99AFA000CE39A /* BluemixAppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BluemixAppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EFBBC7661DF99BF6000CE39A /* BluemixAppIDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BluemixAppIDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFD0251A1E55FC8D00AE1803 /* BluemixAppID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluemixAppID.h; sourceTree = "<group>"; };
 		EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BMSCore.framework; path = "../Library/Developer/Xcode/DerivedData/AppIDworkspace-ctfiojsausdyvabbauzbpkzomohi/Build/Products/Debug-iphonesimulator/BMSCore.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -309,8 +307,7 @@
 		EFBA20171E51F7D9000EB3F5 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				EFBA20181E51F7D9000EB3F5 /* BluemixAppID.h */,
-				EFBA20191E51F7D9000EB3F5 /* dump.rdb */,
+				EFD0251A1E55FC8D00AE1803 /* BluemixAppID.h */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -352,7 +349,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF77D52A1E51F92100C4B87F /* BluemixAppID.h in Headers */,
+				EFD0251B1E55FC8D00AE1803 /* BluemixAppID.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,7 +486,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFBA206D1E51F7D9000EB3F5 /* Info.plist in Resources */,
-				EFBA20701E51F7D9000EB3F5 /* dump.rdb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

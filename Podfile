@@ -1,12 +1,12 @@
 use_frameworks!
 
 
-target ‘AppID' do
+target ‘BluemixAppID' do
 	platform :ios, '9.0'
 	pod ‘BMSCore’
 end
 
-target 'AppIDTests' do
+target 'BluemixAppIDTests' do
 	platform :ios, '9.0'
 	pod ‘BMSCore’
 end

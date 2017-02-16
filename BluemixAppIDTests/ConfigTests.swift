@@ -18,7 +18,7 @@ import BMSCore
 public class ConfigTests: XCTestCase {
 
     func testGetServerUrl() {
-        
+        AppID.sharedInstance = AppID()
         // no region and tenant
         let appid = AppID.sharedInstance
         XCTAssertEqual("https://mobileclientaccess", Config.getServerUrl(appId: appid))

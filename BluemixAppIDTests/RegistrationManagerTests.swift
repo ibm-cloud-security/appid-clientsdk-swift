@@ -18,9 +18,11 @@ import BMSCore
 
 public class RegistrationManagerTests: XCTestCase {
     
-    let oauthManager = OAuthManager(appId: AppID.sharedInstance)
+    var oauthManager = OAuthManager(appId: AppID.sharedInstance)
     public override func setUp() {
+        AppID.sharedInstance = AppID()
         AppID.sharedInstance.initialize(tenantId: "tenant1", bluemixRegion: "region2")
+        oauthManager = OAuthManager(appId: AppID.sharedInstance)
         oauthManager.registrationManager?.clearRegistrationData()
     }
     

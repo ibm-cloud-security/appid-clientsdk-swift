@@ -15,8 +15,11 @@ import BMSCore
 
 public class AuthorizationHeaderHelper {
 
+    
     public static func isAuthorizationRequired(for httpResponse: Response) -> Bool {
-        return AuthorizationHeaderHelper.isAuthorizationRequired(statusCode: httpResponse.statusCode, header: (httpResponse.headers?[AppIDConstants.WWW_AUTHENTICATE_HEADER] as? String))
+        
+        let header = httpResponse.headers?.filter({($0.key as? String)?.lowercased() == AppIDConstants.WWW_AUTHENTICATE_HEADER.lowercased() }).first?.1 as? String
+        return AuthorizationHeaderHelper.isAuthorizationRequired(statusCode: httpResponse.statusCode, header: header)
     }
     
     

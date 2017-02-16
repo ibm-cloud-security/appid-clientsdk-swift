@@ -22,10 +22,10 @@ public class AppID {
     private var userAttributeManager:UserAttributeManager?
     
     public static var overrideServerHost: String?
-    public static let sharedInstance = AppID()
+    public static var sharedInstance = AppID()
     internal static let logger =  Logger.logger(name: AppIDConstants.AppIDLoggerName)
     
-    private init() {}
+    internal init() {}
     
     
     public func initialize(tenantId: String, bluemixRegion: String) {

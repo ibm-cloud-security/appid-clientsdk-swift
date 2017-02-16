@@ -15,7 +15,7 @@ import XCTest
 @testable import BluemixAppID
 public class AuthorizationHeaderHelperTests: XCTestCase {
 
-    
+
     func testIsAuthorizationRequired() {
         var headers:[String: Any] = [:]
         headers["Dummy"] = ["Dummy"]
@@ -40,4 +40,5 @@ public class AuthorizationHeaderHelperTests: XCTestCase {
         let response = HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 401, httpVersion: nil, headerFields: [AppIDConstants.WWW_AUTHENTICATE_HEADER : "Bearer scope=\"appid_default\""])
         XCTAssertTrue(AuthorizationHeaderHelper.isAuthorizationRequired(for: Response(responseData: nil, httpResponse: response, isRedirect: false)))
     }
+    
 }

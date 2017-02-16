@@ -16,15 +16,15 @@ import BMSCore
 @testable import BluemixAppID
 
 public class OAuthClientTests: XCTestCase {
-
+    
     func testOAuthClient() {
         let idToken = IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)
         let client = OAuthClientImpl(with: idToken!)
-       
+
         XCTAssertEqual(client?.type, "mobileapp")
-         XCTAssertEqual(client?.name, "testAppDisplayName")
-         XCTAssertEqual(client?.softwareId, "testApp")
-         XCTAssertEqual(client?.softwareVersion, "1.0")
+        XCTAssertEqual(client?.name, "testAppDisplayName")
+        XCTAssertEqual(client?.softwareId, "testApp")
+        XCTAssertEqual(client?.softwareVersion, "1.0")
         XCTAssertEqual(client?.deviceId, "9600E01E-E5F1-4FDD-B9C9-D24C418DA947")
         XCTAssertEqual(client?.deviceModel, "iPhone")
         XCTAssertEqual(client?.deviceOS, "iPhone OS")
@@ -44,5 +44,5 @@ public class OAuthClientTests: XCTestCase {
         XCTAssertNil(client?.deviceOS)
         
     }
-
+    
 }

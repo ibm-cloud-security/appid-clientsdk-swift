@@ -14,7 +14,7 @@ import BMSCore
 @testable import BluemixAppID
 
 public class Helpers {
-    
+
     public static func savePublicKeyDataToKeyChain(_ key:Data,tag:String) {
         let publicKeyAttr : [NSString:AnyObject] = [
             kSecValueData: key as AnyObject,
@@ -39,7 +39,7 @@ public class Helpers {
         SecItemAdd(publicKeyAttr as CFDictionary, nil)
     }
     
-    public static func clearDictValuesFromKeyChain(_ dict : [String : NSString])  {
+    public static func clearDictValuesFromKeyChain(_ dict : [String : NSString]) {
         for (tag, kSecClassName) in dict {
             if kSecClassName == kSecClassKey {
                 _ = SecurityUtils.deleteKeyFromKeyChain(tag)

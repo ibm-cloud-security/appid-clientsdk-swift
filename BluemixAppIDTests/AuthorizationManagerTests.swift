@@ -23,9 +23,9 @@ public class AuthorizationManagerTests : XCTestCase {
         authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).clear()
         // with idp, no registration data
         XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp"), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp")
-        
+
         // no idp, no registration data
-        
+
         XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE)
         
         // with idp, with registration data
@@ -48,30 +48,36 @@ public class AuthorizationManagerTests : XCTestCase {
                 self.expectedError = expectedErr
                 self.res = res
             }
+            
             func onAuthorizationFailure(error: AuthorizationError) {
                 XCTAssertEqual(error.description, expectedError)
                 delegate.fails += 1
                 if res != "failure" {
                     XCTFail()
                 }
+                
             }
+            
             func onAuthorizationCanceled() {
                 delegate.cancel += 1
                 if res != "cancel" {
                     XCTFail()
                 }
             }
+            
             func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
                 }
             }
+            
         }
 
         
         class MockRegistrationManager: RegistrationManager {
             static var shouldFail: Bool?
+            
             override func ensureRegistered(callback : @escaping (AppIDError?) -> Void) {
                 if MockRegistrationManager.shouldFail == true {
                     callback(AppIDError.registrationError(msg: "Failed to register OAuth client"))
@@ -79,6 +85,7 @@ public class AuthorizationManagerTests : XCTestCase {
                     callback(nil)
                 }
             }
+            
         }
        
         // ensure registerd fails
@@ -87,7 +94,7 @@ public class AuthorizationManagerTests : XCTestCase {
         authManager.launchAuthorizationUI(authorizationDelegate:delegate(res: "failure", expectedErr: "Failed to register OAuth client"))
 //        //mock with not error
 //        authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : ["redirect"]] as [String:Any])
-//        // TODO:  think how to ovveride it?
+        // TODO:  think how to ovveride it?
 //        // no redirects
 //        authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : []] as [String:Any])
 

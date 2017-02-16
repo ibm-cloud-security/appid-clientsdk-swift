@@ -34,8 +34,8 @@ class TokenTests: XCTestCase {
         XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1487084878 as Double))
 
     }
-    
-    
+
+
     func testValidIdToken() {
         let token = IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)
         
@@ -60,4 +60,5 @@ class TokenTests: XCTestCase {
         XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1487084878 as Double))
         
     }
+    
 }

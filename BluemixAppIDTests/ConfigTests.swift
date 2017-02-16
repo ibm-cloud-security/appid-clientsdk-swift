@@ -22,7 +22,7 @@ public class ConfigTests: XCTestCase {
         // no region and tenant
         let appid = AppID.sharedInstance
         XCTAssertEqual("https://mobileclientaccess", Config.getServerUrl(appId: appid))
-        
+
         // with region and tenant
         appid.initialize(tenantId: "sometenant", bluemixRegion: ".region")
         XCTAssertEqual("https://mobileclientaccess.region/oauth/v3/sometenant", Config.getServerUrl(appId: appid))

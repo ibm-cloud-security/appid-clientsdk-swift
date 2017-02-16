@@ -17,11 +17,12 @@ import BMSCore
 
 class TokenManagerTests: XCTestCase {
     var tokenManager:TokenManager = TokenManager(oAuthManager: OAuthManager(appId:AppID.sharedInstance))
+    
     override func setUp() {
-        super.setUp();
+        super.setUp()
     }
-    
-    
+
+
     func testClearStoredTokens() {
         XCTAssertNil(tokenManager.latestAccessToken)
         XCTAssertNil(tokenManager.latestIdentityToken)
@@ -76,6 +77,7 @@ class TokenManagerTests: XCTestCase {
             
             internalCallBack(response, err)
         }
+        
     }
     
     
@@ -92,12 +94,14 @@ class TokenManagerTests: XCTestCase {
         func onAuthorizationCanceled() {
             
         }
+        
         func onAuthorizationFailure(error: AuthorizationError) {
             if !success {
                 XCTAssertEqual(error.description, msg)
                 exp.fulfill()
             }
         }
+        
         func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response: Response?) {
             if success {
                 XCTAssertEqual(accessToken.raw, AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!.raw)
@@ -105,6 +109,7 @@ class TokenManagerTests: XCTestCase {
                 exp.fulfill()
             }
         }
+        
     }
     
     
@@ -232,7 +237,7 @@ class TokenManagerTests: XCTestCase {
     
     
     
-    func testExtractTokens(){
+    func testExtractTokens() {
         
         class delegate: AuthorizationDelegate {
             var res:String
@@ -244,6 +249,7 @@ class TokenManagerTests: XCTestCase {
                 self.expectedError = expectedErr
                 self.res = res
             }
+            
             func onAuthorizationFailure(error: AuthorizationError) {
                 XCTAssertEqual(error.description, expectedError)
                 delegate.fails += 1
@@ -251,18 +257,21 @@ class TokenManagerTests: XCTestCase {
                     XCTFail()
                 }
             }
+            
             func onAuthorizationCanceled() {
                 delegate.cancel += 1
                 if res != "cancel" {
                     XCTFail()
                 }
             }
+            
             func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
                 }
             }
+            
         }
         
         // no response text

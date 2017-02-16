@@ -15,7 +15,7 @@ import XCTest
 import BMSCore
 @testable import BluemixAppID
 class SecurityUtilsTest: XCTestCase {
-    
+
     var itemLabel = "itemLabel"
     var itemData = "testItemString"
     var keySize = 512
@@ -60,7 +60,7 @@ class SecurityUtilsTest: XCTestCase {
         do {
             jwks = try SecurityUtils.getJWKSHeader()
             XCTFail()
-        } catch (let e) {
+        } catch let e {
             XCTAssertEqual((e as? AppIDError)?.description, "General Error")
         }
     }

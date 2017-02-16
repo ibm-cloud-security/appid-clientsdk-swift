@@ -17,8 +17,9 @@ import BMSCore
 
 
 public class RegistrationManagerTests: XCTestCase {
-    
+
     var oauthManager = OAuthManager(appId: AppID.sharedInstance)
+    
     public override func setUp() {
         AppID.sharedInstance = AppID()
         AppID.sharedInstance.initialize(tenantId: "tenant1", bluemixRegion: "region2")
@@ -53,8 +54,8 @@ public class RegistrationManagerTests: XCTestCase {
             Helpers.savePublicKeyDataToKeyChain(AppIDTestConstants.publicKeyData, tag: AppIDConstants.publicKeyIdentifier)
             return
         }
+        
         override internal func sendRequest(request:Request, registrationParamsAsData:Data?, internalCallBack: @escaping BMSCompletionHandler) {
-            
 
             XCTAssertEqual(request.resourceUrl, Config.getServerUrl(appId: AppID.sharedInstance) + "/clients")
             XCTAssertEqual(request.httpMethod, HttpMethod.POST)
@@ -121,7 +122,7 @@ public class RegistrationManagerTests: XCTestCase {
     
 
     
-    //send request returns unsuccessful response
+    // send request returns unsuccessful response
     func testRegisterOAuthClient3() {
         
         let expectation1 = expectation(description: "got to callback")
@@ -193,10 +194,6 @@ public class RegistrationManagerTests: XCTestCase {
         }
     }
 
-    
-    
-    
-    
     func testEnsureRegistered() {
         class MockRegistrationManager: RegistrationManager {
             var success:Bool
@@ -204,6 +201,7 @@ public class RegistrationManagerTests: XCTestCase {
                 self.success = success
                 super.init(oauthManager:oauthManager)
             }
+            
             override internal func registerOAuthClient(callback :@escaping (Error?) -> Void) {
                 if success == true {
                     callback(nil)
@@ -211,6 +209,7 @@ public class RegistrationManagerTests: XCTestCase {
                     callback(AppIDError.registrationError(msg: "Failed to register OAuth client"))
                 }
             }
+            
         }
         // registration success
         MockRegistrationManager(oauthManager:OAuthManager(appId: AppID.sharedInstance), success: true).ensureRegistered(callback: {(error: Error?) -> Void in

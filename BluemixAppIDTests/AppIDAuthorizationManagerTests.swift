@@ -17,7 +17,7 @@ import BMSCore
 @testable import BluemixAppID
 
 public class AppIDAuthorizationManagerTests: XCTestCase {
-    
+
     static var appid:AppID? = nil
     static var manager:AppIDAuthorizationManager? = nil
     
@@ -48,6 +48,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
     static var expectedResponse:Response = Response(responseData: nil, httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 401, httpVersion: nil, headerFields: [AppIDConstants.WWW_AUTHENTICATE_HEADER : "Bearer scope=\"appid_default\""]), isRedirect: false)
     class MockAuthorizationManager: BluemixAppID.AuthorizationManager {
         static var res = "cancel"
+        
         override func launchAuthorizationUI(authorizationDelegate:AuthorizationDelegate) {
             if MockAuthorizationManager.res == "success" {
                 authorizationDelegate.onAuthorizationSuccess(accessToken:AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!, identityToken : IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!, response: AppIDAuthorizationManagerTests.expectedResponse)
@@ -56,6 +57,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
             } else {
                 authorizationDelegate.onAuthorizationCanceled()
             }
+            
         }
     }
 

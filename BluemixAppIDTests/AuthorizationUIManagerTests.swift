@@ -16,23 +16,27 @@ import BMSCore
 @testable import BluemixAppID
 
 public class AuthorizationUIManagerTests: XCTestCase {
-    
-    
+
+
     class MockTokenManager: TokenManager {
         var exp:XCTestExpectation
         init(oAuthManager: OAuthManager, exp: XCTestExpectation) {
             self.exp = exp
             super.init(oAuthManager: oAuthManager)
         }
+        
         override func obtainTokens(code:String, authorizationDelegate:AuthorizationDelegate) {
             self.exp.fulfill()
         }
+        
     }
     
     class MockSafariView: safariView {
+        
         override func dismiss(animated flag: Bool, completion: (() -> Swift.Void)? = nil) {
             completion!()
         }
+        
     }
     
 
@@ -45,16 +49,20 @@ public class AuthorizationUIManagerTests: XCTestCase {
             self.exp = exp
             self.errMsg = errMsg
         }
+        
         func onAuthorizationFailure(error: AuthorizationError) {
             XCTAssertEqual(error.description, errMsg)
             self.exp?.fulfill()
         }
+        
         func onAuthorizationCanceled() {
            XCTFail()
         }
+        
         func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
              XCTFail()
         }
+        
     }
     
     // happy flow

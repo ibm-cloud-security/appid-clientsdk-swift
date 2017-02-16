@@ -73,9 +73,7 @@
 		01FA9E1A8ED97A13F21394E3 /* Pods-AppID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppID/Pods-AppID.debug.xcconfig"; sourceTree = "<group>"; };
 		4B58980BB6762238599AB583 /* Pods-AppIDTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppIDTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppIDTests/Pods-AppIDTests.debug.xcconfig"; sourceTree = "<group>"; };
 		98737A275AB5B6B0D542A622 /* Pods-AppIDTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppIDTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppIDTests/Pods-AppIDTests.release.xcconfig"; sourceTree = "<group>"; };
-		D283A626C8D140B4A8EA025A /* Pods_AppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0FE4EAFD296A325904100A1 /* Pods-AppID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppID.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppID/Pods-AppID.release.xcconfig"; sourceTree = "<group>"; };
-		E85962A21A6729F86A5D94F7 /* Pods_AppIDTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AppIDTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationUIManagerTests.swift; sourceTree = "<group>"; };
 		EF37F8BB1E5487C40020E998 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		EF3B3BDF1E55C4E900DFFF13 /* dummyAppForKeyChain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dummyAppForKeyChain.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -327,8 +325,6 @@
 			isa = PBXGroup;
 			children = (
 				EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */,
-				D283A626C8D140B4A8EA025A /* Pods_AppID.framework */,
-				E85962A21A6729F86A5D94F7 /* Pods_AppIDTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

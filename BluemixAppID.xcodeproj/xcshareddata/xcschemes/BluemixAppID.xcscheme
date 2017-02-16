@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EFBBC7651DF99BF6000CE39A"
+               BuildableName = "BluemixAppIDTests.xctest"
+               BlueprintName = "BluemixAppIDTests"
+               ReferencedContainer = "container:BluemixAppID.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
+            BuildableName = "BluemixAppID.framework"
+            BlueprintName = "BluemixAppID"
+            ReferencedContainer = "container:BluemixAppID.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>

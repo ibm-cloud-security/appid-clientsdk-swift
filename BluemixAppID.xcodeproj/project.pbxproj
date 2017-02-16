@@ -60,7 +60,6 @@
 		EFBA20661E51F7D9000EB3F5 /* IdentityTokenImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20131E51F7D9000EB3F5 /* IdentityTokenImpl.swift */; };
 		EFBA20681E51F7D9000EB3F5 /* OAuthClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20141E51F7D9000EB3F5 /* OAuthClientImpl.swift */; };
 		EFBA206A1E51F7D9000EB3F5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20151E51F7D9000EB3F5 /* Utils.swift */; };
-		EFBA206C1E51F7D9000EB3F5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EFBA20161E51F7D9000EB3F5 /* Info.plist */; };
 		EFBA206D1E51F7D9000EB3F5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EFBA20161E51F7D9000EB3F5 /* Info.plist */; };
 		EFBBC76B1DF99BF6000CE39A /* BluemixAppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBBC7541DF99AFA000CE39A /* BluemixAppID.framework */; };
 		EFD0251B1E55FC8D00AE1803 /* BluemixAppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFD0251A1E55FC8D00AE1803 /* BluemixAppID.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -477,7 +476,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EFBA206C1E51F7D9000EB3F5 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

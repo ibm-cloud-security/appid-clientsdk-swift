@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		86A15E1F7E722A64903944AA /* Pods_BluemixAppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 064D9BA22544B1C47B79A9A6 /* Pods_BluemixAppID.framework */; };
 		EF3B3BE21E55C4E900DFFF13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B3BE11E55C4E900DFFF13 /* AppDelegate.swift */; };
 		EF3B3BE41E55C4E900DFFF13 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B3BE31E55C4E900DFFF13 /* ViewController.swift */; };
 		EF3B3BE71E55C4E900DFFF13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF3B3BE51E55C4E900DFFF13 /* Main.storyboard */; };
@@ -70,10 +71,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		01FA9E1A8ED97A13F21394E3 /* Pods-AppID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppID/Pods-AppID.debug.xcconfig"; sourceTree = "<group>"; };
-		4B58980BB6762238599AB583 /* Pods-AppIDTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppIDTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AppIDTests/Pods-AppIDTests.debug.xcconfig"; sourceTree = "<group>"; };
-		98737A275AB5B6B0D542A622 /* Pods-AppIDTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppIDTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppIDTests/Pods-AppIDTests.release.xcconfig"; sourceTree = "<group>"; };
-		E0FE4EAFD296A325904100A1 /* Pods-AppID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AppID.release.xcconfig"; path = "Pods/Target Support Files/Pods-AppID/Pods-AppID.release.xcconfig"; sourceTree = "<group>"; };
+		064D9BA22544B1C47B79A9A6 /* Pods_BluemixAppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BluemixAppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationUIManagerTests.swift; sourceTree = "<group>"; };
 		EF37F8BB1E5487C40020E998 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
 		EF3B3BDF1E55C4E900DFFF13 /* dummyAppForKeyChain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dummyAppForKeyChain.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EFE8DC1D1DFDAE920039A5F2 /* BMSCore.framework in Frameworks */,
+				86A15E1F7E722A64903944AA /* Pods_BluemixAppID.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,17 +162,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B255057605C97CFC91D97019 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				01FA9E1A8ED97A13F21394E3 /* Pods-AppID.debug.xcconfig */,
-				E0FE4EAFD296A325904100A1 /* Pods-AppID.release.xcconfig */,
-				4B58980BB6762238599AB583 /* Pods-AppIDTests.debug.xcconfig */,
-				98737A275AB5B6B0D542A622 /* Pods-AppIDTests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		EF3B3BE01E55C4E900DFFF13 /* dummyAppForKeyChain */ = {
 			isa = PBXGroup;
 			children = (
@@ -307,7 +295,6 @@
 				EF3B3BE01E55C4E900DFFF13 /* dummyAppForKeyChain */,
 				EFBBC7551DF99AFA000CE39A /* Products */,
 				EFE8DC1B1DFDAE920039A5F2 /* Frameworks */,
-				B255057605C97CFC91D97019 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -325,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */,
+				064D9BA22544B1C47B79A9A6 /* Pods_BluemixAppID.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -497,7 +485,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppIDTests/Pods-AppIDTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BluemixAppIDTests/Pods-BluemixAppIDTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6111D1E3BBCD2A683ACB89C0 /* [CP] Embed Pods Frameworks */ = {
@@ -512,7 +500,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppIDTests/Pods-AppIDTests-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BluemixAppIDTests/Pods-BluemixAppIDTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		73339EA47910744DA0E21952 /* [CP] Check Pods Manifest.lock */ = {
@@ -542,7 +530,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AppID/Pods-AppID-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BluemixAppID/Pods-BluemixAppID-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C4BFD19D53E45B314022A8A6 /* [CP] Check Pods Manifest.lock */ = {
@@ -782,7 +770,6 @@
 		};
 		EFBBC75D1DF99AFA000CE39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 01FA9E1A8ED97A13F21394E3 /* Pods-AppID.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -806,7 +793,6 @@
 		};
 		EFBBC75E1DF99AFA000CE39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E0FE4EAFD296A325904100A1 /* Pods-AppID.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -829,7 +815,6 @@
 		};
 		EFBBC76F1DF99BF6000CE39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4B58980BB6762238599AB583 /* Pods-AppIDTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
@@ -844,7 +829,6 @@
 		};
 		EFBBC7701DF99BF6000CE39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 98737A275AB5B6B0D542A622 /* Pods-AppIDTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;

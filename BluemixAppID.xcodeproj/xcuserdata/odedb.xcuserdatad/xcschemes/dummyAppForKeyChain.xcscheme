@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "EF4D525C1E27EEEE00604D8B"
+               BlueprintIdentifier = "EF3B3BDE1E55C4E900DFFF13"
                BuildableName = "dummyAppForKeyChain.app"
                BlueprintName = "dummyAppForKeyChain"
-               ReferencedContainer = "container:AppID.xcodeproj">
+               ReferencedContainer = "container:BluemixAppID.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,14 +28,24 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "EFBBC7651DF99BF6000CE39A"
+               BuildableName = "BluemixAppIDTests.xctest"
+               BlueprintName = "BluemixAppIDTests"
+               ReferencedContainer = "container:BluemixAppID.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EF4D525C1E27EEEE00604D8B"
+            BlueprintIdentifier = "EF3B3BDE1E55C4E900DFFF13"
             BuildableName = "dummyAppForKeyChain.app"
             BlueprintName = "dummyAppForKeyChain"
-            ReferencedContainer = "container:AppID.xcodeproj">
+            ReferencedContainer = "container:BluemixAppID.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +65,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EF4D525C1E27EEEE00604D8B"
+            BlueprintIdentifier = "EF3B3BDE1E55C4E900DFFF13"
             BuildableName = "dummyAppForKeyChain.app"
             BlueprintName = "dummyAppForKeyChain"
-            ReferencedContainer = "container:AppID.xcodeproj">
+            ReferencedContainer = "container:BluemixAppID.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +84,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "EF4D525C1E27EEEE00604D8B"
+            BlueprintIdentifier = "EF3B3BDE1E55C4E900DFFF13"
             BuildableName = "dummyAppForKeyChain.app"
             BlueprintName = "dummyAppForKeyChain"
-            ReferencedContainer = "container:AppID.xcodeproj">
+            ReferencedContainer = "container:BluemixAppID.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

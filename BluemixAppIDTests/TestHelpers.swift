@@ -13,7 +13,7 @@ import Foundation
 import BMSCore
 @testable import BluemixAppID
 
-public class Helpers {
+public class TestHelpers {
 
     public static func savePublicKeyDataToKeyChain(_ key:Data,tag:String) {
         let publicKeyAttr : [NSString:AnyObject] = [

@@ -27,14 +27,14 @@ class SecurityUtilsTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        Helpers.clearDictValuesFromKeyChain([publicKeyTag : kSecClassKey, privateKeyTag : kSecClassKey])
-        Helpers.savePublicKeyDataToKeyChain(AppIDTestConstants.publicKeyData, tag: publicKeyTag)
-        Helpers.savePrivateKeyDataToKeyChain(AppIDTestConstants.privateKeyData, tag: privateKeyTag)
+        TestHelpers.clearDictValuesFromKeyChain([publicKeyTag : kSecClassKey, privateKeyTag : kSecClassKey])
+        TestHelpers.savePublicKeyDataToKeyChain(AppIDTestConstants.publicKeyData, tag: publicKeyTag)
+        TestHelpers.savePrivateKeyDataToKeyChain(AppIDTestConstants.privateKeyData, tag: privateKeyTag)
     }
     
     
     func testKeyPairGeneration() {
-        Helpers.clearDictValuesFromKeyChain([publicKeyTag : kSecClassKey, privateKeyTag : kSecClassKey])
+        TestHelpers.clearDictValuesFromKeyChain([publicKeyTag : kSecClassKey, privateKeyTag : kSecClassKey])
         XCTAssertNotNil(try? SecurityUtils.generateKeyPair(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag))
     }
     
@@ -56,7 +56,7 @@ class SecurityUtilsTest: XCTestCase {
         XCTAssertEqual(jwks?["n"] as? String, "AOH-nACU3cCopAz6_SzJuDtUyN4nHhnk9yfF9DFiGPctXPbwMXofZvd9WcYQqtw-w3WV_yhui9PrOVfVBhk6CmM=")
         
         // no public key
-        Helpers.clearDictValuesFromKeyChain([AppIDConstants.publicKeyIdentifier : kSecClassKey])
+        TestHelpers.clearDictValuesFromKeyChain([AppIDConstants.publicKeyIdentifier : kSecClassKey])
         do {
             jwks = try SecurityUtils.getJWKSHeader()
             XCTFail()

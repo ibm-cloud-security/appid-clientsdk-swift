@@ -49,9 +49,9 @@ public class RegistrationManagerTests: XCTestCase {
         
         
         override internal func generateKeyPair() throws {
-            Helpers.clearDictValuesFromKeyChain([AppIDConstants.publicKeyIdentifier : kSecClassKey, AppIDConstants.privateKeyIdentifier : kSecClassKey])
-            Helpers.savePrivateKeyDataToKeyChain(AppIDTestConstants.privateKeyData, tag: AppIDConstants.privateKeyIdentifier)
-            Helpers.savePublicKeyDataToKeyChain(AppIDTestConstants.publicKeyData, tag: AppIDConstants.publicKeyIdentifier)
+            TestHelpers.clearDictValuesFromKeyChain([AppIDConstants.publicKeyIdentifier : kSecClassKey, AppIDConstants.privateKeyIdentifier : kSecClassKey])
+            TestHelpers.savePrivateKeyDataToKeyChain(AppIDTestConstants.privateKeyData, tag: AppIDConstants.privateKeyIdentifier)
+            TestHelpers.savePublicKeyDataToKeyChain(AppIDTestConstants.publicKeyData, tag: AppIDConstants.publicKeyIdentifier)
             return
         }
         

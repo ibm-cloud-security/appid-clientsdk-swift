@@ -12,6 +12,22 @@
 		EF3B3BE71E55C4E900DFFF13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF3B3BE51E55C4E900DFFF13 /* Main.storyboard */; };
 		EF3B3BE91E55C4E900DFFF13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF3B3BE81E55C4E900DFFF13 /* Assets.xcassets */; };
 		EF3B3BEC1E55C4E900DFFF13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF3B3BEA1E55C4E900DFFF13 /* LaunchScreen.storyboard */; };
+		EF4994801E55F7BE008ACC27 /* AppIDAuthorizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE71E51F7D9000EB3F5 /* AppIDAuthorizationManagerTests.swift */; };
+		EF4994811E55F7BE008ACC27 /* SecurityUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE81E51F7D9000EB3F5 /* SecurityUtilsTests.swift */; };
+		EF4994821E55F7BE008ACC27 /* AppIDTestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */; };
+		EF4994831E55F7BE008ACC27 /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEA1E51F7D9000EB3F5 /* AppIDTests.swift */; };
+		EF4994841E55F7BE008ACC27 /* AuthorizationHeaderHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEB1E51F7D9000EB3F5 /* AuthorizationHeaderHelperTests.swift */; };
+		EF4994851E55F7BE008ACC27 /* Info.plist in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEC1E51F7D9000EB3F5 /* Info.plist */; };
+		EF4994861E55F7BE008ACC27 /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FED1E51F7D9000EB3F5 /* PreferencesTests.swift */; };
+		EF4994871E55F7BE008ACC27 /* TokenManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEE1E51F7D9000EB3F5 /* TokenManagerTests.swift */; };
+		EF4994881E55F7BE008ACC27 /* TokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEF1E51F7D9000EB3F5 /* TokenTests.swift */; };
+		EF4994891E55F7BE008ACC27 /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF01E51F7D9000EB3F5 /* UtilsTests.swift */; };
+		EF49948A1E55F7BE008ACC27 /* RegistrationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF77D5371E52085800C4B87F /* RegistrationManagerTests.swift */; };
+		EF49948B1E55F7BE008ACC27 /* AuthorizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7F3B11E5307F20099BEDC /* AuthorizationManagerTests.swift */; };
+		EF49948C1E55F7BE008ACC27 /* ConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB876361E533E9400E017FA /* ConfigTests.swift */; };
+		EF49948D1E55F7BE008ACC27 /* OAuthClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB876381E53434800E017FA /* OAuthClientTests.swift */; };
+		EF49948E1E55F7BE008ACC27 /* AuthorizationUIManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */; };
+		EF49948F1E55F7BE008ACC27 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37F8BB1E5487C40020E998 /* TestHelpers.swift */; };
 		EF77D52A1E51F92100C4B87F /* BluemixAppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFBA20181E51F7D9000EB3F5 /* BluemixAppID.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EFBA201E1E51F7D9000EB3F5 /* AppIDTestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */; };
 		EFBA202E1E51F7D9000EB3F5 /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF41E51F7D9000EB3F5 /* AppID.swift */; };
@@ -532,6 +548,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF4994801E55F7BE008ACC27 /* AppIDAuthorizationManagerTests.swift in Sources */,
+				EF4994811E55F7BE008ACC27 /* SecurityUtilsTests.swift in Sources */,
+				EF4994821E55F7BE008ACC27 /* AppIDTestConstants.swift in Sources */,
+				EF4994831E55F7BE008ACC27 /* AppIDTests.swift in Sources */,
+				EF4994841E55F7BE008ACC27 /* AuthorizationHeaderHelperTests.swift in Sources */,
+				EF4994851E55F7BE008ACC27 /* Info.plist in Sources */,
+				EF4994861E55F7BE008ACC27 /* PreferencesTests.swift in Sources */,
+				EF4994871E55F7BE008ACC27 /* TokenManagerTests.swift in Sources */,
+				EF4994881E55F7BE008ACC27 /* TokenTests.swift in Sources */,
+				EF4994891E55F7BE008ACC27 /* UtilsTests.swift in Sources */,
+				EF49948A1E55F7BE008ACC27 /* RegistrationManagerTests.swift in Sources */,
+				EF49948B1E55F7BE008ACC27 /* AuthorizationManagerTests.swift in Sources */,
+				EF49948C1E55F7BE008ACC27 /* ConfigTests.swift in Sources */,
+				EF49948D1E55F7BE008ACC27 /* OAuthClientTests.swift in Sources */,
+				EF49948E1E55F7BE008ACC27 /* AuthorizationUIManagerTests.swift in Sources */,
+				EF49948F1E55F7BE008ACC27 /* TestHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

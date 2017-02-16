@@ -9,6 +9,6 @@ Pod::Spec.new do |s|
     s.source       = { :git => 'https://github.com/ibm-bluemix-mobile-services/appid-clientsdk-swift.git', :tag => "#{s.version}" }
     s.dependency 'BMSCore'
     s.requires_arc = true
-    s.source_files = 'Source/**/*.swift', 'Source/Resources/AppId.h'
+    s.source_files = 'Source/**/*.swift', 'Source/Resources/BluemixAppID.h'
     s.ios.deployment_target = '9.0'
 end

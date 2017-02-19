@@ -1,0 +1,853 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EF3B3BE21E55C4E900DFFF13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B3BE11E55C4E900DFFF13 /* AppDelegate.swift */; };
+		EF3B3BE41E55C4E900DFFF13 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B3BE31E55C4E900DFFF13 /* ViewController.swift */; };
+		EF3B3BE71E55C4E900DFFF13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF3B3BE51E55C4E900DFFF13 /* Main.storyboard */; };
+		EF3B3BE91E55C4E900DFFF13 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF3B3BE81E55C4E900DFFF13 /* Assets.xcassets */; };
+		EF3B3BEC1E55C4E900DFFF13 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF3B3BEA1E55C4E900DFFF13 /* LaunchScreen.storyboard */; };
+		EF4994801E55F7BE008ACC27 /* AppIDAuthorizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE71E51F7D9000EB3F5 /* AppIDAuthorizationManagerTests.swift */; };
+		EF4994811E55F7BE008ACC27 /* SecurityUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE81E51F7D9000EB3F5 /* SecurityUtilsTests.swift */; };
+		EF4994821E55F7BE008ACC27 /* AppIDTestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */; };
+		EF4994831E55F7BE008ACC27 /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEA1E51F7D9000EB3F5 /* AppIDTests.swift */; };
+		EF4994841E55F7BE008ACC27 /* AuthorizationHeaderHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEB1E51F7D9000EB3F5 /* AuthorizationHeaderHelperTests.swift */; };
+		EF4994851E55F7BE008ACC27 /* Info.plist in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEC1E51F7D9000EB3F5 /* Info.plist */; };
+		EF4994861E55F7BE008ACC27 /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FED1E51F7D9000EB3F5 /* PreferencesTests.swift */; };
+		EF4994871E55F7BE008ACC27 /* TokenManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEE1E51F7D9000EB3F5 /* TokenManagerTests.swift */; };
+		EF4994881E55F7BE008ACC27 /* TokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEF1E51F7D9000EB3F5 /* TokenTests.swift */; };
+		EF4994891E55F7BE008ACC27 /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF01E51F7D9000EB3F5 /* UtilsTests.swift */; };
+		EF49948A1E55F7BE008ACC27 /* RegistrationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF77D5371E52085800C4B87F /* RegistrationManagerTests.swift */; };
+		EF49948B1E55F7BE008ACC27 /* AuthorizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7F3B11E5307F20099BEDC /* AuthorizationManagerTests.swift */; };
+		EF49948C1E55F7BE008ACC27 /* ConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB876361E533E9400E017FA /* ConfigTests.swift */; };
+		EF49948D1E55F7BE008ACC27 /* OAuthClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB876381E53434800E017FA /* OAuthClientTests.swift */; };
+		EF49948E1E55F7BE008ACC27 /* AuthorizationUIManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */; };
+		EF49948F1E55F7BE008ACC27 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37F8BB1E5487C40020E998 /* TestHelpers.swift */; };
+		EFBA201E1E51F7D9000EB3F5 /* AppIDTestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */; };
+		EFBA202E1E51F7D9000EB3F5 /* AppID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF41E51F7D9000EB3F5 /* AppID.swift */; };
+		EFBA20301E51F7D9000EB3F5 /* AppIDAuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF51E51F7D9000EB3F5 /* AppIDAuthorizationManager.swift */; };
+		EFBA20321E51F7D9000EB3F5 /* AuthorizationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF61E51F7D9000EB3F5 /* AuthorizationDelegate.swift */; };
+		EFBA20341E51F7D9000EB3F5 /* AuthorizationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF71E51F7D9000EB3F5 /* AuthorizationError.swift */; };
+		EFBA20361E51F7D9000EB3F5 /* IdentityToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF81E51F7D9000EB3F5 /* IdentityToken.swift */; };
+		EFBA20381E51F7D9000EB3F5 /* LoginWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF91E51F7D9000EB3F5 /* LoginWidget.swift */; };
+		EFBA203A1E51F7D9000EB3F5 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FFB1E51F7D9000EB3F5 /* AccessToken.swift */; };
+		EFBA203C1E51F7D9000EB3F5 /* OAuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FFC1E51F7D9000EB3F5 /* OAuthClient.swift */; };
+		EFBA203E1E51F7D9000EB3F5 /* UserAttributeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FFD1E51F7D9000EB3F5 /* UserAttributeDelegate.swift */; };
+		EFBA20401E51F7D9000EB3F5 /* UserAttributeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FFE1E51F7D9000EB3F5 /* UserAttributeError.swift */; };
+		EFBA20421E51F7D9000EB3F5 /* UserAttributeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FFF1E51F7D9000EB3F5 /* UserAttributeManager.swift */; };
+		EFBA20441E51F7D9000EB3F5 /* AppIDConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20011E51F7D9000EB3F5 /* AppIDConstants.swift */; };
+		EFBA20461E51F7D9000EB3F5 /* AppIDError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20021E51F7D9000EB3F5 /* AppIDError.swift */; };
+		EFBA20481E51F7D9000EB3F5 /* AuthorizationHeaderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20031E51F7D9000EB3F5 /* AuthorizationHeaderHelper.swift */; };
+		EFBA204A1E51F7D9000EB3F5 /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20041E51F7D9000EB3F5 /* AuthorizationManager.swift */; };
+		EFBA204C1E51F7D9000EB3F5 /* AuthorizationUIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20051E51F7D9000EB3F5 /* AuthorizationUIManager.swift */; };
+		EFBA204E1E51F7D9000EB3F5 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20061E51F7D9000EB3F5 /* Config.swift */; };
+		EFBA20501E51F7D9000EB3F5 /* JSONPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20071E51F7D9000EB3F5 /* JSONPreference.swift */; };
+		EFBA20521E51F7D9000EB3F5 /* LoginWidgetImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20081E51F7D9000EB3F5 /* LoginWidgetImpl.swift */; };
+		EFBA20541E51F7D9000EB3F5 /* OAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20091E51F7D9000EB3F5 /* OAuthManager.swift */; };
+		EFBA20561E51F7D9000EB3F5 /* PreferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200A1E51F7D9000EB3F5 /* PreferenceManager.swift */; };
+		EFBA20581E51F7D9000EB3F5 /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200B1E51F7D9000EB3F5 /* RegistrationManager.swift */; };
+		EFBA205A1E51F7D9000EB3F5 /* safariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200C1E51F7D9000EB3F5 /* safariView.swift */; };
+		EFBA205C1E51F7D9000EB3F5 /* SecurityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200D1E51F7D9000EB3F5 /* SecurityUtils.swift */; };
+		EFBA205E1E51F7D9000EB3F5 /* StringPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200E1E51F7D9000EB3F5 /* StringPreference.swift */; };
+		EFBA20601E51F7D9000EB3F5 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200F1E51F7D9000EB3F5 /* TokenManager.swift */; };
+		EFBA20621E51F7D9000EB3F5 /* AbstractToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20111E51F7D9000EB3F5 /* AbstractToken.swift */; };
+		EFBA20641E51F7D9000EB3F5 /* AccessTokenImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20121E51F7D9000EB3F5 /* AccessTokenImpl.swift */; };
+		EFBA20661E51F7D9000EB3F5 /* IdentityTokenImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20131E51F7D9000EB3F5 /* IdentityTokenImpl.swift */; };
+		EFBA20681E51F7D9000EB3F5 /* OAuthClientImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20141E51F7D9000EB3F5 /* OAuthClientImpl.swift */; };
+		EFBA206A1E51F7D9000EB3F5 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20151E51F7D9000EB3F5 /* Utils.swift */; };
+		EFBA206D1E51F7D9000EB3F5 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EFBA20161E51F7D9000EB3F5 /* Info.plist */; };
+		EFBBC76B1DF99BF6000CE39A /* BluemixAppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFBBC7541DF99AFA000CE39A /* BluemixAppID.framework */; };
+		EFD0251B1E55FC8D00AE1803 /* BluemixAppID.h in Headers */ = {isa = PBXBuildFile; fileRef = EFD0251A1E55FC8D00AE1803 /* BluemixAppID.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EFE8DC1D1DFDAE920039A5F2 /* BMSCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		EFBBC76C1DF99BF6000CE39A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EFBBC74B1DF99AFA000CE39A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EFBBC7531DF99AFA000CE39A;
+			remoteInfo = AppID;
+		};
+		EFFD59351E55C50F00B47FCB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EFBBC74B1DF99AFA000CE39A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF3B3BDE1E55C4E900DFFF13;
+			remoteInfo = dummyAppForKeyChain;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		66E951CC5B401814BE794DBE /* Pods-BluemixAppIDTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppIDTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppIDTests/Pods-BluemixAppIDTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D419D8062637A352B06716FC /* Pods-BluemixAppIDTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppIDTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppIDTests/Pods-BluemixAppIDTests.release.xcconfig"; sourceTree = "<group>"; };
+		D7C1B0698BAAA534E21A1C51 /* Pods-BluemixAppID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppID/Pods-BluemixAppID.debug.xcconfig"; sourceTree = "<group>"; };
+		EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationUIManagerTests.swift; sourceTree = "<group>"; };
+		EF37F8BB1E5487C40020E998 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
+		EF3B3BDF1E55C4E900DFFF13 /* dummyAppForKeyChain.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dummyAppForKeyChain.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF3B3BE11E55C4E900DFFF13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		EF3B3BE31E55C4E900DFFF13 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EF3B3BE61E55C4E900DFFF13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		EF3B3BE81E55C4E900DFFF13 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		EF3B3BEB1E55C4E900DFFF13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		EF3B3BED1E55C4E900DFFF13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF77D5371E52085800C4B87F /* RegistrationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManagerTests.swift; sourceTree = "<group>"; };
+		EFB619554546A4A1C879BF50 /* Pods-BluemixAppID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppID.release.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppID/Pods-BluemixAppID.release.xcconfig"; sourceTree = "<group>"; };
+		EFB7F3B11E5307F20099BEDC /* AuthorizationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManagerTests.swift; sourceTree = "<group>"; };
+		EFB876361E533E9400E017FA /* ConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
+		EFB876381E53434800E017FA /* OAuthClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthClientTests.swift; sourceTree = "<group>"; };
+		EFBA1FE71E51F7D9000EB3F5 /* AppIDAuthorizationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAuthorizationManagerTests.swift; sourceTree = "<group>"; };
+		EFBA1FE81E51F7D9000EB3F5 /* SecurityUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityUtilsTests.swift; sourceTree = "<group>"; };
+		EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDTestConstants.swift; sourceTree = "<group>"; };
+		EFBA1FEA1E51F7D9000EB3F5 /* AppIDTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDTests.swift; sourceTree = "<group>"; };
+		EFBA1FEB1E51F7D9000EB3F5 /* AuthorizationHeaderHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationHeaderHelperTests.swift; sourceTree = "<group>"; };
+		EFBA1FEC1E51F7D9000EB3F5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFBA1FED1E51F7D9000EB3F5 /* PreferencesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferencesTests.swift; sourceTree = "<group>"; };
+		EFBA1FEE1E51F7D9000EB3F5 /* TokenManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenManagerTests.swift; sourceTree = "<group>"; };
+		EFBA1FEF1E51F7D9000EB3F5 /* TokenTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenTests.swift; sourceTree = "<group>"; };
+		EFBA1FF01E51F7D9000EB3F5 /* UtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilsTests.swift; sourceTree = "<group>"; };
+		EFBA1FF41E51F7D9000EB3F5 /* AppID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppID.swift; sourceTree = "<group>"; };
+		EFBA1FF51E51F7D9000EB3F5 /* AppIDAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAuthorizationManager.swift; sourceTree = "<group>"; };
+		EFBA1FF61E51F7D9000EB3F5 /* AuthorizationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationDelegate.swift; sourceTree = "<group>"; };
+		EFBA1FF71E51F7D9000EB3F5 /* AuthorizationError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationError.swift; sourceTree = "<group>"; };
+		EFBA1FF81E51F7D9000EB3F5 /* IdentityToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityToken.swift; sourceTree = "<group>"; };
+		EFBA1FF91E51F7D9000EB3F5 /* LoginWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWidget.swift; sourceTree = "<group>"; };
+		EFBA1FFB1E51F7D9000EB3F5 /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
+		EFBA1FFC1E51F7D9000EB3F5 /* OAuthClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthClient.swift; sourceTree = "<group>"; };
+		EFBA1FFD1E51F7D9000EB3F5 /* UserAttributeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeDelegate.swift; sourceTree = "<group>"; };
+		EFBA1FFE1E51F7D9000EB3F5 /* UserAttributeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeError.swift; sourceTree = "<group>"; };
+		EFBA1FFF1E51F7D9000EB3F5 /* UserAttributeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeManager.swift; sourceTree = "<group>"; };
+		EFBA20011E51F7D9000EB3F5 /* AppIDConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDConstants.swift; sourceTree = "<group>"; };
+		EFBA20021E51F7D9000EB3F5 /* AppIDError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDError.swift; sourceTree = "<group>"; };
+		EFBA20031E51F7D9000EB3F5 /* AuthorizationHeaderHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationHeaderHelper.swift; sourceTree = "<group>"; };
+		EFBA20041E51F7D9000EB3F5 /* AuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManager.swift; sourceTree = "<group>"; };
+		EFBA20051E51F7D9000EB3F5 /* AuthorizationUIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationUIManager.swift; sourceTree = "<group>"; };
+		EFBA20061E51F7D9000EB3F5 /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		EFBA20071E51F7D9000EB3F5 /* JSONPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONPreference.swift; sourceTree = "<group>"; };
+		EFBA20081E51F7D9000EB3F5 /* LoginWidgetImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWidgetImpl.swift; sourceTree = "<group>"; };
+		EFBA20091E51F7D9000EB3F5 /* OAuthManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthManager.swift; sourceTree = "<group>"; };
+		EFBA200A1E51F7D9000EB3F5 /* PreferenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceManager.swift; sourceTree = "<group>"; };
+		EFBA200B1E51F7D9000EB3F5 /* RegistrationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManager.swift; sourceTree = "<group>"; };
+		EFBA200C1E51F7D9000EB3F5 /* safariView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = safariView.swift; sourceTree = "<group>"; };
+		EFBA200D1E51F7D9000EB3F5 /* SecurityUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityUtils.swift; sourceTree = "<group>"; };
+		EFBA200E1E51F7D9000EB3F5 /* StringPreference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringPreference.swift; sourceTree = "<group>"; };
+		EFBA200F1E51F7D9000EB3F5 /* TokenManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		EFBA20111E51F7D9000EB3F5 /* AbstractToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbstractToken.swift; sourceTree = "<group>"; };
+		EFBA20121E51F7D9000EB3F5 /* AccessTokenImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessTokenImpl.swift; sourceTree = "<group>"; };
+		EFBA20131E51F7D9000EB3F5 /* IdentityTokenImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdentityTokenImpl.swift; sourceTree = "<group>"; };
+		EFBA20141E51F7D9000EB3F5 /* OAuthClientImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthClientImpl.swift; sourceTree = "<group>"; };
+		EFBA20151E51F7D9000EB3F5 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		EFBA20161E51F7D9000EB3F5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFBBC7541DF99AFA000CE39A /* BluemixAppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BluemixAppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFBBC7661DF99BF6000CE39A /* BluemixAppIDTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BluemixAppIDTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFD0251A1E55FC8D00AE1803 /* BluemixAppID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluemixAppID.h; sourceTree = "<group>"; };
+		EFD0251C1E56013B00AE1803 /* dummyAppForKeyChain.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = dummyAppForKeyChain.entitlements; sourceTree = "<group>"; };
+		EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BMSCore.framework; path = "../Library/Developer/Xcode/DerivedData/AppIDworkspace-ctfiojsausdyvabbauzbpkzomohi/Build/Products/Debug-iphonesimulator/BMSCore.framework"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EF3B3BDC1E55C4E900DFFF13 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EFBBC7501DF99AFA000CE39A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EFE8DC1D1DFDAE920039A5F2 /* BMSCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EFBBC7631DF99BF6000CE39A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EFBBC76B1DF99BF6000CE39A /* BluemixAppID.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		52AD538B40EAAC9A3BBD7B9E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D7C1B0698BAAA534E21A1C51 /* Pods-BluemixAppID.debug.xcconfig */,
+				EFB619554546A4A1C879BF50 /* Pods-BluemixAppID.release.xcconfig */,
+				66E951CC5B401814BE794DBE /* Pods-BluemixAppIDTests.debug.xcconfig */,
+				D419D8062637A352B06716FC /* Pods-BluemixAppIDTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		EF3B3BE01E55C4E900DFFF13 /* dummyAppForKeyChain */ = {
+			isa = PBXGroup;
+			children = (
+				EFD0251C1E56013B00AE1803 /* dummyAppForKeyChain.entitlements */,
+				EF3B3BE11E55C4E900DFFF13 /* AppDelegate.swift */,
+				EF3B3BE31E55C4E900DFFF13 /* ViewController.swift */,
+				EF3B3BE51E55C4E900DFFF13 /* Main.storyboard */,
+				EF3B3BE81E55C4E900DFFF13 /* Assets.xcassets */,
+				EF3B3BEA1E55C4E900DFFF13 /* LaunchScreen.storyboard */,
+				EF3B3BED1E55C4E900DFFF13 /* Info.plist */,
+			);
+			path = dummyAppForKeyChain;
+			sourceTree = "<group>";
+		};
+		EFBA1FE61E51F7D9000EB3F5 /* BluemixAppIDTests */ = {
+			isa = PBXGroup;
+			children = (
+				EFBA1FE71E51F7D9000EB3F5 /* AppIDAuthorizationManagerTests.swift */,
+				EFBA1FE81E51F7D9000EB3F5 /* SecurityUtilsTests.swift */,
+				EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */,
+				EFBA1FEA1E51F7D9000EB3F5 /* AppIDTests.swift */,
+				EFBA1FEB1E51F7D9000EB3F5 /* AuthorizationHeaderHelperTests.swift */,
+				EFBA1FEC1E51F7D9000EB3F5 /* Info.plist */,
+				EFBA1FED1E51F7D9000EB3F5 /* PreferencesTests.swift */,
+				EFBA1FEE1E51F7D9000EB3F5 /* TokenManagerTests.swift */,
+				EFBA1FEF1E51F7D9000EB3F5 /* TokenTests.swift */,
+				EFBA1FF01E51F7D9000EB3F5 /* UtilsTests.swift */,
+				EF77D5371E52085800C4B87F /* RegistrationManagerTests.swift */,
+				EFB7F3B11E5307F20099BEDC /* AuthorizationManagerTests.swift */,
+				EFB876361E533E9400E017FA /* ConfigTests.swift */,
+				EFB876381E53434800E017FA /* OAuthClientTests.swift */,
+				EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */,
+				EF37F8BB1E5487C40020E998 /* TestHelpers.swift */,
+			);
+			path = BluemixAppIDTests;
+			sourceTree = "<group>";
+		};
+		EFBA1FF11E51F7D9000EB3F5 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				EFBA1FF21E51F7D9000EB3F5 /* BluemixAppID */,
+				EFBA20161E51F7D9000EB3F5 /* Info.plist */,
+				EFBA20171E51F7D9000EB3F5 /* Resources */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		EFBA1FF21E51F7D9000EB3F5 /* BluemixAppID */ = {
+			isa = PBXGroup;
+			children = (
+				EFBA1FF31E51F7D9000EB3F5 /* api */,
+				EFBA20001E51F7D9000EB3F5 /* internal */,
+			);
+			path = BluemixAppID;
+			sourceTree = "<group>";
+		};
+		EFBA1FF31E51F7D9000EB3F5 /* api */ = {
+			isa = PBXGroup;
+			children = (
+				EFBA1FF41E51F7D9000EB3F5 /* AppID.swift */,
+				EFBA1FF51E51F7D9000EB3F5 /* AppIDAuthorizationManager.swift */,
+				EFBA1FF61E51F7D9000EB3F5 /* AuthorizationDelegate.swift */,
+				EFBA1FF71E51F7D9000EB3F5 /* AuthorizationError.swift */,
+				EFBA1FF81E51F7D9000EB3F5 /* IdentityToken.swift */,
+				EFBA1FF91E51F7D9000EB3F5 /* LoginWidget.swift */,
+				EFBA1FFA1E51F7D9000EB3F5 /* Tokens */,
+				EFBA1FFD1E51F7D9000EB3F5 /* UserAttributeDelegate.swift */,
+				EFBA1FFE1E51F7D9000EB3F5 /* UserAttributeError.swift */,
+				EFBA1FFF1E51F7D9000EB3F5 /* UserAttributeManager.swift */,
+			);
+			path = api;
+			sourceTree = "<group>";
+		};
+		EFBA1FFA1E51F7D9000EB3F5 /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				EFBA1FFB1E51F7D9000EB3F5 /* AccessToken.swift */,
+				EFBA1FFC1E51F7D9000EB3F5 /* OAuthClient.swift */,
+			);
+			path = Tokens;
+			sourceTree = "<group>";
+		};
+		EFBA20001E51F7D9000EB3F5 /* internal */ = {
+			isa = PBXGroup;
+			children = (
+				EFBA20011E51F7D9000EB3F5 /* AppIDConstants.swift */,
+				EFBA20021E51F7D9000EB3F5 /* AppIDError.swift */,
+				EFBA20031E51F7D9000EB3F5 /* AuthorizationHeaderHelper.swift */,
+				EFBA20041E51F7D9000EB3F5 /* AuthorizationManager.swift */,
+				EFBA20051E51F7D9000EB3F5 /* AuthorizationUIManager.swift */,
+				EFBA20061E51F7D9000EB3F5 /* Config.swift */,
+				EFBA20071E51F7D9000EB3F5 /* JSONPreference.swift */,
+				EFBA20081E51F7D9000EB3F5 /* LoginWidgetImpl.swift */,
+				EFBA20091E51F7D9000EB3F5 /* OAuthManager.swift */,
+				EFBA200A1E51F7D9000EB3F5 /* PreferenceManager.swift */,
+				EFBA200B1E51F7D9000EB3F5 /* RegistrationManager.swift */,
+				EFBA200C1E51F7D9000EB3F5 /* safariView.swift */,
+				EFBA200D1E51F7D9000EB3F5 /* SecurityUtils.swift */,
+				EFBA200E1E51F7D9000EB3F5 /* StringPreference.swift */,
+				EFBA200F1E51F7D9000EB3F5 /* TokenManager.swift */,
+				EFBA20101E51F7D9000EB3F5 /* tokens */,
+				EFBA20151E51F7D9000EB3F5 /* Utils.swift */,
+			);
+			path = internal;
+			sourceTree = "<group>";
+		};
+		EFBA20101E51F7D9000EB3F5 /* tokens */ = {
+			isa = PBXGroup;
+			children = (
+				EFBA20111E51F7D9000EB3F5 /* AbstractToken.swift */,
+				EFBA20121E51F7D9000EB3F5 /* AccessTokenImpl.swift */,
+				EFBA20131E51F7D9000EB3F5 /* IdentityTokenImpl.swift */,
+				EFBA20141E51F7D9000EB3F5 /* OAuthClientImpl.swift */,
+			);
+			path = tokens;
+			sourceTree = "<group>";
+		};
+		EFBA20171E51F7D9000EB3F5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EFD0251A1E55FC8D00AE1803 /* BluemixAppID.h */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EFBBC74A1DF99AFA000CE39A = {
+			isa = PBXGroup;
+			children = (
+				EFBA1FE61E51F7D9000EB3F5 /* BluemixAppIDTests */,
+				EFBA1FF11E51F7D9000EB3F5 /* Source */,
+				EF3B3BE01E55C4E900DFFF13 /* dummyAppForKeyChain */,
+				EFBBC7551DF99AFA000CE39A /* Products */,
+				EFE8DC1B1DFDAE920039A5F2 /* Frameworks */,
+				52AD538B40EAAC9A3BBD7B9E /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		EFBBC7551DF99AFA000CE39A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EFBBC7541DF99AFA000CE39A /* BluemixAppID.framework */,
+				EFBBC7661DF99BF6000CE39A /* BluemixAppIDTests.xctest */,
+				EF3B3BDF1E55C4E900DFFF13 /* dummyAppForKeyChain.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EFE8DC1B1DFDAE920039A5F2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EFE8DC1C1DFDAE920039A5F2 /* BMSCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		EFBBC7511DF99AFA000CE39A /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EFD0251B1E55FC8D00AE1803 /* BluemixAppID.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		EF3B3BDE1E55C4E900DFFF13 /* dummyAppForKeyChain */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF3B3BEE1E55C4E900DFFF13 /* Build configuration list for PBXNativeTarget "dummyAppForKeyChain" */;
+			buildPhases = (
+				EF3B3BDB1E55C4E900DFFF13 /* Sources */,
+				EF3B3BDC1E55C4E900DFFF13 /* Frameworks */,
+				EF3B3BDD1E55C4E900DFFF13 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = dummyAppForKeyChain;
+			productName = dummyAppForKeyChain;
+			productReference = EF3B3BDF1E55C4E900DFFF13 /* dummyAppForKeyChain.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EFBBC7531DF99AFA000CE39A /* BluemixAppID */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EFBBC75C1DF99AFA000CE39A /* Build configuration list for PBXNativeTarget "BluemixAppID" */;
+			buildPhases = (
+				EFBBC74F1DF99AFA000CE39A /* Sources */,
+				EFBBC7501DF99AFA000CE39A /* Frameworks */,
+				EFBBC7511DF99AFA000CE39A /* Headers */,
+				EFBBC7521DF99AFA000CE39A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BluemixAppID;
+			productName = AppID;
+			productReference = EFBBC7541DF99AFA000CE39A /* BluemixAppID.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		EFBBC7651DF99BF6000CE39A /* BluemixAppIDTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EFBBC76E1DF99BF6000CE39A /* Build configuration list for PBXNativeTarget "BluemixAppIDTests" */;
+			buildPhases = (
+				EFBBC7621DF99BF6000CE39A /* Sources */,
+				EFBBC7631DF99BF6000CE39A /* Frameworks */,
+				EFBBC7641DF99BF6000CE39A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EFBBC76D1DF99BF6000CE39A /* PBXTargetDependency */,
+				EFFD59361E55C50F00B47FCB /* PBXTargetDependency */,
+			);
+			name = BluemixAppIDTests;
+			productName = AppIDTests;
+			productReference = EFBBC7661DF99BF6000CE39A /* BluemixAppIDTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EFBBC74B1DF99AFA000CE39A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0810;
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = "Oded Betzalel";
+				TargetAttributes = {
+					EF3B3BDE1E55C4E900DFFF13 = {
+						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = TN6YQNGLXP;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
+					EFBBC7531DF99AFA000CE39A = {
+						CreatedOnToolsVersion = 8.1;
+						LastSwiftMigration = 0810;
+						ProvisioningStyle = Automatic;
+					};
+					EFBBC7651DF99BF6000CE39A = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = EF3B3BDE1E55C4E900DFFF13;
+					};
+				};
+			};
+			buildConfigurationList = EFBBC74E1DF99AFA000CE39A /* Build configuration list for PBXProject "BluemixAppID" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EFBBC74A1DF99AFA000CE39A;
+			productRefGroup = EFBBC7551DF99AFA000CE39A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EFBBC7531DF99AFA000CE39A /* BluemixAppID */,
+				EFBBC7651DF99BF6000CE39A /* BluemixAppIDTests */,
+				EF3B3BDE1E55C4E900DFFF13 /* dummyAppForKeyChain */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EF3B3BDD1E55C4E900DFFF13 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF3B3BEC1E55C4E900DFFF13 /* LaunchScreen.storyboard in Resources */,
+				EF3B3BE91E55C4E900DFFF13 /* Assets.xcassets in Resources */,
+				EF3B3BE71E55C4E900DFFF13 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EFBBC7521DF99AFA000CE39A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EFBBC7641DF99BF6000CE39A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EFBA206D1E51F7D9000EB3F5 /* Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EF3B3BDB1E55C4E900DFFF13 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF3B3BE41E55C4E900DFFF13 /* ViewController.swift in Sources */,
+				EF3B3BE21E55C4E900DFFF13 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EFBBC74F1DF99AFA000CE39A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EFBA20341E51F7D9000EB3F5 /* AuthorizationError.swift in Sources */,
+				EFBA20621E51F7D9000EB3F5 /* AbstractToken.swift in Sources */,
+				EFBA20421E51F7D9000EB3F5 /* UserAttributeManager.swift in Sources */,
+				EFBA202E1E51F7D9000EB3F5 /* AppID.swift in Sources */,
+				EFBA205E1E51F7D9000EB3F5 /* StringPreference.swift in Sources */,
+				EFBA20661E51F7D9000EB3F5 /* IdentityTokenImpl.swift in Sources */,
+				EFBA20441E51F7D9000EB3F5 /* AppIDConstants.swift in Sources */,
+				EFBA205C1E51F7D9000EB3F5 /* SecurityUtils.swift in Sources */,
+				EFBA20461E51F7D9000EB3F5 /* AppIDError.swift in Sources */,
+				EFBA20561E51F7D9000EB3F5 /* PreferenceManager.swift in Sources */,
+				EFBA206A1E51F7D9000EB3F5 /* Utils.swift in Sources */,
+				EFBA20501E51F7D9000EB3F5 /* JSONPreference.swift in Sources */,
+				EFBA20681E51F7D9000EB3F5 /* OAuthClientImpl.swift in Sources */,
+				EFBA20301E51F7D9000EB3F5 /* AppIDAuthorizationManager.swift in Sources */,
+				EFBA20381E51F7D9000EB3F5 /* LoginWidget.swift in Sources */,
+				EFBA20361E51F7D9000EB3F5 /* IdentityToken.swift in Sources */,
+				EFBA20401E51F7D9000EB3F5 /* UserAttributeError.swift in Sources */,
+				EFBA204C1E51F7D9000EB3F5 /* AuthorizationUIManager.swift in Sources */,
+				EFBA201E1E51F7D9000EB3F5 /* AppIDTestConstants.swift in Sources */,
+				EFBA20521E51F7D9000EB3F5 /* LoginWidgetImpl.swift in Sources */,
+				EFBA204A1E51F7D9000EB3F5 /* AuthorizationManager.swift in Sources */,
+				EFBA20541E51F7D9000EB3F5 /* OAuthManager.swift in Sources */,
+				EFBA20641E51F7D9000EB3F5 /* AccessTokenImpl.swift in Sources */,
+				EFBA204E1E51F7D9000EB3F5 /* Config.swift in Sources */,
+				EFBA20321E51F7D9000EB3F5 /* AuthorizationDelegate.swift in Sources */,
+				EFBA20601E51F7D9000EB3F5 /* TokenManager.swift in Sources */,
+				EFBA203E1E51F7D9000EB3F5 /* UserAttributeDelegate.swift in Sources */,
+				EFBA203C1E51F7D9000EB3F5 /* OAuthClient.swift in Sources */,
+				EFBA20481E51F7D9000EB3F5 /* AuthorizationHeaderHelper.swift in Sources */,
+				EFBA205A1E51F7D9000EB3F5 /* safariView.swift in Sources */,
+				EFBA20581E51F7D9000EB3F5 /* RegistrationManager.swift in Sources */,
+				EFBA203A1E51F7D9000EB3F5 /* AccessToken.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EFBBC7621DF99BF6000CE39A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EF4994801E55F7BE008ACC27 /* AppIDAuthorizationManagerTests.swift in Sources */,
+				EF4994811E55F7BE008ACC27 /* SecurityUtilsTests.swift in Sources */,
+				EF4994821E55F7BE008ACC27 /* AppIDTestConstants.swift in Sources */,
+				EF4994831E55F7BE008ACC27 /* AppIDTests.swift in Sources */,
+				EF4994841E55F7BE008ACC27 /* AuthorizationHeaderHelperTests.swift in Sources */,
+				EF4994851E55F7BE008ACC27 /* Info.plist in Sources */,
+				EF4994861E55F7BE008ACC27 /* PreferencesTests.swift in Sources */,
+				EF4994871E55F7BE008ACC27 /* TokenManagerTests.swift in Sources */,
+				EF4994881E55F7BE008ACC27 /* TokenTests.swift in Sources */,
+				EF4994891E55F7BE008ACC27 /* UtilsTests.swift in Sources */,
+				EF49948A1E55F7BE008ACC27 /* RegistrationManagerTests.swift in Sources */,
+				EF49948B1E55F7BE008ACC27 /* AuthorizationManagerTests.swift in Sources */,
+				EF49948C1E55F7BE008ACC27 /* ConfigTests.swift in Sources */,
+				EF49948D1E55F7BE008ACC27 /* OAuthClientTests.swift in Sources */,
+				EF49948E1E55F7BE008ACC27 /* AuthorizationUIManagerTests.swift in Sources */,
+				EF49948F1E55F7BE008ACC27 /* TestHelpers.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EFBBC76D1DF99BF6000CE39A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EFBBC7531DF99AFA000CE39A /* BluemixAppID */;
+			targetProxy = EFBBC76C1DF99BF6000CE39A /* PBXContainerItemProxy */;
+		};
+		EFFD59361E55C50F00B47FCB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF3B3BDE1E55C4E900DFFF13 /* dummyAppForKeyChain */;
+			targetProxy = EFFD59351E55C50F00B47FCB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		EF3B3BE51E55C4E900DFFF13 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF3B3BE61E55C4E900DFFF13 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		EF3B3BEA1E55C4E900DFFF13 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				EF3B3BEB1E55C4E900DFFF13 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		EF3B3BEF1E55C4E900DFFF13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = dummyAppForKeyChain/dummyAppForKeyChain.entitlements;
+				DEVELOPMENT_TEAM = TN6YQNGLXP;
+				INFOPLIST_FILE = dummyAppForKeyChain/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = oded.dummyAppForKeyChain;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		EF3B3BF01E55C4E900DFFF13 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = dummyAppForKeyChain/dummyAppForKeyChain.entitlements;
+				DEVELOPMENT_TEAM = TN6YQNGLXP;
+				INFOPLIST_FILE = dummyAppForKeyChain/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = oded.dummyAppForKeyChain;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		EFBBC75A1DF99AFA000CE39A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		EFBBC75B1DF99AFA000CE39A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		EFBBC75D1DF99AFA000CE39A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D7C1B0698BAAA534E21A1C51 /* Pods-BluemixAppID.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = BluemixAppIDTests/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = BluemixAppID;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0.1;
+				USE_HEADERMAP = YES;
+			};
+			name = Debug;
+		};
+		EFBBC75E1DF99AFA000CE39A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EFB619554546A4A1C879BF50 /* Pods-BluemixAppID.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = BluemixAppIDTests/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = BluemixAppID;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 3.0.1;
+				USE_HEADERMAP = YES;
+			};
+			name = Release;
+		};
+		EFBBC76F1DF99BF6000CE39A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 66E951CC5B401814BE794DBE /* Pods-BluemixAppIDTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				INFOPLIST_FILE = BluemixAppIDTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = oded.BluemixAppIDTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0.1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dummyAppForKeyChain.app/dummyAppForKeyChain";
+			};
+			name = Debug;
+		};
+		EFBBC7701DF99BF6000CE39A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D419D8062637A352B06716FC /* Pods-BluemixAppIDTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
+				INFOPLIST_FILE = BluemixAppIDTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = oded.BluemixAppIDTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0.1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/dummyAppForKeyChain.app/dummyAppForKeyChain";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EF3B3BEE1E55C4E900DFFF13 /* Build configuration list for PBXNativeTarget "dummyAppForKeyChain" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF3B3BEF1E55C4E900DFFF13 /* Debug */,
+				EF3B3BF01E55C4E900DFFF13 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EFBBC74E1DF99AFA000CE39A /* Build configuration list for PBXProject "BluemixAppID" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EFBBC75A1DF99AFA000CE39A /* Debug */,
+				EFBBC75B1DF99AFA000CE39A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EFBBC75C1DF99AFA000CE39A /* Build configuration list for PBXNativeTarget "BluemixAppID" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EFBBC75D1DF99AFA000CE39A /* Debug */,
+				EFBBC75E1DF99AFA000CE39A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EFBBC76E1DF99BF6000CE39A /* Build configuration list for PBXNativeTarget "BluemixAppIDTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EFBBC76F1DF99BF6000CE39A /* Debug */,
+				EFBBC7701DF99BF6000CE39A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EFBBC74B1DF99AFA000CE39A /* Project object */;
+}

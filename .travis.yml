@@ -9,7 +9,11 @@ before_script:
 script:
   # Test that the framework can be installed and built, and passes all unit tests
   - travis_wait pod update
-  #- pod lib lint --allow-warnings
+  - pod lib lint --allow-warnings
   - xcodebuild -workspace 'BluemixAppID.xcworkspace' -scheme 'BluemixAppID' clean build CODE_SIGN_IDENTITY= CODE_SIGNING_REQUIRED=NO
   - xcodebuild -workspace 'BluemixAppID.xcworkspace' -list
   - travis_retry xcodebuild -workspace 'BluemixAppID.xcworkspace' test -scheme 'BluemixAppIDTests' -destination 'platform=iOS Simulator,name=iPhone 6' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+  # When merging or pushing to the master branch, release a new version and publish the API documentation
+  - if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ] ; then
+      bash scripts/release.sh;
+    fi

@@ -113,8 +113,7 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
         let identity:[String:Any] = [
             BaseUserIdentity.Key.authorizedBy : idToken?.authenticationMethods ?? "",
             BaseUserIdentity.Key.displayName : idToken?.name ?? "",
-            // TODO: what should be this value? - not implemted in android
-            BaseUserIdentity.Key.ID : idToken?.name ?? ""
+            BaseUserIdentity.Key.ID : idToken?.subject ?? ""
         ]
         return BaseUserIdentity(map: identity)
         

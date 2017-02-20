@@ -24,7 +24,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
             self.exp = exp
             super.init(oAuthManager: oAuthManager)
         }
-        
+
         override func obtainTokens(code:String, authorizationDelegate:AuthorizationDelegate) {
             self.exp.fulfill()
         }

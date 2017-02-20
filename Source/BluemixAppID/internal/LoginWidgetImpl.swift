@@ -23,4 +23,5 @@ public class LoginWidgetImpl: LoginWidget {
     public func launch(delegate: AuthorizationDelegate) {
         self.oauthManager.authorizationManager?.launchAuthorizationUI(authorizationDelegate: delegate)
     }
+    
 }

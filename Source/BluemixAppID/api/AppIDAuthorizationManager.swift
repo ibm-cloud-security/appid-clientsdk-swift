@@ -18,8 +18,7 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
 
     internal var oAuthManager:OAuthManager
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationManager")
-    
-    
+
     public init(appid:AppID) {
         self.oAuthManager = appid.oauthManager!
     }

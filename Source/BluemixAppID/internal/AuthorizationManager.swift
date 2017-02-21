@@ -40,7 +40,7 @@ public class AuthorizationManager {
         }
         return url
     }
-    
+
     public func launchAuthorizationUI(authorizationDelegate:AuthorizationDelegate) {
         
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in

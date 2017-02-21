@@ -1,0 +1,6 @@
+coverage_service: coveralls
+workspace: BluemixAppID
+xcodeproj: BluemixAppID.xcodeproj
+scheme: BluemixAppIDTests
+ignore:
+  - BluemixAppIDTests/*

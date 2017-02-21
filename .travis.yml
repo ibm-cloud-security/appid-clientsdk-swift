@@ -4,7 +4,7 @@ matrix:
     - osx_image: xcode8.1
 install:
   - gem install jazzy
-  - gen install slather
+  - gem install slather
 before_script:
   - rm -rf ~/Library/Developer/Xcode/DerivedData
 script:
@@ -12,7 +12,6 @@ script:
   - travis_wait pod update
   - pod lib lint --allow-warnings
   - xcodebuild -workspace 'BluemixAppID.xcworkspace' -scheme 'BluemixAppID' clean build CODE_SIGN_IDENTITY= CODE_SIGNING_REQUIRED=NO
-  - xcodebuild -workspace 'BluemixAppID.xcworkspace' -list
   - travis_retry xcodebuild -workspace 'BluemixAppID.xcworkspace' test -scheme 'BluemixAppIDTests' -destination 'platform=iOS Simulator,name=iPhone 6' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -enableCodeCoverage YES
   - slather coverage --coveralls --binary-basename BluemixAppID.framework -v
   # When merging or pushing to the master branch, release a new version and publish the API documentation

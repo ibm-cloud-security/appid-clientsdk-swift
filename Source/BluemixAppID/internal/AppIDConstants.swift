@@ -113,6 +113,7 @@ internal class AppIDConstants {
     internal static let BASIC_AUTHORIZATION_STRING = "Basic"
     internal static let WWW_AUTHENTICATE_HEADER = "WWW-Authenticate"
     internal static let AUTH_REALM = "\"appid_default\""
+    internal static let ANONYMOUS_IDP_NAME = "appid_anon"
     /**
      * Parts of the path to authorization endpoint.
      */

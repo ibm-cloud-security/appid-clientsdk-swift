@@ -71,7 +71,7 @@ public class AuthorizationManager {
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
-            let authorizationUrl = self.getAuthorizationUrl(idpName: "appid_anon", accessToken:accessTokenString)
+            let authorizationUrl = self.getAuthorizationUrl(idpName: AppIDConstants.ANONYMOUS_IDP_NAME, accessToken:accessTokenString)
             
             
             let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
@@ -79,52 +79,35 @@ public class AuthorizationManager {
                     if let unWrapperResponse = response, unWrapperResponse.statusCode == 302 {
                         let urlString = self.extractUrlString(body : unWrapperResponse.responseText)
                         if urlString != nil {
-                            var url = URL(string: urlString!)
-                            
+                            let url = URL(string: urlString!)
                             
                             if (url != nil) {
-                            
-                            if let err = self.getParamFromQuery(url: url!, paramName: "error") {
-                               
-                                    let errorDescription = self.getParamFromQuery(url: url!, paramName: "error_description")
-                                    let errorCode = self.getParamFromQuery(url: url!, paramName: "error_code")
+                                
+                                if let err = Utils.getParamFromQuery(url: url!, paramName: "error") {
+                                    // authorization endpoint returned error
+                                    let errorDescription = Utils.getParamFromQuery(url: url!, paramName: "error_description")
+                                    let errorCode = Utils.getParamFromQuery(url: url!, paramName: "error_code")
                                     AuthorizationManager.logger.error(message: "error: " + err)
                                     AuthorizationManager.logger.error(message: "errorCode: " + (errorCode ?? "not available"))
                                     AuthorizationManager.logger.error(message: "errorDescription: " + (errorDescription ?? "not available"))
                                     authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to obtain access and identity tokens"))
-                                
-                                
-                            } else {
-                            
-                                if urlString!.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
-                                    // gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
-                                    if let code =  self.getParamFromQuery(url: url!, paramName: AppIDConstants.JSON_CODE_KEY) {
-                                        self.oAuthManager.tokenManager?.obtainTokens(code: code, authorizationDelegate: authorizationDelegate)
-                                    } else {
-                                        AuthorizationManager.logger.debug(message: "Failed to extract grant code")
-                                        //tokenRequest(code: nil, errMsg: "Failed to extract grant code")
-                                        //return false
+                                    return
+                                    
+                                } else {
+                                    // authorization endpoint success
+                                    if urlString!.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
+                                        if let code =  Utils.getParamFromQuery(url: url!, paramName: AppIDConstants.JSON_CODE_KEY) {
+                                            self.oAuthManager.tokenManager?.obtainTokens(code: code, authorizationDelegate: authorizationDelegate)
+                                            return
+                                        }
                                     }
                                 }
-                                
                             }
-                            
-                            
-                            }  else {
-                                // url is not prper
-                            }
-                            
-                            
-                            
-                            
-                        } else {
-                            // no body
                         }
-                    } else {
-                        // cannot unwrap or wrong status code
                     }
+                    self.logAndFail(message: "Failed to extract grant code", delegate: authorizationDelegate)
                 } else {
-                    //error is not nil
+                    self.logAndFail(message: "Unable to get response from server", delegate: authorizationDelegate)
                 }
             }
             
@@ -137,6 +120,11 @@ public class AuthorizationManager {
             
         })
         
+    }
+    
+    private func logAndFail(message : String, delegate: AuthorizationDelegate) {
+        AuthorizationManager.logger.debug(message : message)
+        delegate.onAuthorizationFailure( error: AuthorizationError.authorizationFailure(message))
     }
     
     private func extractUrlString(body: String?) -> String?{
@@ -157,11 +145,6 @@ public class AuthorizationManager {
         return (self.authorizationUIManager?.application(application, open: url, options: options))!
     }
     
-    
-    
-    private func getParamFromQuery(url:URL, paramName: String) -> String? {
-        return url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(paramName)}).first?.components(separatedBy: "=")[1]
-    }
     
     
     

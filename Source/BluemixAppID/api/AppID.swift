@@ -39,12 +39,12 @@ public class AppID {
 	
     public func loginAnonymously(authorizationDelegate:AuthorizationDelegate) {
         // TODO: we need to complete this
-        self.loginAnonymously(accessToken: nil, authorizationDelegate: authorizationDelegate)
+        self.loginAnonymously(accessTokenString: nil, authorizationDelegate: authorizationDelegate)
     }
     
-    public func loginAnonymously(accessToken:String?, authorizationDelegate:AuthorizationDelegate) {
+    public func loginAnonymously(accessTokenString:String?, authorizationDelegate:AuthorizationDelegate) {
         // TODO: we need to complete this
-        oauthManager?.authorizationManager?.loginAnonymously(accessTokenString: nil, authorizationDelegate: authorizationDelegate)
+        oauthManager?.authorizationManager?.loginAnonymously(accessTokenString: accessTokenString, authorizationDelegate: authorizationDelegate)
         
     }
     

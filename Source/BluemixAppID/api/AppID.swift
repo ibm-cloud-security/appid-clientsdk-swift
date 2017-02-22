@@ -19,9 +19,10 @@ public class AppID {
 	private(set) var bluemixRegion: String?
     private(set) var oauthManager: OAuthManager?
     public var loginWidget: LoginWidgetImpl?
-    private var userAttributeManager:UserAttributeManager?
+    public var userAttributeManager:UserAttributeManagerImpl?
     
     public static var overrideServerHost: String?
+    public static var overrideAttributesHost: String?
     public static var sharedInstance = AppID()
     internal static let logger =  Logger.logger(name: AppIDConstants.AppIDLoggerName)
     
@@ -33,6 +34,7 @@ public class AppID {
         self.bluemixRegion = bluemixRegion
 		self.oauthManager = OAuthManager(appId: self)
         self.loginWidget = LoginWidgetImpl(oauthManager: self.oauthManager!)
+        self.userAttributeManager = UserAttributeManagerImpl(appId: self)
     }
 	
     public func loginAnonymously(authorizationDelegate:AuthorizationDelegate) {
@@ -42,6 +44,8 @@ public class AppID {
     
     public func loginAnonymously(accessToken:String?, authorizationDelegate:AuthorizationDelegate) {
         // TODO: we need to complete this
+        oauthManager?.authorizationManager?.loginAnonymously(accessTokenString: nil, authorizationDelegate: authorizationDelegate)
+        
     }
     
 	public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {

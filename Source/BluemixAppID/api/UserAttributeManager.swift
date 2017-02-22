@@ -10,11 +10,13 @@ import Foundation
 
 public protocol UserAttributeManager {
 
-    func setAttribute(var1: String, var2: String, var3: UserAttributeDelegate)
-    func setAttribute(var1: String, var2: String, var3: AccessToken, var4: UserAttributeDelegate)
-    func getAttribute(var1: String, var2: UserAttributeDelegate)
-    func getAttribute(var1: String, var2: AccessToken, var3: UserAttributeDelegate)
-    func deleteAttribute(var1: String, var2: UserAttributeDelegate)
-    func deleteAttribute(var1: String, var2: AccessToken, var3: UserAttributeDelegate)
+    func setAttribute(key: String, value: String, delegate: UserAttributeDelegate)
+    func setAttribute(key: String, value: String, accessToken: AccessToken, delegate: UserAttributeDelegate)
+    func getAttribute(key: String, delegate: UserAttributeDelegate)
+    func getAttribute(key: String, accessToken: AccessToken, delegate: UserAttributeDelegate)
+    func getAttributes(delegate: UserAttributeDelegate)
+    func getAttributes(accessToken: AccessToken, delegate: UserAttributeDelegate)
+    func deleteAttribute(key: String, delegate: UserAttributeDelegate)
+    func deleteAttribute(key: String, accessToken: AccessToken, delegate: UserAttributeDelegate)
     
 }

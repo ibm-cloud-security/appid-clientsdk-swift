@@ -84,10 +84,10 @@ public class AuthorizationUIManager {
         
     }
     
+ 
     private func getParamFromQuery(url:URL, paramName: String) -> String? {
         return url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(paramName)}).first?.components(separatedBy: "=")[1]
     }
-    
     
     
 }

@@ -8,6 +8,13 @@
 
 import Foundation
 
-public class UserAttributeError {
-
+public enum UserAttributeError: Error {
+    case userAttributeFailure(String)
+    
+    var description: String {
+        switch self {
+        case .userAttributeFailure(let msg) :
+            return msg
+        }
+    }
 }

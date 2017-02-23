@@ -18,8 +18,7 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
 
     internal var oAuthManager:OAuthManager
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationManager")
-    
-    
+
     public init(appid:AppID) {
         self.oAuthManager = appid.oauthManager!
     }
@@ -112,10 +111,9 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     public var userIdentity:UserIdentity? {
         let idToken = self.identityToken
         let identity:[String:Any] = [
-            BaseUserIdentity.Key.authorizedBy : idToken?.authBy ?? "",
+            BaseUserIdentity.Key.authorizedBy : idToken?.authenticationMethods ?? "",
             BaseUserIdentity.Key.displayName : idToken?.name ?? "",
-            // TODO: what should be this value? - not implemted in android
-            BaseUserIdentity.Key.ID : idToken?.name ?? ""
+            BaseUserIdentity.Key.ID : idToken?.subject ?? ""
         ]
         return BaseUserIdentity(map: identity)
         

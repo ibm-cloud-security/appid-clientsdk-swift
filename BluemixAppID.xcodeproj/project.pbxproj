@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BDC0D53F1E5EF68300444F9E /* UserAttributeManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC0D53E1E5EF68300444F9E /* UserAttributeManagerImpl.swift */; };
 		EF3B3BE21E55C4E900DFFF13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B3BE11E55C4E900DFFF13 /* AppDelegate.swift */; };
 		EF3B3BE41E55C4E900DFFF13 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B3BE31E55C4E900DFFF13 /* ViewController.swift */; };
 		EF3B3BE71E55C4E900DFFF13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF3B3BE51E55C4E900DFFF13 /* Main.storyboard */; };
@@ -85,6 +86,7 @@
 
 /* Begin PBXFileReference section */
 		66E951CC5B401814BE794DBE /* Pods-BluemixAppIDTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppIDTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppIDTests/Pods-BluemixAppIDTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BDC0D53E1E5EF68300444F9E /* UserAttributeManagerImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeManagerImpl.swift; sourceTree = "<group>"; };
 		D419D8062637A352B06716FC /* Pods-BluemixAppIDTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppIDTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppIDTests/Pods-BluemixAppIDTests.release.xcconfig"; sourceTree = "<group>"; };
 		D7C1B0698BAAA534E21A1C51 /* Pods-BluemixAppID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppID/Pods-BluemixAppID.debug.xcconfig"; sourceTree = "<group>"; };
 		EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationUIManagerTests.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 			children = (
 				EFBA20011E51F7D9000EB3F5 /* AppIDConstants.swift */,
 				EFBA20021E51F7D9000EB3F5 /* AppIDError.swift */,
+				BDC0D53E1E5EF68300444F9E /* UserAttributeManagerImpl.swift */,
 				EFBA20031E51F7D9000EB3F5 /* AuthorizationHeaderHelper.swift */,
 				EFBA20041E51F7D9000EB3F5 /* AuthorizationManager.swift */,
 				EFBA20051E51F7D9000EB3F5 /* AuthorizationUIManager.swift */,
@@ -530,6 +533,7 @@
 				EFBA20641E51F7D9000EB3F5 /* AccessTokenImpl.swift in Sources */,
 				EFBA204E1E51F7D9000EB3F5 /* Config.swift in Sources */,
 				EFBA20321E51F7D9000EB3F5 /* AuthorizationDelegate.swift in Sources */,
+				BDC0D53F1E5EF68300444F9E /* UserAttributeManagerImpl.swift in Sources */,
 				EFBA20601E51F7D9000EB3F5 /* TokenManager.swift in Sources */,
 				EFBA203E1E51F7D9000EB3F5 /* UserAttributeDelegate.swift in Sources */,
 				EFBA203C1E51F7D9000EB3F5 /* OAuthClient.swift in Sources */,
@@ -729,7 +733,6 @@
 		};
 		EFBBC75D1DF99AFA000CE39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D7C1B0698BAAA534E21A1C51 /* Pods-BluemixAppID.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -755,7 +758,6 @@
 		};
 		EFBBC75E1DF99AFA000CE39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EFB619554546A4A1C879BF50 /* Pods-BluemixAppID.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
@@ -780,7 +782,6 @@
 		};
 		EFBBC76F1DF99BF6000CE39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 66E951CC5B401814BE794DBE /* Pods-BluemixAppIDTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
@@ -795,7 +796,6 @@
 		};
 		EFBBC7701DF99BF6000CE39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D419D8062637A352B06716FC /* Pods-BluemixAppIDTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;

@@ -229,7 +229,7 @@ public class Utils {
         let FORM_ENCODE_SET = " \"':;<=>@[]^`{}|/\\?#&!$(),~%"
         
         for element: Int in 0x20..<0x7f {
-            if !FORM_ENCODE_SET.contains(String(describing: UnicodeScalar(element))) {
+            if !FORM_ENCODE_SET.contains(String(describing: Character(UnicodeScalar(element)!))) {
                 unchangedCharacters += String(Character(UnicodeScalar(element)!))
             }
         }

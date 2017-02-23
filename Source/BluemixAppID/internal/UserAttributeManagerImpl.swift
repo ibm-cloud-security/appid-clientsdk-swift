@@ -48,40 +48,31 @@ public class UserAttributeManagerImpl: UserAttributeManager {
     
     
     internal func sendRequest(method: HttpMethod, key: String?, value: String?, accessTokenString: String?, delegate: UserAttributeDelegate) {
-        
-        
-        
         var urlString = Config.getAttributesUrl(appId: appId) + userProfileAttributesPath;
         
         if (key != nil) {
             let unWrappedKey = key!;
-            urlString = urlString + "/" + unWrappedKey;
+            urlString = urlString + "/" + Utils.urlEncode(unWrappedKey);
         }
         
         let url = URL(string: urlString)
         var req = URLRequest(url: url!)
         req.httpMethod = method.rawValue
-        //req.httpBody = requestBody
         req.timeoutInterval = BMSClient.sharedInstance.requestTimeout;
-        
         
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if (accessTokenString != nil) {
             req.setValue("Bearer " + accessTokenString!, forHTTPHeaderField: "Authorization")
         }
         
-        
         if (value != nil){
             let unwrappedValue = value!;
             req.httpBody=unwrappedValue.data(using: .utf8)
         }
         
-        
         let urlSession = URLSession.shared
         
         let dataTask = urlSession.dataTask(with: req, completionHandler: {(data, response, error) in
-            // this is where the completion handler code goes
-            
             if response != nil {
                 let unWrappedResponse = response as! HTTPURLResponse
                 if unWrappedResponse.statusCode>=200 && unWrappedResponse.statusCode < 300 {
@@ -118,23 +109,12 @@ public class UserAttributeManagerImpl: UserAttributeManager {
             }
             
             
-
+            
         })
         dataTask.resume()
-        
-        
-        
-        
-        
     }
     
     private func getLatestToken() -> String? {
         return  appId.oauthManager?.tokenManager?.latestAccessToken?.raw
     }
-    
-   
-    
-    
-
-    
 }

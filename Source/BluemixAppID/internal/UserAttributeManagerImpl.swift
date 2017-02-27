@@ -21,7 +21,7 @@ public class UserAttributeManagerImpl: UserAttributeManager {
     init(appId:AppID) {
         self.appId = appId
     }
-    
+
     public func setAttribute(key: String, value: String, delegate: UserAttributeDelegate) {
         sendRequest(method: HttpMethod.PUT, key: key, value: value, accessTokenString: getLatestToken(), delegate: delegate)
     }

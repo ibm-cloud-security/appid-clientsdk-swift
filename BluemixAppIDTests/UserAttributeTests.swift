@@ -24,7 +24,7 @@ public class UserAttributeTests: XCTestCase {
         var token : String? = nil
 
         var expectMethod = "GET"
-        
+
         override func send(request : URLRequest, handler : @escaping (Data?, URLResponse?, Error?) -> Void) {
             // make sure the token is put on the request:
             if token != nil {

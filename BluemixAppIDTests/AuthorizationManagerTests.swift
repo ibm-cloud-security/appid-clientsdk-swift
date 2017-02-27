@@ -193,8 +193,8 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         authManager.response = Response(responseData: "Obviously this is not a url, the auth server will never return this, but we need to make sure we can handle it anyway".data(using: .utf8), httpResponse: nil, isRedirect: false)
         authManager.error = nil
         authManager.loginAnonymously(accessTokenString: nil, allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
-        if !del.failed{
-            XCTFail();
+        if !del.failed {
+            XCTFail()
         }
         del.failed = false
         

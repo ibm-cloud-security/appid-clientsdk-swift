@@ -25,59 +25,59 @@ public class UserAttributeManagerImpl: UserAttributeManager {
     public func setAttribute(key: String, value: String, delegate: UserAttributeDelegate) {
         sendRequest(method: HttpMethod.PUT, key: key, value: value, accessTokenString: getLatestToken(), delegate: delegate)
     }
-    
+
     public func setAttribute(key: String, value: String, accessTokenString: String, delegate: UserAttributeDelegate) {
         sendRequest(method: HttpMethod.PUT, key: key, value: value, accessTokenString: accessTokenString, delegate: delegate)
     }
-    
+
     public func getAttribute(key: String, delegate: UserAttributeDelegate) {
         sendRequest(method: HttpMethod.GET, key: key, value: nil, accessTokenString: getLatestToken(), delegate: delegate)
     }
-    
+
     public func getAttribute(key: String, accessTokenString: String, delegate: UserAttributeDelegate) {
         sendRequest(method: HttpMethod.GET, key: key, value: nil, accessTokenString: accessTokenString, delegate: delegate)
     }
-    
+
     public func deleteAttribute(key: String, delegate: UserAttributeDelegate) {
         sendRequest(method: HttpMethod.DELETE, key: key, value: nil, accessTokenString: getLatestToken(), delegate: delegate)
     }
-    
+
     public func deleteAttribute(key: String, accessTokenString: String, delegate: UserAttributeDelegate) {
         sendRequest(method: HttpMethod.DELETE, key: key, value: nil, accessTokenString: accessTokenString, delegate: delegate)
     }
-    
+
     public func getAttributes(delegate: UserAttributeDelegate) {
         sendRequest(method: HttpMethod.GET, key: nil, value: nil, accessTokenString: getLatestToken(), delegate: delegate)
     }
-    
+
     public func getAttributes(accessTokenString: String, delegate: UserAttributeDelegate) {
         sendRequest(method: HttpMethod.GET, key: nil, value: nil, accessTokenString: accessTokenString, delegate: delegate)
     }
-    
-    
+
+
     internal func sendRequest(method: HttpMethod, key: String?, value: String?, accessTokenString: String?, delegate: UserAttributeDelegate) {
         var urlString = Config.getAttributesUrl(appId: appId) + userProfileAttributesPath
-        
+
         if key != nil {
             let unWrappedKey = key!
             urlString = urlString + "/" + Utils.urlEncode(unWrappedKey)
         }
-        
+
         let url = URL(string: urlString)
         var req = URLRequest(url: url!)
         req.httpMethod = method.rawValue
         req.timeoutInterval = BMSClient.sharedInstance.requestTimeout
-        
+
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         if accessTokenString != nil {
             req.setValue("Bearer " + accessTokenString!, forHTTPHeaderField: "Authorization")
         }
-        
+
         if value != nil {
             let unwrappedValue = value!
             req.httpBody=unwrappedValue.data(using: .utf8)
         }
-        
+
         send(request: req, handler:      {(data, response, error) in
             if response != nil {
                 let unWrappedResponse = response as? HTTPURLResponse
@@ -95,7 +95,7 @@ public class UserAttributeManagerImpl: UserAttributeManager {
                                     responseJson =  try Utils.parseJsonStringtoDictionary(unWrappedText)
                                 }
                             }
-                            
+
                         } catch _ {
                             delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to parse server response - failed to parse json"))
                             return
@@ -110,28 +110,24 @@ public class UserAttributeManagerImpl: UserAttributeManager {
                         } else {
                             delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to get response from server"))
                         }
-                        
+
                     }
                 }
             } else {
                 delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to get response from server"))
-                
+
             }
-            
-            
-            
+
         })
-        
-        
-        
+
     }
-    
+
     internal func send(request : URLRequest, handler : @escaping (Data?, URLResponse?, Error?) -> Void) {
         URLSession.shared.dataTask(with: request, completionHandler: handler).resume()
     }
-    
+
     internal func getLatestToken() -> String? {
         return  appId.oauthManager?.tokenManager?.latestAccessToken?.raw
     }
-    
+
 }

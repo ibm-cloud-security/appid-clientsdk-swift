@@ -78,12 +78,12 @@ public class AuthorizationManager {
             
             let accessTokenToUse = accessTokenString != nil ? accessTokenString : self.oAuthManager.tokenManager?.latestAccessToken?.raw
             
-            if (accessTokenToUse == nil && !allowCreateNewAnonymousUsers) {
+            if accessTokenToUse == nil && !allowCreateNewAnonymousUsers {
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Not allowed to create new anonymous users"))
                 return
             }
             
-            let authorizationUrl = self.getAuthorizationUrl(idpName: AppIDConstants.ANONYMOUS_IDP_NAME, accessToken:accessTokenToUse)
+            let authorizationUrl = self.getAuthorizationUrl(idpName: AppIDConstants.AnonymousIdpName, accessToken:accessTokenToUse)
             
             
             let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
@@ -93,7 +93,7 @@ public class AuthorizationManager {
                         if urlString != nil {
                             let url = URL(string: urlString!)
                             
-                            if (url != nil) {
+                            if url != nil {
                                 
                                 if let err = Utils.getParamFromQuery(url: url!, paramName: "error") {
                                     // authorization endpoint returned error
@@ -139,17 +139,17 @@ public class AuthorizationManager {
         delegate.onAuthorizationFailure( error: AuthorizationError.authorizationFailure(message))
     }
     
-    private func extractUrlString(body: String?) -> String?{
+    private func extractUrlString(body: String?) -> String? {
         if let unWrappedBody = body {
-            let r = unWrappedBody.range(of: AppIDConstants.REDIRECT_URI_VALUE);
-            if (r != nil) {
-                return unWrappedBody.substring(from: r!.lowerBound);
+            let r = unWrappedBody.range(of: AppIDConstants.REDIRECT_URI_VALUE)
+            if r != nil {
+                return unWrappedBody.substring(from: r!.lowerBound)
                 
             } else {
-                return nil;
+                return nil
             }
         } else {
-            return nil;
+            return nil
         }
     }
     

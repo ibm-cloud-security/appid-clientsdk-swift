@@ -113,7 +113,6 @@ internal class AppIDConstants {
     internal static let BASIC_AUTHORIZATION_STRING = "Basic"
     internal static let WWW_AUTHENTICATE_HEADER = "WWW-Authenticate"
     internal static let AUTH_REALM = "\"appid_default\""
-    internal static let ANONYMOUS_IDP_NAME = "appid_anon"
     /**
      * Parts of the path to authorization endpoint.
      */
@@ -179,6 +178,7 @@ internal class AppIDConstants {
     internal static let USER_IDENTITY_LABEL = "userIdentity"
     // labels
     
+    internal static let AnonymousIdpName = "appid_anon"
     internal static let BMSSecurityErrorDomain = "com.ibm.mobilefirstplatform.clientsdk.swift.bmssecurity"
     internal static let privateKeyIdentifier = "\(_PRIVATE_KEY_LABEL):\(nameAndVer.name):\(nameAndVer.version)"
     internal static let publicKeyIdentifier = "\(_PUBLIC_KEY_LABEL):\(nameAndVer.name):\(nameAndVer.version)"

@@ -16,7 +16,7 @@ import BMSCore
 @testable import BluemixAppID
 
 public class UserAttributeTests: XCTestCase {
-    
+
     class MockUserAttributeManger : UserAttributeManagerImpl {
         var data : Data? = nil
         var response : URLResponse? = nil
@@ -27,7 +27,7 @@ public class UserAttributeTests: XCTestCase {
         
         override func send(request : URLRequest, handler : @escaping (Data?, URLResponse?, Error?) -> Void) {
             // make sure the token is put on the request:
-            if (token != nil) {
+            if token != nil {
                 let unWrappedToken = token!
                 XCTAssert(("Bearer "+unWrappedToken) == request.value(forHTTPHeaderField: "Authorization"))
             }
@@ -39,12 +39,13 @@ public class UserAttributeTests: XCTestCase {
         override func getLatestToken() -> String? {
             return token
         }
+        
     }
     
     class MyDelegate : UserAttributeDelegate {
         
-        var failed = false;
-        var passed = false;
+        var failed = false
+        var passed = false
         var failureDesc : String? = nil
         
         func onSuccess(result: [String:Any]) {
@@ -54,6 +55,7 @@ public class UserAttributeTests: XCTestCase {
             XCTAssert(actualValueString == "value")
             passed = true
         }
+        
         func onFailure(error: UserAttributeError) {
             failureDesc = error.description
             failed = true

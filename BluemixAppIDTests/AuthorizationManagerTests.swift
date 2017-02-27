@@ -110,18 +110,21 @@ public class AuthorizationManagerTests : XCTestCase {
     
     class MockTokenManager: TokenManager {
         var shouldCallObtain = true
+        
         override func obtainTokens(code: String, authorizationDelegate: AuthorizationDelegate) {
-            if (!shouldCallObtain) {
+            if !shouldCallObtain {
                 XCTFail()
             } else {
                 
             }
         }
+        
     }
     
     class MockAuthorizationManager: BluemixAppID.AuthorizationManager {
          var response : Response? = nil
          var error : Error? = nil
+        
         override func sendRequest(request: Request, internalCallBack: @escaping BMSCompletionHandler) {
                 internalCallBack(response, error)
             
@@ -132,14 +135,14 @@ public class AuthorizationManagerTests : XCTestCase {
     func testLoginAnonymously() {
           let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
         authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
-        let originalTokenManager = authManager.appid.oauthManager?.tokenManager;
+        let originalTokenManager = authManager.appid.oauthManager?.tokenManager
         authManager.appid.oauthManager?.tokenManager = MockTokenManager(oAuthManager: authManager.appid.oauthManager!)
         
         class SomeError : Error {
             
         }
         class delegate: AuthorizationDelegate {
-            var failed = false;
+            var failed = false
             func onAuthorizationFailure(error: AuthorizationError) {
                 failed = true;
             }
@@ -165,13 +168,13 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         authManager.response = response
         authManager.error = nil
         MockRegistrationManager.shouldFail = false
-        authManager.loginAnonymously(accessTokenString: nil, authorizationDelegate: del)
+        authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
         
         // sad flow 1: registration error
         MockRegistrationManager.shouldFail = true
-        authManager.loginAnonymously(accessTokenString: nil, authorizationDelegate: del)
-        if !del.failed{
-            XCTFail();
+        authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
+        if !del.failed {
+            XCTFail()
         }
         del.failed = false
         MockRegistrationManager.shouldFail = false
@@ -179,7 +182,7 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         // sad flow 2: error instead of response:
         authManager.response = nil
         authManager.error = SomeError()
-        authManager.loginAnonymously(accessTokenString: nil, authorizationDelegate: del)
+        authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
         if !del.failed{
             XCTFail();
         }
@@ -188,7 +191,7 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         // sad flow 3: response from auth server is bad:
         authManager.response = Response(responseData: "Obviously this is not a url, the auth server will never return this, but we need to make sure we can handle it anyway".data(using: .utf8), httpResponse: nil, isRedirect: false)
         authManager.error = nil
-        authManager.loginAnonymously(accessTokenString: nil, authorizationDelegate: del)
+        authManager.loginAnonymously(accessTokenString: nil, allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
         if !del.failed{
             XCTFail();
         }
@@ -198,7 +201,7 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         
         authManager.response = Response(responseData: badData.data(using: .utf8), httpResponse: nil, isRedirect: false)
         authManager.error = nil
-        authManager.loginAnonymously(accessTokenString: nil, authorizationDelegate: del)
+        authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
         if !del.failed{
             XCTFail();
         }

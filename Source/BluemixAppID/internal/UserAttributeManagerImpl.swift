@@ -70,9 +70,7 @@ public class UserAttributeManagerImpl: UserAttributeManager {
             req.httpBody=unwrappedValue.data(using: .utf8)
         }
         
-        let urlSession = URLSession.shared
-        
-        let dataTask = urlSession.dataTask(with: req, completionHandler: {(data, response, error) in
+        send(request: req, handler:      {(data, response, error) in
             if response != nil {
                 let unWrappedResponse = response as! HTTPURLResponse
                 if unWrappedResponse.statusCode>=200 && unWrappedResponse.statusCode < 300 {
@@ -100,6 +98,8 @@ public class UserAttributeManagerImpl: UserAttributeManager {
                         delegate.onFailure(error: UserAttributeError.userAttributeFailure("UNATHORIZED"))
                     } else if unWrappedResponse.statusCode == 404 {
                         delegate.onFailure(error: UserAttributeError.userAttributeFailure("NOT FOUND"))
+                    } else {
+                        delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to get response from server"))
                     }
                     
                 }
@@ -111,10 +111,16 @@ public class UserAttributeManagerImpl: UserAttributeManager {
             
             
         })
-        dataTask.resume()
+        
+
+     
     }
     
-    private func getLatestToken() -> String? {
+    internal func send(request : URLRequest, handler : @escaping (Data?, URLResponse?, Error?) -> Void) {
+        URLSession.shared.dataTask(with: request, completionHandler: handler).resume()
+    }
+    
+    internal func getLatestToken() -> String? {
         return  appId.oauthManager?.tokenManager?.latestAccessToken?.raw
     }
 }

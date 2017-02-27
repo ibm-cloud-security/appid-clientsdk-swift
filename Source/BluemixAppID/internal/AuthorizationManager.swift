@@ -76,7 +76,7 @@ public class AuthorizationManager {
             
             let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
                 if error == nil {
-                    if let unWrapperResponse = response, unWrapperResponse.statusCode == 302 {
+                    if let unWrapperResponse = response {
                         let urlString = self.extractUrlString(body : unWrapperResponse.responseText)
                         if urlString != nil {
                             let url = URL(string: urlString!)
@@ -115,8 +115,7 @@ public class AuthorizationManager {
             
             request.timeout = BMSClient.sharedInstance.requestTimeout
             request.allowRedirects = false
-            request.send(completionHandler: internalCallback)
-            
+            self.sendRequest(request: request, internalCallBack: internalCallback)
             
         })
         
@@ -129,15 +128,20 @@ public class AuthorizationManager {
     
     private func extractUrlString(body: String?) -> String?{
         if let unWrappedBody = body {
-            let index = unWrappedBody.index(unWrappedBody.startIndex, offsetBy: 22)
-            return unWrappedBody.substring(from: index)
+            let r = unWrappedBody.range(of: AppIDConstants.REDIRECT_URI_VALUE);
+            if (r != nil) {
+                return unWrappedBody.substring(from: r!.lowerBound);
+                
+            } else {
+                return nil;
+            }
         } else {
             return nil;
         }
     }
     
-    internal func sendRequest(request:Request, body:Data?, internalCallBack: @escaping BMSCompletionHandler) {
-        request.send(requestBody: body, completionHandler: internalCallBack)
+    internal func sendRequest(request:Request, internalCallBack: @escaping BMSCompletionHandler) {
+        request.send(completionHandler: internalCallBack)
     }
     
     

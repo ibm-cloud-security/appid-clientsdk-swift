@@ -42,7 +42,7 @@ internal class Config {
             return serverUrlPrefix
         }
         
-        var attributesUrl = Config.attributesUrlPrefix + region + "/v1/api/attributes/"
+        var attributesUrl = Config.attributesUrlPrefix + region + "/v1/api/"
         if let overrideHost = AppID.overrideAttributesHost {
             attributesUrl = overrideHost
         }

@@ -127,8 +127,8 @@ public class AuthorizationManagerTests : XCTestCase {
         
         override func sendRequest(request: Request, internalCallBack: @escaping BMSCompletionHandler) {
                 internalCallBack(response, error)
-            
         }
+        
     }
     
     
@@ -143,8 +143,9 @@ public class AuthorizationManagerTests : XCTestCase {
         }
         class delegate: AuthorizationDelegate {
             var failed = false
+            
             func onAuthorizationFailure(error: AuthorizationError) {
-                failed = true;
+                failed = true
             }
             
             func onAuthorizationCanceled() {
@@ -183,8 +184,8 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         authManager.response = nil
         authManager.error = SomeError()
         authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
-        if !del.failed{
-            XCTFail();
+        if !del.failed {
+            XCTFail()
         }
         del.failed = false
         

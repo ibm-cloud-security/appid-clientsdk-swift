@@ -17,7 +17,7 @@ public class UserAttributeManagerImpl: UserAttributeManager {
 
     private let userProfileAttributesPath = "attributes"
     private var appId:AppID
-    
+
     init(appId:AppID) {
         self.appId = appId
     }
@@ -111,7 +111,8 @@ public class UserAttributeManagerImpl: UserAttributeManager {
                             delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to get response from server"))
                         }
                         
-                    }}
+                    }
+                }
             } else {
                 delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to get response from server"))
                 
@@ -132,4 +133,5 @@ public class UserAttributeManagerImpl: UserAttributeManager {
     internal func getLatestToken() -> String? {
         return  appId.oauthManager?.tokenManager?.latestAccessToken?.raw
     }
+    
 }

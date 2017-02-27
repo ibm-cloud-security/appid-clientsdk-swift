@@ -22,7 +22,7 @@ public class UserAttributeTests: XCTestCase {
         var response : URLResponse? = nil
         var error : Error? = nil
         var token : String? = nil
-        
+
         var expectMethod = "GET"
         
         override func send(request : URLRequest, handler : @escaping (Data?, URLResponse?, Error?) -> Void) {
@@ -65,6 +65,7 @@ public class UserAttributeTests: XCTestCase {
             failed = false
             passed = false
         }
+        
     }
     
     func testGetAllAttributes () {

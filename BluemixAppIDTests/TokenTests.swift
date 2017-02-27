@@ -29,7 +29,7 @@ class TokenTests: XCTestCase {
         XCTAssertEqual(token?.audience, "26cb012eb327c612d90a6819163b6bcbd4849cbb")
         XCTAssertTrue(token?.issuedAt == Date(timeIntervalSince1970: 1487081278 as Double))
         XCTAssertEqual(token?.tenant, "4dba9430-54e6-4cf2-a516-6f73feb702bb")
-        XCTAssertEqual(token?.authBy, "facebook")
+        XCTAssertEqual(token?.authenticationMethods?[0], nil)
         XCTAssertTrue(token!.isExpired)
         XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1487084878 as Double))
 
@@ -55,7 +55,7 @@ class TokenTests: XCTestCase {
         XCTAssertEqual(token?.audience, "26cb012eb327c612d90a6819163b6bcbd4849cbb")
         XCTAssertTrue(token?.issuedAt == Date(timeIntervalSince1970: 1487081278 as Double))
         XCTAssertEqual(token?.tenant, "4dba9430-54e6-4cf2-a516-6f73feb702bb")
-        XCTAssertEqual(token?.authBy, "facebook")
+        XCTAssertEqual(token?.authenticationMethods?[0], nil)
         XCTAssertTrue(token!.isExpired)
         XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1487084878 as Double))
         

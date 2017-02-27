@@ -21,10 +21,7 @@ class SecurityUtilsTest: XCTestCase {
     var keySize = 512
     var publicKeyTag = AppIDConstants.publicKeyIdentifier
     var privateKeyTag = AppIDConstants.privateKeyIdentifier
-    
-    
-    
-    
+ 
     override func setUp() {
         super.setUp()
         TestHelpers.clearDictValuesFromKeyChain([publicKeyTag : kSecClassKey, privateKeyTag : kSecClassKey])

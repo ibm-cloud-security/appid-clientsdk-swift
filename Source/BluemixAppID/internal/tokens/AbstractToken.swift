@@ -13,7 +13,7 @@ public protocol Token {
 	var expiration: Date? {get}
 	var issuedAt: Date? {get}
 	var tenant: String? {get}
-	var authBy: String? {get}
+    var authenticationMethods: [String]? {get}
 	var isExpired: Bool {get}
     var isAnonymous: Bool {get}
 }
@@ -26,7 +26,7 @@ internal class AbstractToken: Token {
 	private static let EXPIRATION = "exp"
 	private static let ISSUED_AT = "iat"
 	private static let TENANT = "tenant"
-	private static let AUTH_BY = "auth_by"
+	private static let AUTH_METHODS = "amr"
 
 	var raw: String
 	var header: Dictionary<String, Any>
@@ -98,9 +98,9 @@ internal class AbstractToken: Token {
 		return payload[AbstractToken.TENANT] as? String
 	}
 	
-	var authBy: String? {
-		return payload[AbstractToken.AUTH_BY] as? String
-	}
+    var authenticationMethods: [String]? {
+        return payload[AbstractToken.AUTH_METHODS] as? [String]
+    }
 	
     var isExpired: Bool {
         guard let exp = self.expiration else {

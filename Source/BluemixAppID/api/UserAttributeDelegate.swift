@@ -13,5 +13,4 @@ public protocol UserAttributeDelegate {
 
     func onSuccess(result: [String:Any])
     func onFailure(error: UserAttributeError)
-    
 }

@@ -164,7 +164,7 @@ internal class AppIDConstants {
     internal static var OPEN_ID_VALUE = "openid"
     internal static var TRUE_VALUE = "true"
     
-    //label names
+    // label names
     internal static let KEY_CHAIN_PREFIX = "com.ibm.mobilefirstplatform.clientsdk.swift.bmssecurity"
     internal static let OAUTH_CERT_LABEL = "\(KEY_CHAIN_PREFIX).certificate"
     internal static let _PUBLIC_KEY_LABEL = "\(KEY_CHAIN_PREFIX).publickey"
@@ -177,7 +177,7 @@ internal class AppIDConstants {
     internal static let APP_IDENTITY_LABEL = "appIdentity"
     internal static let DEVICE_IDENTITY_LABEL = "deviceIdentity"
     internal static let USER_IDENTITY_LABEL = "userIdentity"
-    //labels
+    // labels
     
     internal static let BMSSecurityErrorDomain = "com.ibm.mobilefirstplatform.clientsdk.swift.bmssecurity"
     internal static let privateKeyIdentifier = "\(_PRIVATE_KEY_LABEL):\(nameAndVer.name):\(nameAndVer.version)"

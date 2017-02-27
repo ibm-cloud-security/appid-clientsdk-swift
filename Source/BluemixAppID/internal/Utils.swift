@@ -23,7 +23,7 @@ public class Utils {
         
         
         if JSONSerialization.isValidJSONObject(value) {
-            do{
+            do {
                 let data = try JSONSerialization.data(withJSONObject: value, options: options)
                 guard let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String else {
                     throw AppIDError.jsonUtilsError(msg: "Json is malformed")
@@ -139,7 +139,7 @@ public class Utils {
         
         // mop things up if we ended on a boundary
         k = j
-        if (current == "=") {
+        if current == "=" {
             switch (i % 4) {
             case 1:
                 // Invalid state
@@ -189,7 +189,7 @@ public class Utils {
             output[2] = ((input[1] & 0x0F) << 2) | ((input[2] & 0xC0) >> 6)
             output[3] = input[2] & 0x3F
             ctcopy = 4
-            switch (ctremaining) {
+            switch ctremaining {
             case 1:
                 ctcopy = 2
             case 2:

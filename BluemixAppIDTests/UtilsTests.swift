@@ -60,6 +60,7 @@ class UtilsTest: XCTestCase {
         XCTAssertNotNil(appInfo.name)
         XCTAssertNotNil(appInfo.version)
     }
+    
 //    func testGetDeviceDictionary() {
 //        let deviceIdentity = AppIDDeviceIdentity()
 //        let appIdentity = AppIDAppIdentity()

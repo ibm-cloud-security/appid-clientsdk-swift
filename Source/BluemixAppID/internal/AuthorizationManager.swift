@@ -11,6 +11,7 @@
  */
 
 
+
 import Foundation
 import BMSCore
 public class AuthorizationManager {
@@ -43,11 +44,14 @@ public class AuthorizationManager {
         }
         return url
     }
+
+ 
     internal func launchAuthorizationUI(authorizationDelegate:AuthorizationDelegate) {
         launchAuthorizationUI(accessTokenString: nil, authorizationDelegate: authorizationDelegate)
     }
     
     internal func launchAuthorizationUI(accessTokenString:String?, authorizationDelegate:AuthorizationDelegate) {
+
         
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {

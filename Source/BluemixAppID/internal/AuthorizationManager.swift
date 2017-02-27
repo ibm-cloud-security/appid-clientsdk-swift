@@ -26,7 +26,7 @@ public class AuthorizationManager {
         self.registrationManager = oAuthManager.registrationManager!
     }
     
-    public func getAuthorizationUrl(idpName:String?, accessToken : String?) -> String {
+    internal func getAuthorizationUrl(idpName:String?, accessToken : String?) -> String {
         var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY
         if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
             url += "&" + AppIDConstants.client_id_String + "=" + clientId
@@ -43,11 +43,11 @@ public class AuthorizationManager {
         }
         return url
     }
-    public func launchAuthorizationUI(authorizationDelegate:AuthorizationDelegate) {
+    internal func launchAuthorizationUI(authorizationDelegate:AuthorizationDelegate) {
         launchAuthorizationUI(accessTokenString: nil, authorizationDelegate: authorizationDelegate)
     }
     
-    public func launchAuthorizationUI(accessTokenString:String?, authorizationDelegate:AuthorizationDelegate) {
+    internal func launchAuthorizationUI(accessTokenString:String?, authorizationDelegate:AuthorizationDelegate) {
         
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {
@@ -64,14 +64,22 @@ public class AuthorizationManager {
     }
     
     
-    public func loginAnonymously(accessTokenString:String?, authorizationDelegate:AuthorizationDelegate) {
+    internal func loginAnonymously(accessTokenString:String?, allowCreateNewAnonymousUsers: Bool, authorizationDelegate:AuthorizationDelegate) {
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {
                 AuthorizationManager.logger.error(message: error!.description)
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
-            let authorizationUrl = self.getAuthorizationUrl(idpName: AppIDConstants.ANONYMOUS_IDP_NAME, accessToken:accessTokenString)
+            
+            let accessTokenToUse = accessTokenString != nil ? accessTokenString : self.oAuthManager.tokenManager?.latestAccessToken?.raw
+            
+            if (accessTokenToUse == nil && !allowCreateNewAnonymousUsers) {
+                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Not allowed to create new anonymous users"))
+                return
+            }
+            
+            let authorizationUrl = self.getAuthorizationUrl(idpName: AppIDConstants.ANONYMOUS_IDP_NAME, accessToken:accessTokenToUse)
             
             
             let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
@@ -97,6 +105,7 @@ public class AuthorizationManager {
                                     // authorization endpoint success
                                     if urlString!.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
                                         if let code =  Utils.getParamFromQuery(url: url!, paramName: AppIDConstants.JSON_CODE_KEY) {
+                                            BMSClient.sharedInstance.authorizationManager.clearAuthorizationData()
                                             self.oAuthManager.tokenManager?.obtainTokens(code: code, authorizationDelegate: authorizationDelegate)
                                             return
                                         }
@@ -111,7 +120,7 @@ public class AuthorizationManager {
                 }
             }
             
-            let request:Request = Request(url: authorizationUrl,method: HttpMethod.GET, headers: nil, queryParameters: nil, timeout: 0)
+            let request = Request(url: authorizationUrl,method: HttpMethod.GET, headers: nil, queryParameters: nil, timeout: 0)
             
             request.timeout = BMSClient.sharedInstance.requestTimeout
             request.allowRedirects = false

@@ -38,14 +38,15 @@ public class AppID {
     }
 	
     public func loginAnonymously(authorizationDelegate:AuthorizationDelegate) {
-        // TODO: we need to complete this
         self.loginAnonymously(accessTokenString: nil, authorizationDelegate: authorizationDelegate)
     }
     
     public func loginAnonymously(accessTokenString:String?, authorizationDelegate:AuthorizationDelegate) {
-        // TODO: we need to complete this
-        oauthManager?.authorizationManager?.loginAnonymously(accessTokenString: accessTokenString, authorizationDelegate: authorizationDelegate)
-        
+        self.loginAnonymously(accessTokenString: accessTokenString, allowCreateNewAnonymousUsers: true, authorizationDelegate: authorizationDelegate)
+    }
+    
+    public func loginAnonymously(accessTokenString:String?, allowCreateNewAnonymousUsers: Bool, authorizationDelegate:AuthorizationDelegate) {
+        oauthManager?.authorizationManager?.loginAnonymously(accessTokenString: accessTokenString, allowCreateNewAnonymousUsers: allowCreateNewAnonymousUsers, authorizationDelegate: authorizationDelegate)
     }
     
 	public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {

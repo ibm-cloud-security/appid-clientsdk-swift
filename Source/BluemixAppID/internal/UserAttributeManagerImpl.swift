@@ -99,7 +99,7 @@ public class UserAttributeManagerImpl: UserAttributeManager {
                 }
                 else {
                     if unWrappedResponse.statusCode == 401 {
-                        delegate.onFailure(error: UserAttributeError.userAttributeFailure("UNATHORIZED"))
+                        delegate.onFailure(error: UserAttributeError.userAttributeFailure("UNAUTHORIZED"))
                     } else if unWrappedResponse.statusCode == 404 {
                         delegate.onFailure(error: UserAttributeError.userAttributeFailure("NOT FOUND"))
                     } else {

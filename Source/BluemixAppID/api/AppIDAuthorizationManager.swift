@@ -22,7 +22,7 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     public init(appid:AppID) {
         self.oAuthManager = appid.oauthManager!
     }
-    
+
     /**
      A response is an OAuth error response only if,
      1. it's status is 401 or 403.

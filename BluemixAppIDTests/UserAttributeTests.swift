@@ -31,23 +31,23 @@ public class UserAttributeTests: XCTestCase {
                 let unWrappedToken = token!
                 XCTAssert(("Bearer "+unWrappedToken) == request.value(forHTTPHeaderField: "Authorization"))
             }
-            
+
             XCTAssert(expectMethod == request.httpMethod)
             handler(data, response, error)
         }
-        
+
         override func getLatestToken() -> String? {
             return token
         }
-        
+
     }
-    
+
     class MyDelegate : UserAttributeDelegate {
-        
+
         var failed = false
         var passed = false
         var failureDesc : String? = nil
-        
+
         func onSuccess(result: [String:Any]) {
             XCTAssert(result["key"] != nil)
             let actualValue = result["key"]!
@@ -55,19 +55,19 @@ public class UserAttributeTests: XCTestCase {
             XCTAssert(actualValueString == "value")
             passed = true
         }
-        
+
         func onFailure(error: UserAttributeError) {
             failureDesc = error.description
             failed = true
         }
-        
+
         func reset() {
             failed = false
             passed = false
         }
-        
+
     }
-    
+
     func testGetAllAttributes () {
         var delegate = MyDelegate()
         var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
@@ -80,10 +80,10 @@ public class UserAttributeTests: XCTestCase {
             XCTFail()
         }
         delegate.reset()
-        
-    
+
+
     }
-    
+
     func testGetAllAttributesWithToken () {
         var delegate = MyDelegate()
         var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
@@ -97,11 +97,11 @@ public class UserAttributeTests: XCTestCase {
             XCTFail()
         }
         delegate.reset()
-        
-        
+
+
     }
-    
-    
+
+
     func testGetAttribute () {
         var delegate = MyDelegate()
         var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
@@ -114,10 +114,10 @@ public class UserAttributeTests: XCTestCase {
             XCTFail()
         }
         delegate.reset()
-        
-        
+
+
     }
-    
+
     func testGetAttributeWithToken () {
         var delegate = MyDelegate()
         var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
@@ -131,11 +131,11 @@ public class UserAttributeTests: XCTestCase {
             XCTFail()
         }
         delegate.reset()
-        
-        
+
+
     }
-    
-    
+
+
     func testSetAttribute () {
         var delegate = MyDelegate()
         var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
@@ -148,10 +148,10 @@ public class UserAttributeTests: XCTestCase {
             XCTFail()
         }
         delegate.reset()
-        
-        
+
+
     }
-    
+
     func testSetAttributeWithToken () {
         var delegate = MyDelegate()
         var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
@@ -165,10 +165,10 @@ public class UserAttributeTests: XCTestCase {
             XCTFail()
         }
         delegate.reset()
-        
-        
+
+
     }
-    
+
     func testFailure () {
         var delegate = MyDelegate()
         var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
@@ -180,9 +180,9 @@ public class UserAttributeTests: XCTestCase {
         userAttributeManager.setAttribute(key : "key", value : "value", accessTokenString: "token", delegate: delegate)
         XCTAssert(delegate.failed)
         delegate.reset()
-        
-        
+
+
     }
-    
-    
+
+
 }

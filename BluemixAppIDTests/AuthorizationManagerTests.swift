@@ -203,8 +203,8 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         authManager.response = Response(responseData: badData.data(using: .utf8), httpResponse: nil, isRedirect: false)
         authManager.error = nil
         authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
-        if !del.failed{
-            XCTFail();
+        if !del.failed {
+            XCTFail()
         }
         del.failed = false
         

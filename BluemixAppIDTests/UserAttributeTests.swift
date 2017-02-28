@@ -98,7 +98,6 @@ public class UserAttributeTests: XCTestCase {
         }
         delegate.reset()
 
-
     }
 
 

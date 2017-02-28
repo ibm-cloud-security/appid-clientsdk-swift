@@ -28,7 +28,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
         override func obtainTokens(code:String, authorizationDelegate:AuthorizationDelegate) {
             self.exp.fulfill()
         }
-        
+
     }
     
     class MockSafariView: safariView {

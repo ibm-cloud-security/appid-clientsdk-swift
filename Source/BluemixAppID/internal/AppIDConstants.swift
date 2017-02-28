@@ -178,6 +178,7 @@ internal class AppIDConstants {
     internal static let USER_IDENTITY_LABEL = "userIdentity"
     // labels
     
+    internal static let AnonymousIdpName = "appid_anon"
     internal static let BMSSecurityErrorDomain = "com.ibm.mobilefirstplatform.clientsdk.swift.bmssecurity"
     internal static let privateKeyIdentifier = "\(_PRIVATE_KEY_LABEL):\(nameAndVer.name):\(nameAndVer.version)"
     internal static let publicKeyIdentifier = "\(_PUBLIC_KEY_LABEL):\(nameAndVer.name):\(nameAndVer.version)"

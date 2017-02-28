@@ -66,6 +66,7 @@ public class RegistrationManagerTests: XCTestCase {
             
             internalCallBack(response, err)
         }
+        
     }
 
     // send request returns error

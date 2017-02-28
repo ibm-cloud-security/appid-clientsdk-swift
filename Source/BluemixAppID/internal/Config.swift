@@ -16,6 +16,7 @@ import BMSCore
 
 internal class Config {
     private static var serverUrlPrefix = "https://mobileclientaccess"
+    private static var attributesUrlPrefix = "https://appid-profiles"
     internal static let logger =  Logger.logger(name: AppIDConstants.ConfigLoggerName)
 
     internal static func getServerUrl(appId:AppID) -> String {
@@ -32,6 +33,21 @@ internal class Config {
         
         serverUrl = serverUrl + tenant
         return serverUrl
+    }
+    
+    internal static func getAttributesUrl(appId:AppID) -> String {
+        
+        guard let region = appId.bluemixRegion else {
+            logger.error(message: "Could not set server url properly, no region set")
+            return serverUrlPrefix
+        }
+        
+        var attributesUrl = Config.attributesUrlPrefix + region + "/v1/api/"
+        if let overrideHost = AppID.overrideAttributesHost {
+            attributesUrl = overrideHost
+        }
+        
+        return attributesUrl
     }
     
 }

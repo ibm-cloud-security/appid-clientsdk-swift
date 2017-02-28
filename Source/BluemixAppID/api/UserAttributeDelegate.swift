@@ -11,7 +11,6 @@ import Foundation
 
 public protocol UserAttributeDelegate {
 
-    func onSuccess(var1: [String:Any])
-    func onFailure(var1: UserAttributeError)
-
+    func onSuccess(result: [String:Any])
+    func onFailure(error: UserAttributeError)
 }

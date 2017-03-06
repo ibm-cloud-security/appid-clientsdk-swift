@@ -109,7 +109,6 @@ public class AuthorizationManager {
                                     // authorization endpoint success
                                     if urlString!.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
                                         if let code =  Utils.getParamFromQuery(url: url!, paramName: AppIDConstants.JSON_CODE_KEY) {
-                                            BMSClient.sharedInstance.authorizationManager.clearAuthorizationData()
                                             self.oAuthManager.tokenManager?.obtainTokens(code: code, authorizationDelegate: authorizationDelegate)
                                             return
                                         }
@@ -125,26 +124,25 @@ public class AuthorizationManager {
             }
             
             let request = Request(url: authorizationUrl,method: HttpMethod.GET, headers: nil, queryParameters: nil, timeout: 0)
-            
             request.timeout = BMSClient.sharedInstance.requestTimeout
             request.allowRedirects = false
             self.sendRequest(request: request, internalCallBack: internalCallback)
-            
+
         })
-        
+
     }
-    
+
     private func logAndFail(message : String, delegate: AuthorizationDelegate) {
         AuthorizationManager.logger.debug(message : message)
         delegate.onAuthorizationFailure( error: AuthorizationError.authorizationFailure(message))
     }
-    
+
     private func extractUrlString(body: String?) -> String? {
         if let unWrappedBody = body {
             let r = unWrappedBody.range(of: AppIDConstants.REDIRECT_URI_VALUE)
             if r != nil {
                 return unWrappedBody.substring(from: r!.lowerBound)
-                
+
             } else {
                 return nil
             }
@@ -152,17 +150,17 @@ public class AuthorizationManager {
             return nil
         }
     }
-    
+
     internal func sendRequest(request:Request, internalCallBack: @escaping BMSCompletionHandler) {
         request.send(completionHandler: internalCallBack)
     }
-    
-    
+
+
     public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         return (self.authorizationUIManager?.application(application, open: url, options: options))!
     }
-    
-    
-    
-    
+
+
+
+
 }

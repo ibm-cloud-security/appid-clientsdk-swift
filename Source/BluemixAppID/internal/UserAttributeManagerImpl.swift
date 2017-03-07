@@ -22,40 +22,40 @@ public class UserAttributeManagerImpl: UserAttributeManager {
         self.appId = appId
     }
 
-    public func setAttribute(key: String, value: String, delegate: UserAttributeDelegate) {
-        sendRequest(method: HttpMethod.PUT, key: key, value: value, accessTokenString: getLatestToken(), delegate: delegate)
+    public func setAttribute(key: String, value: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+        sendRequest(method: HttpMethod.PUT, key: key, value: value, accessTokenString: getLatestToken(), completionHandler: completionHandler)
     }
 
-    public func setAttribute(key: String, value: String, accessTokenString: String, delegate: UserAttributeDelegate) {
-        sendRequest(method: HttpMethod.PUT, key: key, value: value, accessTokenString: accessTokenString, delegate: delegate)
+    public func setAttribute(key: String, value: String, accessTokenString: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+        sendRequest(method: HttpMethod.PUT, key: key, value: value, accessTokenString: accessTokenString, completionHandler: completionHandler)
     }
 
-    public func getAttribute(key: String, delegate: UserAttributeDelegate) {
-        sendRequest(method: HttpMethod.GET, key: key, value: nil, accessTokenString: getLatestToken(), delegate: delegate)
+    public func getAttribute(key: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+        sendRequest(method: HttpMethod.GET, key: key, value: nil, accessTokenString: getLatestToken(), completionHandler: completionHandler)
     }
 
-    public func getAttribute(key: String, accessTokenString: String, delegate: UserAttributeDelegate) {
-        sendRequest(method: HttpMethod.GET, key: key, value: nil, accessTokenString: accessTokenString, delegate: delegate)
+    public func getAttribute(key: String, accessTokenString: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+        sendRequest(method: HttpMethod.GET, key: key, value: nil, accessTokenString: accessTokenString, completionHandler: completionHandler)
     }
 
-    public func deleteAttribute(key: String, delegate: UserAttributeDelegate) {
-        sendRequest(method: HttpMethod.DELETE, key: key, value: nil, accessTokenString: getLatestToken(), delegate: delegate)
+    public func deleteAttribute(key: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+        sendRequest(method: HttpMethod.DELETE, key: key, value: nil, accessTokenString: getLatestToken(), completionHandler: completionHandler)
     }
 
-    public func deleteAttribute(key: String, accessTokenString: String, delegate: UserAttributeDelegate) {
-        sendRequest(method: HttpMethod.DELETE, key: key, value: nil, accessTokenString: accessTokenString, delegate: delegate)
+    public func deleteAttribute(key: String, accessTokenString: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+        sendRequest(method: HttpMethod.DELETE, key: key, value: nil, accessTokenString: accessTokenString, completionHandler: completionHandler)
     }
 
-    public func getAttributes(delegate: UserAttributeDelegate) {
-        sendRequest(method: HttpMethod.GET, key: nil, value: nil, accessTokenString: getLatestToken(), delegate: delegate)
+    public func getAttributes(completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+        sendRequest(method: HttpMethod.GET, key: nil, value: nil, accessTokenString: getLatestToken(), completionHandler: completionHandler)
     }
 
-    public func getAttributes(accessTokenString: String, delegate: UserAttributeDelegate) {
-        sendRequest(method: HttpMethod.GET, key: nil, value: nil, accessTokenString: accessTokenString, delegate: delegate)
+    public func getAttributes(accessTokenString: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+        sendRequest(method: HttpMethod.GET, key: nil, value: nil, accessTokenString: accessTokenString, completionHandler: completionHandler)
     }
 
 
-    internal func sendRequest(method: HttpMethod, key: String?, value: String?, accessTokenString: String?, delegate: UserAttributeDelegate) {
+    internal func sendRequest(method: HttpMethod, key: String?, value: String?, accessTokenString: String?, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
         var urlString = Config.getAttributesUrl(appId: appId) + userProfileAttributesPath
 
         if key != nil {
@@ -84,7 +84,8 @@ public class UserAttributeManagerImpl: UserAttributeManager {
                 if unWrappedResponse != nil {
                     if unWrappedResponse!.statusCode>=200 && unWrappedResponse!.statusCode < 300 {
                         guard let unWrappedData = data else {
-                            delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to parse server response - no response text"))
+                           // delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to parse server response - no response text"))
+                            completionHandler(UserAttributeError.userAttributeFailure("Failed to parse server response - no response text"), nil)
                             return
                         }
                         var responseJson : [String:Any] = [:]
@@ -97,25 +98,31 @@ public class UserAttributeManagerImpl: UserAttributeManager {
                             }
 
                         } catch _ {
-                            delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to parse server response - failed to parse json"))
+                            //delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to parse server response - failed to parse json"))
+                                               completionHandler(UserAttributeError.userAttributeFailure("Failed to parse server response - failed to parse json"), nil)
                             return
                         }
-                        delegate.onSuccess(result: responseJson)
+                        //delegate.onSuccess(result: responseJson)
+                        completionHandler(nil, responseJson)
                     }
                     else {
                         if unWrappedResponse!.statusCode == 401 {
-                            delegate.onFailure(error: UserAttributeError.userAttributeFailure("UNAUTHORIZED"))
+                           // delegate.onFailure(error: UserAttributeError.userAttributeFailure("UNAUTHORIZED"))
+                            completionHandler(UserAttributeError.userAttributeFailure("UNAUTHORIZED"), nil)
+                            
                         } else if unWrappedResponse!.statusCode == 404 {
-                            delegate.onFailure(error: UserAttributeError.userAttributeFailure("NOT FOUND"))
+                           // delegate.onFailure(error: UserAttributeError.userAttributeFailure("NOT FOUND"))
+                            completionHandler(UserAttributeError.userAttributeFailure("NOT FOUND"), nil)
                         } else {
-                            delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to get response from server"))
+                            //delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to get response from server"))
+                            completionHandler(UserAttributeError.userAttributeFailure("Failed to get response from server"), nil)
                         }
 
                     }
                 }
             } else {
-                delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to get response from server"))
-
+                //delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to get response from server"))
+                completionHandler(UserAttributeError.userAttributeFailure("Failed to get response from server"), nil)
             }
 
         })

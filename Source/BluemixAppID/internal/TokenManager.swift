@@ -24,7 +24,7 @@ internal class TokenManager {
         self.appid = oAuthManager.appId
         self.registrationManager = oAuthManager.registrationManager!
     }
-
+    
     
     public func obtainTokens(code:String, authorizationDelegate:AuthorizationDelegate) {
         TokenManager.logger.debug(message: "obtainTokens")
@@ -33,14 +33,14 @@ internal class TokenManager {
         guard let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String), let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0) else {
             TokenManager.logger.error(message: "Client not registered")
             authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Client not registered"))
-         return
+            return
         }
         
         var headers:[String:String] = [:]
         
         do {
-        headers = [AppIDConstants.AUTHORIZATION_HEADER : try createAuthenticationHeader(clientId: clientId),
-                   Request.contentType : "application/x-www-form-urlencoded"]
+            headers = [AppIDConstants.AUTHORIZATION_HEADER : try createAuthenticationHeader(clientId: clientId),
+                       Request.contentType : "application/x-www-form-urlencoded"]
         } catch (_) {
             TokenManager.logger.error(message: "Failed to create authentication header")
             authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to create authentication header"))
@@ -81,6 +81,9 @@ internal class TokenManager {
     }
     
     internal func sendRequest(request:Request, body:Data?, internalCallBack: @escaping BMSCompletionHandler) {
+        
+        request.urlSession.isBMSAuthorizationRequest = true
+
         request.send(requestBody: body, completionHandler: internalCallBack)
     }
     
@@ -94,8 +97,8 @@ internal class TokenManager {
             return
         }
         do {
-        var responseJson =  try Utils.parseJsonStringtoDictionary(responseText)
-        
+            var responseJson =  try Utils.parseJsonStringtoDictionary(responseText)
+            
             guard let accessTokenString = (responseJson["access_token"] as? String), let idTokenString = (responseJson["id_token"] as? String) else {
                 TokenManager.logger.error(message: "Failed to parse server response - no access or identity token")
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response - no access or identity token"))
@@ -114,7 +117,7 @@ internal class TokenManager {
             authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response - failed to parse json"))
             return
         }
-       
+        
         
     }
     
@@ -127,7 +130,7 @@ internal class TokenManager {
         self.latestAccessToken = nil
         self.latestIdentityToken = nil
     }
-
+    
     
     
     

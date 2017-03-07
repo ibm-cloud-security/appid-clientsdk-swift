@@ -15,8 +15,10 @@ import Foundation
 import BMSCore
 
 internal class Config {
-    private static var serverUrlPrefix = "https://mobileclientaccess"
+
+    private static var serverUrlPrefix = "https://appid-oauth"
     private static var attributesUrlPrefix = "https://appid-profiles"
+
     internal static let logger =  Logger.logger(name: AppIDConstants.ConfigLoggerName)
 
     internal static func getServerUrl(appId:AppID) -> String {

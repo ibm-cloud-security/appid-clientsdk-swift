@@ -21,11 +21,11 @@ public class ConfigTests: XCTestCase {
         AppID.sharedInstance = AppID()
         // no region and tenant
         let appid = AppID.sharedInstance
-        XCTAssertEqual("https://mobileclientaccess", Config.getServerUrl(appId: appid))
+        XCTAssertEqual("https://appid-oauth", Config.getServerUrl(appId: appid))
 
         // with region and tenant
         appid.initialize(tenantId: "sometenant", bluemixRegion: ".region")
-        XCTAssertEqual("https://mobileclientaccess.region/oauth/v3/sometenant", Config.getServerUrl(appId: appid))
+        XCTAssertEqual("https://appid-oauth.region/oauth/v3/sometenant", Config.getServerUrl(appId: appid))
         
         // with overrideserverhost
         AppID.overrideServerHost = "somehost/"

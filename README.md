@@ -78,7 +78,7 @@ AppID.sharedInstance.loginWidget?.launch(delegate: delegate())
 BMSClient.sharedInstance.initialize(bluemixRegion: AppID.<region>)
 BMSClient.sharedInstance.authorizationManager = AppIDAuthorizationManager(appid:AppID.sharedInstance)
 var request:Request =  Request(url: "<your protected resource url>")
-r.send(completionHandler: {(response:Response?, error:Error?) in
+request.send(completionHandler: {(response:Response?, error:Error?) in
     //code handling the response here
 })
 ```

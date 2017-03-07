@@ -76,6 +76,7 @@ internal class RegistrationManager {
     
     
     internal func sendRequest(request:Request, registrationParamsAsData:Data?, internalCallBack: @escaping BMSCompletionHandler) {
+        request.urlSession.isBMSAuthorizationRequest = true
         request.send(requestBody: registrationParamsAsData, completionHandler: internalCallBack)
     }
     

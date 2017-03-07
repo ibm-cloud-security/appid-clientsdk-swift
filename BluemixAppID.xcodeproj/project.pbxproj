@@ -702,6 +702,7 @@
 		EF3B3BEF1E55C4E900DFFF13 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = dummyAppForKeyChain/dummyAppForKeyChain.entitlements;
 				DEVELOPMENT_TEAM = TN6YQNGLXP;
@@ -716,6 +717,7 @@
 		EF3B3BF01E55C4E900DFFF13 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = dummyAppForKeyChain/dummyAppForKeyChain.entitlements;
 				DEVELOPMENT_TEAM = TN6YQNGLXP;

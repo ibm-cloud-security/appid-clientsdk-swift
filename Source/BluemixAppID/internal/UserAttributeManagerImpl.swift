@@ -98,30 +98,24 @@ public class UserAttributeManagerImpl: UserAttributeManager {
                             }
 
                         } catch _ {
-                            //delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to parse server response - failed to parse json"))
                                                completionHandler(UserAttributeError.userAttributeFailure("Failed to parse server response - failed to parse json"), nil)
                             return
                         }
-                        //delegate.onSuccess(result: responseJson)
                         completionHandler(nil, responseJson)
                     }
                     else {
                         if unWrappedResponse!.statusCode == 401 {
-                           // delegate.onFailure(error: UserAttributeError.userAttributeFailure("UNAUTHORIZED"))
                             completionHandler(UserAttributeError.userAttributeFailure("UNAUTHORIZED"), nil)
-                            
+
                         } else if unWrappedResponse!.statusCode == 404 {
-                           // delegate.onFailure(error: UserAttributeError.userAttributeFailure("NOT FOUND"))
                             completionHandler(UserAttributeError.userAttributeFailure("NOT FOUND"), nil)
                         } else {
-                            //delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to get response from server"))
                             completionHandler(UserAttributeError.userAttributeFailure("Failed to get response from server"), nil)
                         }
 
                     }
                 }
             } else {
-                //delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to get response from server"))
                 completionHandler(UserAttributeError.userAttributeFailure("Failed to get response from server"), nil)
             }
 

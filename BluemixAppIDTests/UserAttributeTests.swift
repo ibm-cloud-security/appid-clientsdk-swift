@@ -42,7 +42,7 @@ public class UserAttributeTests: XCTestCase {
 
     }
 
-    class MyDelegate : UserAttributeDelegate {
+    class MyDelegate {
 
         var failed = false
         var passed = false
@@ -56,8 +56,7 @@ public class UserAttributeTests: XCTestCase {
             passed = true
         }
 
-        func onFailure(error: UserAttributeError) {
-            failureDesc = error.description
+        func onFailure(error: Error) {
             failed = true
         }
 
@@ -75,7 +74,13 @@ public class UserAttributeTests: XCTestCase {
         userAttributeManager.response = resp
         userAttributeManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userAttributeManager.expectMethod = "GET"
-        userAttributeManager.getAttributes(delegate: delegate)
+        userAttributeManager.getAttributes { (err, res) in
+            if err == nil {
+                delegate.onSuccess(result: res!)
+            } else {
+                delegate.onFailure(error: err!)
+            }
+        }
         if delegate.failed || !delegate.passed {
             XCTFail()
         }
@@ -92,7 +97,13 @@ public class UserAttributeTests: XCTestCase {
         userAttributeManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userAttributeManager.token = "token"
         userAttributeManager.expectMethod = "GET"
-        userAttributeManager.getAttributes(accessTokenString: "token", delegate: delegate)
+        userAttributeManager.getAttributes(accessTokenString: "token") { (err, res) in
+            if err == nil {
+                delegate.onSuccess(result: res!)
+            } else {
+                delegate.onFailure(error: err!)
+            }
+        }
         if delegate.failed || !delegate.passed {
             XCTFail()
         }
@@ -108,7 +119,13 @@ public class UserAttributeTests: XCTestCase {
         userAttributeManager.response = resp
         userAttributeManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userAttributeManager.expectMethod = "GET"
-        userAttributeManager.getAttribute(key : "key", delegate: delegate)
+        userAttributeManager.getAttribute(key: "key") { (err, res) in
+            if err == nil {
+                delegate.onSuccess(result: res!)
+            } else {
+                delegate.onFailure(error: err!)
+            }
+        }
         if delegate.failed || !delegate.passed {
             XCTFail()
         }
@@ -125,7 +142,13 @@ public class UserAttributeTests: XCTestCase {
         userAttributeManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userAttributeManager.token = "token"
         userAttributeManager.expectMethod = "GET"
-        userAttributeManager.getAttribute(key : "key", accessTokenString: "token", delegate: delegate)
+        userAttributeManager.getAttribute(key: "key", accessTokenString: "token") { (err, res) in
+            if err == nil {
+                delegate.onSuccess(result: res!)
+            } else {
+                delegate.onFailure(error: err!)
+            }
+        }
         if delegate.failed || !delegate.passed {
             XCTFail()
         }
@@ -142,7 +165,13 @@ public class UserAttributeTests: XCTestCase {
         userAttributeManager.response = resp
         userAttributeManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userAttributeManager.expectMethod = "PUT"
-        userAttributeManager.setAttribute(key : "key", value : "value", delegate: delegate)
+        userAttributeManager.setAttribute(key: "key", value: "value") { (err, res) in
+            if err == nil {
+                delegate.onSuccess(result: res!)
+            } else {
+                delegate.onFailure(error: err!)
+            }
+        }
         if delegate.failed || !delegate.passed {
             XCTFail()
         }
@@ -159,7 +188,14 @@ public class UserAttributeTests: XCTestCase {
         userAttributeManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userAttributeManager.token = "token"
         userAttributeManager.expectMethod = "PUT"
-        userAttributeManager.setAttribute(key : "key", value : "value", accessTokenString: "token", delegate: delegate)
+        userAttributeManager.setAttribute(key: "key", value: "value", accessTokenString: "token") { (err, res) in
+            if err == nil {
+                delegate.onSuccess(result: res!)
+            } else {
+                delegate.onFailure(error: err!)
+            }
+        }
+
         if delegate.failed || !delegate.passed {
             XCTFail()
         }
@@ -176,7 +212,13 @@ public class UserAttributeTests: XCTestCase {
         userAttributeManager.data = "{\"error\" : \"NOT_FOUND\"}".data(using: .utf8)
         userAttributeManager.token = "token"
         userAttributeManager.expectMethod = "PUT"
-        userAttributeManager.setAttribute(key : "key", value : "value", accessTokenString: "token", delegate: delegate)
+        userAttributeManager.setAttribute(key: "key", value: "value", accessTokenString: "token") { (err, res) in
+            if err == nil {
+                delegate.onSuccess(result: res!)
+            } else {
+                delegate.onFailure(error: err!)
+            }
+        }
         XCTAssert(delegate.failed)
         delegate.reset()
 

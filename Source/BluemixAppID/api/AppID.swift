@@ -40,16 +40,8 @@ public class AppID {
         self.loginWidget = LoginWidgetImpl(oauthManager: self.oauthManager!)
         self.userAttributeManager = UserAttributeManagerImpl(appId: self)
     }
-	
-    public func loginAnonymously(authorizationDelegate:AuthorizationDelegate) {
-        self.loginAnonymously(accessTokenString: nil, authorizationDelegate: authorizationDelegate)
-    }
     
-    public func loginAnonymously(accessTokenString:String?, authorizationDelegate:AuthorizationDelegate) {
-        self.loginAnonymously(accessTokenString: accessTokenString, allowCreateNewAnonymousUsers: true, authorizationDelegate: authorizationDelegate)
-    }
-    
-    public func loginAnonymously(accessTokenString:String?, allowCreateNewAnonymousUsers: Bool, authorizationDelegate:AuthorizationDelegate) {
+    public func loginAnonymously(accessTokenString:String? = nil, allowCreateNewAnonymousUsers: Bool = true, authorizationDelegate:AuthorizationDelegate) {
         oauthManager?.authorizationManager?.loginAnonymously(accessTokenString: accessTokenString, allowCreateNewAnonymousUsers: allowCreateNewAnonymousUsers, authorizationDelegate: authorizationDelegate)
     }
     

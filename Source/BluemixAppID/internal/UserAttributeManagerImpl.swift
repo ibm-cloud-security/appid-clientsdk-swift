@@ -15,6 +15,7 @@ import BMSCore
 
 public class UserAttributeManagerImpl: UserAttributeManager {
 
+    static var logger = Logger.logger(name: AppIDConstants.UserAttributeManagerLoggerName)
     private let userProfileAttributesPath = "attributes"
     private var appId:AppID
 
@@ -84,8 +85,7 @@ public class UserAttributeManagerImpl: UserAttributeManager {
                 if unWrappedResponse != nil {
                     if unWrappedResponse!.statusCode>=200 && unWrappedResponse!.statusCode < 300 {
                         guard let unWrappedData = data else {
-                           // delegate.onFailure(error: UserAttributeError.userAttributeFailure("Failed to parse server response - no response text"))
-                            completionHandler(UserAttributeError.userAttributeFailure("Failed to parse server response - no response text"), nil)
+                            self.logAndFail(errorString: "Failed to parse server response - no response text", completionHandler: completionHandler)
                             return
                         }
                         var responseJson : [String:Any] = [:]
@@ -98,29 +98,34 @@ public class UserAttributeManagerImpl: UserAttributeManager {
                             }
 
                         } catch _ {
-                                               completionHandler(UserAttributeError.userAttributeFailure("Failed to parse server response - failed to parse json"), nil)
+                            self.logAndFail(errorString: "Failed to parse server response - failed to parse json", completionHandler: completionHandler)
                             return
                         }
                         completionHandler(nil, responseJson)
                     }
                     else {
                         if unWrappedResponse!.statusCode == 401 {
-                            completionHandler(UserAttributeError.userAttributeFailure("UNAUTHORIZED"), nil)
-
+                            UserAttributeManagerImpl.logger.warn(message: "Ensure user profiles feature is enabled in the App ID dashboard.")
+                            self.logAndFail(errorString: "UNAUTHORIZED", completionHandler: completionHandler)
                         } else if unWrappedResponse!.statusCode == 404 {
-                            completionHandler(UserAttributeError.userAttributeFailure("NOT FOUND"), nil)
+                            self.logAndFail(errorString: "NOT FOUND", completionHandler: completionHandler)
                         } else {
-                            completionHandler(UserAttributeError.userAttributeFailure("Failed to get response from server"), nil)
+                            self.logAndFail(errorString: "Failed to get response from server", completionHandler: completionHandler)
                         }
 
                     }
                 }
             } else {
-                completionHandler(UserAttributeError.userAttributeFailure("Failed to get response from server"), nil)
+                self.logAndFail(errorString: "Failed to get response from server", completionHandler: completionHandler)
             }
 
         })
 
+    }
+
+    internal func logAndFail(errorString: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+        UserAttributeManagerImpl.logger.debug(message: errorString)
+        completionHandler(UserAttributeError.userAttributeFailure(errorString), nil)
     }
 
     internal func send(request : URLRequest, handler : @escaping (Data?, URLResponse?, Error?) -> Void) {

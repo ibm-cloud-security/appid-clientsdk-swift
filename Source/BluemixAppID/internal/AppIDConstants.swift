@@ -79,6 +79,7 @@ internal class AppIDConstants {
     
     internal static var AppIDRequestManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDRequestManager"
     internal static var RegistrationManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDRegistrationManager"
+    internal static var UserAttributeManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDUserManagerManager"
     internal static var TokenManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDTokenManager"
      internal static var AuthorizationManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDAuthorizationManager"
     internal static var AppIDLoggerName = Logger.bmsLoggerPrefix + "AppID"

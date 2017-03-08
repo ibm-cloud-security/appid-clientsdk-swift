@@ -42,7 +42,6 @@
 		EFBA20381E51F7D9000EB3F5 /* LoginWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FF91E51F7D9000EB3F5 /* LoginWidget.swift */; };
 		EFBA203A1E51F7D9000EB3F5 /* AccessToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FFB1E51F7D9000EB3F5 /* AccessToken.swift */; };
 		EFBA203C1E51F7D9000EB3F5 /* OAuthClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FFC1E51F7D9000EB3F5 /* OAuthClient.swift */; };
-		EFBA203E1E51F7D9000EB3F5 /* UserAttributeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FFD1E51F7D9000EB3F5 /* UserAttributeDelegate.swift */; };
 		EFBA20401E51F7D9000EB3F5 /* UserAttributeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FFE1E51F7D9000EB3F5 /* UserAttributeError.swift */; };
 		EFBA20421E51F7D9000EB3F5 /* UserAttributeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FFF1E51F7D9000EB3F5 /* UserAttributeManager.swift */; };
 		EFBA20441E51F7D9000EB3F5 /* AppIDConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20011E51F7D9000EB3F5 /* AppIDConstants.swift */; };
@@ -127,7 +126,6 @@
 		EFBA1FF91E51F7D9000EB3F5 /* LoginWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWidget.swift; sourceTree = "<group>"; };
 		EFBA1FFB1E51F7D9000EB3F5 /* AccessToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessToken.swift; sourceTree = "<group>"; };
 		EFBA1FFC1E51F7D9000EB3F5 /* OAuthClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthClient.swift; sourceTree = "<group>"; };
-		EFBA1FFD1E51F7D9000EB3F5 /* UserAttributeDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeDelegate.swift; sourceTree = "<group>"; };
 		EFBA1FFE1E51F7D9000EB3F5 /* UserAttributeError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeError.swift; sourceTree = "<group>"; };
 		EFBA1FFF1E51F7D9000EB3F5 /* UserAttributeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeManager.swift; sourceTree = "<group>"; };
 		EFBA20011E51F7D9000EB3F5 /* AppIDConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDConstants.swift; sourceTree = "<group>"; };
@@ -266,7 +264,6 @@
 				EFBA1FF81E51F7D9000EB3F5 /* IdentityToken.swift */,
 				EFBA1FF91E51F7D9000EB3F5 /* LoginWidget.swift */,
 				EFBA1FFA1E51F7D9000EB3F5 /* Tokens */,
-				EFBA1FFD1E51F7D9000EB3F5 /* UserAttributeDelegate.swift */,
 				EFBA1FFE1E51F7D9000EB3F5 /* UserAttributeError.swift */,
 				EFBA1FFF1E51F7D9000EB3F5 /* UserAttributeManager.swift */,
 			);
@@ -630,7 +627,6 @@
 				EFBA20321E51F7D9000EB3F5 /* AuthorizationDelegate.swift in Sources */,
 				BDC0D53F1E5EF68300444F9E /* UserAttributeManagerImpl.swift in Sources */,
 				EFBA20601E51F7D9000EB3F5 /* TokenManager.swift in Sources */,
-				EFBA203E1E51F7D9000EB3F5 /* UserAttributeDelegate.swift in Sources */,
 				EFBA203C1E51F7D9000EB3F5 /* OAuthClient.swift in Sources */,
 				EFBA20481E51F7D9000EB3F5 /* AuthorizationHeaderHelper.swift in Sources */,
 				EFBA205A1E51F7D9000EB3F5 /* safariView.swift in Sources */,

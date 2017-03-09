@@ -56,10 +56,10 @@ public class AuthorizationUIManager {
             })
         }
         
-        if let err = getParamFromQuery(url: url, paramName: "error") {
+        if let err = Utils.getParamFromQuery(url: url, paramName: "error") {
             loginView?.dismiss(animated: true, completion: { () -> Void in
-                let errorDescription = self.getParamFromQuery(url: url, paramName: "error_description")
-                let errorCode = self.getParamFromQuery(url: url, paramName: "error_code")
+                let errorDescription = Utils.getParamFromQuery(url: url, paramName: "error_description")
+                let errorCode = Utils.getParamFromQuery(url: url, paramName: "error_code")
                 AuthorizationUIManager.logger.error(message: "error: " + err)
                 AuthorizationUIManager.logger.error(message: "errorCode: " + (errorCode ?? "not available"))
                 AuthorizationUIManager.logger.error(message: "errorDescription: " + (errorDescription ?? "not available"))
@@ -70,7 +70,7 @@ public class AuthorizationUIManager {
             let urlString = url.absoluteString
             if urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
                 // gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
-                if let code =  getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) {
+                if let code =  Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) {
                     tokenRequest(code: code, errMsg: nil)
                     return true
                 } else {
@@ -84,10 +84,7 @@ public class AuthorizationUIManager {
         
     }
     
-    private func getParamFromQuery(url:URL, paramName: String) -> String? {
-        return url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(paramName)}).first?.components(separatedBy: "=")[1]
-    }
-    
+ 
     
     
 }

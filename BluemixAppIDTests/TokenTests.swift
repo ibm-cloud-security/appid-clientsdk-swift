@@ -38,7 +38,7 @@ class TokenTests: XCTestCase {
 
     func testValidIdToken() {
         let token = IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)
-        
+
         XCTAssertEqual(token?.email, "donlonqwerty@gmail.com")
         XCTAssertEqual(token?.gender, "male")
         XCTAssertEqual(token?.locale, "en_US")

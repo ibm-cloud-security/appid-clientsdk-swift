@@ -10,11 +10,13 @@ import Foundation
 
 public protocol UserAttributeManager {
 
-    func setAttribute(var1: String, var2: String, var3: UserAttributeDelegate)
-    func setAttribute(var1: String, var2: String, var3: AccessToken, var4: UserAttributeDelegate)
-    func getAttribute(var1: String, var2: UserAttributeDelegate)
-    func getAttribute(var1: String, var2: AccessToken, var3: UserAttributeDelegate)
-    func deleteAttribute(var1: String, var2: UserAttributeDelegate)
-    func deleteAttribute(var1: String, var2: AccessToken, var3: UserAttributeDelegate)
+    func setAttribute(key: String, value: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func setAttribute(key: String, value: String, accessTokenString: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func getAttribute(key: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func getAttribute(key: String, accessTokenString: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func getAttributes(completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func getAttributes(accessTokenString: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func deleteAttribute(key: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func deleteAttribute(key: String, accessTokenString: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
     
 }

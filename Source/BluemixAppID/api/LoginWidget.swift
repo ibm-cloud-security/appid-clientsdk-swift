@@ -14,5 +14,5 @@
 import Foundation
 
 public protocol LoginWidget {
-    func launch(delegate:AuthorizationDelegate)
+    func launch(accessTokenString: String?, delegate: AuthorizationDelegate)
 }

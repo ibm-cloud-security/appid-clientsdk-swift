@@ -49,7 +49,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
     class MockAuthorizationManager: BluemixAppID.AuthorizationManager {
         static var res = "cancel"
         
-        override func launchAuthorizationUI(authorizationDelegate:AuthorizationDelegate) {
+        override func launchAuthorizationUI(accessTokenString: String? = nil, authorizationDelegate:AuthorizationDelegate) {
             if MockAuthorizationManager.res == "success" {
                 authorizationDelegate.onAuthorizationSuccess(accessToken:AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!, identityToken : IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!, response: AppIDAuthorizationManagerTests.expectedResponse)
             } else if MockAuthorizationManager.res == "failure" {

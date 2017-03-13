@@ -5,7 +5,6 @@ Swift SDK for the Bluemix AppID service
 [![Travis][img-travis-master]][url-travis-master]
 [![Coveralls][img-coveralls-master]][url-coveralls-master]
 [![Codacy][img-codacy]][url-codacy]
-[![Version][img-version]][url-bintray]
 [![License][img-license]][url-bintray]
 
 [![GithubWatch][img-github-watchers]][url-github-watchers]
@@ -18,7 +17,7 @@ Xcode 8.1 or above, CocoaPods 1.1.0 or higher, MacOS 10.11.5 or higher, iOS 9 or
 ## Installing the SDK:
 
 1. Add the 'BluemixAppID' dependency to your Podfile, for example:
-    
+
     ```swift
     target <yourTarget> do
        use_frameworks!
@@ -27,9 +26,9 @@ Xcode 8.1 or above, CocoaPods 1.1.0 or higher, MacOS 10.11.5 or higher, iOS 9 or
     ```  
 2. From the terminal, run:  
     ```swift
-    pod install --repo-update 
+    pod install --repo-update
     ```
-    
+
 ## Using the SDK:
 
 ### Initializing the AppId client SDK
@@ -57,11 +56,11 @@ class delegate : AuthorizationDelegate {
     public func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
         //User authenticated
     }
-    
+
     public func onAuthorizationCanceled() {
         //Authentication canceled by the user
     }
-            
+
     public func onAuthorizationFailure(error: AuthorizationError) {
         //Exception occurred
     }

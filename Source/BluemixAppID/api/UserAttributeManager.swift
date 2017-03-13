@@ -1,20 +1,26 @@
-//
-//  UserAttributeManager.swift
-//  AppID
-//
-//  Created by Oded Betzalel on 06/02/2017.
-//  Copyright © 2017 Oded Betzalel. All rights reserved.
-//
+/* *     Copyright 2016, 2017 IBM Corp.
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
+ */
 
 import Foundation
 
 public protocol UserAttributeManager {
 
-    func setAttribute(var1: String, var2: String, var3: UserAttributeDelegate)
-    func setAttribute(var1: String, var2: String, var3: AccessToken, var4: UserAttributeDelegate)
-    func getAttribute(var1: String, var2: UserAttributeDelegate)
-    func getAttribute(var1: String, var2: AccessToken, var3: UserAttributeDelegate)
-    func deleteAttribute(var1: String, var2: UserAttributeDelegate)
-    func deleteAttribute(var1: String, var2: AccessToken, var3: UserAttributeDelegate)
+    func setAttribute(key: String, value: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func setAttribute(key: String, value: String, accessTokenString: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func getAttribute(key: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func getAttribute(key: String, accessTokenString: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func getAttributes(completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func getAttributes(accessTokenString: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func deleteAttribute(key: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
+    func deleteAttribute(key: String, accessTokenString: String, completionHandler: @escaping(Error?, [String:Any]?) -> Void)
     
 }

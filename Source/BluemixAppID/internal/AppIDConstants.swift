@@ -79,6 +79,7 @@ internal class AppIDConstants {
     
     internal static var AppIDRequestManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDRequestManager"
     internal static var RegistrationManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDRegistrationManager"
+    internal static var UserAttributeManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDUserManagerManager"
     internal static var TokenManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDTokenManager"
      internal static var AuthorizationManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDAuthorizationManager"
     internal static var AppIDLoggerName = Logger.bmsLoggerPrefix + "AppID"
@@ -178,6 +179,7 @@ internal class AppIDConstants {
     internal static let USER_IDENTITY_LABEL = "userIdentity"
     // labels
     
+    internal static let AnonymousIdpName = "appid_anon"
     internal static let BMSSecurityErrorDomain = "com.ibm.mobilefirstplatform.clientsdk.swift.bmssecurity"
     internal static let privateKeyIdentifier = "\(_PRIVATE_KEY_LABEL):\(nameAndVer.name):\(nameAndVer.version)"
     internal static let publicKeyIdentifier = "\(_PUBLIC_KEY_LABEL):\(nameAndVer.name):\(nameAndVer.version)"

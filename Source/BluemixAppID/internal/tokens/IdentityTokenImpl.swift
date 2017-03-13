@@ -30,8 +30,7 @@ internal class IdentityTokenImpl: AbstractToken, IdentityToken {
 	}
 	
 	var identities: Array<Dictionary<String, Any>>? {
-        // TODO: implement when server supports it
-		return Array()
+        return payload[IdentityTokenImpl.IDENTITIES] as? Array<Dictionary<String, Any>>
 	}
 	
 	var oauthClient: OAuthClient? {

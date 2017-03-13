@@ -32,7 +32,11 @@ public class AppID {
     
     internal init() {}
     
-    
+    /**
+        Intializes the App ID instance
+        @param tenantId The tenant Id.
+        @param bluemixRegion The bluemix region.
+    */
     public func initialize(tenantId: String, bluemixRegion: String) {
         self.tenantId = tenantId
         self.bluemixRegion = bluemixRegion

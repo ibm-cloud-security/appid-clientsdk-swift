@@ -34,23 +34,34 @@ Xcode 8.1 or above, CocoaPods 1.1.0 or higher, MacOS 10.11.5 or higher, iOS 9 or
 ### Initializing the AppId client SDK
 1. Open your Xcode project and enable Keychain Sharing (Under project settings --> Capabilities --> Keychain sharing)
 2. Under project setting --> info --> Url Types, Add $(PRODUCT_BUNDLE_IDENTIFIER) as a URL Scheme
-3. Initialize the client SDK by passing the tenantId and region parameters to the initialize method. A common, though not mandatory, place to put the initialization code is in the application:didFinishLaunchingWithOptions: method of the AppDelegate in your Swift application.
+3. Add the following import to your AppDelegate.swift file:
+```swift
+import BluemixAppID
+```
+4. Initialize the client SDK by passing the tenantId and region parameters to the initialize method. A common, though not mandatory, place to put the initialization code is in the application:didFinishLaunchingWithOptions: method of the AppDelegate in your Swift application.
     ```swift
     AppID.sharedInstance.initialize(tenantId: <tenantId>, bluemixRegion: AppID.<region>)
     ```
-4. Add the following code to you AppDelegate file
+5. Add the following code to you AppDelegate file
     ```swift
     func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         return AppID.sharedInstance.application(application, open: url, options: options)
     }
     ```
-* Replace ״tenantId״ with the App ID service tenantId.
+
+
+* Replace ״tenantId״ with the App ID service tenantId. <br />
 * Replace ״region״ with the App ID region.
 
 For more information on obtaining these values see Before you begin.
 
 ### Using Login Widget
 After the App ID client SDK is initialized, you can start authenticate users by launching the Login Widget.
+Add the following import to the file in which you want to use the using the login Widget:
+```swift
+import BluemixAppID
+```
+Then add the following code:
 ```swift
 class delegate : AuthorizationDelegate {
     public func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
@@ -72,7 +83,12 @@ AppID.sharedInstance.loginWidget?.launch(delegate: delegate())
     If you configure only one of them the login widget will NOT launch and the user will be redirect to the configured idp authentication screen.
 
 ### Invoking protected resources
-
+Add the following imports to the file in which you want to invoke a protected resource request:
+```swift
+import BMSCore
+import BluemixAppID
+```
+Then add the following code:
 ```swift
 BMSClient.sharedInstance.initialize(bluemixRegion: AppID.<region>)
 BMSClient.sharedInstance.authorizationManager = AppIDAuthorizationManager(appid:AppID.sharedInstance)

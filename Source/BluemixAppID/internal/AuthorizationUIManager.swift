@@ -62,8 +62,8 @@ public class AuthorizationUIManager {
                     self.oAuthManager.registrationManager?.clearRegistrationData()
                     self.oAuthManager.authorizationManager?.launchAuthorizationUI(authorizationDelegate: self.authorizationDelegate)
                 } else {
-                    let errorDescription = self.getParamFromQuery(url: url, paramName: "error_description")
-                    let errorCode = self.getParamFromQuery(url: url, paramName: "error_code")
+                    let errorDescription = Utils.getParamFromQuery(url: url, paramName: "error_description")
+                    let errorCode = Utils.getParamFromQuery(url: url, paramName: "error_code")
                     AuthorizationUIManager.logger.error(message: "error: " + err)
                     AuthorizationUIManager.logger.error(message: "errorCode: " + (errorCode ?? "not available"))
                     AuthorizationUIManager.logger.error(message: "errorDescription: " + (errorDescription ?? "not available"))

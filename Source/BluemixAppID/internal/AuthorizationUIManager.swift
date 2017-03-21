@@ -58,12 +58,17 @@ public class AuthorizationUIManager {
         
         if let err = Utils.getParamFromQuery(url: url, paramName: "error") {
             loginView?.dismiss(animated: true, completion: { () -> Void in
-                let errorDescription = Utils.getParamFromQuery(url: url, paramName: "error_description")
-                let errorCode = Utils.getParamFromQuery(url: url, paramName: "error_code")
-                AuthorizationUIManager.logger.error(message: "error: " + err)
-                AuthorizationUIManager.logger.error(message: "errorCode: " + (errorCode ?? "not available"))
-                AuthorizationUIManager.logger.error(message: "errorDescription: " + (errorDescription ?? "not available"))
-                self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to obtain access and identity tokens"))
+                if err == "invalid_client" {
+                    self.oAuthManager.registrationManager?.clearRegistrationData()
+                    self.oAuthManager.authorizationManager?.launchAuthorizationUI(authorizationDelegate: self.authorizationDelegate)
+                } else {
+                    let errorDescription = Utils.getParamFromQuery(url: url, paramName: "error_description")
+                    let errorCode = Utils.getParamFromQuery(url: url, paramName: "error_code")
+                    AuthorizationUIManager.logger.error(message: "error: " + err)
+                    AuthorizationUIManager.logger.error(message: "errorCode: " + (errorCode ?? "not available"))
+                    AuthorizationUIManager.logger.error(message: "errorDescription: " + (errorDescription ?? "not available"))
+                    self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to obtain access and identity tokens"))
+                }
             })
             return false
         } else {
@@ -84,7 +89,7 @@ public class AuthorizationUIManager {
         
     }
     
- 
+    
     
     
 }

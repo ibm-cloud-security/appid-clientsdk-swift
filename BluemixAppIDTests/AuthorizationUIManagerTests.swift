@@ -117,6 +117,44 @@ public class AuthorizationUIManagerTests: XCTestCase {
     
         
     }
+    
+    func testApplicationErr3() {
+        class MockRegistrationManager:RegistrationManager {
+            static var expectation:XCTestExpectation?
+            public override func clearRegistrationData() {
+                MockRegistrationManager.expectation?.fulfill()
+            }
+        }
+        
+        class MockAuthorizationManager:BluemixAppID.AuthorizationManager {
+            static var expectation:XCTestExpectation?
+            public override func launchAuthorizationUI(accessTokenString: String?, authorizationDelegate: AuthorizationDelegate) {
+                XCTAssertNil(accessTokenString)
+                MockAuthorizationManager.expectation?.fulfill()
+            }
+        }
+        let expectation1 = expectation(description: "clear data")
+        let expectation2 = expectation(description: "invoke registration")
+        oauthManager.registrationManager = MockRegistrationManager(oauthManager:oauthManager)
+        MockRegistrationManager.expectation = expectation1
+        oauthManager.authorizationManager = MockAuthorizationManager(oAuthManager: oauthManager)
+        MockAuthorizationManager.expectation = expectation2
+        
+        let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: "Failed to obtain access and identity tokens"), authorizationUrl: "someurl", redirectUri: "someredirect")
+        manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
+        XCTAssertFalse(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somecode&error=invalid_client")!, options: [:]))
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+        
+        
+        
+        
+    }
+
 
     
 }

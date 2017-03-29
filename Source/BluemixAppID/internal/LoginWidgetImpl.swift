@@ -14,14 +14,14 @@
 import Foundation
 
 public class LoginWidgetImpl: LoginWidget {
-    
+
     var oauthManager:OAuthManager
     init(oauthManager:OAuthManager) {
         self.oauthManager = oauthManager
     }
-    
-    public func launch(delegate: AuthorizationDelegate) {
-        self.oauthManager.authorizationManager?.launchAuthorizationUI(authorizationDelegate: delegate)
+
+    public func launch(accessTokenString: String? = nil, delegate: AuthorizationDelegate) {
+        self.oauthManager.authorizationManager?.launchAuthorizationUI(accessTokenString: accessTokenString, authorizationDelegate: delegate)
     }
-    
+
 }

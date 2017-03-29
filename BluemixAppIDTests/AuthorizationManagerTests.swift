@@ -22,17 +22,33 @@ public class AuthorizationManagerTests : XCTestCase {
         authManager.registrationManager.preferenceManager.getStringPreference(name: AppIDConstants.client_id_String).clear()
         authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).clear()
         // with idp, no registration data
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp"), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp")
+        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: nil), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp")
 
         // no idp, no registration data
 
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE)
+        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE)
         
         // with idp, with registration data
         
         authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : ["redirect"]] as [String:Any])
         
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp"), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.client_id_String + "=someclient" + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=redirect" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp")
+        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: nil), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.client_id_String + "=someclient" + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=redirect" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp")
+        
+                XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: "token"), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.client_id_String + "=someclient" + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=redirect" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp" + "&appid_access_token=token")
+    }
+    
+    
+    class MockRegistrationManager: RegistrationManager {
+        static var shouldFail: Bool?
+        
+        override func ensureRegistered(callback : @escaping (AppIDError?) -> Void) {
+            if MockRegistrationManager.shouldFail == true {
+                callback(AppIDError.registrationError(msg: "Failed to register OAuth client"))
+            } else {
+                callback(nil)
+            }
+        }
+        
     }
     
     func testLaunchAuthorizationUI() {
@@ -74,19 +90,7 @@ public class AuthorizationManagerTests : XCTestCase {
             
         }
 
-        
-        class MockRegistrationManager: RegistrationManager {
-            static var shouldFail: Bool?
-            
-            override func ensureRegistered(callback : @escaping (AppIDError?) -> Void) {
-                if MockRegistrationManager.shouldFail == true {
-                    callback(AppIDError.registrationError(msg: "Failed to register OAuth client"))
-                } else {
-                    callback(nil)
-                }
-            }
-            
-        }
+ 
        
         // ensure registerd fails
         MockRegistrationManager.shouldFail = true
@@ -98,6 +102,113 @@ public class AuthorizationManagerTests : XCTestCase {
 //        // no redirects
 //        authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : []] as [String:Any])
 
+        
+    }
+    
+    
+
+    
+    class MockTokenManager: TokenManager {
+        var shouldCallObtain = true
+        
+        override func obtainTokens(code: String, authorizationDelegate: AuthorizationDelegate) {
+            if !shouldCallObtain {
+                XCTFail()
+            } else {
+                
+            }
+        }
+        
+    }
+    
+    class MockAuthorizationManager: BluemixAppID.AuthorizationManager {
+         var response : Response? = nil
+         var error : Error? = nil
+        
+        override func sendRequest(request: Request, internalCallBack: @escaping BMSCompletionHandler) {
+                internalCallBack(response, error)
+        }
+        
+    }
+    
+    
+    func testLoginAnonymously() {
+          let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
+        let originalTokenManager = authManager.appid.oauthManager?.tokenManager
+        authManager.appid.oauthManager?.tokenManager = MockTokenManager(oAuthManager: authManager.appid.oauthManager!)
+        
+        class SomeError : Error {
+            
+        }
+        class delegate: AuthorizationDelegate {
+            var failed = false
+            
+            func onAuthorizationFailure(error: AuthorizationError) {
+                failed = true
+            }
+            
+            func onAuthorizationCanceled() {
+                
+            }
+            
+            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+               
+            }
+            
+        }
+        
+        var del = delegate()
+        
+        // happy flow:
+        let redirect = AppIDConstants.REDIRECT_URI_VALUE
+                let goodData = "Found. Redirecting to "+redirect+"?code=w7DClMOnf03Dg8OxeyHCrwzChDXCnsOcw4cSw4nDuU_Dqkcmdy1zwoVKw5xEQMO5CsKYVcOiRsKYw4_Ds8OsBAfCpABrw4sAwqnDr37DiMOQwq7CjXMmw4PCt1knw7vCsMOXGHnCvBQ4wq7DjzMrDAJpwoHCmcKxAxbCjcKHSg1dw4vDr8OhHzE9w57CpygtIcOGwrE_wqdjwpw-VSvDg8K-wr7DvjTCoTMhwrV1w5Y6VGNPJG5IWwFFwqzCl8OAw4TDl8OefMOzSE1ofE4OQVTDkMOnPsO5wpTDuGPDigjDjFbDnkvDrVgWw7TClzjCk8O3AsKrRXLDjMKTwrbDv8Kmd0Nlw7rCn0LDgMKRCW_DtcKJOMK4wrjDpEJ-wqs"
+let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
+        let response = Response(responseData: goodData.data(using: .utf8), httpResponse: nil, isRedirect: false)
+        
+        authManager.response = response
+        authManager.error = nil
+        MockRegistrationManager.shouldFail = false
+        authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
+        
+        // sad flow 1: registration error
+        MockRegistrationManager.shouldFail = true
+        authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
+        if !del.failed {
+            XCTFail()
+        }
+        del.failed = false
+        MockRegistrationManager.shouldFail = false
+        
+        // sad flow 2: error instead of response:
+        authManager.response = nil
+        authManager.error = SomeError()
+        authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
+        if !del.failed {
+            XCTFail()
+        }
+        del.failed = false
+        
+        // sad flow 3: response from auth server is bad:
+        authManager.response = Response(responseData: "Obviously this is not a url, the auth server will never return this, but we need to make sure we can handle it anyway".data(using: .utf8), httpResponse: nil, isRedirect: false)
+        authManager.error = nil
+        authManager.loginAnonymously(accessTokenString: nil, allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
+        if !del.failed {
+            XCTFail()
+        }
+        del.failed = false
+        
+        // sad flow 4: response from auth server is bad:
+        
+        authManager.response = Response(responseData: badData.data(using: .utf8), httpResponse: nil, isRedirect: false)
+        authManager.error = nil
+        authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
+        if !del.failed {
+            XCTFail()
+        }
+        del.failed = false
+        
+        authManager.appid.oauthManager?.tokenManager = originalTokenManager
         
     }
 

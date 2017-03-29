@@ -111,7 +111,10 @@ internal class AbstractToken: Token {
     
     var isAnonymous: Bool {
         // TODO: complete this
-        return false
+        guard let amr = payload[AbstractToken.AUTH_METHODS] as? Array<String> else {
+            return false
+        }
+        return amr.contains("appid_anon")
     }
 	
 }

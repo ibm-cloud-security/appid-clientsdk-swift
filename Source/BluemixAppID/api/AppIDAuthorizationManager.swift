@@ -18,11 +18,16 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
 
     internal var oAuthManager:OAuthManager
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationManager")
-
+    
+    
+    /**
+     Intializes the App ID Authorization Manager
+     @param appid An AppID instance
+     */
     public init(appid:AppID) {
         self.oAuthManager = appid.oauthManager!
     }
-    
+
     /**
      A response is an OAuth error response only if,
      1. it's status is 401 or 403.
@@ -107,7 +112,9 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     
     
     
-    
+    /**
+     Returns the UserIdentity object constructed from the Identity Token if there is one
+     */
     public var userIdentity:UserIdentity? {
         let idToken = self.identityToken
         let identity:[String:Any] = [
@@ -118,17 +125,30 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
         return BaseUserIdentity(map: identity)
         
     }
+    /**
+     Returns the a DeviceIdentity object
+     */
     public var deviceIdentity:DeviceIdentity {
         return BaseDeviceIdentity()
         
     }
+    /**
+     Returns the an AppIdentity object
+     */
     public var appIdentity:AppIdentity {
         return BaseAppIdentity()
     }
+    
+    /**
+     Returns the latest access token
+     */
     public var accessToken:AccessToken? {
         return self.oAuthManager.tokenManager?.latestAccessToken
     }
     
+    /**
+     Returns the latest identity token
+     */
     public var identityToken:IdentityToken? {
         return self.oAuthManager.tokenManager?.latestIdentityToken
     }
@@ -152,6 +172,9 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
         request.setValue(unWrappedHeader, forHTTPHeaderField: AppIDConstants.AUTHORIZATION_HEADER)
     }
     
+    /**
+     Removes saved tokens
+     */
     public func logout() {
         self.clearAuthorizationData()
     }

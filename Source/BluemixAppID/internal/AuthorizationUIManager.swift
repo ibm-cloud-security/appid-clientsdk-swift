@@ -19,6 +19,7 @@ public class AuthorizationUIManager {
     var authorizationDelegate:AuthorizationDelegate
     var authorizationUrl:String
     var redirectUri:String
+    var timer:Timer;
     private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationUIManager")
     var loginView:safariView?
     init(oAuthManager: OAuthManager, authorizationDelegate: AuthorizationDelegate, authorizationUrl: String, redirectUri: String) {
@@ -26,6 +27,7 @@ public class AuthorizationUIManager {
         self.authorizationDelegate = authorizationDelegate
         self.authorizationUrl = authorizationUrl
         self.redirectUri = redirectUri
+        self.timer = Timer()
     }
     
     public func launch() {
@@ -34,7 +36,18 @@ public class AuthorizationUIManager {
         loginView?.authorizationDelegate = authorizationDelegate
         let mainView  = UIApplication.shared.keyWindow?.rootViewController
         DispatchQueue.main.async {
-            mainView?.present(self.loginView!, animated: true, completion:  nil)
+            mainView?.present(self.loginView!, animated: true, completion:  {
+                self.timer = Timer.scheduledTimer(timeInterval: 60.0, target: self, selector: #selector(self.checkAccessToken), userInfo: nil, repeats: false) //Wait 60 seconds and see if page was loaded
+            })
+        }
+    }
+    
+    @objc func checkAccessToken() {
+        if self.oAuthManager.tokenManager?.latestAccessToken == nil
+        {
+             loginView?.dismiss(animated: true, completion: { () -> Void  in //close safari view
+                self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Error loading page, check identity provider credentials"))
+            })
         }
     }
     
@@ -55,6 +68,8 @@ public class AuthorizationUIManager {
                 self.oAuthManager.tokenManager?.obtainTokens(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
             })
         }
+        
+        timer.invalidate() // disable check accessToken timer if we got reponse from server
         
         if let err = Utils.getParamFromQuery(url: url, paramName: "error") {
             loginView?.dismiss(animated: true, completion: { () -> Void in

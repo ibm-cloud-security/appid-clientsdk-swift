@@ -51,7 +51,7 @@ public class UserAttributeTests: XCTestCase {
         func onSuccess(result: [String:Any]) {
             XCTAssert(result["key"] != nil)
             let actualValue = result["key"]!
-            var actualValueString = String(describing: actualValue)
+            let actualValueString = String(describing: actualValue)
             XCTAssert(actualValueString == "value")
             passed = true
         }
@@ -68,9 +68,9 @@ public class UserAttributeTests: XCTestCase {
     }
 
     func testGetAllAttributes () {
-        var delegate = MyDelegate()
-        var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
-        var resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 200, httpVersion: "1.1", headerFields: [:])
+        let delegate = MyDelegate()
+        let userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
+        let resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 200, httpVersion: "1.1", headerFields: [:])
         userAttributeManager.response = resp
         userAttributeManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userAttributeManager.expectMethod = "GET"
@@ -90,9 +90,9 @@ public class UserAttributeTests: XCTestCase {
     }
 
     func testGetAllAttributesWithToken () {
-        var delegate = MyDelegate()
-        var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
-        var resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 200, httpVersion: "1.1", headerFields: [:])
+        let delegate = MyDelegate()
+        let userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
+        let resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 200, httpVersion: "1.1", headerFields: [:])
         userAttributeManager.response = resp
         userAttributeManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userAttributeManager.token = "token"
@@ -113,9 +113,9 @@ public class UserAttributeTests: XCTestCase {
 
 
     func testGetAttribute () {
-        var delegate = MyDelegate()
-        var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
-        var resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 200, httpVersion: "1.1", headerFields: [:])
+        let delegate = MyDelegate()
+        let userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
+        let resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 200, httpVersion: "1.1", headerFields: [:])
         userAttributeManager.response = resp
         userAttributeManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userAttributeManager.expectMethod = "GET"
@@ -135,9 +135,9 @@ public class UserAttributeTests: XCTestCase {
     }
 
     func testGetAttributeWithToken () {
-        var delegate = MyDelegate()
-        var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
-        var resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 200, httpVersion: "1.1", headerFields: [:])
+        let delegate = MyDelegate()
+        let userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
+        let resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 200, httpVersion: "1.1", headerFields: [:])
         userAttributeManager.response = resp
         userAttributeManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userAttributeManager.token = "token"
@@ -159,9 +159,9 @@ public class UserAttributeTests: XCTestCase {
 
 
     func testSetAttribute () {
-        var delegate = MyDelegate()
-        var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
-        var resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 200, httpVersion: "1.1", headerFields: [:])
+        let delegate = MyDelegate()
+        let userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
+        let resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 200, httpVersion: "1.1", headerFields: [:])
         userAttributeManager.response = resp
         userAttributeManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userAttributeManager.expectMethod = "PUT"
@@ -181,9 +181,9 @@ public class UserAttributeTests: XCTestCase {
     }
 
     func testSetAttributeWithToken () {
-        var delegate = MyDelegate()
-        var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
-        var resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 200, httpVersion: "1.1", headerFields: [:])
+        let delegate = MyDelegate()
+        let userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
+        let resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 200, httpVersion: "1.1", headerFields: [:])
         userAttributeManager.response = resp
         userAttributeManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userAttributeManager.token = "token"
@@ -205,9 +205,9 @@ public class UserAttributeTests: XCTestCase {
     }
 
     func testFailure () {
-        var delegate = MyDelegate()
-        var userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
-        var resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 404, httpVersion: "1.1", headerFields: [:])
+        let delegate = MyDelegate()
+        let userAttributeManager = MockUserAttributeManger(appId: AppID.sharedInstance)
+        let resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 404, httpVersion: "1.1", headerFields: [:])
         userAttributeManager.response = resp
         userAttributeManager.data = "{\"error\" : \"NOT_FOUND\"}".data(using: .utf8)
         userAttributeManager.token = "token"

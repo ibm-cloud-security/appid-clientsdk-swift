@@ -158,7 +158,7 @@ public class AuthorizationManagerTests : XCTestCase {
             
         }
         
-        var del = delegate()
+        let del = delegate()
         
         // happy flow:
         let redirect = AppIDConstants.REDIRECT_URI_VALUE

@@ -34,8 +34,9 @@ public class AuthorizationUIManager {
         loginView?.authorizationDelegate = authorizationDelegate
         let rootView = UIApplication.shared.keyWindow?.rootViewController
         let currentView = rootView?.presentedViewController
+        let view = currentView != nil ? currentView : rootView
         DispatchQueue.main.async {
-            currentView?.present(self.loginView!, animated: true, completion:  nil)
+            view?.present(self.loginView!, animated: true, completion:  nil)
         }
     }
     

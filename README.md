@@ -1,5 +1,5 @@
-# Bluemix AppID
-Swift SDK for the Bluemix AppID service
+# Bluemix App ID
+Swift SDK for the Bluemix App ID service
 
 [![Bluemix powered][img-bluemix-powered]][url-bluemix]
 [![Travis][img-travis-master]][url-travis-master]
@@ -31,7 +31,7 @@ Xcode 8.1 or above, CocoaPods 1.1.0 or higher, MacOS 10.11.5 or higher, iOS 9 or
 
 ## Using the SDK:
 
-### Initializing the AppId client SDK
+### Initializing the App ID client SDK
 1. Open your Xcode project and enable Keychain Sharing (Under project settings --> Capabilities --> Keychain sharing)
 2. Under project setting --> info --> Url Types, Add $(PRODUCT_BUNDLE_IDENTIFIER) as a URL Scheme
 3. Add the following import to your AppDelegate.swift file:

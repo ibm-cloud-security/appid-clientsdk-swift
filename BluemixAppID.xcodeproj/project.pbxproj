@@ -22,7 +22,6 @@
 		EF4994821E55F7BE008ACC27 /* AppIDTestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */; };
 		EF4994831E55F7BE008ACC27 /* AppIDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEA1E51F7D9000EB3F5 /* AppIDTests.swift */; };
 		EF4994841E55F7BE008ACC27 /* AuthorizationHeaderHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEB1E51F7D9000EB3F5 /* AuthorizationHeaderHelperTests.swift */; };
-		EF4994851E55F7BE008ACC27 /* Info.plist in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEC1E51F7D9000EB3F5 /* Info.plist */; };
 		EF4994861E55F7BE008ACC27 /* PreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FED1E51F7D9000EB3F5 /* PreferencesTests.swift */; };
 		EF4994871E55F7BE008ACC27 /* TokenManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEE1E51F7D9000EB3F5 /* TokenManagerTests.swift */; };
 		EF4994881E55F7BE008ACC27 /* TokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FEF1E51F7D9000EB3F5 /* TokenTests.swift */; };
@@ -645,7 +644,6 @@
 				EF4994831E55F7BE008ACC27 /* AppIDTests.swift in Sources */,
 				BDF5878B1E65736B00393C0C /* (null) in Sources */,
 				EF4994841E55F7BE008ACC27 /* AuthorizationHeaderHelperTests.swift in Sources */,
-				EF4994851E55F7BE008ACC27 /* Info.plist in Sources */,
 				EF4994861E55F7BE008ACC27 /* PreferencesTests.swift in Sources */,
 				EF4994871E55F7BE008ACC27 /* TokenManagerTests.swift in Sources */,
 				EF4994881E55F7BE008ACC27 /* TokenTests.swift in Sources */,

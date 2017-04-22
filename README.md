@@ -119,3 +119,4 @@ This package contains code licensed under the Apache License, Version 2.0 (the "
 
 [img-codacy]: https://api.codacy.com/project/badge/Grade/d41f8f069dd343769fcbdb55089561fc?branch=master
 [url-codacy]: https://www.codacy.com/app/ibm-cloud-security/appid-clientsdk-swift
+

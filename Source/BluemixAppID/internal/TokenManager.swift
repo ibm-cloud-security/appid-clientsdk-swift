@@ -41,7 +41,7 @@ internal class TokenManager {
             AppIDConstants.JSON_GRANT_TYPE_KEY : AppIDConstants.authorization_code_String,
             AppIDConstants.JSON_REDIRECT_URI_KEY : redirectUri
         ]
-        retrieveTokens(bodyParams: bodyParams, authorizationDelegate: authorizationDelegate)
+        retrieveTokens(bodyParams: bodyParams, tokenResponseDelegate: authorizationDelegate)
     }
     
     public func obtainTokens(username: String, password: String, tokenResponseDelegate: TokenResponseDelegate) {
@@ -57,7 +57,7 @@ internal class TokenManager {
         
     }
     
-    internal func retrieveTokens(bodyParams: Array,  tokenResponseDelegate: TokenResponseDelegate) {
+    internal func retrieveTokens(bodyParams: [String:String],  tokenResponseDelegate: TokenResponseDelegate) {
         let tokenUrl = Config.getServerUrl(appId: self.appid) + "/token"
         
         guard let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) else {
@@ -86,7 +86,7 @@ internal class TokenManager {
                     tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to extract tokens"))
                 }
             } else {
-                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens:" + error))
+                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
             }
         }
         

@@ -14,6 +14,6 @@
 import Foundation
 import BMSCore
 
-public protocol AuthorizationDelegate : TokenResponseDelegate{
+public protocol AuthorizationDelegate : TokenResponseDelegate {
 	func onAuthorizationCanceled()
 }

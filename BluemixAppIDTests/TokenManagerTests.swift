@@ -80,6 +80,46 @@ class TokenManagerTests: XCTestCase {
         
     }
     
+    class MockTokenManagerWithSendRequestRop: TokenManager {
+        var err:Error?
+        var response:Response?
+        var throwExc:Bool
+        init(oauthManager:OAuthManager, response:Response?, err:Error?, throwExc:Bool = false) {
+            self.err = err
+            self.response = response
+            self.throwExc = throwExc
+            super.init(oAuthManager:oauthManager)
+        }
+        
+        override internal func extractTokens(response: Response, tokenResponseDelegate:TokenResponseDelegate) {
+            XCTAssertEqual(response.responseData, self.response?.responseData)
+            tokenResponseDelegate.onAuthorizationSuccess(accessToken: AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!, identityToken: IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!, response: response)
+        }
+        
+        override internal func createAuthenticationHeader(clientId: String) throws -> String {
+            if throwExc {
+                throw AppIDError.generalError
+            } else {
+                XCTAssertEqual(clientId, TokenManagerTests.clientId)
+                return "Bearer signature"
+            }
+        }
+        
+        override internal func sendRequest(request:Request, body registrationParamsAsData:Data?, internalCallBack: @escaping BMSCompletionHandler) {
+            
+            XCTAssertEqual(request.resourceUrl, Config.getServerUrl(appId: AppID.sharedInstance) + "/token")
+            XCTAssertEqual(request.httpMethod, HttpMethod.POST)
+            XCTAssertEqual(request.headers.count, 2)
+            XCTAssertEqual(request.headers["Content-Type"], "application/x-www-form-urlencoded")
+            XCTAssertEqual(request.headers["Authorization"], "Bearer signature")
+            XCTAssertEqual(request.timeout, BMSClient.sharedInstance.requestTimeout)
+            XCTAssertEqual(String(data: registrationParamsAsData!, encoding: .utf8), "grant_type=password&username=thisisusername&password=thisispassword")
+            
+            internalCallBack(response, err)
+        }
+        
+    }
+    
     
     class delegate: AuthorizationDelegate {
         var exp:XCTestExpectation
@@ -153,6 +193,98 @@ class TokenManagerTests: XCTestCase {
         
     }
     
+    
+    func testObtainTokensUsingRop_no_response() {
+        
+        let expectation1 = expectation(description: "got to callback")
+        let err = AppIDError.registrationError(msg: "Failed to register OAuth client")
+        let oauthmanager = OAuthManager(appId: AppID.sharedInstance)
+        oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : TokenManagerTests.clientId])
+        
+        let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: nil, err: err)
+        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+    }
+    
+    func testObtainTokensUsingRop2_catch() {
+        
+        let expectation1 = expectation(description: "got to callback")
+        let err = AppIDError.registrationError(msg: "Failed to register OAuth client")
+        let oauthmanager = OAuthManager(appId: AppID.sharedInstance)
+        oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : TokenManagerTests.clientId])
+        
+        let response:Response = Response(responseData: "some text".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 401, httpVersion: nil, headerFields: nil), isRedirect: false)
+        
+        let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: response, err: err)
+        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+    }
+    
+    // no error and no response
+    func testObtainTokensUsingRop_no_err_no_response() {
+        
+        let expectation1 = expectation(description: "got to callback")
+        let oauthmanager = OAuthManager(appId: AppID.sharedInstance)
+        oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient"])
+        
+        let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: nil, err: nil)
+        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate: delegate(exp:expectation1, msg: "Failed to extract tokens"))
+        
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+    }
+    
+    func testObtainTokensUsingRop4_no_error_description() {
+        
+        let expectation1 = expectation(description: "got to callback")
+        let err = AppIDError.registrationError(msg: "Failed to register OAuth client")
+        let oauthmanager = OAuthManager(appId: AppID.sharedInstance)
+        oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : TokenManagerTests.clientId])
+        
+        let response:Response = Response(responseData: "{}".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 401, httpVersion: nil, headerFields: nil), isRedirect: false)
+        
+        let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: response, err: err)
+        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+    }
+    
+    func testObtainTokensUsingRop4_with_error_description() {
+        
+        let expectation1 = expectation(description: "got to callback")
+        let err = AppIDError.registrationError(msg: "Failed to register OAuth client")
+        let oauthmanager = OAuthManager(appId: AppID.sharedInstance)
+        oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : TokenManagerTests.clientId])
+        
+        let response:Response = Response(responseData: "{\"error_description\":\"some error\"}".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 401, httpVersion: nil, headerFields: nil), isRedirect: false)
+        
+        let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: response, err: err)
+        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens: some error"))
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+    }
     
     // with err
     func testObtainTokens() {

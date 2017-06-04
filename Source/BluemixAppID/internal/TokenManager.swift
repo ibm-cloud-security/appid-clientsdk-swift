@@ -86,7 +86,28 @@ internal class TokenManager {
                     tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to extract tokens"))
                 }
             } else {
-                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
+            
+                do {
+                    if (response?.statusCode == 401) {
+                        var errorJson : [String:String] = [:]
+                        let errorText = response?.responseText
+                        if (errorText != nil) {
+                            errorJson = try Utils.parseJsonStringtoDictionary(errorText!) as![String : String]
+                            if let error_descreption = errorJson["error_description"] {
+                                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens: " + error_descreption))
+                            } else {
+                                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
+                            }
+                        } else {
+                            tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
+                        }
+                    } else {
+                        tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
+                    }
+                    
+                } catch _ {
+                    tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
+                }
             }
         }
         

@@ -223,6 +223,7 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         }
         class delegate: TokenResponseDelegate {
             var failed = false
+            
             func onAuthorizationFailure(error: AuthorizationError) {
                 failed = true
             }

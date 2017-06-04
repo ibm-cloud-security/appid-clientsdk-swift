@@ -88,13 +88,13 @@ internal class TokenManager {
             } else {
             
                 do {
-                    if (response?.statusCode == 401) {
+                    if response?.statusCode == 401 {
                         var errorJson : [String:String] = [:]
                         let errorText = response?.responseText
-                        if (errorText != nil) {
+                        if  errorText != nil {
                             errorJson = try Utils.parseJsonStringtoDictionary(errorText!) as![String : String]
-                            if let error_descreption = errorJson["error_description"] {
-                                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens: " + error_descreption))
+                            if let errorDescreption = errorJson["error_description"] {
+                                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens: " + errorDescreption))
                             } else {
                                 tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
                             }

@@ -78,6 +78,23 @@ AppID.sharedInstance.loginWidget?.launch(delegate: delegate())
 ```
 **Note**: The Login widget default configuration use Facebook and Google as authentication options.
     If you configure only one of them the login widget will NOT launch and the user will be redirect to the configured idp authentication screen.
+<!--
+### Login using Resource Owner Password
+You can obtain access token and id token by supplying the end user's username and the end user's password.
+```swift
+class delegate : TokenResponseDelegate {
+    public func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+    //User authenticated
+    }
+
+    public func onAuthorizationFailure(error: AuthorizationError) {
+    //Exception occurred
+    }
+}
+
+AppID.sharedInstance.obtainTokensWithROP(username: username, password: password, delegate: delegate())
+```
+-->
 
 ### Invoking protected resources
 Add the following imports to the file in which you want to invoke a protected resource request:

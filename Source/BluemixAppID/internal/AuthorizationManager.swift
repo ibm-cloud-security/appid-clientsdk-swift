@@ -148,7 +148,7 @@ public class AuthorizationManager {
         request.send(completionHandler: internalCallBack)
     }
     
-    internal func obtainTokensWithROP(username: String, password: String, tokenResponseDelegate:TokenResponseDelegate){
+    internal func obtainTokensWithROP(username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {
                 AuthorizationManager.logger.error(message: error!.description)

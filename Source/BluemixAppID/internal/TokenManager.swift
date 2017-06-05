@@ -86,25 +86,19 @@ internal class TokenManager {
                     tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to extract tokens"))
                 }
             } else {
-            
                 do {
                     if response?.statusCode == 401 {
-                        var errorJson : [String:String] = [:]
                         let errorText = response?.responseText
                         if  errorText != nil {
-                            errorJson = try Utils.parseJsonStringtoDictionary(errorText!) as![String : String]
-                            if let errorDescreption = errorJson["error_description"] {
-                                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens: " + errorDescreption))
-                            } else {
-                                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
+                            if let errorJson:[String:String] = try Utils.parseJsonStringtoDictionary(errorText!) as? [String:String] {
+                                if let errorDescreption = errorJson["error_description"] {
+                                    tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens: " + errorDescreption))
+                                    return
+                                }
                             }
-                        } else {
-                            tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
                         }
-                    } else {
-                        tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
                     }
-                    
+                    tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
                 } catch _ {
                     tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
                 }

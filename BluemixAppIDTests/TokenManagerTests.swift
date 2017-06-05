@@ -266,6 +266,7 @@ class TokenManagerTests: XCTestCase {
             }
         }
     }
+    
     func testObtainTokensUsingRop4_no_error() {
         
         let expectation1 = expectation(description: "got to callback")

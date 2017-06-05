@@ -158,9 +158,7 @@ public class AuthorizationManager {
             self.oAuthManager.tokenManager?.obtainTokens(username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
             return
         })
-        
     }
-
 
     public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         return (self.authorizationUIManager?.application(application, open: url, options: options))!

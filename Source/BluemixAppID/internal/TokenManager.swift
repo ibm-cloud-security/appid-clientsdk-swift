@@ -87,13 +87,15 @@ internal class TokenManager {
                 }
             } else {
                 do {
-                    if response?.statusCode == 401 {
+                    if response?.statusCode == 400 {
                         let errorText = response?.responseText
                         if  errorText != nil {
                             if let errorJson:[String:String] = try Utils.parseJsonStringtoDictionary(errorText!) as? [String:String] {
-                                if let errorDescreption = errorJson["error_description"] {
-                                    tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens: " + errorDescreption))
-                                    return
+                                if errorJson["error"] == "invalid_grant" {
+                                    if let errorDescreption = errorJson["error_description"] {
+                                        tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens: " + errorDescreption))
+                                        return
+                                    }
                                 }
                             }
                         }

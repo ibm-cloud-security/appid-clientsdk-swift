@@ -211,5 +211,47 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         authManager.appid.oauthManager?.tokenManager = originalTokenManager
         
     }
+    
+    func testObtainTokensWithROP() {
+        let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
+        let originalTokenManager = authManager.appid.oauthManager?.tokenManager
+        authManager.appid.oauthManager?.tokenManager = MockTokenManager(oAuthManager: authManager.appid.oauthManager!)
+        
+        class SomeError : Error {
+            
+        }
+        class delegate: TokenResponseDelegate {
+            var failed = false
+            
+            func onAuthorizationFailure(error: AuthorizationError) {
+                failed = true
+            }
+            
+            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+                
+            }
+            
+        }
+        
+        let del = delegate()
+        
+        // happy flow:
+        authManager.error = nil
+        MockRegistrationManager.shouldFail = false
+        authManager.obtainTokensWithROP(username: "testUsername", password: "testPassword", tokenResponseDelegate: del)
+        
+        // sad flow 1: registration error
+        MockRegistrationManager.shouldFail = true
+        authManager.obtainTokensWithROP(username: "testUsername", password: "testPassword", tokenResponseDelegate: del)
+        if !del.failed {
+            XCTFail()
+        }
+        del.failed = false
+        MockRegistrationManager.shouldFail = false
+        
+        authManager.appid.oauthManager?.tokenManager = originalTokenManager
+    }
+
 
 }

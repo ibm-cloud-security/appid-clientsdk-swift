@@ -148,6 +148,17 @@ public class AuthorizationManager {
         request.send(completionHandler: internalCallBack)
     }
 
+    internal func obtainTokensWithROP(username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
+        self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
+            guard error == nil else {
+                AuthorizationManager.logger.error(message: error!.description)
+                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
+                return
+            }
+            self.oAuthManager.tokenManager?.obtainTokens(username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
+            return
+        })
+    }
 
     public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         return (self.authorizationUIManager?.application(application, open: url, options: options))!

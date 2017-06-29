@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		181050421EE1BD9200AAA443 /* TokenResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181050411EE1BD9200AAA443 /* TokenResponseDelegate.swift */; };
 		686FA7AB6F9EE8ACF04FFE5B /* Pods_BluemixAppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9518D9FBE5C06EEB62E45B4 /* Pods_BluemixAppID.framework */; };
 		9178A9196CA83023A3A1FC90 /* Pods_BluemixAppIDTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D5F58BDE9E7A759720873B7 /* Pods_BluemixAppIDTests.framework */; };
 		BDC0D53F1E5EF68300444F9E /* UserAttributeManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC0D53E1E5EF68300444F9E /* UserAttributeManagerImpl.swift */; };
@@ -87,6 +88,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		181050411EE1BD9200AAA443 /* TokenResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenResponseDelegate.swift; sourceTree = "<group>"; };
 		66E951CC5B401814BE794DBE /* Pods-BluemixAppIDTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppIDTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppIDTests/Pods-BluemixAppIDTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8D5F58BDE9E7A759720873B7 /* Pods_BluemixAppIDTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BluemixAppIDTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDC0D53E1E5EF68300444F9E /* UserAttributeManagerImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeManagerImpl.swift; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				EFBA1FF41E51F7D9000EB3F5 /* AppID.swift */,
 				EFBA1FF51E51F7D9000EB3F5 /* AppIDAuthorizationManager.swift */,
 				EFBA1FF61E51F7D9000EB3F5 /* AuthorizationDelegate.swift */,
+				181050411EE1BD9200AAA443 /* TokenResponseDelegate.swift */,
 				EFBA1FF71E51F7D9000EB3F5 /* AuthorizationError.swift */,
 				EFBA1FF81E51F7D9000EB3F5 /* IdentityToken.swift */,
 				EFBA1FF91E51F7D9000EB3F5 /* LoginWidget.swift */,
@@ -621,6 +624,7 @@
 				EFBA20521E51F7D9000EB3F5 /* LoginWidgetImpl.swift in Sources */,
 				EFBA204A1E51F7D9000EB3F5 /* AuthorizationManager.swift in Sources */,
 				EFBA20541E51F7D9000EB3F5 /* OAuthManager.swift in Sources */,
+				181050421EE1BD9200AAA443 /* TokenResponseDelegate.swift in Sources */,
 				EFBA20641E51F7D9000EB3F5 /* AccessTokenImpl.swift in Sources */,
 				EFBA204E1E51F7D9000EB3F5 /* Config.swift in Sources */,
 				EFBA20321E51F7D9000EB3F5 /* AuthorizationDelegate.swift in Sources */,

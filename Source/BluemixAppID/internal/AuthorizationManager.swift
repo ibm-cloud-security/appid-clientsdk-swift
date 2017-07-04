@@ -148,14 +148,23 @@ public class AuthorizationManager {
         request.send(completionHandler: internalCallBack)
     }
 
-    internal func obtainTokensWithROP(username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
+    internal func obtainTokensWithROP(accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
+       
+        var accessTokenToUse = accessTokenString
+        if (accessTokenToUse == nil) {
+            let latestAccessToken = self.oAuthManager.tokenManager?.latestAccessToken;
+            if (latestAccessToken != nil && (latestAccessToken?.isAnonymous)!) {
+                accessTokenToUse = latestAccessToken?.raw
+            }
+        }
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {
                 AuthorizationManager.logger.error(message: error!.description)
                 tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
-            self.oAuthManager.tokenManager?.obtainTokens(username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
+            
+            self.oAuthManager.tokenManager?.obtainTokens(accessTokenString: accessTokenToUse, username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
             return
         })
     }

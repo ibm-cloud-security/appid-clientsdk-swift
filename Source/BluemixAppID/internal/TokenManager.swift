@@ -44,14 +44,17 @@ internal class TokenManager {
         retrieveTokens(bodyParams: bodyParams, tokenResponseDelegate: authorizationDelegate)
     }
     
-    public func obtainTokens(username: String, password: String, tokenResponseDelegate: TokenResponseDelegate) {
+    public func obtainTokens(accessTokenString: String? = nil, username: String, password: String, tokenResponseDelegate: TokenResponseDelegate) {
         TokenManager.logger.debug(message: "obtainTokens - with resource owner password")
         
-        let bodyParams = [
+        var bodyParams = [
             AppIDConstants.JSON_USERNAME : username,
             AppIDConstants.JSON_PASSWORD :  password,
             AppIDConstants.JSON_GRANT_TYPE_KEY : AppIDConstants.resource_owner_password_String
         ]
+        if (accessTokenString != nil) {
+            bodyParams[AppIDConstants.APPID_ACCESS_TOKEN] = accessTokenString;
+        }
         
         retrieveTokens(bodyParams: bodyParams, tokenResponseDelegate: tokenResponseDelegate)
         

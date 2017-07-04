@@ -148,8 +148,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 failed = true
             }
             
-            func onAuthorizationCanceled() {
-                
+            func onAuthorizationCanceled() {                
             }
             
             func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {

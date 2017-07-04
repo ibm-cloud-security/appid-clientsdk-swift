@@ -52,8 +52,8 @@ internal class TokenManager {
             AppIDConstants.JSON_PASSWORD :  password,
             AppIDConstants.JSON_GRANT_TYPE_KEY : AppIDConstants.resource_owner_password_String
         ]
-        if (accessTokenString != nil) {
-            bodyParams[AppIDConstants.APPID_ACCESS_TOKEN] = accessTokenString;
+        if accessTokenString != nil {
+            bodyParams[AppIDConstants.APPID_ACCESS_TOKEN] = accessTokenString
         }
         
         retrieveTokens(bodyParams: bodyParams, tokenResponseDelegate: tokenResponseDelegate)

@@ -149,11 +149,10 @@ public class AuthorizationManager {
     }
 
     internal func obtainTokensWithROP(accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
-       
         var accessTokenToUse = accessTokenString
-        if (accessTokenToUse == nil) {
-            let latestAccessToken = self.oAuthManager.tokenManager?.latestAccessToken;
-            if (latestAccessToken != nil && (latestAccessToken?.isAnonymous)!) {
+        if accessTokenToUse == nil {
+            let latestAccessToken = self.oAuthManager.tokenManager?.latestAccessToken
+            if latestAccessToken != nil && (latestAccessToken?.isAnonymous)! {
                 accessTokenToUse = latestAccessToken?.raw
             }
         }

@@ -162,7 +162,6 @@ public class AuthorizationManager {
                 tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
-            
             self.oAuthManager.tokenManager?.obtainTokens(accessTokenString: accessTokenToUse, username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
             return
         })

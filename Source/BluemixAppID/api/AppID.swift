@@ -50,8 +50,8 @@ public class AppID {
         oauthManager?.authorizationManager?.loginAnonymously(accessTokenString: accessTokenString, allowCreateNewAnonymousUsers: allowCreateNewAnonymousUsers, authorizationDelegate: authorizationDelegate)
     }
     
-    public func obtainTokensWithROP(username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
-        oauthManager?.authorizationManager?.obtainTokensWithROP(username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
+    public func obtainTokensWithROP(accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
+        oauthManager?.authorizationManager?.obtainTokensWithROP(accessTokenString: accessTokenString, username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
     }
     
 	public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {

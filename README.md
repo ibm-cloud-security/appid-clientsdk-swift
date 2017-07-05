@@ -134,5 +134,5 @@ This package contains code licensed under the Apache License, Version 2.0 (the "
 [img-coveralls-master]: https://coveralls.io/repos/github/ibm-cloud-security/appid-clientsdk-swift/badge.svg
 [url-coveralls-master]: https://coveralls.io/github/ibm-cloud-security/appid-clientsdk-swift
 
-[img-codacy]: https://api.codacy.com/project/badge/Grade/d41f8f069dd343769fcbdb55089561fc?branch=master
+[img-codacy]: https://api.codacy.com/project/badge/Grade/d41f8f069dd343769fcbdb55089561fc
 [url-codacy]: https://www.codacy.com/app/ibm-cloud-security/appid-clientsdk-swift

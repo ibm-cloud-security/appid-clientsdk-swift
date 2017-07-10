@@ -46,27 +46,32 @@ public class AuthorizationManager {
     }
 
     internal func launchAuthorizationUI(accessTokenString:String? = nil, authorizationDelegate:AuthorizationDelegate) {
-        let authorizationUrl = self.getAuthorizationUrl(idpName: nil, accessToken:accessTokenString, responseType: AppIDConstants.JSON_CODE_KEY)
-        launchAuthorizationURL(authorizationUrl: authorizationUrl, authorizationDelegate: authorizationDelegate)
-    }
-    
-    internal func launchSignUpAuthorizationUI(authorizationDelegate:AuthorizationDelegate) {
-        let signUpAuthorizationUrl = self.getAuthorizationUrl(idpName: nil, accessToken:nil, responseType: AppIDConstants.JSON_SIGN_UP_KEY);
-        launchAuthorizationURL(authorizationUrl: signUpAuthorizationUrl, authorizationDelegate: authorizationDelegate)
-    }
-
-    private func launchAuthorizationURL(authorizationUrl:String, authorizationDelegate:AuthorizationDelegate){
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {
                 AuthorizationManager.logger.error(message: error!.description)
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
-            
+            let authorizationUrl = self.getAuthorizationUrl(idpName: nil, accessToken:accessTokenString, responseType: AppIDConstants.JSON_CODE_KEY)
             let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0)
             self.authorizationUIManager = AuthorizationUIManager(oAuthManager: self.oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: authorizationUrl, redirectUri: redirectUri!)
             self.authorizationUIManager?.launch()
         })
+    }
+    
+    internal func launchSignUpAuthorizationUI(authorizationDelegate:AuthorizationDelegate) {
+        self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
+            guard error == nil else {
+                AuthorizationManager.logger.error(message: error!.description)
+                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
+                return
+            }
+            let signUpAuthorizationUrl = self.getAuthorizationUrl(idpName: nil, accessToken:nil, responseType: AppIDConstants.JSON_SIGN_UP_KEY)
+            let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0)
+            self.authorizationUIManager = AuthorizationUIManager(oAuthManager: self.oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: signUpAuthorizationUrl, redirectUri: redirectUri!)
+            self.authorizationUIManager?.launch()
+        })
+        
     }
 
     internal func loginAnonymously(accessTokenString:String?, allowCreateNewAnonymousUsers: Bool, authorizationDelegate:AuthorizationDelegate) {

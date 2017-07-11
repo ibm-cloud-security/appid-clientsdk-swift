@@ -22,19 +22,21 @@ public class AuthorizationManagerTests : XCTestCase {
         authManager.registrationManager.preferenceManager.getStringPreference(name: AppIDConstants.client_id_String).clear()
         authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).clear()
         // with idp, no registration data
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: nil), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp")
+        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp")
 
         // no idp, no registration data
 
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE)
+        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "code" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE)
+        
+        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_SIGN_UP_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "sign_up" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE)
         
         // with idp, with registration data
         
         authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : ["redirect"]] as [String:Any])
         
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: nil), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.client_id_String + "=someclient" + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=redirect" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp")
+        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.client_id_String + "=someclient" + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=redirect" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp")
         
-                XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: "token"), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.client_id_String + "=someclient" + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=redirect" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp" + "&appid_access_token=token")
+                XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: "token", responseType:  AppIDConstants.JSON_CODE_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.client_id_String + "=someclient" + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=redirect" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp" + "&appid_access_token=token")
     }
     
     
@@ -106,6 +108,58 @@ public class AuthorizationManagerTests : XCTestCase {
     }
     
     
+    func testLaunchSignUpAuthorizationUI() {
+        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        
+        class delegate: AuthorizationDelegate {
+            var res:String
+            var expectedError:String
+            static var fails:Int = 0
+            static var cancel:Int = 0
+            static var success:Int = 0
+            public init(res:String, expectedErr:String) {
+                self.expectedError = expectedErr
+                self.res = res
+            }
+            
+            func onAuthorizationFailure(error: AuthorizationError) {
+                XCTAssertEqual(error.description, expectedError)
+                delegate.fails += 1
+                if res != "failure" {
+                    XCTFail()
+                }
+                
+            }
+            
+            func onAuthorizationCanceled() {
+                delegate.cancel += 1
+                if res != "cancel" {
+                    XCTFail()
+                }
+            }
+            
+            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+                delegate.success += 1
+                if res != "success" {
+                    XCTFail()
+                }
+            }
+            
+        }
+        
+        
+        
+        // ensure registerd fails
+        MockRegistrationManager.shouldFail = true
+        authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
+        authManager.launchSignUpAuthorizationUI(authorizationDelegate:delegate(res: "failure", expectedErr: "Failed to register OAuth client"))
+        //        //mock with not error
+        //        authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : ["redirect"]] as [String:Any])
+        // TODO:  think how to ovveride it?
+        //        // no redirects
+        //        authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : []] as [String:Any])
+        
+    }
 
     
     class MockTokenManager: TokenManager {

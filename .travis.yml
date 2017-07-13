@@ -15,6 +15,6 @@ script:
   - travis_retry xcodebuild -workspace 'BluemixAppID.xcworkspace' test -scheme 'BluemixAppIDTests' -destination 'platform=iOS Simulator,name=iPhone 6' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -enableCodeCoverage YES
   - slather coverage --coveralls --binary-basename BluemixAppID.framework -v
   # When merging or pushing to the master branch, release a new version and publish the API documentation
-  - if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ] ; then
-      bash scripts/release.sh;
-    fi
+  #- if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ] ; then
+  #    bash scripts/release.sh;
+  # fi

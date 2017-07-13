@@ -106,9 +106,11 @@ internal class AppIDConstants {
     internal static var JSON_IMF_USER_KEY = "imf.user"
     internal static var JSON_REDIRECT_URI_KEY = "redirect_uri"
     internal static var JSON_CODE_KEY = "code"
+    internal static var JSON_SIGN_UP_KEY = "sign_up"
     internal static var JSON_GRANT_TYPE_KEY = "grant_type"
     internal static var JSON_USERNAME = "username"
     internal static var JSON_PASSWORD = "password"
+    internal static var APPID_ACCESS_TOKEN = "appid_access_token"
     
     internal static let MFP_SECURITY_PACKAGE = Logger.bmsLoggerPrefix + "security"
     

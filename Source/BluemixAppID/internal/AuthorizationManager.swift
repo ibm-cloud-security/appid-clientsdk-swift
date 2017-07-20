@@ -27,7 +27,7 @@ public class AuthorizationManager {
         self.registrationManager = oAuthManager.registrationManager!
     }
 
-    internal func getAuthorizationUrl(idpName:String?, accessToken : String?, responseType : String) -> String {
+    internal func getAuthorizationUrl(idpName : String?, accessToken : String?, responseType : String) -> String {
         var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + responseType
         if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
             url += "&" + AppIDConstants.client_id_String + "=" + clientId
@@ -42,6 +42,15 @@ public class AuthorizationManager {
         if let unWrappedAccessToken = accessToken {
             url += "&appid_access_token=" + unWrappedAccessToken
         }
+        return url
+    }
+    
+    internal func getChangePasswordUrl(userId : String, redirectUri : String) -> String{
+        var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.CHANGE_PASSWORD_PATH + "?" + AppIDConstants.JSON_USER_ID + "=" + userId
+        if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
+            url += "&" + AppIDConstants.client_id_String + "=" + clientId
+        }
+        url +=  "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=" + redirectUri
         return url
     }
 
@@ -72,6 +81,21 @@ public class AuthorizationManager {
             self.authorizationUIManager?.launch()
         })
         
+    }
+    
+    internal func launchChangePasswordUI(authorizationDelegate:AuthorizationDelegate) {
+        let currentIdToken:IdentityToken? = self.oAuthManager.tokenManager?.latestIdentityToken
+        if (currentIdToken == nil) {
+            authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("No identity token found."))
+        } else if (currentIdToken?.identities?.first?[AppIDConstants.JSON_PROVIDER] as? String != AppIDConstants.JSON_CLOUD_DIRECTORY) {
+             authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("The identity token was not retrieved using cloud directory idp."))
+        } else {
+            let userId = currentIdToken?.identities?.first?[AppIDConstants.JSON_ID]
+            let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0)
+            let changePasswordUrl = getChangePasswordUrl(userId: userId as! String, redirectUri: redirectUri!)
+            self.authorizationUIManager = AuthorizationUIManager(oAuthManager: self.oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: changePasswordUrl, redirectUri: redirectUri!)
+            self.authorizationUIManager?.launch()
+        }
     }
 
     internal func loginAnonymously(accessTokenString:String?, allowCreateNewAnonymousUsers: Bool, authorizationDelegate:AuthorizationDelegate) {

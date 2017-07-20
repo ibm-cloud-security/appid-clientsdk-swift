@@ -106,6 +106,13 @@ internal class AppIDConstants {
     internal static var JSON_IMF_USER_KEY = "imf.user"
     internal static var JSON_REDIRECT_URI_KEY = "redirect_uri"
     internal static var JSON_CODE_KEY = "code"
+    
+    internal static var JSON_ID = "id"
+    internal static var JSON_PROVIDER = "provider"
+    internal static var JSON_CLOUD_DIRECTORY = "cloud_directory"
+    internal static var JSON_USER_ID = "user_id"
+    internal static let CHANGE_PASSWORD_PATH = "/cloud_directory/change_password"
+    
     internal static var JSON_SIGN_UP_KEY = "sign_up"
     internal static var JSON_GRANT_TYPE_KEY = "grant_type"
     internal static var JSON_USERNAME = "username"

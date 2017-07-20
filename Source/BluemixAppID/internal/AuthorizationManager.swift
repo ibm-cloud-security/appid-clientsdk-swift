@@ -45,7 +45,7 @@ public class AuthorizationManager {
         return url
     }
     
-    internal func getChangePasswordUrl(userId : String, redirectUri : String) -> String{
+    internal func getChangePasswordUrl(userId : String, redirectUri : String) -> String {
         var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.CHANGE_PASSWORD_PATH + "?" + AppIDConstants.JSON_USER_ID + "=" + userId
         if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
             url += "&" + AppIDConstants.client_id_String + "=" + clientId
@@ -85,9 +85,9 @@ public class AuthorizationManager {
     
     internal func launchChangePasswordUI(authorizationDelegate:AuthorizationDelegate) {
         let currentIdToken:IdentityToken? = self.oAuthManager.tokenManager?.latestIdentityToken
-        if (currentIdToken == nil) {
+        if currentIdToken == nil {
             authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("No identity token found."))
-        } else if (currentIdToken?.identities?.first?[AppIDConstants.JSON_PROVIDER] as? String != AppIDConstants.JSON_CLOUD_DIRECTORY) {
+        } else if currentIdToken?.identities?.first?[AppIDConstants.JSON_PROVIDER] as? String != AppIDConstants.JSON_CLOUD_DIRECTORY {
              authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("The identity token was not retrieved using cloud directory idp."))
         } else {
             let userId = currentIdToken?.identities?.first?[AppIDConstants.JSON_ID]

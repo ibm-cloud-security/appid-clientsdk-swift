@@ -118,7 +118,7 @@ public class AuthorizationManager {
         } else {
             let generateCodeURL = Config.getServerUrl(appId: self.appid) + AppIDConstants.GENERATE_CODE_PATH
             let request:Request =  Request(url: generateCodeURL)
-            request.send(completionHandler: {(response:Response?, error:Error?) in
+            self.sendRequest(request: request, internalCallBack: {(response:Response?, error:Error?) in
                 if error == nil {
                     if let unWrapperResponse = response {
                         let code = unWrapperResponse.responseText

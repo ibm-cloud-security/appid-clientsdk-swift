@@ -98,7 +98,7 @@ public class AuthorizationManager {
         let currentIdToken:IdentityToken? = self.oAuthManager.tokenManager?.latestIdentityToken
         if currentIdToken == nil {
             authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("No identity token found."))
-        } else if (currentIdToken?.identities?.first?[AppIDConstants.JSON_PROVIDER] as? String != AppIDConstants.JSON_CLOUD_DIRECTORY) {
+        } else if currentIdToken?.identities?.first?[AppIDConstants.JSON_PROVIDER] as? String != AppIDConstants.JSON_CLOUD_DIRECTORY {
             authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("The identity token was not retrieved using cloud directory idp."))
         } else {
             let userId = currentIdToken?.identities?.first?[AppIDConstants.JSON_ID]
@@ -113,7 +113,7 @@ public class AuthorizationManager {
         let currentIdToken:IdentityToken? = self.oAuthManager.tokenManager?.latestIdentityToken
         if currentIdToken == nil {
             authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("No identity token found."))
-        } else if (currentIdToken?.identities?.first?[AppIDConstants.JSON_PROVIDER] as? String != AppIDConstants.JSON_CLOUD_DIRECTORY) {
+        } else if currentIdToken?.identities?.first?[AppIDConstants.JSON_PROVIDER] as? String != AppIDConstants.JSON_CLOUD_DIRECTORY {
             authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("The identity token was not retrieved using cloud directory idp."))
         } else {
             let generateCodeURL = Config.getServerUrl(appId: self.appid) + AppIDConstants.GENERATE_CODE_PATH

@@ -149,6 +149,7 @@ internal class AppIDConstants {
     internal static let JSON_JWKS_KEY = "jwks"
     internal static let JSON_DEVICE_ID_KEY = "device_id"
     internal static let JSON_OS_KEY = "device_os"
+    internal static let JSON_OS_VERSION_KEY = "device_os_version"
     internal static let JSON_ENVIRONMENT_KEY = "environment"
     internal static let JSON_MODEL_KEY = "device_model"
     internal static let JSON_SOFTWARE_ID_KEY = "software_id"

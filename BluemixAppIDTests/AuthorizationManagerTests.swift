@@ -107,6 +107,240 @@ public class AuthorizationManagerTests : XCTestCase {
         
     }
     
+    func testNoId() {
+        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        
+        class delegate: AuthorizationDelegate {
+            var res:String
+            var expectedError:String
+            static var fails:Int = 0
+            static var cancel:Int = 0
+            static var success:Int = 0
+            public init(res:String, expectedErr:String) {
+                self.expectedError = expectedErr
+                self.res = res
+            }
+            
+            func onAuthorizationFailure(error: AuthorizationError) {
+                XCTAssertEqual(error.description, expectedError)
+                delegate.fails += 1
+                if res != "failure" {
+                    XCTFail()
+                }
+                
+            }
+            
+            func onAuthorizationCanceled() {
+                delegate.cancel += 1
+                if res != "cancel" {
+                    XCTFail()
+                }
+            }
+            
+            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+                delegate.success += 1
+                if res != "success" {
+                    XCTFail()
+                }
+            }
+            
+        }
+        testLaunchChangePasswordAuthorizationUI_NO_IDToken(authManager: authManager, delegate:delegate(res: "failure", expectedErr: "No identity token found."))
+        testLaunchChangeDetailsAuthorizationUI_NO_IDToken(authManager: authManager, delegate:delegate(res: "failure", expectedErr: "No identity token found."))
+    }
+    
+    func testLaunchChangePasswordAuthorizationUI_NO_IDToken(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+        authManager.launchChangePasswordUI(authorizationDelegate: delegate)
+        
+    }
+    
+    func testLaunchChangeDetailsAuthorizationUI_NO_IDToken(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+        authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
+        
+    }
+    
+    
+    func test_ID_Token_Not_Of_CD() {
+        let oAuthManager = OAuthManager(appId: AppID.sharedInstance)
+        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: oAuthManager)
+        
+        class delegate: AuthorizationDelegate {
+            var res:String
+            var expectedError:String
+            static var fails:Int = 0
+            static var cancel:Int = 0
+            static var success:Int = 0
+            public init(res:String, expectedErr:String) {
+                self.expectedError = expectedErr
+                self.res = res
+            }
+            
+            func onAuthorizationFailure(error: AuthorizationError) {
+                XCTAssertEqual(error.description, expectedError)
+                delegate.fails += 1
+                if res != "failure" {
+                    XCTFail()
+                }
+                
+            }
+            
+            func onAuthorizationCanceled() {
+                delegate.cancel += 1
+                if res != "cancel" {
+                    XCTFail()
+                }
+            }
+            
+            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+                delegate.success += 1
+                if res != "success" {
+                    XCTFail()
+                }
+            }
+            
+        }
+        //id token not from cloud directory
+        let data = "{\"access_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw\",\"id_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiYXVkIjoiMTdlMTI4OWI2N2E1MzIwMDQ4MTdhNWEwYmQzMTM5YjljYWM4NDE0OCIsImV4cCI6MTQ4NzA2NjMwMiwiYXV0aF9ieSI6ImZhY2Vib29rIiwidGVuYW50IjoiNGRiYTk0MzAtNTRlNi00Y2YyLWE1MTYtNmY3M2ZlYjcwMmJiIiwiaWF0IjoxNDg3MDYyNzAyLCJuYW1lIjoiRG9uIExvbiIsImVtYWlsIjoiZG9ubG9ucXdlcnR5QGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJsb2NhbGUiOiJlbl9VUyIsInBpY3R1cmUiOiJodHRwczovL3Njb250ZW50Lnh4LmZiY2RuLm5ldC92L3QxLjAtMS9wNTB4NTAvMTM1MDE1NTFfMjg2NDA3ODM4Mzc4ODkyXzE3ODU3NjYyMTE3NjY3MzA2OTdfbi5qcGc_b2g9MjQyYmMyZmI1MDU2MDliNDQyODc0ZmRlM2U5ODY1YTkmb2U9NTkwN0IxQkMiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImZhY2Vib29rIiwiaWQiOiIzNzc0NDAxNTkyNzU2NTkifV0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiT2RlZEFwcElEYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJPZGVkQXBwSURhcHBpZElEIiwic29mdHdhcmVfdmVyc2lvbiI6IjEuMCIsImRldmljZV9pZCI6Ijk5MDI0Njg4LUZGMTktNDg4Qy04RjJELUY3MTY2MDZDQTU5NCIsImRldmljZV9tb2RlbCI6ImlQaG9uZSIsImRldmljZV9vcyI6ImlQaG9uZSBPUyJ9fQ.kFPUtpi9AROmBvQqPa19LgX18aYSSbnjlea4Hg0OA4UUw8XYnuoufBWpmmzDpaqZVnN5LTWg9YK5-wtB5Hi9YwX8bhklkeciHP_1ue-fyNDLN2uCNUvBxh916mgFy8u1gFicBcCzQkVoSDSL4Pcjgo0VoTla8t36wLFRtEKmBQ-p8UOlvjD-dnAoNBDveUsNNyeaLMdVPRRfXi-RYWOH3E9bjvyhHd-Zea2OX3oC1XRpqNgrUBXQblskOi_mEll_iWAUX5oD23tOZB9cb0eph9B6_tDZutgvaY338ZD1W9St6YokIL8IltKbrX3q1_FFJSu9nfNPgILsKIAKqe9fHQ\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenManager:TokenManager = TokenManager(oAuthManager: oAuthManager)
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"success", expectedErr: ""))
+        oAuthManager.tokenManager = tokenManager
+        
+        testLaunchChangePassword_ID_Token_Not_Of_CD(authManager: authManager, delegate:delegate(res: "failure", expectedErr: "The identity token was not retrieved using cloud directory idp."))
+        testLaunchChangeDetails_ID_Token_Not_Of_CD(authManager: authManager, delegate:delegate(res: "failure", expectedErr: "The identity token was not retrieved using cloud directory idp."))
+        
+    }
+    
+    func testLaunchChangePassword_ID_Token_Not_Of_CD(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+        authManager.launchChangePasswordUI(authorizationDelegate: delegate)
+        
+    }
+    
+    func testLaunchChangeDetails_ID_Token_Not_Of_CD(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+        authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
+        
+    }
+    
+    func testLaunchChangePassword_success() {
+        let oAuthManager = OAuthManager(appId: AppID.sharedInstance)
+        AppID.sharedInstance.initialize(tenantId: "tenant1", bluemixRegion: "region2")
+        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: oAuthManager)
+        
+        class delegate: AuthorizationDelegate {
+            var res:String
+            var expectedError:String
+            static var fails:Int = 0
+            static var cancel:Int = 0
+            static var success:Int = 0
+            public init(res:String, expectedErr:String) {
+                self.expectedError = expectedErr
+                self.res = res
+            }
+            
+            func onAuthorizationFailure(error: AuthorizationError) {
+                XCTAssertEqual(error.description, expectedError)
+                delegate.fails += 1
+                if res != "failure" {
+                    XCTFail()
+                }
+                
+            }
+            
+            func onAuthorizationCanceled() {
+                delegate.cancel += 1
+                if res != "cancel" {
+                    XCTFail()
+                }
+            }
+            
+            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+                delegate.success += 1
+                if res != "success" {
+                    XCTFail()
+                }
+            }
+            
+        }
+        //id token from cloud directory
+        let data = "{\"access_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw\",\"id_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJvS3dTY21CRFdITjBMVEhnVDRpQjhpMjdZUjNYOF9IRWQ3Smo2RlEtcHhVIn0.eyJpc3MiOiJhcHBpZC1vYXV0aC5zdGFnZTEubXlibHVlbWl4Lm5ldCIsImF1ZCI6IjQxNDIzNzZmYjFiYjU1ZjE4ZjQxNTE0ZmU4NWNlMGQ2MjlmZjk0YmYiLCJleHAiOjE1MDA1NTE4NzUsInRlbmFudCI6IjIyOGUzMGMyLWM3ZWMtNGUwZS04ZWQxLTZhZWMwZTkzZDRlYSIsImlhdCI6MTUwMDU0ODI3NSwiZW1haWwiOiJyb3RlbUBpYm0uY29tIiwibmFtZSI6InJvdGVtQGlibS5jb20iLCJzdWIiOiI1ZWY3NjQ3Mi0xMGM0LTQ4YmItYTRlMS1iOTg1OGFhODdmODgiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImNsb3VkX2RpcmVjdG9yeSIsImlkIjoiYmQ5OGU3YTgtNjAzNS00ZTA3LTlkOTQtMDRjMDRjOWZkN2FiIn1dLCJhbXIiOlsiY2xvdWRfZGlyZWN0b3J5Il0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJjb20uaWJtLm1vYmlsZWZpcnN0cGxhdGZvcm0uYXBwaWQiLCJzb2Z0d2FyZV92ZXJzaW9uIjoiMS4wIiwiZGV2aWNlX2lkIjoiZjNhZWQ3ZWEtMGUzNC0zNGM0LWI2NDgtMTJjZTQwYmE5ZWFhIiwiZGV2aWNlX21vZGVsIjoiQW5kcm9pZCBTREsgYnVpbHQgZm9yIHg4Nl82NCIsImRldmljZV9vcyI6ImFuZHJvaWQifX0.A-cHskvxS947usTLm90DtOYh7qyyvZi61D3XUIZ2Kxtw6mJE_ShsTtsR0b1uavYVyZTXUeD6bqKKzEqDD8TDpB7KO8gAePuUdMyMPF-ObVcgF3mzHzusWOHUiVUr0sbtF-i9YbyPwO4r6cs_GhhfeY05e4sDL7Gy9l2ab9IoSOJ-zDGe4_cJjkevbZ6Sl31PcRqz89wip5ixvhhvApkusojKcO-WG-6hDLWKrlf8Iz5AP4YLN5vpB7-9nCS2Z5whRnlr9kVyott8h6AREI_pvcjUUCvA7hrhiVJv38oS6yeTMeWPj4Q5RI9iYdF3rzFVw44ODnIKtXeP9IOzJEvlqA\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenManager:TokenManager = TokenManager(oAuthManager: oAuthManager)
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"success", expectedErr: ""))
+        oAuthManager.tokenManager = tokenManager
+        authManager.launchChangePasswordUI(authorizationDelegate:delegate(res:"", expectedErr:""))
+        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri as String!, "redirect")
+        let expectedUrl: String! = "https://appid-oauthregion2/oauth/v3/tenant1/cloud_directory/change_password?user_id=bd98e7a8-6035-4e07-9d94-04c04c9fd7ab&client_id=someclient&redirect_uri=redirect"
+        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
+    }
+    
+    func tests_launchDetails() {
+        let oAuthManager = OAuthManager(appId: AppID.sharedInstance)
+        AppID.sharedInstance.initialize(tenantId: "tenant1", bluemixRegion: "region2")
+        let authManager = MockAuthorizationManagerWithGoodResponse(oAuthManager: oAuthManager)
+        let authManagerNoCode = MockAuthorizationManager(oAuthManager: oAuthManager)
+        let authManagerRequestError = MockAuthorizationManagerWithRequestError(oAuthManager: oAuthManager)
+        
+        class delegate: AuthorizationDelegate {
+            var res:String
+            var expectedError:String
+            static var fails:Int = 0
+            static var cancel:Int = 0
+            static var success:Int = 0
+            public init(res:String, expectedErr:String) {
+                self.expectedError = expectedErr
+                self.res = res
+            }
+            
+            func onAuthorizationFailure(error: AuthorizationError) {
+                XCTAssertEqual(error.description, expectedError)
+                delegate.fails += 1
+                if res != "failure" {
+                    XCTFail()
+                }
+                
+            }
+            
+            func onAuthorizationCanceled() {
+                delegate.cancel += 1
+                if res != "cancel" {
+                    XCTFail()
+                }
+            }
+            
+            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+                delegate.success += 1
+                if res != "success" {
+                    XCTFail()
+                }
+            }
+            
+        }
+        //id token from cloud directory
+        let data = "{\"access_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw\",\"id_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJvS3dTY21CRFdITjBMVEhnVDRpQjhpMjdZUjNYOF9IRWQ3Smo2RlEtcHhVIn0.eyJpc3MiOiJhcHBpZC1vYXV0aC5zdGFnZTEubXlibHVlbWl4Lm5ldCIsImF1ZCI6IjQxNDIzNzZmYjFiYjU1ZjE4ZjQxNTE0ZmU4NWNlMGQ2MjlmZjk0YmYiLCJleHAiOjE1MDA1NTE4NzUsInRlbmFudCI6IjIyOGUzMGMyLWM3ZWMtNGUwZS04ZWQxLTZhZWMwZTkzZDRlYSIsImlhdCI6MTUwMDU0ODI3NSwiZW1haWwiOiJyb3RlbUBpYm0uY29tIiwibmFtZSI6InJvdGVtQGlibS5jb20iLCJzdWIiOiI1ZWY3NjQ3Mi0xMGM0LTQ4YmItYTRlMS1iOTg1OGFhODdmODgiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImNsb3VkX2RpcmVjdG9yeSIsImlkIjoiYmQ5OGU3YTgtNjAzNS00ZTA3LTlkOTQtMDRjMDRjOWZkN2FiIn1dLCJhbXIiOlsiY2xvdWRfZGlyZWN0b3J5Il0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJjb20uaWJtLm1vYmlsZWZpcnN0cGxhdGZvcm0uYXBwaWQiLCJzb2Z0d2FyZV92ZXJzaW9uIjoiMS4wIiwiZGV2aWNlX2lkIjoiZjNhZWQ3ZWEtMGUzNC0zNGM0LWI2NDgtMTJjZTQwYmE5ZWFhIiwiZGV2aWNlX21vZGVsIjoiQW5kcm9pZCBTREsgYnVpbHQgZm9yIHg4Nl82NCIsImRldmljZV9vcyI6ImFuZHJvaWQifX0.A-cHskvxS947usTLm90DtOYh7qyyvZi61D3XUIZ2Kxtw6mJE_ShsTtsR0b1uavYVyZTXUeD6bqKKzEqDD8TDpB7KO8gAePuUdMyMPF-ObVcgF3mzHzusWOHUiVUr0sbtF-i9YbyPwO4r6cs_GhhfeY05e4sDL7Gy9l2ab9IoSOJ-zDGe4_cJjkevbZ6Sl31PcRqz89wip5ixvhhvApkusojKcO-WG-6hDLWKrlf8Iz5AP4YLN5vpB7-9nCS2Z5whRnlr9kVyott8h6AREI_pvcjUUCvA7hrhiVJv38oS6yeTMeWPj4Q5RI9iYdF3rzFVw44ODnIKtXeP9IOzJEvlqA\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenManager:TokenManager = TokenManager(oAuthManager: oAuthManager)
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"success", expectedErr: ""))
+        oAuthManager.tokenManager = tokenManager
+        
+        testLaunchChangeDetails_success(authManager: authManager, delegate:delegate(res:"", expectedErr:""))
+        testLaunchChangeDetails_no_code(authManager: authManagerNoCode, delegate:delegate(res:"failure", expectedErr:"Failed to extract code"))
+        testLaunchChangeDetails_request_error(authManager: authManagerRequestError, delegate:delegate(res:"failure", expectedErr:"Unable to get response from server"))
+    }
+    
+    func testLaunchChangeDetails_success(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+        authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
+        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri as String!, "redirect")
+        let expectedUrl: String! = "https://appid-oauthregion2/oauth/v3/tenant1/cloud_directory/change_details?code=1234&client_id=someclient&redirect_uri=redirect"
+        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
+    }
+    
+    func testLaunchChangeDetails_no_code(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+        authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
+    }
+    
+    func testLaunchChangeDetails_request_error(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+        authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
+    }
     
     func testLaunchSignUpAuthorizationUI() {
         let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
@@ -182,12 +416,33 @@ public class AuthorizationManagerTests : XCTestCase {
         override func sendRequest(request: Request, internalCallBack: @escaping BMSCompletionHandler) {
                 internalCallBack(response, error)
         }
+    }
+    
+    class MockAuthorizationManagerWithGoodResponse: BluemixAppID.AuthorizationManager {
         
+        var response : Response? = Response(responseData: "1234".data(using: .utf8), httpResponse: nil, isRedirect: false)
+        var error : Error? = nil
+        
+        override func sendRequest(request: Request, internalCallBack: @escaping BMSCompletionHandler) {
+            internalCallBack(response, error)
+        }
+    }
+    
+    class MockAuthorizationManagerWithRequestError: BluemixAppID.AuthorizationManager {
+        
+        var response : Response? = nil
+        class SomeError : Error {
+            
+        }
+        var error : Error? = SomeError()
+        override func sendRequest(request: Request, internalCallBack: @escaping BMSCompletionHandler) {
+            internalCallBack(response, error)
+        }
     }
     
     
     func testLoginAnonymously() {
-          let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
         authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
         let originalTokenManager = authManager.appid.oauthManager?.tokenManager
         authManager.appid.oauthManager?.tokenManager = MockTokenManager(oAuthManager: authManager.appid.oauthManager!)

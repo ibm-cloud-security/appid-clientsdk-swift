@@ -27,5 +27,13 @@ public class LoginWidgetImpl: LoginWidget {
     public func launchSignUp(_ delegate: AuthorizationDelegate) {
         self.oauthManager.authorizationManager?.launchSignUpAuthorizationUI(authorizationDelegate: delegate)
     }
+    
+    public func launchChangePassword(_ delegate: AuthorizationDelegate) {
+        self.oauthManager.authorizationManager?.launchChangePasswordUI(authorizationDelegate: delegate)
+    }
+    
+    public func launchChangeDetails(_ delegate: AuthorizationDelegate) {
+        self.oauthManager.authorizationManager?.launchChangeDetailsUI(authorizationDelegate: delegate)
+    }
 
 }

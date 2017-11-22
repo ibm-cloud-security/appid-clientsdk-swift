@@ -79,13 +79,13 @@ public class AuthorizationUIManager {
                     AuthorizationUIManager.logger.debug(message: "finish " + flow + " flow")
                     self.authorizationDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, response: nil)
                 })
-                return true;
+                return true
             }
             loginView?.dismiss(animated: true, completion: { () -> Void in
                 AuthorizationUIManager.logger.error(message: "Bad callback uri:" + url.absoluteString)
                 self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Bad callback uri"))
             })
-            return false;
+            return false
         } else {
             let urlString = url.absoluteString
             if urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {

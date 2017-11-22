@@ -65,10 +65,10 @@ public class AuthorizationManager {
         return url
     }
     
-    internal func getForgotPasswordUrl() -> String {
+    internal func getForgotPasswordUrl(redirectUri: String) -> String {
         var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.FORGOT_PASSWORD_PATH
         if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
-            url += "?" + AppIDConstants.client_id_String + "=" + clientId
+            url += "?" + AppIDConstants.client_id_String + "=" + clientId + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=" + redirectUri
         }
         
         return url
@@ -147,37 +147,17 @@ public class AuthorizationManager {
         }
     }
     
-    internal func launchForgotPasswordUI(forgotPasswordDelegate:ForgotPasswordDelegate) {
-        
-        class authDelegate : AuthorizationDelegate {
-            var forgotPasswordDelegate:ForgotPasswordDelegate
-            init(forgotPasswordDelegate:ForgotPasswordDelegate) {
-                self.forgotPasswordDelegate = forgotPasswordDelegate
-            }
-            
-            public func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
-                // This should not get called since in the end of forgot password flow we don't get tokens
-                self.forgotPasswordDelegate.onFailure(error: AuthorizationError.authorizationFailure("Forgot password flow must not invoked onAuthorizationSuccess"))
-            }
-            
-            public func onAuthorizationCanceled() {
-                self.forgotPasswordDelegate.onFinish()
-            }
-            
-            public func onAuthorizationFailure(error: AuthorizationError) {
-                self.forgotPasswordDelegate.onFailure(error: error)
-            }
-        }
-        
+    internal func launchForgotPasswordUI(authorizationDelegate:AuthorizationDelegate) {
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {
                 AuthorizationManager.logger.error(message: error!.description)
-                forgotPasswordDelegate.onFailure(error: AuthorizationError.authorizationFailure(error!.description))
+                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
             
-            let forgotPasswordUrl = self.getForgotPasswordUrl()
-            self.authorizationUIManager = AuthorizationUIManager(oAuthManager:self.oAuthManager, authorizationDelegate:authDelegate(forgotPasswordDelegate: forgotPasswordDelegate), authorizationUrl:forgotPasswordUrl, redirectUri:"")
+            let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0)
+            let forgotPasswordUrl = self.getForgotPasswordUrl(redirectUri: redirectUri!)
+            self.authorizationUIManager = AuthorizationUIManager(oAuthManager:self.oAuthManager, authorizationDelegate:authorizationDelegate, authorizationUrl: forgotPasswordUrl, redirectUri: redirectUri!)
             self.authorizationUIManager?.launch()
         })
     }

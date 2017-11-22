@@ -182,10 +182,10 @@ class TokenManagerTests: XCTestCase {
             }
         }
         
-        func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response: Response?) {
+        func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response: Response?) {
             if success {
-                XCTAssertEqual(accessToken.raw, AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!.raw)
-                XCTAssertEqual(identityToken.raw, IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!.raw)
+                XCTAssertEqual(accessToken?.raw, AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!.raw)
+                XCTAssertEqual(identityToken?.raw, IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!.raw)
                 exp.fulfill()
             }
         }
@@ -511,7 +511,7 @@ class TokenManagerTests: XCTestCase {
                 }
             }
             
-            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()

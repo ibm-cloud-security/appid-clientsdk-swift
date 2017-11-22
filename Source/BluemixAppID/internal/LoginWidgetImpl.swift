@@ -36,8 +36,8 @@ public class LoginWidgetImpl: LoginWidget {
         self.oauthManager.authorizationManager?.launchChangeDetailsUI(authorizationDelegate: delegate)
     }
     
-    public func launchForgotPassword(_ delegate: ForgotPasswordDelegate) {
-        self.oauthManager.authorizationManager?.launchForgotPasswordUI(forgotPasswordDelegate: delegate)
+    public func launchForgotPassword(_ delegate: AuthorizationDelegate) {
+        self.oauthManager.authorizationManager?.launchForgotPasswordUI(authorizationDelegate: delegate)
     }
 
 }

@@ -117,6 +117,7 @@ internal class AppIDConstants {
     internal static let FORGOT_PASSWORD_PATH = "/cloud_directory/forgot_password"
     
     internal static var JSON_SIGN_UP_KEY = "sign_up"
+    internal static var JSON_FORGOT_PASSWORD_KEY = "forgot_password"
     internal static var JSON_GRANT_TYPE_KEY = "grant_type"
     internal static var JSON_USERNAME = "username"
     internal static var JSON_PASSWORD = "password"

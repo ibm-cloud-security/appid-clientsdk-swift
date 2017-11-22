@@ -83,7 +83,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 }
             }
             
-            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -137,7 +137,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 }
             }
             
-            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -191,7 +191,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 }
             }
             
-            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -253,7 +253,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 }
             }
             
-            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -307,7 +307,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 }
             }
             
-            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -372,7 +372,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 }
             }
             
-            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -540,7 +540,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 
             }
             
-            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
                
             }
             
@@ -616,7 +616,7 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
                 failed = true
             }
             
-            func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
                 
             }
             

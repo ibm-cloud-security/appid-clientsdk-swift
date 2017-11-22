@@ -16,5 +16,5 @@ import BMSCore
 
 public protocol TokenResponseDelegate {
     func onAuthorizationFailure(error: AuthorizationError)
-    func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?)
+    func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?)
 }

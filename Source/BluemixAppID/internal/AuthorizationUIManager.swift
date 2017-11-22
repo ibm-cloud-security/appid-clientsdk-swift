@@ -42,10 +42,15 @@ public class AuthorizationUIManager {
     
     public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {
         
-        func tokenRequest(code: String?, errMsg:String?) {
+        func tokenRequest(code: String?, errMsg:String?, flow: String? = nil) {
             loginView?.dismiss(animated: true, completion: { () -> Void in
                 guard errMsg == nil else {
                     self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(errMsg!))
+                    return
+                }
+                guard flow == nil else {
+                    AuthorizationUIManager.logger.debug(message: "Response is without code and with flow " + flow!);
+                    self.authorizationDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, response: nil);
                     return
                 }
                 guard let unwrappedCode = code else {
@@ -79,6 +84,9 @@ public class AuthorizationUIManager {
                 // gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
                 if let code =  Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) {
                     tokenRequest(code: code, errMsg: nil)
+                    return true
+                } else if let flow =  Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_FLOW_KEY) {
+                    tokenRequest(code: nil, errMsg: nil, flow: flow)
                     return true
                 } else {
                     AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")

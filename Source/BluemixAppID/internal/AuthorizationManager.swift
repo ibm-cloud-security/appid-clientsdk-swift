@@ -155,7 +155,7 @@ public class AuthorizationManager {
                 self.forgotPasswordDelegate = forgotPasswordDelegate
             }
             
-            public func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+            public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
                 // This should not get called since in the end of forgot password flow we don't get tokens
                 self.forgotPasswordDelegate.onFailure(error: AuthorizationError.authorizationFailure("Forgot password flow must not invoked onAuthorizationSuccess"))
             }

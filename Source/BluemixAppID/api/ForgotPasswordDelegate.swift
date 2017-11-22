@@ -10,13 +10,10 @@
  *     limitations under the License.
  */
 
-
 import Foundation
+import BMSCore
 
-public protocol LoginWidget {
-    func launch(accessTokenString: String?, delegate: AuthorizationDelegate)
-    func launchSignUp(_ delegate: AuthorizationDelegate)
-    func launchChangePassword(_ delegate: AuthorizationDelegate)
-    func launchChangeDetails(_ delegate: AuthorizationDelegate)
-    func launchForgotPassword(_ delegate: ForgotPasswordDelegate)
+public protocol ForgotPasswordDelegate {
+    func onFailure(error: AuthorizationError)
+    func onFinish()
 }

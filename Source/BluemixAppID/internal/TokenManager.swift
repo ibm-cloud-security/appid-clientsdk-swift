@@ -96,7 +96,7 @@ internal class TokenManager {
                             if let errorJson:[String:String] = try Utils.parseJsonStringtoDictionary(errorText!) as? [String:String] {
                                 if errorJson["error"] == "invalid_grant" {
                                     if let errorDescreption = errorJson["error_description"] {
-                                        tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens: " + errorDescreption))
+                                        tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(errorDescreption))
                                         return
                                     }
                                 }

@@ -353,7 +353,7 @@ class TokenManagerTests: XCTestCase {
         let response:Response = Response(responseData: "{\"error_description\":\"some error\", \"error\":\"invalid_grant\"}".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 400, httpVersion: nil, headerFields: nil), isRedirect: false)
         
         let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: response, err: err)
-        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens: some error"))
+        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "some error"))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {

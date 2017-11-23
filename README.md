@@ -82,10 +82,11 @@ AppID.sharedInstance.loginWidget?.launch(delegate: delegate())
 * In case of using Cloud Directory, and "Email verification" is configured to NOT allow users to sign-in without email verification, then the "onAuthorizationSuccess" of the "AuthorizationListener" will be invoked without tokens.
 
 
-###Cloud Directory APIs
+### Cloud Directory APIs
+
  Make sure to set Cloud Directory identity provider to ON in AppID dashboard, when using the following APIs.
 
-##### Login using Resource Owner Password
+#### Login using Resource Owner Password
  You can obtain access token and id token by supplying the end user's username and the end user's password.
  ```swift
  class delegate : TokenResponseDelegate {
@@ -100,7 +101,7 @@ AppID.sharedInstance.loginWidget?.launch(delegate: delegate())
 
  AppID.sharedInstance.obtainTokensWithROP(username: username, password: password, delegate: delegate())
  ```
- ##### Sign Up
+ #### Sign Up
  Make sure to set "Allow users to sign up and reset their password" to ON,
  in Cloud Directory settings that are in AppID dashboard.
 
@@ -126,7 +127,7 @@ AppID.sharedInstance.loginWidget?.launch(delegate: delegate())
 
  AppID.sharedInstance.loginWidget?.launchSignUp(delegate: delegate())
  ```
-  ##### Forgot Password
+  #### Forgot Password
   Make sure to set "Allow users to sign up and reset their password" and "Forgot password email" to ON,
   in Cloud Directory settings that are in AppID dashboard.
 
@@ -148,7 +149,7 @@ AppID.sharedInstance.loginWidget?.launch(delegate: delegate())
  
   AppID.sharedInstance.loginWidget?.launchForgotPassword(delegate: delegate())
   ```
-  ##### Change Details
+  #### Change Details
   Make sure to set "Allow users to sign up and reset their password" to ON,
   in Cloud Directory settings that are in AppID dashboard.
 
@@ -173,7 +174,7 @@ AppID.sharedInstance.loginWidget?.launch(delegate: delegate())
     AppID.sharedInstance.loginWidget?.launchChangeDetails(delegate: delegate())
    ```
    
-   ##### Change Password
+   #### Change Password
    Make sure to set "Allow users to sign up and reset their password" to ON,
    in Cloud Directory settings that are in AppID dashboard.
 

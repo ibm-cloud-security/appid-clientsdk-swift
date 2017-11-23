@@ -48,7 +48,7 @@ public class AuthorizationUIManager {
                     self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(errMsg!))
                     return
                 }
-                guard flow == nil else {
+                if (flow != nil && (flow == AppIDConstants.JSON_SIGN_UP_KEY || flow == AppIDConstants.JSON_FORGOT_PASSWORD_KEY)) {
                     AuthorizationUIManager.logger.debug(message: "Response is without code and with flow " + flow!);
                     self.authorizationDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, response: nil);
                     return

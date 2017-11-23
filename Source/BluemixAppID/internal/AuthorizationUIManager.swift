@@ -48,11 +48,6 @@ public class AuthorizationUIManager {
                     self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(errMsg!))
                     return
                 }
-                if (flow != nil && (flow == AppIDConstants.JSON_SIGN_UP_KEY || flow == AppIDConstants.JSON_FORGOT_PASSWORD_KEY)) {
-                    AuthorizationUIManager.logger.debug(message: "Response is without code and with flow " + flow!);
-                    self.authorizationDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, response: nil);
-                    return
-                }
                 guard let unwrappedCode = code else {
                     self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to extract grant code"))
                     return
@@ -81,7 +76,7 @@ public class AuthorizationUIManager {
         } else if let flow = Utils.getParamFromQuery(url: url, paramName: "flow") {
             if flow == AppIDConstants.JSON_FORGOT_PASSWORD_KEY ||  flow == AppIDConstants.JSON_SIGN_UP_KEY {
                 loginView?.dismiss(animated: true, completion: { () -> Void in
-                    AuthorizationUIManager.logger.debug(message: "finish " + flow + " flow")
+                    AuthorizationUIManager.logger.debug(message: "Finish " + flow + " flow")
                     self.authorizationDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, response: nil)
                 })
                 return true
@@ -98,9 +93,6 @@ public class AuthorizationUIManager {
                 if let code =  Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) {
                     tokenRequest(code: code, errMsg: nil)
                     return true
-                } else if let flow =  Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_FLOW_KEY) {
-                    tokenRequest(code: nil, errMsg: nil, flow: flow)
-                    return true
                 } else {
                     AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")
                     tokenRequest(code: nil, errMsg: "Failed to extract grant code")
@@ -116,3 +108,5 @@ public class AuthorizationUIManager {
     
     
 }
+
+

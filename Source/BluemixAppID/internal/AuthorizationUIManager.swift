@@ -42,7 +42,7 @@ public class AuthorizationUIManager {
     
     public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {
         
-        func tokenRequest(code: String?, errMsg:String?, flow: String? = nil) {
+        func tokenRequest(code: String?, errMsg:String?) {
             loginView?.dismiss(animated: true, completion: { () -> Void in
                 guard errMsg == nil else {
                     self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(errMsg!))

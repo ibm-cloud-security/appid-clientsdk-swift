@@ -112,7 +112,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
                 XCTFail("err: \(error)")
             }
         }
-        
+
     }
     
     func testApplicationErr3() {
@@ -147,10 +147,10 @@ public class AuthorizationUIManagerTests: XCTestCase {
             }
         }
     }
-    
+
     // happy flow - sign_up done flow
     func testApplicationDoneFlowSignUp() {
-        
+
         let expectation1 = expectation(description: "Found Flow")
         let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: nil), authorizationUrl: "someurl", redirectUri: "someredirect")
         manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
@@ -161,12 +161,12 @@ public class AuthorizationUIManagerTests: XCTestCase {
                 XCTFail("err: \(error)")
             }
         }
-        
+
     }
-    
+
     // happy flow - forgot_password done flow
     func testApplicationDoneFlowForgotPassword() {
-        
+
         let expectation1 = expectation(description: "Found Flow")
         let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: nil), authorizationUrl: "someurl", redirectUri: "someredirect")
         manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
@@ -177,7 +177,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
                 XCTFail("err: \(error)")
             }
         }
-        
+
     }
 
 

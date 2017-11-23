@@ -398,17 +398,18 @@ public class AuthorizationManagerTests : XCTestCase {
     func testLaunchForgotPasswordUI_registration_fails() {
         let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
         
-        class delegate: ForgotPasswordDelegate {
+        class delegate: AuthorizationDelegate {
             var res:String
             var expectedError:String
-            static var fails:Int = 0
             static var cancel:Int = 0
+            static var fails:Int = 0
+            static var success:Int = 0
             public init(res:String, expectedErr:String) {
                 self.expectedError = expectedErr
                 self.res = res
             }
             
-            func onFailure(error: AuthorizationError) {
+            func onAuthorizationFailure(error: AuthorizationError) {
                 XCTAssertEqual(error.description, expectedError)
                 delegate.fails += 1
                 if res != "failure" {
@@ -417,9 +418,16 @@ public class AuthorizationManagerTests : XCTestCase {
                 
             }
             
-            func onFinish() {
+            func onAuthorizationCanceled() {
                 delegate.cancel += 1
                 if res != "cancel" {
+                    XCTFail()
+                }
+            }
+            
+            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+                delegate.success += 1
+                if res != "success" {
                     XCTFail()
                 }
             }
@@ -429,24 +437,25 @@ public class AuthorizationManagerTests : XCTestCase {
         // ensure registerd fails
         MockRegistrationManager.shouldFail = true
         authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
-        authManager.launchForgotPasswordUI(forgotPasswordDelegate:delegate(res: "failure", expectedErr: "Failed to register OAuth client"))
+        authManager.launchForgotPasswordUI(authorizationDelegate: delegate(res: "failure", expectedErr: "Failed to register OAuth client"))
         
     }
     
     func testLaunchForgotPasswordUI_registration_success() {
         let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
         
-        class delegate: ForgotPasswordDelegate {
+        class delegate: AuthorizationDelegate {
             var res:String
             var expectedError:String
-            static var fails:Int = 0
             static var cancel:Int = 0
+            static var fails:Int = 0
+            static var success:Int = 0
             public init(res:String, expectedErr:String) {
                 self.expectedError = expectedErr
                 self.res = res
             }
             
-            func onFailure(error: AuthorizationError) {
+            func onAuthorizationFailure(error: AuthorizationError) {
                 XCTAssertEqual(error.description, expectedError)
                 delegate.fails += 1
                 if res != "failure" {
@@ -455,9 +464,16 @@ public class AuthorizationManagerTests : XCTestCase {
                 
             }
             
-            func onFinish() {
+            func onAuthorizationCanceled() {
                 delegate.cancel += 1
                 if res != "cancel" {
+                    XCTFail()
+                }
+            }
+            
+            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+                delegate.success += 1
+                if res != "success" {
                     XCTFail()
                 }
             }
@@ -467,9 +483,9 @@ public class AuthorizationManagerTests : XCTestCase {
         AppID.sharedInstance.initialize(tenantId: "tenant1", bluemixRegion: ".region2")
         MockRegistrationManager.shouldFail = false
         authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
-        authManager.launchForgotPasswordUI(forgotPasswordDelegate:delegate(res: "failure", expectedErr: ""))
+        authManager.launchForgotPasswordUI(authorizationDelegate: delegate(res: "failure", expectedErr: ""))
         
-        let expectedUrl: String! = "https://appid-oauth.region2/oauth/v3/tenant1/cloud_directory/forgot_password?client_id=someclient"
+        let expectedUrl: String! = "https://appid-oauth.region2/oauth/v3/tenant1/cloud_directory/forgot_password?client_id=someclient&redirect_uri=redirect"
         XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
         
     }

@@ -60,7 +60,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
         }
         
         func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
-             XCTFail()
+             self.exp?.fulfill()
         }
         
     }
@@ -113,9 +113,6 @@ public class AuthorizationUIManagerTests: XCTestCase {
             }
         }
 
-        
-    
-        
     }
     
     func testApplicationErr3() {
@@ -149,10 +146,38 @@ public class AuthorizationUIManagerTests: XCTestCase {
                 XCTFail("err: \(error)")
             }
         }
-        
-        
-        
-        
+    }
+
+    // happy flow - sign_up done flow
+    func testApplicationDoneFlowSignUp() {
+
+        let expectation1 = expectation(description: "Found Flow")
+        let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: nil), authorizationUrl: "someurl", redirectUri: "someredirect")
+        manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
+        // happy flow with sign_up done
+        XCTAssertTrue(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?flow=forgot_password")!, options: [:]))
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+
+    }
+
+    // happy flow - forgot_password done flow
+    func testApplicationDoneFlowForgotPassword() {
+
+        let expectation1 = expectation(description: "Found Flow")
+        let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: nil), authorizationUrl: "someurl", redirectUri: "someredirect")
+        manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
+        // happy flow with forgot_password done
+        XCTAssertTrue(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?flow=forgot_password")!, options: [:]))
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+
     }
 
 

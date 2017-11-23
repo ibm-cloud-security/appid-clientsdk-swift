@@ -73,10 +73,10 @@ public class AuthorizationUIManager {
                 }
             })
             return false
-        } else if let flow = Utils.getParamFromQuery(url: url, paramName: "flow") {
+        } else if let flow = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_FLOW_KEY) {
             if flow == AppIDConstants.JSON_FORGOT_PASSWORD_KEY ||  flow == AppIDConstants.JSON_SIGN_UP_KEY {
                 loginView?.dismiss(animated: true, completion: { () -> Void in
-                    AuthorizationUIManager.logger.debug(message: "finish " + flow + " flow")
+                    AuthorizationUIManager.logger.debug(message: "Finish " + flow + " flow")
                     self.authorizationDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, response: nil)
                 })
                 return true
@@ -108,3 +108,5 @@ public class AuthorizationUIManager {
     
     
 }
+
+

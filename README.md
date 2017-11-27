@@ -1,5 +1,5 @@
-# Bluemix App ID
-Swift SDK for the Bluemix App ID service
+# IBM Cloud App ID
+Swift SDK for the IBM Cloud App ID service
 
 [![Bluemix powered][img-bluemix-powered]][url-bluemix]
 [![Travis][img-travis-master]][url-travis-master]
@@ -44,7 +44,7 @@ import BluemixAppID
     ```
     * Replace "tenantId" with the App ID service tenantId.
     * Replace the AppID.REGION_UK with the your App ID region (AppID.REGION_US_SOUTH, AppID.REGION_SYDNEY).
-    
+
 5. Add the following code to you AppDelegate file
     ```swift
     func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
@@ -61,7 +61,7 @@ import BluemixAppID
 Then add the following code:
 ```swift
 class delegate : AuthorizationDelegate {
-    public func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
+    public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
         //User authenticated
     }
 
@@ -76,26 +76,128 @@ class delegate : AuthorizationDelegate {
 
 AppID.sharedInstance.loginWidget?.launch(delegate: delegate())
 ```
-**Note**: The Login widget default configuration use Facebook and Google as authentication options.
+**Note**:
+* The Login widget default configuration use Facebook and Google as authentication options.
     If you configure only one of them the login widget will NOT launch and the user will be redirect to the configured idp authentication screen.
-<!--
-### Login using Resource Owner Password
-You can obtain access token and id token by supplying the end user's username and the end user's password.
-```swift
-class delegate : TokenResponseDelegate {
-    public func onAuthorizationSuccess(accessToken: AccessToken, identityToken: IdentityToken, response:Response?) {
-    //User authenticated
+* In case of using Cloud Directory, and "Email verification" is configured to NOT allow users to sign-in without email verification, then the "onAuthorizationSuccess" of the "AuthorizationListener" will be invoked without tokens.
+
+
+### Cloud Directory APIs
+
+ Make sure to set Cloud Directory identity provider to ON in AppID dashboard, when using the following APIs.
+
+#### Login using Resource Owner Password
+ You can obtain access token and id token by supplying the end user's username and the end user's password.
+ ```swift
+ class delegate : TokenResponseDelegate {
+     public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+     //User authenticated
+     }
+
+     public func onAuthorizationFailure(error: AuthorizationError) {
+     //Exception occurred
+     }
+ }
+
+ AppID.sharedInstance.obtainTokensWithROP(username: username, password: password, delegate: delegate())
+ ```
+ #### Sign Up
+ Make sure to set "Allow users to sign up and reset their password" to ON,
+ in Cloud Directory settings that are in AppID dashboard.
+
+ Use LoginWidget class to start the sign up flow.
+ ```swift
+ class delegate : AuthorizationDelegate {
+     public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+        if accessToken == nil && identityToken == nil {
+         //email verification is required
+         return
+        }
+      //User authenticated
+     }
+
+     public func onAuthorizationCanceled() {
+         //Sign up canceled by the user
+     }
+
+     public func onAuthorizationFailure(error: AuthorizationError) {
+         //Exception occurred
+     }
+ }
+
+ AppID.sharedInstance.loginWidget?.launchSignUp(delegate: delegate())
+ ```
+  #### Forgot Password
+  Make sure to set "Allow users to sign up and reset their password" and "Forgot password email" to ON,
+  in Cloud Directory settings that are in AppID dashboard.
+
+ Use LoginWidget class to start the forgot password flow.
+  ```swift
+  class delegate : AuthorizationDelegate {
+      public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+         //forgot password finished, in this case accessToken and identityToken will be null.
+      }
+ 
+      public func onAuthorizationCanceled() {
+          //forogt password canceled by the user
+      }
+ 
+      public func onAuthorizationFailure(error: AuthorizationError) {
+          //Exception occurred
+      }
+  }
+ 
+  AppID.sharedInstance.loginWidget?.launchForgotPassword(delegate: delegate())
+  ```
+  #### Change Details
+  Make sure to set "Allow users to sign up and reset their password" to ON,
+  in Cloud Directory settings that are in AppID dashboard.
+
+  Use LoginWidget class to start the change details flow.
+  This API can be used only when the user is logged in using Cloud Directory identity provider.
+   ```swift
+    
+    class delegate : AuthorizationDelegate {
+        public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+           //User authenticated, and fresh tokens received
+        }
+        
+        public func onAuthorizationCanceled() {
+            //changed details canceled by the user
+        }
+   
+        public func onAuthorizationFailure(error: AuthorizationError) {
+            //Exception occurred
+        }
     }
+   
+    AppID.sharedInstance.loginWidget?.launchChangeDetails(delegate: delegate())
+   ```
+   
+   #### Change Password
+   Make sure to set "Allow users to sign up and reset their password" to ON,
+   in Cloud Directory settings that are in AppID dashboard.
 
-    public func onAuthorizationFailure(error: AuthorizationError) {
-    //Exception occurred
-    }
-}
-
-AppID.sharedInstance.obtainTokensWithROP(username: username, password: password, delegate: delegate())
-```
--->
-
+   Use LoginWidget class to start the change password flow.
+   This API can be used only when the user is logged in using Cloud Directory identity provider.
+   ```swift
+    class delegate : AuthorizationDelegate {
+        public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+            //User authenticated, and fresh tokens received
+        }
+           
+        public func onAuthorizationCanceled() {
+            //change password canceled by the user
+        }
+      
+        public func onAuthorizationFailure(error: AuthorizationError) {
+             //Exception occurred
+        }
+     }
+      
+     AppID.sharedInstance.loginWidget?.launchChangePassword(delegate: delegate())
+   ```
+    
 ### Invoking protected resources
 Add the following imports to the file in which you want to invoke a protected resource request:
 ```swift

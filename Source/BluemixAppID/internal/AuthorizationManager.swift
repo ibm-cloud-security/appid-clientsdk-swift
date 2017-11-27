@@ -65,6 +65,15 @@ public class AuthorizationManager {
         return url
     }
     
+    internal func getForgotPasswordUrl(redirectUri: String) -> String {
+        var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.FORGOT_PASSWORD_PATH
+        if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
+            url += "?" + AppIDConstants.client_id_String + "=" + clientId + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=" + redirectUri
+        }
+        
+        return url
+    }
+    
     internal func launchAuthorizationUI(accessTokenString:String? = nil, authorizationDelegate:AuthorizationDelegate) {
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {
@@ -136,6 +145,21 @@ public class AuthorizationManager {
                 }
             })
         }
+    }
+    
+    internal func launchForgotPasswordUI(authorizationDelegate:AuthorizationDelegate) {
+        self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
+            guard error == nil else {
+                AuthorizationManager.logger.error(message: error!.description)
+                authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
+                return
+            }
+            
+            let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0)
+            let forgotPasswordUrl = self.getForgotPasswordUrl(redirectUri: redirectUri!)
+            self.authorizationUIManager = AuthorizationUIManager(oAuthManager:self.oAuthManager, authorizationDelegate:authorizationDelegate, authorizationUrl: forgotPasswordUrl, redirectUri: redirectUri!)
+            self.authorizationUIManager?.launch()
+        })
     }
     
     internal func loginAnonymously(accessTokenString:String?, allowCreateNewAnonymousUsers: Bool, authorizationDelegate:AuthorizationDelegate) {

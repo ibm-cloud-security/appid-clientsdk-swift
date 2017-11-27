@@ -101,6 +101,7 @@ internal class RegistrationManager {
             params[AppIDConstants.JSON_DEVICE_ID_KEY] = deviceIdentity.ID
             params[AppIDConstants.JSON_MODEL_KEY] = deviceIdentity.model
             params[AppIDConstants.JSON_OS_KEY] = deviceIdentity.OS
+            params[AppIDConstants.JSON_OS_VERSION_KEY] = deviceIdentity.OSVersion
             
             params[AppIDConstants.JSON_CLIENT_TYPE_KEY] = AppIDConstants.MOBILE_APP_TYPE
             

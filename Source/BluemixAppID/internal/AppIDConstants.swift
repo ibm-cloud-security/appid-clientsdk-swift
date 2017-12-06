@@ -71,9 +71,9 @@ internal class AppIDConstants {
         -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
         -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2
     ]
-
     
-   
+    
+    
     
     internal static let nameAndVer = Utils.getApplicationDetails()
     
@@ -81,10 +81,10 @@ internal class AppIDConstants {
     internal static var RegistrationManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDRegistrationManager"
     internal static var UserAttributeManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDUserManagerManager"
     internal static var TokenManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDTokenManager"
-     internal static var AuthorizationManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDAuthorizationManager"
+    internal static var AuthorizationManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDAuthorizationManager"
     internal static var AppIDLoggerName = Logger.bmsLoggerPrefix + "AppID"
     internal static var ConfigLoggerName = Logger.bmsLoggerPrefix + "Config"
-
+    
     internal static var tokenEndPoint = "token"
     internal static var clientsEndPoint = "clients"
     
@@ -106,8 +106,20 @@ internal class AppIDConstants {
     internal static var JSON_IMF_USER_KEY = "imf.user"
     internal static var JSON_REDIRECT_URI_KEY = "redirect_uri"
     internal static var JSON_CODE_KEY = "code"
+    
+    internal static var JSON_ID = "id"
+    internal static var JSON_PROVIDER = "provider"
+    internal static var JSON_CLOUD_DIRECTORY = "cloud_directory"
+    internal static var JSON_USER_ID = "user_id"
+    internal static let CHANGE_PASSWORD_PATH = "/cloud_directory/change_password"
+    internal static let GENERATE_CODE_PATH = "/cloud_directory/generate_code"
+    internal static let CHANGE_DETAILS_PATH = "/cloud_directory/change_details"
+    internal static let FORGOT_PASSWORD_PATH = "/cloud_directory/forgot_password"
+    
     internal static var JSON_SIGN_UP_KEY = "sign_up"
+    internal static var JSON_FORGOT_PASSWORD_KEY = "forgot_password"
     internal static var JSON_GRANT_TYPE_KEY = "grant_type"
+    internal static var JSON_FLOW_KEY = "flow"
     internal static var JSON_USERNAME = "username"
     internal static var JSON_PASSWORD = "password"
     internal static var APPID_ACCESS_TOKEN = "appid_access_token"
@@ -133,13 +145,14 @@ internal class AppIDConstants {
     
     internal static var FACEBOOK_COOKIE_NAME =  "c_user"
     
-
+    
     
     //JSON keys and values
     internal static let JSON_KEYS_KEY = "keys"
     internal static let JSON_JWKS_KEY = "jwks"
     internal static let JSON_DEVICE_ID_KEY = "device_id"
     internal static let JSON_OS_KEY = "device_os"
+    internal static let JSON_OS_VERSION_KEY = "device_os_version"
     internal static let JSON_ENVIRONMENT_KEY = "environment"
     internal static let JSON_MODEL_KEY = "device_model"
     internal static let JSON_SOFTWARE_ID_KEY = "software_id"
@@ -153,8 +166,8 @@ internal class AppIDConstants {
     internal static let MOBILE_APP_TYPE = "mobileapp"
     internal static let CLIENT_SECRET_BASIC = "client_secret_basic"
     internal static let PASSWORD_STRING = "password"
-
-
+    
+    
     
     internal static let tenantPrefName = "com.ibm.bluemix.appid.swift.tenantid"
     internal static let registrationDataPref = "com.ibm.bluemix.appid.swift.REGISTRATION_DATA"

@@ -66,10 +66,10 @@ public class AuthorizationUIManager {
                 } else {
                     let errorDescription = Utils.getParamFromQuery(url: url, paramName: "error_description")
                     let errorCode = Utils.getParamFromQuery(url: url, paramName: "error_code")
-                    AuthorizationUIManager.logger.error(message: "error: " + err)
+                    AuthorizationUIManager.logger.error(message: "Failed to obtain access and identity tokens, error: " + err)
                     AuthorizationUIManager.logger.error(message: "errorCode: " + (errorCode ?? "not available"))
                     AuthorizationUIManager.logger.error(message: "errorDescription: " + (errorDescription ?? "not available"))
-                    self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to obtain access and identity tokens"))
+                    self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(err))
                 }
             })
             return false

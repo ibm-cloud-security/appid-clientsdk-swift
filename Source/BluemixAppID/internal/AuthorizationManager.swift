@@ -232,7 +232,7 @@ public class AuthorizationManager {
     }
 
     private func addLocaleQueryParam(_ url : String) -> String {
-        let localeToUse = preferredLocale != nil ? preferredLocale! : Locale.current
+        let localeToUse = preferredLocale ?? Locale.current
         return url + "&" + AppIDConstants.localeParamName + "=" + localeToUse.identifier
     }
 

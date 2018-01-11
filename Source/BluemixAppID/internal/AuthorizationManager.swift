@@ -21,6 +21,7 @@ public class AuthorizationManager {
     var appid:AppID
     var oAuthManager:OAuthManager
     var authorizationUIManager:AuthorizationUIManager?
+    var preferredLocale:Locale?
     init(oAuthManager:OAuthManager) {
         self.oAuthManager = oAuthManager
         self.appid = oAuthManager.appId
@@ -42,6 +43,8 @@ public class AuthorizationManager {
         if let unWrappedAccessToken = accessToken {
             url += "&appid_access_token=" + unWrappedAccessToken
         }
+        url = addLocaleQueryParam(url)
+
         return url
     }
     
@@ -51,7 +54,8 @@ public class AuthorizationManager {
             url += "&" + AppIDConstants.client_id_String + "=" + clientId
         }
         url +=  "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=" + redirectUri
-        
+        url = addLocaleQueryParam(url)
+
         return url
     }
     
@@ -61,7 +65,8 @@ public class AuthorizationManager {
             url += "&" + AppIDConstants.client_id_String + "=" + clientId
         }
         url +=  "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=" + redirectUri
-        
+        url = addLocaleQueryParam(url)
+
         return url
     }
     
@@ -70,7 +75,8 @@ public class AuthorizationManager {
         if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
             url += "?" + AppIDConstants.client_id_String + "=" + clientId + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=" + redirectUri
         }
-        
+        url = addLocaleQueryParam(url)
+
         return url
     }
     
@@ -224,7 +230,12 @@ public class AuthorizationManager {
         })
         
     }
-    
+
+    private func addLocaleQueryParam(_ url : String) -> String {
+        let localeToUse = preferredLocale != nil ? preferredLocale! : Locale.current
+        return url + "&" + AppIDConstants.localeParamName + "=" + localeToUse.identifier
+    }
+
     private func logAndFail(message : String, delegate: AuthorizationDelegate) {
         AuthorizationManager.logger.debug(message : message)
         delegate.onAuthorizationFailure( error: AuthorizationError.authorizationFailure(message))

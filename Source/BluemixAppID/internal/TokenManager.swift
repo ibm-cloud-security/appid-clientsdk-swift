@@ -62,6 +62,17 @@ internal class TokenManager {
         
     }
     
+    public func obtainTokensWithRefreshToken(refreshTokenString: String,
+                                             tokenResponseDelegate: TokenResponseDelegate) {
+        TokenManager.logger.debug(message: "obtainTokens - with resource owner password")
+        
+        var bodyParams = [
+            AppIDConstants.JSON_REFRESH_TOKEN : refreshTokenString,
+            AppIDConstants.JSON_GRANT_TYPE_KEY : AppIDConstants.refresh_token_String
+        ]
+        retrieveTokens(bodyParams: bodyParams, tokenResponseDelegate: tokenResponseDelegate)
+    }
+    
     internal func retrieveTokens(bodyParams: [String:String],  tokenResponseDelegate: TokenResponseDelegate) {
         let tokenUrl = Config.getServerUrl(appId: self.appid) + "/token"
         

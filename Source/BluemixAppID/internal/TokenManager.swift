@@ -154,6 +154,7 @@ internal class TokenManager {
             }
             self.latestAccessToken = accessToken
             self.latestIdentityToken = identityToken
+            
             tokenResponseDelegate.onAuthorizationSuccess(accessToken: accessToken, identityToken: identityToken, response:response)
         } catch (_) {
             TokenManager.logger.error(message: "Failed to parse server response - failed to parse json")

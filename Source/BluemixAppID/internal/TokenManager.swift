@@ -18,6 +18,8 @@ internal class TokenManager {
     private final var registrationManager:RegistrationManager
     internal var latestAccessToken:AccessToken?
     internal var latestIdentityToken:IdentityToken?
+    internal var latestRefreshToken:RefreshToken?
+
     internal static let logger = Logger.logger(name: AppIDConstants.TokenManagerLoggerName)
     internal init(oAuthManager:OAuthManager)
     {
@@ -152,10 +154,18 @@ internal class TokenManager {
                 tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse tokens"))
                 return
             }
+            let refreshTokenString = (responseJson["refresh_token"] as? String)
+            var refreshToken: RefreshTokenImpl?
+            if (refreshTokenString != nil) {
+                refreshToken = RefreshTokenImpl(with: refreshTokenString!)
+            }
             self.latestAccessToken = accessToken
             self.latestIdentityToken = identityToken
-            
-            tokenResponseDelegate.onAuthorizationSuccess(accessToken: accessToken, identityToken: identityToken, response:response)
+            self.latestRefreshToken = refreshToken;
+            tokenResponseDelegate.onAuthorizationSuccess(accessToken: accessToken,
+                                                         identityToken: identityToken,
+                                                         refreshToken: refreshToken,
+                                                         response:response)
         } catch (_) {
             TokenManager.logger.error(message: "Failed to parse server response - failed to parse json")
             tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response - failed to parse json"))

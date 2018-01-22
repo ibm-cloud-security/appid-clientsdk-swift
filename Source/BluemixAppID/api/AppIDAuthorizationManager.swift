@@ -78,7 +78,9 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
                 callback?(nil, AuthorizationError.authorizationFailure("Authorization canceled"))
             }
             
-            func onAuthorizationSuccess (accessToken:AccessToken?, identityToken:IdentityToken?, response:Response?) {
+            func onAuthorizationSuccess (accessToken:AccessToken?,
+                                         identityToken:IdentityToken?,
+                                         refreshToken: RefreshToken?, response:Response?) {
                 callback?(response,nil)
             }
             

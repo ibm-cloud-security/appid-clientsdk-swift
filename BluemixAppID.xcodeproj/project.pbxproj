@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		181050421EE1BD9200AAA443 /* TokenResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181050411EE1BD9200AAA443 /* TokenResponseDelegate.swift */; };
+		4D42CF8A20173BD200EF40B6 /* RefreshToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D42CF8920173BD200EF40B6 /* RefreshToken.swift */; };
+		4D42CF8C20173BDD00EF40B6 /* RefreshTokenImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D42CF8B20173BDD00EF40B6 /* RefreshTokenImpl.swift */; };
 		686FA7AB6F9EE8ACF04FFE5B /* Pods_BluemixAppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9518D9FBE5C06EEB62E45B4 /* Pods_BluemixAppID.framework */; };
 		9178A9196CA83023A3A1FC90 /* Pods_BluemixAppIDTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D5F58BDE9E7A759720873B7 /* Pods_BluemixAppIDTests.framework */; };
 		BDC0D53F1E5EF68300444F9E /* UserAttributeManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC0D53E1E5EF68300444F9E /* UserAttributeManagerImpl.swift */; };
@@ -89,6 +91,8 @@
 
 /* Begin PBXFileReference section */
 		181050411EE1BD9200AAA443 /* TokenResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenResponseDelegate.swift; sourceTree = "<group>"; };
+		4D42CF8920173BD200EF40B6 /* RefreshToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshToken.swift; sourceTree = "<group>"; };
+		4D42CF8B20173BDD00EF40B6 /* RefreshTokenImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshTokenImpl.swift; sourceTree = "<group>"; };
 		66E951CC5B401814BE794DBE /* Pods-BluemixAppIDTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppIDTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppIDTests/Pods-BluemixAppIDTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8D5F58BDE9E7A759720873B7 /* Pods_BluemixAppIDTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BluemixAppIDTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDC0D53E1E5EF68300444F9E /* UserAttributeManagerImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserAttributeManagerImpl.swift; sourceTree = "<group>"; };
@@ -258,6 +262,7 @@
 		EFBA1FF31E51F7D9000EB3F5 /* api */ = {
 			isa = PBXGroup;
 			children = (
+				4D42CF8920173BD200EF40B6 /* RefreshToken.swift */,
 				EFBA1FF41E51F7D9000EB3F5 /* AppID.swift */,
 				EFBA1FF51E51F7D9000EB3F5 /* AppIDAuthorizationManager.swift */,
 				EFBA1FF61E51F7D9000EB3F5 /* AuthorizationDelegate.swift */,
@@ -309,6 +314,7 @@
 		EFBA20101E51F7D9000EB3F5 /* tokens */ = {
 			isa = PBXGroup;
 			children = (
+				4D42CF8B20173BDD00EF40B6 /* RefreshTokenImpl.swift */,
 				EFBA20111E51F7D9000EB3F5 /* AbstractToken.swift */,
 				EFBA20121E51F7D9000EB3F5 /* AccessTokenImpl.swift */,
 				EFBA20131E51F7D9000EB3F5 /* IdentityTokenImpl.swift */,
@@ -517,13 +523,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BluemixAppID-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B97F0C1B172B2DD0986CA529 /* [CP] Copy Pods Resources */ = {
@@ -562,13 +571,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BluemixAppIDTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FF35B93374897FC0DB6A9422 /* [CP] Embed Pods Frameworks */ = {
@@ -577,9 +589,14 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-BluemixAppIDTests/Pods-BluemixAppIDTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BMSAnalyticsAPI/BMSAnalyticsAPI.framework",
+				"${BUILT_PRODUCTS_DIR}/BMSCore/BMSCore.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BMSAnalyticsAPI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BMSCore.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -615,6 +632,7 @@
 				EFBA206A1E51F7D9000EB3F5 /* Utils.swift in Sources */,
 				EFBA20501E51F7D9000EB3F5 /* JSONPreference.swift in Sources */,
 				EFBA20681E51F7D9000EB3F5 /* OAuthClientImpl.swift in Sources */,
+				4D42CF8C20173BDD00EF40B6 /* RefreshTokenImpl.swift in Sources */,
 				EFBA20301E51F7D9000EB3F5 /* AppIDAuthorizationManager.swift in Sources */,
 				EFBA20381E51F7D9000EB3F5 /* LoginWidget.swift in Sources */,
 				EFBA20361E51F7D9000EB3F5 /* IdentityToken.swift in Sources */,
@@ -633,6 +651,7 @@
 				EFBA203C1E51F7D9000EB3F5 /* OAuthClient.swift in Sources */,
 				EFBA20481E51F7D9000EB3F5 /* AuthorizationHeaderHelper.swift in Sources */,
 				EFBA205A1E51F7D9000EB3F5 /* safariView.swift in Sources */,
+				4D42CF8A20173BD200EF40B6 /* RefreshToken.swift in Sources */,
 				EFBA20581E51F7D9000EB3F5 /* RegistrationManager.swift in Sources */,
 				EFBA203A1E51F7D9000EB3F5 /* AccessToken.swift in Sources */,
 			);

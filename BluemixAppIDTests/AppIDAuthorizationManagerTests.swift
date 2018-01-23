@@ -51,7 +51,11 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
         
         override func launchAuthorizationUI(accessTokenString: String? = nil, authorizationDelegate:AuthorizationDelegate) {
             if MockAuthorizationManager.res == "success" {
-                authorizationDelegate.onAuthorizationSuccess(accessToken:AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!, identityToken : IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!, response: AppIDAuthorizationManagerTests.expectedResponse)
+                authorizationDelegate.onAuthorizationSuccess(
+                    accessToken:AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!,
+                    identityToken : IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!,
+                    refreshToken: nil,
+                    response: AppIDAuthorizationManagerTests.expectedResponse)
             } else if MockAuthorizationManager.res == "failure" {
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("someerr"))
             } else {

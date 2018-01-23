@@ -59,7 +59,10 @@ public class AuthorizationUIManagerTests: XCTestCase {
            XCTFail()
         }
         
-        func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+        func onAuthorizationSuccess(accessToken: AccessToken?,
+                                    identityToken: IdentityToken?,
+                                    refreshToken: RefreshToken?,
+                                    response:Response?) {
              self.exp?.fulfill()
         }
         

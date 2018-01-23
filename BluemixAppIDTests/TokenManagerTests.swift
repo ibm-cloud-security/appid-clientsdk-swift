@@ -53,7 +53,11 @@ class TokenManagerTests: XCTestCase {
         
         override internal func extractTokens(response: Response, tokenResponseDelegate:TokenResponseDelegate) {
             XCTAssertEqual(response.responseData, self.response?.responseData)
-            tokenResponseDelegate.onAuthorizationSuccess(accessToken: AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!, identityToken: IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!, response: response)
+            tokenResponseDelegate.onAuthorizationSuccess(
+                accessToken: AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!,
+                identityToken: IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!,
+                refreshToken: nil,
+                response: response)
         }
         
         override internal func createAuthenticationHeader(clientId: String) throws -> String {
@@ -93,7 +97,11 @@ class TokenManagerTests: XCTestCase {
         
         override internal func extractTokens(response: Response, tokenResponseDelegate:TokenResponseDelegate) {
             XCTAssertEqual(response.responseData, self.response?.responseData)
-            tokenResponseDelegate.onAuthorizationSuccess(accessToken: AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!, identityToken: IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!, response: response)
+            tokenResponseDelegate.onAuthorizationSuccess(
+                accessToken: AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!,
+                identityToken: IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!,
+                refreshToken: nil,
+                response: response)
         }
         
         override internal func createAuthenticationHeader(clientId: String) throws -> String {
@@ -133,7 +141,11 @@ class TokenManagerTests: XCTestCase {
         
         override internal func extractTokens(response: Response, tokenResponseDelegate:TokenResponseDelegate) {
             XCTAssertEqual(response.responseData, self.response?.responseData)
-            tokenResponseDelegate.onAuthorizationSuccess(accessToken: AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!, identityToken: IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!, response: response)
+            tokenResponseDelegate.onAuthorizationSuccess(
+                accessToken: AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!,
+                identityToken: IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!,
+                refreshToken: nil,
+                response: response)
         }
         
         override internal func createAuthenticationHeader(clientId: String) throws -> String {
@@ -182,7 +194,10 @@ class TokenManagerTests: XCTestCase {
             }
         }
         
-        func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response: Response?) {
+        func onAuthorizationSuccess(accessToken: AccessToken?,
+                                    identityToken: IdentityToken?,
+                                    refreshToken: RefreshToken?,
+                                    response: Response?) {
             if success {
                 XCTAssertEqual(accessToken!.raw, AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN)!.raw)
                 XCTAssertEqual(identityToken!.raw, IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)!.raw)
@@ -511,7 +526,10 @@ class TokenManagerTests: XCTestCase {
                 }
             }
             
-            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?,
+                                        identityToken: IdentityToken?,
+                                        refreshToken: RefreshToken?,
+                                        response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()

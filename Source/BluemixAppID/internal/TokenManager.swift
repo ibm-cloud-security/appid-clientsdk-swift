@@ -28,7 +28,7 @@ internal class TokenManager {
     }
     
     
-    public func obtainTokens(code:String, authorizationDelegate:AuthorizationDelegate) {
+    public func obtainTokensAuthCode(code:String, authorizationDelegate:AuthorizationDelegate) {
         TokenManager.logger.debug(message: "obtainTokens")
         
         guard let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String), let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0) else {
@@ -46,7 +46,7 @@ internal class TokenManager {
         retrieveTokens(bodyParams: bodyParams, tokenResponseDelegate: authorizationDelegate)
     }
     
-    public func obtainTokens(accessTokenString: String? = nil, username: String, password: String, tokenResponseDelegate: TokenResponseDelegate) {
+    public func obtainTokensRoP(accessTokenString: String? = nil, username: String, password: String, tokenResponseDelegate: TokenResponseDelegate) {
         TokenManager.logger.debug(message: "obtainTokens - with resource owner password")
         
         var bodyParams = [
@@ -62,11 +62,11 @@ internal class TokenManager {
         
     }
     
-    public func obtainTokensWithRefreshToken(refreshTokenString: String,
+    public func obtainTokensRefreshToken(refreshTokenString: String,
                                              tokenResponseDelegate: TokenResponseDelegate) {
         TokenManager.logger.debug(message: "obtainTokens - with resource owner password")
         
-        var bodyParams = [
+        let bodyParams = [
             AppIDConstants.JSON_REFRESH_TOKEN : refreshTokenString,
             AppIDConstants.JSON_GRANT_TYPE_KEY : AppIDConstants.refresh_token_String
         ]
@@ -193,9 +193,7 @@ internal class TokenManager {
     public func clearStoredToken() {
         self.latestAccessToken = nil
         self.latestIdentityToken = nil
+        self.latestRefreshToken = nil
     }
-    
-    
-    
     
 }

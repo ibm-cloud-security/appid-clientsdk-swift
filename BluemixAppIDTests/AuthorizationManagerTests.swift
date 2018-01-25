@@ -518,7 +518,7 @@ public class AuthorizationManagerTests : XCTestCase {
     class MockTokenManager: TokenManager {
         var shouldCallObtain = true
         
-        override func obtainTokens(code: String, authorizationDelegate: AuthorizationDelegate) {
+        override func obtainTokensAuthCode(code: String, authorizationDelegate: AuthorizationDelegate) {
             if !shouldCallObtain {
                 XCTFail()
             } else {

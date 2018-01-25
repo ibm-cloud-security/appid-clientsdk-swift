@@ -59,11 +59,41 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
         return AuthorizationHeaderHelper.isAuthorizationRequired(statusCode: statusCode, header: responseAuthorizationHeader)
     }
     
-    
-    
-    
     public func obtainAuthorization(completionHandler callback: BMSCompletionHandler?) {
         AppIDAuthorizationManager.logger.debug(message: "obtainAuthorization")
+        
+        class innerTokenDelegate: TokenResponseDelegate {
+            var callback:(Response?, AuthorizationError?) -> Void
+            init(_ callback: @escaping (Response?, AuthorizationError?) -> Void) {
+                self.callback = callback
+            }
+            
+            func onAuthorizationFailure(error: AuthorizationError) {
+                self.callback(nil, error)
+            }
+            
+            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, refreshToken: RefreshToken?, response: Response?) {
+                self.callback(response, nil)
+            }
+        }
+        
+        let refreshToken = self.oAuthManager.tokenManager?.latestRefreshToken
+        if (refreshToken != nil) {
+            self.oAuthManager.tokenManager?.obtainTokensRefreshToken(
+                refreshTokenString: refreshToken!.raw!,
+                tokenResponseDelegate: innerTokenDelegate({ (response, authorizationError) in
+                    if (response != nil) {
+                        callback?(response, nil)
+                    } else {
+                        self.launchAuthorization(completionHandler: callback)
+                    }
+                }))
+        } else {
+            self.launchAuthorization(completionHandler: callback)
+        }
+    }
+    
+    public func launchAuthorization(completionHandler callback: BMSCompletionHandler?) {
         class innerAuthorizationDelegate: AuthorizationDelegate {
             var callback:BMSCompletionHandler?
             init(callback:BMSCompletionHandler?) {
@@ -85,44 +115,13 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
             }
             
         }
-        
-        class innerTokenDelegate: TokenResponseDelegate {
-            var callback:BMSCompletionHandler?
-            let oAuthManager: OAuthManager
-            init(callback:BMSCompletionHandler?, oAuthManager: OAuthManager) {
-                self.callback = callback
-                self.oAuthManager = oAuthManager
-            }
-            
-            func onAuthorizationFailure(error: AuthorizationError) {
-                oAuthManager.authorizationManager?.launchAuthorizationUI(authorizationDelegate: innerAuthorizationDelegate(callback: callback))
-            }
-            
-            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, refreshToken: RefreshToken?, response: Response?) {
-                callback?(response,nil)
-            }
-        }
-        
-        let refreshToken = self.oAuthManager.tokenManager?.latestRefreshToken
-        if (refreshToken != nil) {
-            self.oAuthManager.tokenManager?.obtainTokensWithRefreshToken(
-                refreshTokenString: refreshToken!.raw!,
-                tokenResponseDelegate: innerTokenDelegate(callback: callback,
-                                                          oAuthManager: self.oAuthManager))
-        } else {
-            oAuthManager.authorizationManager?.launchAuthorizationUI(authorizationDelegate: innerAuthorizationDelegate(callback: callback))
-        }
+        oAuthManager.authorizationManager?.launchAuthorizationUI(authorizationDelegate: innerAuthorizationDelegate(callback: callback))
     }
     
     public func clearAuthorizationData() {
         AppIDAuthorizationManager.logger.debug(message: "clearAuthorizationData")
         self.oAuthManager.tokenManager?.clearStoredToken()
     }
-    
-    
-    
-    
-
     
     /**
      - returns: The locally stored authorization header or nil if the value does not exist.

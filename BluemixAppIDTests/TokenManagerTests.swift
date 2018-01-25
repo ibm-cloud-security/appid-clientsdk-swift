@@ -216,7 +216,7 @@ class TokenManagerTests: XCTestCase {
         let oauthmanager = OAuthManager(appId: AppID.sharedInstance)
         oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).clear()
         let tokenManager =  MockTokenManagerWithSendRequest(oauthManager:oauthmanager, response: nil, err: nil)
-        tokenManager.obtainTokens(code: "thisisgrantcode", authorizationDelegate: delegate(exp:expectation1, msg: "Client not registered", success: false))
+        tokenManager.obtainTokensAuthCode(code: "thisisgrantcode", authorizationDelegate: delegate(exp:expectation1, msg: "Client not registered", success: false))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {
@@ -237,7 +237,7 @@ class TokenManagerTests: XCTestCase {
         
         
         let tokenManager =  MockTokenManagerWithSendRequest(oauthManager:oauthmanager, response: nil, err: nil, throwExc: true)
-        tokenManager.obtainTokens(code: "thisisgrantcode", authorizationDelegate: delegate(exp:expectation1, msg: "Failed to create authentication header"))
+        tokenManager.obtainTokensAuthCode(code: "thisisgrantcode", authorizationDelegate: delegate(exp:expectation1, msg: "Failed to create authentication header"))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {
@@ -257,7 +257,7 @@ class TokenManagerTests: XCTestCase {
         oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : TokenManagerTests.clientId])
         
         let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: nil, err: err)
-        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
+        tokenManager.obtainTokensRoP(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {
@@ -274,7 +274,7 @@ class TokenManagerTests: XCTestCase {
         oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : TokenManagerTests.clientId])
         
         let tokenManager =  MockTokenManagerWithSendRequestRopWithAccessToken(oauthManager:oauthmanager, response: nil, err: err)
-        tokenManager.obtainTokens(accessTokenString: "testAccessToken" ,username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
+        tokenManager.obtainTokensRoP(accessTokenString: "testAccessToken" ,username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {
@@ -293,7 +293,7 @@ class TokenManagerTests: XCTestCase {
         let response:Response = Response(responseData: "some text".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 400, httpVersion: nil, headerFields: nil), isRedirect: false)
         
         let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: response, err: err)
-        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
+        tokenManager.obtainTokensRoP(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {
@@ -310,7 +310,7 @@ class TokenManagerTests: XCTestCase {
         oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient"])
         
         let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: nil, err: nil)
-        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate: delegate(exp:expectation1, msg: "Failed to extract tokens"))
+        tokenManager.obtainTokensRoP(username: "thisisusername", password: "thisispassword",tokenResponseDelegate: delegate(exp:expectation1, msg: "Failed to extract tokens"))
         
         
         waitForExpectations(timeout: 1) { error in
@@ -330,7 +330,7 @@ class TokenManagerTests: XCTestCase {
         let response:Response = Response(responseData: "{{\"error\":\"invalid_grant\"}}".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 400, httpVersion: nil, headerFields: nil), isRedirect: false)
         
         let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: response, err: err)
-        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
+        tokenManager.obtainTokensRoP(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {
@@ -349,7 +349,7 @@ class TokenManagerTests: XCTestCase {
         let response:Response = Response(responseData: "{\"error_description\":\"some error\", \"baderror\":\"invalid_grant\"}".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 400, httpVersion: nil, headerFields: nil), isRedirect: false)
         
         let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: response, err: err)
-        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
+        tokenManager.obtainTokensRoP(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {
@@ -368,7 +368,7 @@ class TokenManagerTests: XCTestCase {
         let response:Response = Response(responseData: "{\"error_description\":\"some error\", \"error\":\"invalid_grant\"}".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 400, httpVersion: nil, headerFields: nil), isRedirect: false)
         
         let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: response, err: err)
-        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "some error"))
+        tokenManager.obtainTokensRoP(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "some error"))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {
@@ -387,7 +387,7 @@ class TokenManagerTests: XCTestCase {
         let response:Response = Response(responseData: "{\"error_description\":123, \"error\":123}".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 400, httpVersion: nil, headerFields: nil), isRedirect: false)
         
         let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: response, err: err)
-        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
+        tokenManager.obtainTokensRoP(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {
@@ -406,7 +406,7 @@ class TokenManagerTests: XCTestCase {
         let response:Response = Response(responseData: "{\"error_description\":\"some error\", \"error\":\"invalid_grant\"}".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 500, httpVersion: nil, headerFields: nil), isRedirect: false)
         
         let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: response, err: err)
-        tokenManager.obtainTokens(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
+        tokenManager.obtainTokensRoP(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {
@@ -425,7 +425,7 @@ class TokenManagerTests: XCTestCase {
         
         
         let tokenManager =  MockTokenManagerWithSendRequest(oauthManager:oauthmanager, response: nil, err: err)
-        tokenManager.obtainTokens(code: "thisisgrantcode", authorizationDelegate: delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
+        tokenManager.obtainTokensAuthCode(code: "thisisgrantcode", authorizationDelegate: delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {
@@ -444,7 +444,7 @@ class TokenManagerTests: XCTestCase {
         let response:Response = Response(responseData: "some text".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 401, httpVersion: nil, headerFields: nil), isRedirect: false)
         
         let tokenManager =  MockTokenManagerWithSendRequest(oauthManager:oauthmanager, response: response, err: nil)
-        tokenManager.obtainTokens(code: "thisisgrantcode", authorizationDelegate: delegate(exp:expectation1, msg: "Failed to extract tokens"))
+        tokenManager.obtainTokensAuthCode(code: "thisisgrantcode", authorizationDelegate: delegate(exp:expectation1, msg: "Failed to extract tokens"))
         
         
         waitForExpectations(timeout: 1) { error in
@@ -464,7 +464,7 @@ class TokenManagerTests: XCTestCase {
         oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : ["redirect"]] as [String:Any])
         
         let tokenManager =  MockTokenManagerWithSendRequest(oauthManager:oauthmanager, response: nil, err: nil)
-        tokenManager.obtainTokens(code: "thisisgrantcode", authorizationDelegate: delegate(exp:expectation1, msg: "Failed to extract tokens"))
+        tokenManager.obtainTokensAuthCode(code: "thisisgrantcode", authorizationDelegate: delegate(exp:expectation1, msg: "Failed to extract tokens"))
         
         
         waitForExpectations(timeout: 1) { error in
@@ -485,7 +485,7 @@ class TokenManagerTests: XCTestCase {
         
         let response:Response = Response(responseData: "some text".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 200, httpVersion: nil, headerFields: nil), isRedirect: false)
         let tokenManager =  MockTokenManagerWithSendRequest(oauthManager:oauthmanager, response: response, err: nil)
-        tokenManager.obtainTokens(code: "thisisgrantcode", authorizationDelegate: delegate(exp:expectation1, success: true))
+        tokenManager.obtainTokensAuthCode(code: "thisisgrantcode", authorizationDelegate: delegate(exp:expectation1, success: true))
         
         
         waitForExpectations(timeout: 1) { error in

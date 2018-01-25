@@ -202,7 +202,7 @@ public class AuthorizationManager {
                                     // authorization endpoint success
                                     if urlString!.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
                                         if let code =  Utils.getParamFromQuery(url: url!, paramName: AppIDConstants.JSON_CODE_KEY) {
-                                            self.oAuthManager.tokenManager?.obtainTokens(code: code, authorizationDelegate: authorizationDelegate)
+                                            self.oAuthManager.tokenManager?.obtainTokensAuthCode(code: code, authorizationDelegate: authorizationDelegate)
                                             return
                                         }
                                     }
@@ -262,7 +262,7 @@ public class AuthorizationManager {
                 tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
-            self.oAuthManager.tokenManager?.obtainTokens(accessTokenString: accessTokenToUse, username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
+            self.oAuthManager.tokenManager?.obtainTokensRoP(accessTokenString: accessTokenToUse, username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
             return
         })
     }

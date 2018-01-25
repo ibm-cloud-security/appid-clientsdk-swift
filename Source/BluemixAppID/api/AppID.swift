@@ -54,6 +54,12 @@ public class AppID {
         oauthManager?.authorizationManager?.obtainTokensWithROP(accessTokenString: accessTokenString, username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
     }
     
+    public func refreshTokens(_ refreshTokenString:String, tokenResponseDelegate:TokenResponseDelegate) {
+        oauthManager?.authorizationManager?.obtainTokensRefreshToken(
+            refreshTokenString: refreshTokenString,
+            tokenResponseDelegate: tokenResponseDelegate)
+    }
+    
 	public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {
             return (self.oauthManager?.authorizationManager?.application(application, open: url, options: options))!
     }

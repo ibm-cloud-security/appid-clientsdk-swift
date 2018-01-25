@@ -267,6 +267,12 @@ public class AuthorizationManager {
         })
     }
     
+    internal func obtainTokensRefreshToken(refreshTokenString: String, tokenResponseDelegate: TokenResponseDelegate) {
+        self.oAuthManager.tokenManager?.obtainTokensRefreshToken(
+            refreshTokenString: refreshTokenString,
+            tokenResponseDelegate: tokenResponseDelegate)
+    }
+    
     public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         return (self.authorizationUIManager?.application(application, open: url, options: options))!
     }

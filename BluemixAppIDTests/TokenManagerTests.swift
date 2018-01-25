@@ -209,9 +209,7 @@ class TokenManagerTests: XCTestCase {
     
     
     // no registration data
-    func testObtainTokens0() {
-        
-    
+    func testObtainTokensFailWhenNotRegistered() {
         let expectation1 = expectation(description: "got to callback")
         let oauthmanager = OAuthManager(appId: AppID.sharedInstance)
         oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).clear()
@@ -497,88 +495,177 @@ class TokenManagerTests: XCTestCase {
     }
     
     
-    
-    func testExtractTokens() {
+    class ExtractTokensDelegate: AuthorizationDelegate {
+        var res:String
+        var expectedError:String
+        var fails:Int = 0
+        var cancel:Int = 0
+        var success:Int = 0
         
-        class delegate: AuthorizationDelegate {
-            var res:String
-            var expectedError:String
-            static var fails:Int = 0
-            static var cancel:Int = 0
-            static var success:Int = 0
-            public init(res:String, expectedErr:String) {
-                self.expectedError = expectedErr
-                self.res = res
-            }
-            
-            func onAuthorizationFailure(error: AuthorizationError) {
-                XCTAssertEqual(error.description, expectedError)
-                delegate.fails += 1
-                if res != "failure" {
-                    XCTFail()
-                }
-            }
-            
-            func onAuthorizationCanceled() {
-                delegate.cancel += 1
-                if res != "cancel" {
-                    XCTFail()
-                }
-            }
-            
-            func onAuthorizationSuccess(accessToken: AccessToken?,
-                                        identityToken: IdentityToken?,
-                                        refreshToken: RefreshToken?,
-                                        response:Response?) {
-                delegate.success += 1
-                if res != "success" {
-                    XCTFail()
-                }
-            }
-            
+        var accessToken: AccessToken?
+        var identityToken: IdentityToken?
+        var refreshToken: RefreshToken?
+        
+        public init(res:String, expectedErr:String) {
+            self.expectedError = expectedErr
+            self.res = res
         }
         
-        // no response text
-        var response = Response(responseData: nil, httpResponse: nil, isRedirect: false)
-        tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"failure", expectedErr: "Failed to parse server response - no response text"))
+        func onAuthorizationFailure(error: AuthorizationError) {
+            XCTAssertEqual(error.description, expectedError)
+            self.fails += 1
+            if res != "failure" {
+                XCTFail()
+            }
+        }
         
-        // non parsable text
-        var data = "nonParsableText".data(using: .utf8)
-        response = Response(responseData: data, httpResponse: nil, isRedirect: false)
-        tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"failure", expectedErr: "Failed to parse server response - failed to parse json"))
+        func onAuthorizationCanceled() {
+            self.cancel += 1
+            if res != "cancel" {
+                XCTFail()
+            }
+        }
         
+        func onAuthorizationSuccess(accessToken: AccessToken?,
+                                    identityToken: IdentityToken?,
+                                    refreshToken: RefreshToken?,
+                                    response:Response?) {
+            self.accessToken = accessToken
+            self.identityToken = identityToken
+            self.refreshToken = refreshToken
+            self.success += 1
+            if res != "success" {
+                XCTFail()
+            }
+        }
         
-        // no access token
-        data = "{\"id_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiYXVkIjoiMTdlMTI4OWI2N2E1MzIwMDQ4MTdhNWEwYmQzMTM5YjljYWM4NDE0OCIsImV4cCI6MTQ4NzA2NjMwMiwiYXV0aF9ieSI6ImZhY2Vib29rIiwidGVuYW50IjoiNGRiYTk0MzAtNTRlNi00Y2YyLWE1MTYtNmY3M2ZlYjcwMmJiIiwiaWF0IjoxNDg3MDYyNzAyLCJuYW1lIjoiRG9uIExvbiIsImVtYWlsIjoiZG9ubG9ucXdlcnR5QGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJsb2NhbGUiOiJlbl9VUyIsInBpY3R1cmUiOiJodHRwczovL3Njb250ZW50Lnh4LmZiY2RuLm5ldC92L3QxLjAtMS9wNTB4NTAvMTM1MDE1NTFfMjg2NDA3ODM4Mzc4ODkyXzE3ODU3NjYyMTE3NjY3MzA2OTdfbi5qcGc_b2g9MjQyYmMyZmI1MDU2MDliNDQyODc0ZmRlM2U5ODY1YTkmb2U9NTkwN0IxQkMiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImZhY2Vib29rIiwiaWQiOiIzNzc0NDAxNTkyNzU2NTkifV0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiT2RlZEFwcElEYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJPZGVkQXBwSURhcHBpZElEIiwic29mdHdhcmVfdmVyc2lvbiI6IjEuMCIsImRldmljZV9pZCI6Ijk5MDI0Njg4LUZGMTktNDg4Qy04RjJELUY3MTY2MDZDQTU5NCIsImRldmljZV9tb2RlbCI6ImlQaG9uZSIsImRldmljZV9vcyI6ImlQaG9uZSBPUyJ9fQ.kFPUtpi9AROmBvQqPa19LgX18aYSSbnjlea4Hg0OA4UUw8XYnuoufBWpmmzDpaqZVnN5LTWg9YK5-wtB5Hi9YwX8bhklkeciHP_1ue-fyNDLN2uCNUvBxh916mgFy8u1gFicBcCzQkVoSDSL4Pcjgo0VoTla8t36wLFRtEKmBQ-p8UOlvjD-dnAoNBDveUsNNyeaLMdVPRRfXi-RYWOH3E9bjvyhHd-Zea2OX3oC1XRpqNgrUBXQblskOi_mEll_iWAUX5oD23tOZB9cb0eph9B6_tDZutgvaY338ZD1W9St6YokIL8IltKbrX3q1_FFJSu9nfNPgILsKIAKqe9fHQ\",\"expires_in\":3600}".data(using: .utf8)
-        response = Response(responseData: data, httpResponse: nil, isRedirect: false)
-        tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"failure", expectedErr: "Failed to parse server response - no access or identity token"))
-        
-        
-        // no id token
-        data = "{\"access_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw\",\"expires_in\":3600}".data(using: .utf8)
-        response = Response(responseData: data, httpResponse: nil, isRedirect: false)
-        tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"failure", expectedErr: "Failed to parse server response - no access or identity token"))
-        
-        // non parsable access token
-        data = "{\"access_token\":\"nonParsableAccessToken\",\"id_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiYXVkIjoiMTdlMTI4OWI2N2E1MzIwMDQ4MTdhNWEwYmQzMTM5YjljYWM4NDE0OCIsImV4cCI6MTQ4NzA2NjMwMiwiYXV0aF9ieSI6ImZhY2Vib29rIiwidGVuYW50IjoiNGRiYTk0MzAtNTRlNi00Y2YyLWE1MTYtNmY3M2ZlYjcwMmJiIiwiaWF0IjoxNDg3MDYyNzAyLCJuYW1lIjoiRG9uIExvbiIsImVtYWlsIjoiZG9ubG9ucXdlcnR5QGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJsb2NhbGUiOiJlbl9VUyIsInBpY3R1cmUiOiJodHRwczovL3Njb250ZW50Lnh4LmZiY2RuLm5ldC92L3QxLjAtMS9wNTB4NTAvMTM1MDE1NTFfMjg2NDA3ODM4Mzc4ODkyXzE3ODU3NjYyMTE3NjY3MzA2OTdfbi5qcGc_b2g9MjQyYmMyZmI1MDU2MDliNDQyODc0ZmRlM2U5ODY1YTkmb2U9NTkwN0IxQkMiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImZhY2Vib29rIiwiaWQiOiIzNzc0NDAxNTkyNzU2NTkifV0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiT2RlZEFwcElEYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJPZGVkQXBwSURhcHBpZElEIiwic29mdHdhcmVfdmVyc2lvbiI6IjEuMCIsImRldmljZV9pZCI6Ijk5MDI0Njg4LUZGMTktNDg4Qy04RjJELUY3MTY2MDZDQTU5NCIsImRldmljZV9tb2RlbCI6ImlQaG9uZSIsImRldmljZV9vcyI6ImlQaG9uZSBPUyJ9fQ.kFPUtpi9AROmBvQqPa19LgX18aYSSbnjlea4Hg0OA4UUw8XYnuoufBWpmmzDpaqZVnN5LTWg9YK5-wtB5Hi9YwX8bhklkeciHP_1ue-fyNDLN2uCNUvBxh916mgFy8u1gFicBcCzQkVoSDSL4Pcjgo0VoTla8t36wLFRtEKmBQ-p8UOlvjD-dnAoNBDveUsNNyeaLMdVPRRfXi-RYWOH3E9bjvyhHd-Zea2OX3oC1XRpqNgrUBXQblskOi_mEll_iWAUX5oD23tOZB9cb0eph9B6_tDZutgvaY338ZD1W9St6YokIL8IltKbrX3q1_FFJSu9nfNPgILsKIAKqe9fHQ\",\"expires_in\":3600}".data(using: .utf8)
-        response = Response(responseData: data, httpResponse: nil, isRedirect: false)
-        tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"failure", expectedErr: "Failed to parse tokens"))
-        
-        // non parsable id token
-        data = "{\"access_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw\",\"id_token\":\"nonParsableIdToken\",\"expires_in\":3600}".data(using: .utf8)
-        response = Response(responseData: data, httpResponse: nil, isRedirect: false)
-        tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"failure", expectedErr: "Failed to parse tokens"))
-        
-        
-        // happy flow
-        data = "{\"access_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw\",\"id_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiYXVkIjoiMTdlMTI4OWI2N2E1MzIwMDQ4MTdhNWEwYmQzMTM5YjljYWM4NDE0OCIsImV4cCI6MTQ4NzA2NjMwMiwiYXV0aF9ieSI6ImZhY2Vib29rIiwidGVuYW50IjoiNGRiYTk0MzAtNTRlNi00Y2YyLWE1MTYtNmY3M2ZlYjcwMmJiIiwiaWF0IjoxNDg3MDYyNzAyLCJuYW1lIjoiRG9uIExvbiIsImVtYWlsIjoiZG9ubG9ucXdlcnR5QGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJsb2NhbGUiOiJlbl9VUyIsInBpY3R1cmUiOiJodHRwczovL3Njb250ZW50Lnh4LmZiY2RuLm5ldC92L3QxLjAtMS9wNTB4NTAvMTM1MDE1NTFfMjg2NDA3ODM4Mzc4ODkyXzE3ODU3NjYyMTE3NjY3MzA2OTdfbi5qcGc_b2g9MjQyYmMyZmI1MDU2MDliNDQyODc0ZmRlM2U5ODY1YTkmb2U9NTkwN0IxQkMiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImZhY2Vib29rIiwiaWQiOiIzNzc0NDAxNTkyNzU2NTkifV0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiT2RlZEFwcElEYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJPZGVkQXBwSURhcHBpZElEIiwic29mdHdhcmVfdmVyc2lvbiI6IjEuMCIsImRldmljZV9pZCI6Ijk5MDI0Njg4LUZGMTktNDg4Qy04RjJELUY3MTY2MDZDQTU5NCIsImRldmljZV9tb2RlbCI6ImlQaG9uZSIsImRldmljZV9vcyI6ImlQaG9uZSBPUyJ9fQ.kFPUtpi9AROmBvQqPa19LgX18aYSSbnjlea4Hg0OA4UUw8XYnuoufBWpmmzDpaqZVnN5LTWg9YK5-wtB5Hi9YwX8bhklkeciHP_1ue-fyNDLN2uCNUvBxh916mgFy8u1gFicBcCzQkVoSDSL4Pcjgo0VoTla8t36wLFRtEKmBQ-p8UOlvjD-dnAoNBDveUsNNyeaLMdVPRRfXi-RYWOH3E9bjvyhHd-Zea2OX3oC1XRpqNgrUBXQblskOi_mEll_iWAUX5oD23tOZB9cb0eph9B6_tDZutgvaY338ZD1W9St6YokIL8IltKbrX3q1_FFJSu9nfNPgILsKIAKqe9fHQ\",\"expires_in\":3600}".data(using: .utf8)
-        response = Response(responseData: data, httpResponse: nil, isRedirect: false)
-        tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"success", expectedErr: ""))
-        
-        
-        XCTAssertEqual(delegate.success, 1)
-        XCTAssertEqual(delegate.fails, 6)
-        XCTAssertEqual(delegate.cancel, 0)
     }
     
+    let VALID_ID_TOKEN_PAYLOAD = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiYXVkIjoiMTdlMTI4OWI2N2E1MzIwMDQ4MTdhNWEwYmQzMTM5YjljYWM4NDE0OCIsImV4cCI6MTQ4NzA2NjMwMiwiYXV0aF9ieSI6ImZhY2Vib29rIiwidGVuYW50IjoiNGRiYTk0MzAtNTRlNi00Y2YyLWE1MTYtNmY3M2ZlYjcwMmJiIiwiaWF0IjoxNDg3MDYyNzAyLCJuYW1lIjoiRG9uIExvbiIsImVtYWlsIjoiZG9ubG9ucXdlcnR5QGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJsb2NhbGUiOiJlbl9VUyIsInBpY3R1cmUiOiJodHRwczovL3Njb250ZW50Lnh4LmZiY2RuLm5ldC92L3QxLjAtMS9wNTB4NTAvMTM1MDE1NTFfMjg2NDA3ODM4Mzc4ODkyXzE3ODU3NjYyMTE3NjY3MzA2OTdfbi5qcGc_b2g9MjQyYmMyZmI1MDU2MDliNDQyODc0ZmRlM2U5ODY1YTkmb2U9NTkwN0IxQkMiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImZhY2Vib29rIiwiaWQiOiIzNzc0NDAxNTkyNzU2NTkifV0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiT2RlZEFwcElEYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJPZGVkQXBwSURhcHBpZElEIiwic29mdHdhcmVfdmVyc2lvbiI6IjEuMCIsImRldmljZV9pZCI6Ijk5MDI0Njg4LUZGMTktNDg4Qy04RjJELUY3MTY2MDZDQTU5NCIsImRldmljZV9tb2RlbCI6ImlQaG9uZSIsImRldmljZV9vcyI6ImlQaG9uZSBPUyJ9fQ.kFPUtpi9AROmBvQqPa19LgX18aYSSbnjlea4Hg0OA4UUw8XYnuoufBWpmmzDpaqZVnN5LTWg9YK5-wtB5Hi9YwX8bhklkeciHP_1ue-fyNDLN2uCNUvBxh916mgFy8u1gFicBcCzQkVoSDSL4Pcjgo0VoTla8t36wLFRtEKmBQ-p8UOlvjD-dnAoNBDveUsNNyeaLMdVPRRfXi-RYWOH3E9bjvyhHd-Zea2OX3oC1XRpqNgrUBXQblskOi_mEll_iWAUX5oD23tOZB9cb0eph9B6_tDZutgvaY338ZD1W9St6YokIL8IltKbrX3q1_FFJSu9nfNPgILsKIAKqe9fHQ"
+    
+    let VALID_ACCESS_TOKEN_PAYLOAD = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw"
+
+    func testExtractTokensFailsWhenNoResponseText() {
+        let response = Response(responseData: nil, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse server response - no response text")
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+
+    func testExtractTokensFailsWhenNoParsableResponseText() {
+        let data = "nonParsableText".data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse server response - failed to parse json")
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+
+    func testExtractTokensFailsWhenNoAccessToken() {
+        let data = """
+            {
+                "id_token":"\(VALID_ID_TOKEN_PAYLOAD)",
+                "expires_in":3600
+            }
+            """.data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse server response - no access or identity token")
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+    
+    func testExtractTokensFailsWhenNoIdToken() {
+        let data = """
+            {
+                "access_token":"\(VALID_ACCESS_TOKEN_PAYLOAD)",
+                "expires_in":3600
+            }
+            """.data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse server response - no access or identity token")
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+
+    func testExtractTokensFailsWhenNoParsableAccessToken() {
+        let data = """
+            {
+                "access_token":"nonparsable",
+                "id_token":"\(VALID_ID_TOKEN_PAYLOAD)",
+                "expires_in":3600
+            }
+            """.data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse tokens")
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+
+    func testExtractTokensFailsWhenNoParsableIdToken() {
+        let data = """
+            {
+                "access_token":"\(VALID_ACCESS_TOKEN_PAYLOAD)",
+                "id_token":"nonparsable",
+                "expires_in":3600
+            }
+            """.data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse tokens")
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+    
+    func testExtractTokensHappyFlow() {
+        let data = """
+            {
+                "access_token":"\(VALID_ACCESS_TOKEN_PAYLOAD)",
+                "id_token":"\(VALID_ID_TOKEN_PAYLOAD)",
+                "expires_in":3600
+            }
+            """.data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"success", expectedErr: "")
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
+        XCTAssertEqual(tokenRespDelegate.success, 1)
+        XCTAssertEqual(tokenRespDelegate.fails, 0)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+        XCTAssertNotNil(tokenRespDelegate.accessToken)
+        XCTAssertNotNil(tokenRespDelegate.identityToken)
+        XCTAssertNil(tokenRespDelegate.refreshToken)
+    }
+
+    func testExtractTokensHappyFlowWithRefreshToken() {
+        let refreshTokenPayload = "no-matter-refresh-token-has-no-spec"
+        let data = """
+            {
+                "access_token":"\(VALID_ACCESS_TOKEN_PAYLOAD)",
+                "id_token":"\(VALID_ID_TOKEN_PAYLOAD)",
+                "refresh_token":"\(refreshTokenPayload)",
+                "expires_in":3600
+            }
+        """.data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"success", expectedErr: "")
+        tokenManager.extractTokens(response: response,
+                                   tokenResponseDelegate: tokenRespDelegate)
+        XCTAssertEqual(tokenRespDelegate.success, 1)
+        XCTAssertEqual(tokenRespDelegate.fails, 0)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+        XCTAssertNotNil(tokenRespDelegate.refreshToken)
+        XCTAssertNotNil(tokenRespDelegate.accessToken)
+        XCTAssertNotNil(tokenRespDelegate.identityToken)
+        XCTAssertEqual(refreshTokenPayload, tokenRespDelegate.refreshToken!.raw!)
+    }
+
 }

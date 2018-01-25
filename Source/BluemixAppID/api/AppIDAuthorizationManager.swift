@@ -85,15 +85,15 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
                     if (response != nil) {
                         callback?(response, nil)
                     } else {
-                        self.launchAuthorization(completionHandler: callback)
+                        self.launchAuthorization(callback)
                     }
                 }))
         } else {
-            self.launchAuthorization(completionHandler: callback)
+            self.launchAuthorization(callback)
         }
     }
     
-    public func launchAuthorization(completionHandler callback: BMSCompletionHandler?) {
+    public func launchAuthorization(_ callback: BMSCompletionHandler?) {
         class innerAuthorizationDelegate: AuthorizationDelegate {
             var callback:BMSCompletionHandler?
             init(callback:BMSCompletionHandler?) {

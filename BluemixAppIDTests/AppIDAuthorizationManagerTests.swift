@@ -66,7 +66,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
     }
 
     
-    public func testObtainAuthorization1() {
+    public func testObtainAuthorizationCanceled() {
         
         MockAuthorizationManager.res = "cancel"
         AppIDAuthorizationManagerTests.manager?.oAuthManager.authorizationManager = MockAuthorizationManager(oAuthManager: (AppIDAuthorizationManagerTests.manager?.oAuthManager)!)
@@ -78,7 +78,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
         
     }
 
-    public func testObtainAuthorization2() {
+    public func testObtainAuthorizationSuccess() {
         MockAuthorizationManager.res = "success"
         
         
@@ -94,7 +94,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
         
     }
 
-    public func testObtainAuthorization3() {
+    public func testObtainAuthorizationFailure() {
         
         MockAuthorizationManager.res = "failure"
         AppIDAuthorizationManagerTests.manager?.oAuthManager.authorizationManager = MockAuthorizationManager(oAuthManager: (AppIDAuthorizationManagerTests.manager?.oAuthManager)!)

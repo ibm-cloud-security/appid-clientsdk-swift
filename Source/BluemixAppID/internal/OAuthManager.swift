@@ -28,4 +28,9 @@ public class OAuthManager {
         self.authorizationManager = AuthorizationManager(oAuthManager: self)
         self.tokenManager = TokenManager(oAuthManager: self)
     }
+
+    internal func setPreferredLocale(_ locale: Locale) {
+        self.authorizationManager?.preferredLocale = locale
+    }
+
 }

@@ -262,7 +262,6 @@
 		EFBA1FF31E51F7D9000EB3F5 /* api */ = {
 			isa = PBXGroup;
 			children = (
-				4D42CF8920173BD200EF40B6 /* RefreshToken.swift */,
 				EFBA1FF41E51F7D9000EB3F5 /* AppID.swift */,
 				EFBA1FF51E51F7D9000EB3F5 /* AppIDAuthorizationManager.swift */,
 				EFBA1FF61E51F7D9000EB3F5 /* AuthorizationDelegate.swift */,
@@ -280,6 +279,7 @@
 		EFBA1FFA1E51F7D9000EB3F5 /* Tokens */ = {
 			isa = PBXGroup;
 			children = (
+				4D42CF8920173BD200EF40B6 /* RefreshToken.swift */,
 				EFBA1FFB1E51F7D9000EB3F5 /* AccessToken.swift */,
 				EFBA1FFC1E51F7D9000EB3F5 /* OAuthClient.swift */,
 			);

@@ -20,7 +20,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
 
     static var appid:AppID? = nil
     static var manager:AppIDAuthorizationManager? = nil
-    
+        
     override public func setUp() {
         super.setUp()
         AppID.sharedInstance.initialize(tenantId: "123", bluemixRegion: "123")
@@ -49,6 +49,9 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
     class MockAuthorizationManager: BluemixAppID.AuthorizationManager {
         static var res = "cancel"
         
+        var shouldCallObtainTokensRefreshToken = false
+        var obtainTokensRefreshTokenCalled = false
+        
         override func launchAuthorizationUI(accessTokenString: String? = nil, authorizationDelegate:AuthorizationDelegate) {
             if MockAuthorizationManager.res == "success" {
                 authorizationDelegate.onAuthorizationSuccess(
@@ -62,6 +65,19 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
                 authorizationDelegate.onAuthorizationCanceled()
             }
             
+        }
+        
+        override func obtainTokensRefreshToken(refreshTokenString: String?, tokenResponseDelegate: TokenResponseDelegate) {
+            obtainTokensRefreshTokenCalled = true
+            if (!shouldCallObtainTokensRefreshToken) {
+                XCTFail("Unexpected call to obtainTokensRefreshToken")
+            }
+        }
+        
+        func verify() {
+            if (shouldCallObtainTokensRefreshToken && !obtainTokensRefreshTokenCalled) {
+                XCTFail("Should have called obtainTokensRefreshToken, but the function wasn't called")
+            }
         }
     }
 
@@ -80,8 +96,6 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
 
     public func testObtainAuthorizationSuccess() {
         MockAuthorizationManager.res = "success"
-        
-        
         AppIDAuthorizationManagerTests.manager?.oAuthManager.authorizationManager = MockAuthorizationManager(oAuthManager: (AppIDAuthorizationManagerTests.manager?.oAuthManager)!)
         let callback:BMSCompletionHandler = {(response:Response?, error:Error?) in
             XCTAssertNotNil(response)
@@ -91,8 +105,48 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
             XCTAssertNil(error)
         }
         AppIDAuthorizationManagerTests.manager?.obtainAuthorization(completionHandler: callback)
-        
     }
+    
+    public func testObtainAuthorizationWithRefreshTokenSuccess() {
+        MockAuthorizationManager.res = "failure"
+        
+        AppIDAuthorizationManagerTests.manager?.oAuthManager.authorizationManager = MockAuthorizationManager(oAuthManager: (AppIDAuthorizationManagerTests.manager?.oAuthManager)!)
+        
+        let tokenManager = TestHelpers.MockTokenManager(
+            oAuthManager: AppIDAuthorizationManagerTests.manager!.oAuthManager)
+        
+        AppIDAuthorizationManagerTests.manager?.oAuthManager.tokenManager = tokenManager
+        tokenManager.latestRefreshToken = RefreshTokenImpl(with: "ststs")
+        tokenManager.shouldCallObtainWithRefresh = true
+        let callback:BMSCompletionHandler = {(response:Response?, error:Error?) in
+            XCTAssertNotNil(response)
+            XCTAssertNil(error)
+        }
+        AppIDAuthorizationManagerTests.manager?.obtainAuthorization(completionHandler: callback)
+        tokenManager.verify()
+    }
+    
+    public func testObtainAuthorizationSuccessAfterRefreshFails() {
+        MockAuthorizationManager.res = "success"
+        AppIDAuthorizationManagerTests.manager?.oAuthManager.authorizationManager = MockAuthorizationManager(oAuthManager: (AppIDAuthorizationManagerTests.manager?.oAuthManager)!)
+        let tokenManager = TestHelpers.MockTokenManager(
+            oAuthManager: AppIDAuthorizationManagerTests.manager!.oAuthManager)
+        AppIDAuthorizationManagerTests.manager?.oAuthManager.tokenManager = tokenManager
+        tokenManager.shouldCallObtainWithRefresh = true
+        tokenManager.obtainWithRefreshShouldFail = true
+        tokenManager.latestRefreshToken = RefreshTokenImpl(with: "ststs")
+
+        let callback:BMSCompletionHandler = {(response:Response?, error:Error?) in
+            XCTAssertNotNil(response)
+            XCTAssertEqual(AppIDAuthorizationManagerTests.expectedResponse.statusCode, response?.statusCode)
+            XCTAssertEqual(AppIDAuthorizationManagerTests.expectedResponse.responseText, response?.responseText)
+            XCTAssertEqual(AppIDAuthorizationManagerTests.expectedResponse.responseData, response?.responseData)
+            XCTAssertNil(error)
+        }
+        AppIDAuthorizationManagerTests.manager?.obtainAuthorization(completionHandler: callback)
+        tokenManager.verify()
+    }
+
 
     public func testObtainAuthorizationFailure() {
         
@@ -105,6 +159,24 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
         AppIDAuthorizationManagerTests.manager?.obtainAuthorization(completionHandler: callback)
         
     }
+    
+    public func testObtainAuthorizationFailsAfterRefreshFails() {
+        MockAuthorizationManager.res = "failure"
+        AppIDAuthorizationManagerTests.manager?.oAuthManager.authorizationManager = MockAuthorizationManager(oAuthManager: (AppIDAuthorizationManagerTests.manager?.oAuthManager)!)
+        let tokenManager = TestHelpers.MockTokenManager(
+            oAuthManager: AppIDAuthorizationManagerTests.manager!.oAuthManager)
+        AppIDAuthorizationManagerTests.manager?.oAuthManager.tokenManager = tokenManager
+        tokenManager.shouldCallObtainWithRefresh = true
+        tokenManager.obtainWithRefreshShouldFail = true
+        tokenManager.latestRefreshToken = RefreshTokenImpl(with: "ststs")
+        let callback:BMSCompletionHandler = {(response:Response?, error:Error?) in
+            XCTAssertNil(response)
+            XCTAssertEqual((error as? AuthorizationError)?.description, "someerr")
+        }
+        AppIDAuthorizationManagerTests.manager?.obtainAuthorization(completionHandler: callback)
+        tokenManager.verify()
+    }
+
 
     public func testGetCachedAuthorizationHeader () {
         class AppIDAuthorizationManagerMock: AppIDAuthorizationManager {

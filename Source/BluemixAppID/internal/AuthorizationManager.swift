@@ -267,10 +267,31 @@ public class AuthorizationManager {
         })
     }
     
-    internal func obtainTokensRefreshToken(refreshTokenString: String, tokenResponseDelegate: TokenResponseDelegate) {
-        self.oAuthManager.tokenManager?.obtainTokensRefreshToken(
-            refreshTokenString: refreshTokenString,
-            tokenResponseDelegate: tokenResponseDelegate)
+    internal func obtainTokensRefreshToken(refreshTokenString: String? = nil, tokenResponseDelegate: TokenResponseDelegate) {
+        
+        var refreshTokenToUse = refreshTokenString
+        if refreshTokenToUse == nil {
+            let latestRefreshToken = self.oAuthManager.tokenManager?.latestRefreshToken
+            if latestRefreshToken != nil {
+                refreshTokenToUse = latestRefreshToken?.raw
+            }
+        }
+        self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
+            guard error == nil else {
+                AuthorizationManager.logger.error(message: error!.description)
+                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
+                return
+            }
+            guard refreshTokenToUse != nil else {
+                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Could not find refresh token to use - either provide it as parameter or make sure it is cached locally"))
+                return
+            }
+            self.oAuthManager.tokenManager?.obtainTokensRefreshToken(
+                refreshTokenString: refreshTokenToUse!,
+                tokenResponseDelegate: tokenResponseDelegate)
+            return
+        })
+
     }
     
     public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {

@@ -11,6 +11,8 @@
  */
 import Foundation
 import BMSCore
+import XCTest
+
 @testable import BluemixAppID
 
 public class TestHelpers {
@@ -49,6 +51,31 @@ public class TestHelpers {
         }
     }
 
+    public class MockTokenManager: TokenManager {
+        var shouldCallObtainWithRefresh = false
+        var obtainWithRefreshShouldFail = false
+        var obtainWithRefreshCalled = false
+        
+        override public func obtainTokensRefreshToken(refreshTokenString: String, tokenResponseDelegate: TokenResponseDelegate) {
+            obtainWithRefreshCalled = true
+            if !shouldCallObtainWithRefresh {
+                XCTFail("Should not have called obtainTokensRefreshToken")
+            } else {
+                if obtainWithRefreshShouldFail {
+                    tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to refresh token"))
+                } else {
+                    tokenResponseDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, refreshToken: nil, response: Response(responseData: nil, httpResponse: nil, isRedirect: false))
+                }
+            }
+            
+        }
+        
+        func verify() {
+            if (shouldCallObtainWithRefresh && !obtainWithRefreshCalled) {
+                XCTFail("Should have called obtainTokensRefreshToken but it wasn't called")
+            }
+        }
+    }
 
 
 }

@@ -565,12 +565,7 @@ class TokenManagerTests: XCTestCase {
     }
 
     func testExtractTokensFailsWhenNoAccessToken() {
-        let data = """
-            {
-                "id_token":"\(VALID_ID_TOKEN_PAYLOAD)",
-                "expires_in":3600
-            }
-            """.data(using: .utf8)
+        let data = "{\"id_token\":\"\(VALID_ID_TOKEN_PAYLOAD)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse server response - no access or identity token")
         tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
@@ -580,12 +575,7 @@ class TokenManagerTests: XCTestCase {
     }
     
     func testExtractTokensFailsWhenNoIdToken() {
-        let data = """
-            {
-                "access_token":"\(VALID_ACCESS_TOKEN_PAYLOAD)",
-                "expires_in":3600
-            }
-            """.data(using: .utf8)
+        let data = "{\"access_token\":\"\(VALID_ACCESS_TOKEN_PAYLOAD)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse server response - no access or identity token")
         tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
@@ -595,13 +585,7 @@ class TokenManagerTests: XCTestCase {
     }
 
     func testExtractTokensFailsWhenNoParsableAccessToken() {
-        let data = """
-            {
-                "access_token":"nonparsable",
-                "id_token":"\(VALID_ID_TOKEN_PAYLOAD)",
-                "expires_in":3600
-            }
-            """.data(using: .utf8)
+        let data = "{\"access_token\":\"nonparsable\",\"id_token\":\"\(VALID_ID_TOKEN_PAYLOAD)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse tokens")
         tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
@@ -611,13 +595,7 @@ class TokenManagerTests: XCTestCase {
     }
 
     func testExtractTokensFailsWhenNoParsableIdToken() {
-        let data = """
-            {
-                "access_token":"\(VALID_ACCESS_TOKEN_PAYLOAD)",
-                "id_token":"nonparsable",
-                "expires_in":3600
-            }
-            """.data(using: .utf8)
+        let data = "{\"access_token\":\"\(VALID_ACCESS_TOKEN_PAYLOAD)\",\"id_token\":\"nonparsable\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse tokens")
         tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
@@ -627,13 +605,7 @@ class TokenManagerTests: XCTestCase {
     }
     
     func testExtractTokensHappyFlow() {
-        let data = """
-            {
-                "access_token":"\(VALID_ACCESS_TOKEN_PAYLOAD)",
-                "id_token":"\(VALID_ID_TOKEN_PAYLOAD)",
-                "expires_in":3600
-            }
-            """.data(using: .utf8)
+        let data = "{\"access_token\":\"\(VALID_ACCESS_TOKEN_PAYLOAD)\",\"id_token\":\"\(VALID_ID_TOKEN_PAYLOAD)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"success", expectedErr: "")
         tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
@@ -647,14 +619,7 @@ class TokenManagerTests: XCTestCase {
 
     func testExtractTokensHappyFlowWithRefreshToken() {
         let refreshTokenPayload = "no-matter-refresh-token-has-no-spec"
-        let data = """
-            {
-                "access_token":"\(VALID_ACCESS_TOKEN_PAYLOAD)",
-                "id_token":"\(VALID_ID_TOKEN_PAYLOAD)",
-                "refresh_token":"\(refreshTokenPayload)",
-                "expires_in":3600
-            }
-        """.data(using: .utf8)
+        let data = "{\"access_token\":\"\(VALID_ACCESS_TOKEN_PAYLOAD)\",\"id_token\":\"\(VALID_ID_TOKEN_PAYLOAD)\",\"refresh_token\":\"\(refreshTokenPayload)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"success", expectedErr: "")
         tokenManager.extractTokens(response: response,

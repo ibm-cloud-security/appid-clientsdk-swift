@@ -54,7 +54,7 @@ public class AppID {
         oauthManager?.authorizationManager?.obtainTokensWithROP(accessTokenString: accessTokenString, username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
     }
     
-    public func refreshTokens(_ refreshTokenString:String, tokenResponseDelegate:TokenResponseDelegate) {
+    public func refreshTokens(refreshTokenString:String? = nil, tokenResponseDelegate:TokenResponseDelegate) {
         oauthManager?.authorizationManager?.obtainTokensRefreshToken(
             refreshTokenString: refreshTokenString,
             tokenResponseDelegate: tokenResponseDelegate)

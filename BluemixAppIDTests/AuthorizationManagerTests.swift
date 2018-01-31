@@ -151,7 +151,7 @@ public class AuthorizationManagerTests : XCTestCase {
                     XCTFail()
                 }
             }
-            
+
             func onAuthorizationSuccess(accessToken: AccessToken?,
                                         identityToken: IdentityToken?,
                                         refreshToken: RefreshToken?,

@@ -66,7 +66,7 @@ public class TestHelpers {
                 } else {
                     tokenResponseDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, refreshToken: nil, response: Response(responseData: nil, httpResponse: nil, isRedirect: false))
                 }
-            }            
+            }
         }
         
         func verify() {

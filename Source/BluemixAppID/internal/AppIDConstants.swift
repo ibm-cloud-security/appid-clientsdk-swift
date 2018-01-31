@@ -209,6 +209,7 @@ internal class AppIDConstants {
     internal static let tenantIdLabel = "\(TENANT_ID_KEY_LABEL):\(nameAndVer.name):\(nameAndVer.version)"
     internal static let certificateIdentifier = "\(OAUTH_CERT_LABEL):\(nameAndVer.name):\(nameAndVer.version)"
     internal static let AuthorizationKeyChainTagsDictionary = [privateKeyIdentifier : kSecClassKey, publicKeyIdentifier : kSecClassKey, idTokenLabel : kSecClassGenericPassword, accessTokenLabel : kSecClassGenericPassword, certificateIdentifier : kSecClassCertificate]
+    internal static let localeParamName = "language"
     
 }
 

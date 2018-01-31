@@ -45,6 +45,10 @@ public class AppID {
         self.loginWidget = LoginWidgetImpl(oauthManager: self.oauthManager!)
         self.userAttributeManager = UserAttributeManagerImpl(appId: self)
     }
+
+    public func setPreferredLocale(_ locale: Locale) {
+        self.oauthManager?.setPreferredLocale(locale)
+    }
     
     public func signinAnonymously(accessTokenString:String? = nil, allowCreateNewAnonymousUsers: Bool = true, authorizationDelegate:AuthorizationDelegate) {
         oauthManager?.authorizationManager?.loginAnonymously(accessTokenString: accessTokenString, allowCreateNewAnonymousUsers: allowCreateNewAnonymousUsers, authorizationDelegate: authorizationDelegate)

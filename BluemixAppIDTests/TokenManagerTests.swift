@@ -128,10 +128,11 @@ class TokenManagerTests: XCTestCase {
         
     }
     
-    class MockTokenManagerWithSendRequestRopWithAccessToken: TokenManager {
+    class MockTokenManagerWithSendRequestAssertion: TokenManager {
         var err:Error?
         var response:Response?
         var throwExc:Bool
+        var requestFormData: String?
         init(oauthManager:OAuthManager, response:Response?, err:Error?, throwExc:Bool = false) {
             self.err = err
             self.response = response
@@ -165,7 +166,8 @@ class TokenManagerTests: XCTestCase {
             XCTAssertEqual(request.headers["Content-Type"], "application/x-www-form-urlencoded")
             XCTAssertEqual(request.headers["Authorization"], "Bearer signature")
             XCTAssertEqual(request.timeout, BMSClient.sharedInstance.requestTimeout)
-            XCTAssertEqual(String(data: registrationParamsAsData!, encoding: .utf8), "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
+            self.requestFormData = String(data: registrationParamsAsData!, encoding: .utf8)
+//            XCTAssertEqual(String(data: registrationParamsAsData!, encoding: .utf8), "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
             
             internalCallBack(response, err)
         }
@@ -263,7 +265,7 @@ class TokenManagerTests: XCTestCase {
             }
         }
     }
-    
+   
     func testObtainTokensUsingRop_with_access_token() {
         
         let expectation1 = expectation(description: "got to callback")
@@ -271,7 +273,7 @@ class TokenManagerTests: XCTestCase {
         let oauthmanager = OAuthManager(appId: AppID.sharedInstance)
         oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : TokenManagerTests.clientId])
         
-        let tokenManager =  MockTokenManagerWithSendRequestRopWithAccessToken(oauthManager:oauthmanager, response: nil, err: err)
+        let tokenManager =  MockTokenManagerWithSendRequestAssertion(oauthManager:oauthmanager, response: nil, err: err)
         tokenManager.obtainTokensRoP(accessTokenString: "testAccessToken" ,username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
         
         waitForExpectations(timeout: 1) { error in
@@ -279,8 +281,28 @@ class TokenManagerTests: XCTestCase {
                 XCTFail("err: \(error)")
             }
         }
+        XCTAssertEqual(tokenManager.requestFormData,
+                   "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
     }
     
+    func testObtainTokensUsingRefreshToken() {
+        
+        let expectation1 = expectation(description: "got to callback")
+        let err = AppIDError.registrationError(msg: "Failed to register OAuth client")
+        let oauthmanager = OAuthManager(appId: AppID.sharedInstance)
+        oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : TokenManagerTests.clientId])
+        
+        let tokenManager =  MockTokenManagerWithSendRequestAssertion(oauthManager:oauthmanager, response: nil, err: err)
+        tokenManager.obtainTokensRefreshToken(refreshTokenString: "xxtt", tokenResponseDelegate: delegate(exp:expectation1, msg: "Failed to retrieve tokens"))
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+        XCTAssertEqual(tokenManager.requestFormData, "refresh_token=xxtt&grant_type=refresh_token")
+    }
+
     func testObtainTokensUsingRop2_catch() {
         
         let expectation1 = expectation(description: "got to callback")
@@ -493,7 +515,6 @@ class TokenManagerTests: XCTestCase {
         }
         
     }
-    
     
     class ExtractTokensDelegate: AuthorizationDelegate {
         var res:String

@@ -14,4 +14,3 @@
 public protocol RefreshToken {
     var raw: String? {get}
 }
-

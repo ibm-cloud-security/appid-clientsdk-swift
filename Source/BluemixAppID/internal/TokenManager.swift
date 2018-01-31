@@ -165,14 +165,14 @@ internal class TokenManager {
                 tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse tokens"))
                 return
             }
-            let refreshTokenString = (responseJson["refresh_token"] as? String)
+            let refreshTokenString = responseJson["refresh_token"] as? String
             var refreshToken: RefreshTokenImpl?
-            if (refreshTokenString != nil) {
+            if refreshTokenString != nil {
                 refreshToken = RefreshTokenImpl(with: refreshTokenString!)
             }
             self.latestAccessToken = accessToken
             self.latestIdentityToken = identityToken
-            self.latestRefreshToken = refreshToken;
+            self.latestRefreshToken = refreshToken
             tokenResponseDelegate.onAuthorizationSuccess(accessToken: accessToken,
                                                          identityToken: identityToken,
                                                          refreshToken: refreshToken,

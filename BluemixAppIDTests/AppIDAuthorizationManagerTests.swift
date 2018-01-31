@@ -69,13 +69,13 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
         
         override func signinWithRefreshToken(refreshTokenString: String?, tokenResponseDelegate: TokenResponseDelegate) {
             obtainTokensRefreshTokenCalled = true
-            if (!shouldCallObtainTokensRefreshToken) {
+            if !shouldCallObtainTokensRefreshToken {
                 XCTFail("Unexpected call to obtainTokensRefreshToken")
             }
         }
         
         func verify() {
-            if (shouldCallObtainTokensRefreshToken && !obtainTokensRefreshTokenCalled) {
+            if shouldCallObtainTokensRefreshToken && !obtainTokensRefreshTokenCalled {
                 XCTFail("Should have called obtainTokensRefreshToken, but the function wasn't called")
             }
         }

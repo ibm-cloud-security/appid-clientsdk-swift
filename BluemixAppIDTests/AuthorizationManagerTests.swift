@@ -94,7 +94,7 @@ public class AuthorizationManagerTests : XCTestCase {
                     XCTFail()
                 }
             }
-            
+
             func onAuthorizationSuccess(accessToken: AccessToken?,
                                         identityToken: IdentityToken?,
                                         refreshToken: RefreshToken?,
@@ -566,13 +566,13 @@ public class AuthorizationManagerTests : XCTestCase {
         }
 
         func verify() {
-            if (shouldCallObtainAuthCode && !obtainAuthCodeCalled) {
+            if shouldCallObtainAuthCode && !obtainAuthCodeCalled {
                 XCTFail("Should have called obtainTokensRoP but it wasn't called")
             }
-            if (shouldCallObtainRoP && !obtainRopCalled) {
+            if shouldCallObtainRoP && !obtainRopCalled {
                 XCTFail("Should have called obtainTokensAuthCode but it wasn't called")
             }
-            if (shouldCallObtainWithRefresh && !obtainWithRefreshCalled) {
+            if shouldCallObtainWithRefresh && !obtainWithRefreshCalled {
                 XCTFail("Should have called obtainTokensRefreshToken but it wasn't called")
             }
         }
@@ -767,9 +767,9 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         let del = TokenRespDelegate()
         authManager.error = nil
         MockRegistrationManager.shouldFail = false
-        //Assigning lastRefreshToken to some value
+        // Assigning lastRefreshToken to some value
         mockTokenManager.latestRefreshToken = RefreshTokenImpl(with: "tototoken")
-        //Calling the API with refreshTokenString=nil - this should use the value of lastRefreshToken
+        // Calling the API with refreshTokenString=nil - this should use the value of lastRefreshToken
         authManager.signinWithRefreshToken(refreshTokenString: nil, tokenResponseDelegate: del)
         XCTAssertEqual(del.succeeded, true)
         XCTAssertEqual(del.failed, false)

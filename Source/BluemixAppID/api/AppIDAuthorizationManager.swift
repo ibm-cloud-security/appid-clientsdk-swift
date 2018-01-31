@@ -75,19 +75,20 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
             func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, refreshToken: RefreshToken?, response: Response?) {
                 self.callback(response, nil)
             }
+            
         }
         
         let refreshToken = self.oAuthManager.tokenManager?.latestRefreshToken
-        if (refreshToken != nil) {
+        if refreshToken != nil {
             self.oAuthManager.tokenManager?.obtainTokensRefreshToken(
                 refreshTokenString: refreshToken!.raw!,
-                tokenResponseDelegate: innerTokenDelegate({ (response, authorizationError) in
-                    if (response != nil) {
+                tokenResponseDelegate: innerTokenDelegate { (response, authorizationError) in
+                    if response != nil {
                         callback?(response, nil)
                     } else {
                         self.launchAuthorization(callback)
                     }
-                }))
+                })
         } else {
             self.launchAuthorization(callback)
         }

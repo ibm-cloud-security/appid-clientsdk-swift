@@ -66,15 +66,15 @@ public class TestHelpers {
                 } else {
                     tokenResponseDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, refreshToken: nil, response: Response(responseData: nil, httpResponse: nil, isRedirect: false))
                 }
-            }
-            
+            }            
         }
         
         func verify() {
-            if (shouldCallObtainWithRefresh && !obtainWithRefreshCalled) {
+            if shouldCallObtainWithRefresh && !obtainWithRefreshCalled {
                 XCTFail("Should have called obtainTokensRefreshToken but it wasn't called")
             }
         }
+        
     }
 
 

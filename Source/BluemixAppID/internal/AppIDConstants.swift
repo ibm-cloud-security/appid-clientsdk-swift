@@ -94,6 +94,7 @@ internal class AppIDConstants {
     
     internal static var authorization_code_String = "authorization_code"
     internal static var resource_owner_password_String = "password"
+    internal static var refresh_token_String = "refresh_token"
     internal static var JSON_RSA_VALUE = "RSA"
     internal static var JSON_RS256_VALUE = "RS256"
     internal static var JSON_ALG_KEY = "alg"
@@ -119,6 +120,7 @@ internal class AppIDConstants {
     internal static var JSON_SIGN_UP_KEY = "sign_up"
     internal static var JSON_FORGOT_PASSWORD_KEY = "forgot_password"
     internal static var JSON_GRANT_TYPE_KEY = "grant_type"
+    internal static var JSON_REFRESH_TOKEN = "refresh_token"
     internal static var JSON_FLOW_KEY = "flow"
     internal static var JSON_USERNAME = "username"
     internal static var JSON_PASSWORD = "password"

@@ -25,7 +25,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
             super.init(oAuthManager: oAuthManager)
         }
 
-        override func obtainTokens(code:String, authorizationDelegate:AuthorizationDelegate) {
+        override func obtainTokensAuthCode(code:String, authorizationDelegate:AuthorizationDelegate) {
             self.exp.fulfill()
         }
 
@@ -59,7 +59,10 @@ public class AuthorizationUIManagerTests: XCTestCase {
            XCTFail()
         }
         
-        func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+        func onAuthorizationSuccess(accessToken: AccessToken?,
+                                    identityToken: IdentityToken?,
+                                    refreshToken: RefreshToken?,
+                                    response:Response?) {
              self.exp?.fulfill()
         }
         

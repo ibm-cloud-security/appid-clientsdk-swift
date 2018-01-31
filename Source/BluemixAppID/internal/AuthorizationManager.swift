@@ -202,7 +202,7 @@ public class AuthorizationManager {
                                     // authorization endpoint success
                                     if urlString!.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
                                         if let code =  Utils.getParamFromQuery(url: url!, paramName: AppIDConstants.JSON_CODE_KEY) {
-                                            self.oAuthManager.tokenManager?.obtainTokens(code: code, authorizationDelegate: authorizationDelegate)
+                                            self.oAuthManager.tokenManager?.obtainTokensAuthCode(code: code, authorizationDelegate: authorizationDelegate)
                                             return
                                         }
                                     }
@@ -248,7 +248,7 @@ public class AuthorizationManager {
         request.send(completionHandler: internalCallBack)
     }
     
-    internal func obtainTokensWithROP(accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
+    internal func signinWithResourceOwnerPassword(accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
         var accessTokenToUse = accessTokenString
         if accessTokenToUse == nil {
             let latestAccessToken = self.oAuthManager.tokenManager?.latestAccessToken
@@ -262,9 +262,36 @@ public class AuthorizationManager {
                 tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
-            self.oAuthManager.tokenManager?.obtainTokens(accessTokenString: accessTokenToUse, username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
+            self.oAuthManager.tokenManager?.obtainTokensRoP(accessTokenString: accessTokenToUse, username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
             return
         })
+    }
+    
+    internal func signinWithRefreshToken(refreshTokenString: String? = nil, tokenResponseDelegate: TokenResponseDelegate) {
+        
+        var refreshTokenToUse = refreshTokenString
+        if refreshTokenToUse == nil {
+            let latestRefreshToken = self.oAuthManager.tokenManager?.latestRefreshToken
+            if latestRefreshToken != nil {
+                refreshTokenToUse = latestRefreshToken?.raw
+            }
+        }
+        self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
+            guard error == nil else {
+                AuthorizationManager.logger.error(message: error!.description)
+                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
+                return
+            }
+            guard refreshTokenToUse != nil else {
+                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Could not find refresh token to use - either provide it as parameter or make sure it is cached locally"))
+                return
+            }
+            self.oAuthManager.tokenManager?.obtainTokensRefreshToken(
+                refreshTokenString: refreshTokenToUse!,
+                tokenResponseDelegate: tokenResponseDelegate)
+            return
+        })
+
     }
     
     public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {

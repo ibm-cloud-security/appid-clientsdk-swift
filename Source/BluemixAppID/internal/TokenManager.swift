@@ -18,6 +18,8 @@ internal class TokenManager {
     private final var registrationManager:RegistrationManager
     internal var latestAccessToken:AccessToken?
     internal var latestIdentityToken:IdentityToken?
+    internal var latestRefreshToken:RefreshToken?
+
     internal static let logger = Logger.logger(name: AppIDConstants.TokenManagerLoggerName)
     internal init(oAuthManager:OAuthManager)
     {
@@ -26,7 +28,7 @@ internal class TokenManager {
     }
     
     
-    public func obtainTokens(code:String, authorizationDelegate:AuthorizationDelegate) {
+    public func obtainTokensAuthCode(code:String, authorizationDelegate:AuthorizationDelegate) {
         TokenManager.logger.debug(message: "obtainTokens")
         
         guard let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String), let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0) else {
@@ -44,7 +46,7 @@ internal class TokenManager {
         retrieveTokens(bodyParams: bodyParams, tokenResponseDelegate: authorizationDelegate)
     }
     
-    public func obtainTokens(accessTokenString: String? = nil, username: String, password: String, tokenResponseDelegate: TokenResponseDelegate) {
+    public func obtainTokensRoP(accessTokenString: String? = nil, username: String, password: String, tokenResponseDelegate: TokenResponseDelegate) {
         TokenManager.logger.debug(message: "obtainTokens - with resource owner password")
         
         var bodyParams = [
@@ -58,6 +60,17 @@ internal class TokenManager {
         
         retrieveTokens(bodyParams: bodyParams, tokenResponseDelegate: tokenResponseDelegate)
         
+    }
+    
+    public func obtainTokensRefreshToken(refreshTokenString: String,
+                                             tokenResponseDelegate: TokenResponseDelegate) {
+        TokenManager.logger.debug(message: "obtainTokens - with resource owner password")
+        
+        let bodyParams = [
+            AppIDConstants.JSON_REFRESH_TOKEN : refreshTokenString,
+            AppIDConstants.JSON_GRANT_TYPE_KEY : AppIDConstants.refresh_token_String
+        ]
+        retrieveTokens(bodyParams: bodyParams, tokenResponseDelegate: tokenResponseDelegate)
     }
     
     internal func retrieveTokens(bodyParams: [String:String],  tokenResponseDelegate: TokenResponseDelegate) {
@@ -152,9 +165,18 @@ internal class TokenManager {
                 tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse tokens"))
                 return
             }
+            let refreshTokenString = (responseJson["refresh_token"] as? String)
+            var refreshToken: RefreshTokenImpl?
+            if (refreshTokenString != nil) {
+                refreshToken = RefreshTokenImpl(with: refreshTokenString!)
+            }
             self.latestAccessToken = accessToken
             self.latestIdentityToken = identityToken
-            tokenResponseDelegate.onAuthorizationSuccess(accessToken: accessToken, identityToken: identityToken, response:response)
+            self.latestRefreshToken = refreshToken;
+            tokenResponseDelegate.onAuthorizationSuccess(accessToken: accessToken,
+                                                         identityToken: identityToken,
+                                                         refreshToken: refreshToken,
+                                                         response:response)
         } catch (_) {
             TokenManager.logger.error(message: "Failed to parse server response - failed to parse json")
             tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response - failed to parse json"))
@@ -171,9 +193,7 @@ internal class TokenManager {
     public func clearStoredToken() {
         self.latestAccessToken = nil
         self.latestIdentityToken = nil
+        self.latestRefreshToken = nil
     }
-    
-    
-    
     
 }

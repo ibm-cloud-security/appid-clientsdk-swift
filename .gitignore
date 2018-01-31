@@ -2,3 +2,5 @@ BluemixAppID.xcodeproj/
 BluemixAppID.xcworkspace/
 Pods/
 Podfile.lock
+.idea/
+*.DS_Store

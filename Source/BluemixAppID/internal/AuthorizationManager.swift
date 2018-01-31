@@ -248,7 +248,7 @@ public class AuthorizationManager {
         request.send(completionHandler: internalCallBack)
     }
     
-    internal func obtainTokensWithROP(accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
+    internal func signinWithResourceOwnerPassword(accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
         var accessTokenToUse = accessTokenString
         if accessTokenToUse == nil {
             let latestAccessToken = self.oAuthManager.tokenManager?.latestAccessToken
@@ -267,7 +267,7 @@ public class AuthorizationManager {
         })
     }
     
-    internal func obtainTokensRefreshToken(refreshTokenString: String? = nil, tokenResponseDelegate: TokenResponseDelegate) {
+    internal func signinWithRefreshToken(refreshTokenString: String? = nil, tokenResponseDelegate: TokenResponseDelegate) {
         
         var refreshTokenToUse = refreshTokenString
         if refreshTokenToUse == nil {

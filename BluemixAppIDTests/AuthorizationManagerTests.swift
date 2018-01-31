@@ -709,7 +709,7 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         authManager.error = nil
         MockRegistrationManager.shouldFail = false
         authManager.response = Response(responseData:nil, httpResponse: nil,  isRedirect: false)
-        authManager.obtainTokensWithROP(username: "testUsername", password: "testPassword", tokenResponseDelegate: del)
+        authManager.signinWithResourceOwnerPassword(username: "testUsername", password: "testPassword", tokenResponseDelegate: del)
         XCTAssertEqual(del.succeeded, true)
         XCTAssertEqual(del.failed, false)
         mockTokenManager.verify()
@@ -723,7 +723,7 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         authManager.oAuthManager.tokenManager = mockTokenManager
         let del = TokenRespDelegate()
         MockRegistrationManager.shouldFail = true
-        authManager.obtainTokensWithROP(username: "testUsername", password: "testPassword", tokenResponseDelegate: del)
+        authManager.signinWithResourceOwnerPassword(username: "testUsername", password: "testPassword", tokenResponseDelegate: del)
         XCTAssertEqual(del.succeeded, false)
         XCTAssertEqual(del.failed, true)
         mockTokenManager.verify()
@@ -740,7 +740,7 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         let del = TokenRespDelegate()
         authManager.error = nil
         MockRegistrationManager.shouldFail = false
-        authManager.obtainTokensRefreshToken(refreshTokenString: "tototoken", tokenResponseDelegate: del)
+        authManager.signinWithRefreshToken(refreshTokenString: "tototoken", tokenResponseDelegate: del)
         XCTAssertEqual(del.succeeded, true)
         XCTAssertEqual(del.failed, false)
         mockTokenManager.verify()
@@ -758,7 +758,7 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         //Assigning lastRefreshToken to some value
         mockTokenManager.latestRefreshToken = RefreshTokenImpl(with: "tototoken")
         //Calling the API with refreshTokenString=nil - this should use the value of lastRefreshToken
-        authManager.obtainTokensRefreshToken(refreshTokenString: nil, tokenResponseDelegate: del)
+        authManager.signinWithRefreshToken(refreshTokenString: nil, tokenResponseDelegate: del)
         XCTAssertEqual(del.succeeded, true)
         XCTAssertEqual(del.failed, false)
         mockTokenManager.verify()
@@ -772,7 +772,7 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         let del = TokenRespDelegate()
         authManager.error = nil
         MockRegistrationManager.shouldFail = true
-        authManager.obtainTokensRefreshToken(refreshTokenString: "tototoken", tokenResponseDelegate: del)
+        authManager.signinWithRefreshToken(refreshTokenString: "tototoken", tokenResponseDelegate: del)
         XCTAssertEqual(del.succeeded, false)
         XCTAssertEqual(del.failed, true)
         mockTokenManager.verify()
@@ -787,7 +787,7 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         authManager.error = nil
         MockRegistrationManager.shouldFail = false
         authManager.response = Response(responseData:nil, httpResponse: nil,  isRedirect: false)
-        authManager.obtainTokensRefreshToken(refreshTokenString: nil, tokenResponseDelegate: del)
+        authManager.signinWithRefreshToken(refreshTokenString: nil, tokenResponseDelegate: del)
         XCTAssertEqual(del.succeeded, false)
         XCTAssertEqual(del.failed, true)
         mockTokenManager.verify()

@@ -17,4 +17,4 @@ script:
   # When merging or pushing to the master branch, release a new version and publish the API documentation
   #- if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ] ; then
   #    bash scripts/release.sh;
-# fi
+  # fi

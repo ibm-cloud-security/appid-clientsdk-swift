@@ -50,13 +50,32 @@ public class AppID {
         self.oauthManager?.setPreferredLocale(locale)
     }
     
-    public func loginAnonymously(accessTokenString:String? = nil, allowCreateNewAnonymousUsers: Bool = true, authorizationDelegate:AuthorizationDelegate) {
+    public func signinAnonymously(accessTokenString:String? = nil, allowCreateNewAnonymousUsers: Bool = true, authorizationDelegate:AuthorizationDelegate) {
         oauthManager?.authorizationManager?.loginAnonymously(accessTokenString: accessTokenString, allowCreateNewAnonymousUsers: allowCreateNewAnonymousUsers, authorizationDelegate: authorizationDelegate)
     }
-    
-    public func obtainTokensWithROP(_ accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
-        oauthManager?.authorizationManager?.obtainTokensWithROP(accessTokenString: accessTokenString, username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
+
+    public func signinWithResourceOwnerPassword(_ accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
+        oauthManager?.authorizationManager?.signinWithResourceOwnerPassword(accessTokenString: accessTokenString, username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
     }
+
+    public func signinWithRefreshToken(refreshTokenString:String? = nil, tokenResponseDelegate:TokenResponseDelegate) {
+        oauthManager?.authorizationManager?.signinWithRefreshToken(
+            refreshTokenString: refreshTokenString,
+            tokenResponseDelegate: tokenResponseDelegate)
+    }
+    
+    @available(*, deprecated: 3.0, renamed: "signinAnonymously")
+    public func loginAnonymously(accessTokenString:String? = nil, allowCreateNewAnonymousUsers: Bool = true, authorizationDelegate:AuthorizationDelegate) {
+        self.signinAnonymously(accessTokenString: accessTokenString, allowCreateNewAnonymousUsers: allowCreateNewAnonymousUsers, authorizationDelegate: authorizationDelegate)
+    }
+    
+    @available(*, deprecated: 3.0, renamed: "signinWithResourceOwnerPassword")
+    public func obtainTokensWithROP(_ accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
+        self.signinWithResourceOwnerPassword(accessTokenString, username: username,
+                                             password: password, tokenResponseDelegate: tokenResponseDelegate)
+    }
+
+    
     
 	public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {
             return (self.oauthManager?.authorizationManager?.application(application, open: url, options: options))!

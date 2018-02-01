@@ -95,7 +95,10 @@ public class AuthorizationManagerTests : XCTestCase {
                 }
             }
 
-            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?,
+                                        identityToken: IdentityToken?,
+                                        refreshToken: RefreshToken?,
+                                        response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -149,7 +152,10 @@ public class AuthorizationManagerTests : XCTestCase {
                 }
             }
 
-            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?,
+                                        identityToken: IdentityToken?,
+                                        refreshToken: RefreshToken?,
+                                        response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -203,7 +209,10 @@ public class AuthorizationManagerTests : XCTestCase {
                 }
             }
 
-            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?,
+                                        identityToken: IdentityToken?,
+                                        refreshToken: RefreshToken?,
+                                        response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -265,7 +274,10 @@ public class AuthorizationManagerTests : XCTestCase {
                 }
             }
 
-            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?,
+                                        identityToken: IdentityToken?,
+                                        refreshToken: RefreshToken?,
+                                        response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -319,7 +331,10 @@ public class AuthorizationManagerTests : XCTestCase {
                 }
             }
 
-            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+            func onAuthorizationSuccess(accessToken: AccessToken?,
+                                        identityToken: IdentityToken?,
+                                        refreshToken: RefreshToken?,
+                                        response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -383,8 +398,11 @@ public class AuthorizationManagerTests : XCTestCase {
                     XCTFail()
                 }
             }
-
-            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+            
+            func onAuthorizationSuccess(accessToken: AccessToken?,
+                                        identityToken: IdentityToken?,
+                                        refreshToken: RefreshToken?,
+                                        response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -436,8 +454,11 @@ public class AuthorizationManagerTests : XCTestCase {
                     XCTFail()
                 }
             }
-
-            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+            
+            func onAuthorizationSuccess(accessToken: AccessToken?,
+                                        identityToken: IdentityToken?,
+                                        refreshToken: RefreshToken?,
+                                        response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -482,8 +503,11 @@ public class AuthorizationManagerTests : XCTestCase {
                     XCTFail()
                 }
             }
-
-            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+            
+            func onAuthorizationSuccess(accessToken: AccessToken?,
+                                        identityToken: IdentityToken?,
+                                        refreshToken: RefreshToken?,
+                                        response:Response?) {
                 delegate.success += 1
                 if res != "success" {
                     XCTFail()
@@ -504,16 +528,54 @@ public class AuthorizationManagerTests : XCTestCase {
 
 
     class MockTokenManager: TokenManager {
-        var shouldCallObtain = true
+        var shouldCallObtainAuthCode = false
+        var obtainAuthCodeCalled = false
 
-        override func obtainTokens(code: String, authorizationDelegate: AuthorizationDelegate) {
-            if !shouldCallObtain {
-                XCTFail()
+        var shouldCallObtainRoP = false
+        var obtainRopCalled = false
+
+        var shouldCallObtainWithRefresh = false
+        var obtainWithRefreshCalled = false
+
+        override func obtainTokensAuthCode(code: String, authorizationDelegate: AuthorizationDelegate) {
+            obtainAuthCodeCalled = true
+            if !shouldCallObtainAuthCode {
+                XCTFail("Should not have called obtainTokensAuthCode")
             } else {
 
             }
         }
 
+        override func obtainTokensRoP(accessTokenString: String?, username: String, password: String, tokenResponseDelegate: TokenResponseDelegate) {
+            obtainRopCalled = true
+            if !shouldCallObtainRoP {
+                XCTFail("Should not have called obtainTokensRoP")
+            } else {
+                tokenResponseDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, refreshToken: nil, response: nil)
+            }
+        }
+
+        override func obtainTokensRefreshToken(refreshTokenString: String, tokenResponseDelegate: TokenResponseDelegate) {
+            obtainWithRefreshCalled = true
+            if !shouldCallObtainWithRefresh {
+                XCTFail("Should not have called obtainTokensRefreshToken")
+            } else {
+                tokenResponseDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, refreshToken: nil, response: nil)
+            }
+
+        }
+
+        func verify() {
+            if shouldCallObtainAuthCode && !obtainAuthCodeCalled {
+                XCTFail("Should have called obtainTokensRoP but it wasn't called")
+            }
+            if shouldCallObtainRoP && !obtainRopCalled {
+                XCTFail("Should have called obtainTokensAuthCode but it wasn't called")
+            }
+            if shouldCallObtainWithRefresh && !obtainWithRefreshCalled {
+                XCTFail("Should have called obtainTokensRefreshToken but it wasn't called")
+            }
+        }
     }
 
     class MockAuthorizationManager: BluemixAppID.AuthorizationManager {
@@ -567,9 +629,12 @@ public class AuthorizationManagerTests : XCTestCase {
             func onAuthorizationCanceled() {
 
             }
-
-            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
-
+            
+            func onAuthorizationSuccess(accessToken: AccessToken?,
+                                        identityToken: IdentityToken?,
+                                        refreshToken: RefreshToken?,
+                                        response:Response?) {
+               
             }
 
         }
@@ -627,47 +692,117 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         authManager.appid.oauthManager?.tokenManager = originalTokenManager
 
     }
+    
 
-    func testObtainTokensWithROP() {
-        let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
-        authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
-        let originalTokenManager = authManager.appid.oauthManager?.tokenManager
-        authManager.appid.oauthManager?.tokenManager = MockTokenManager(oAuthManager: authManager.appid.oauthManager!)
+    class TokenRespDelegate: TokenResponseDelegate {
+        var failed = false
+        var succeeded = false
 
-        class SomeError : Error {
-
-        }
-        class delegate: TokenResponseDelegate {
-            var failed = false
-
-            func onAuthorizationFailure(error: AuthorizationError) {
-                failed = true
-            }
-
-            func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
-
-            }
-
+        func onAuthorizationFailure(error: AuthorizationError) {
+            failed = true
         }
 
-        let del = delegate()
-
-        // happy flow:
-        authManager.error = nil
-        MockRegistrationManager.shouldFail = false
-        authManager.obtainTokensWithROP(username: "testUsername", password: "testPassword", tokenResponseDelegate: del)
-
-        // sad flow 1: registration error
-        MockRegistrationManager.shouldFail = true
-        authManager.obtainTokensWithROP(username: "testUsername", password: "testPassword", tokenResponseDelegate: del)
-        if !del.failed {
-            XCTFail()
+        func onAuthorizationSuccess(accessToken: AccessToken?,
+                                    identityToken: IdentityToken?,
+                                    refreshToken: RefreshToken?,
+                                    response:Response?) {
+            succeeded = true
         }
-        del.failed = false
-        MockRegistrationManager.shouldFail = false
 
-        authManager.appid.oauthManager?.tokenManager = originalTokenManager
     }
 
+    func testObtainTokensWithROPHappyFlow() {
+        let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
+        let mockTokenManager = MockTokenManager(oAuthManager: authManager.oAuthManager)
+        mockTokenManager.shouldCallObtainRoP = true
+        authManager.oAuthManager.tokenManager = mockTokenManager
+        let del = TokenRespDelegate()
+        authManager.error = nil
+        MockRegistrationManager.shouldFail = false
+        authManager.response = Response(responseData:nil, httpResponse: nil,  isRedirect: false)
+        authManager.signinWithResourceOwnerPassword(username: "testUsername", password: "testPassword", tokenResponseDelegate: del)
+        XCTAssertEqual(del.succeeded, true)
+        XCTAssertEqual(del.failed, false)
+        mockTokenManager.verify()
+    }
+
+    func testObtainTokensWithROPFailToRegister() {
+        let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
+        let mockTokenManager = MockTokenManager(oAuthManager: authManager.oAuthManager)
+        mockTokenManager.shouldCallObtainRoP = false
+        authManager.oAuthManager.tokenManager = mockTokenManager
+        let del = TokenRespDelegate()
+        MockRegistrationManager.shouldFail = true
+        authManager.signinWithResourceOwnerPassword(username: "testUsername", password: "testPassword", tokenResponseDelegate: del)
+        XCTAssertEqual(del.succeeded, false)
+        XCTAssertEqual(del.failed, true)
+        mockTokenManager.verify()
+        MockRegistrationManager.shouldFail = false
+    }
+
+
+    func testObtainTokensWithRefreshHappyFlow() {
+        let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
+        let mockTokenManager = MockTokenManager(oAuthManager: authManager.oAuthManager)
+        mockTokenManager.shouldCallObtainWithRefresh = true
+        authManager.oAuthManager.tokenManager = mockTokenManager
+        let del = TokenRespDelegate()
+        authManager.error = nil
+        MockRegistrationManager.shouldFail = false
+        authManager.signinWithRefreshToken(refreshTokenString: "tototoken", tokenResponseDelegate: del)
+        XCTAssertEqual(del.succeeded, true)
+        XCTAssertEqual(del.failed, false)
+        mockTokenManager.verify()
+    }
+
+    func testObtainTokensWithLastRefreshHappyFlow() {
+        let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
+        let mockTokenManager = MockTokenManager(oAuthManager: authManager.oAuthManager)
+        mockTokenManager.shouldCallObtainWithRefresh = true
+        authManager.oAuthManager.tokenManager = mockTokenManager
+        let del = TokenRespDelegate()
+        authManager.error = nil
+        MockRegistrationManager.shouldFail = false
+        // Assigning lastRefreshToken to some value
+        mockTokenManager.latestRefreshToken = RefreshTokenImpl(with: "tototoken")
+        // Calling the API with refreshTokenString=nil - this should use the value of lastRefreshToken
+        authManager.signinWithRefreshToken(refreshTokenString: nil, tokenResponseDelegate: del)
+        XCTAssertEqual(del.succeeded, true)
+        XCTAssertEqual(del.failed, false)
+        mockTokenManager.verify()
+    }
+
+    func testObtainTokensWithRefreshFailNotRegistered() {
+        let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
+        let mockTokenManager = MockTokenManager(oAuthManager: authManager.oAuthManager)
+        authManager.oAuthManager.tokenManager = mockTokenManager
+        let del = TokenRespDelegate()
+        authManager.error = nil
+        MockRegistrationManager.shouldFail = true
+        authManager.signinWithRefreshToken(refreshTokenString: "tototoken", tokenResponseDelegate: del)
+        XCTAssertEqual(del.succeeded, false)
+        XCTAssertEqual(del.failed, true)
+        mockTokenManager.verify()
+    }
+
+    func testObtainTokensWithRefreshFailNoRefreshTokenToUse() {
+        let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
+        let mockTokenManager = MockTokenManager(oAuthManager: authManager.oAuthManager)
+        authManager.oAuthManager.tokenManager = mockTokenManager
+        let del = TokenRespDelegate()
+        authManager.error = nil
+        MockRegistrationManager.shouldFail = false
+        authManager.response = Response(responseData:nil, httpResponse: nil,  isRedirect: false)
+        authManager.signinWithRefreshToken(refreshTokenString: nil, tokenResponseDelegate: del)
+        XCTAssertEqual(del.succeeded, false)
+        XCTAssertEqual(del.failed, true)
+        mockTokenManager.verify()
+    }
 
 }

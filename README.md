@@ -61,7 +61,7 @@ import BluemixAppID
 2. Add the following code to the same file:
 ```swift
 class delegate : AuthorizationDelegate {
-    public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+    public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, refreshToken: RefreshToken?, response:Response?) {
         //User authenticated
     }
 
@@ -89,7 +89,7 @@ AppID.sharedInstance.loginWidget?.launch(delegate: delegate())
 You can obtain access token and id token by supplying the end user's username and the end user's password.
   ```swift
   class delegate : TokenResponseDelegate {
-      public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+      public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, refreshToken: RefreshToken?, response:Response?) {
       //User authenticated
       }
 
@@ -98,7 +98,7 @@ You can obtain access token and id token by supplying the end user's username an
       }
   }
 
-  AppID.sharedInstance.obtainTokensWithROP(username: username, password: password, delegate: delegate())
+  AppID.sharedInstance.signinWithResourceOwnerPassword(username: username, password: password, delegate: delegate())
   ```
   {: codeblock}
 
@@ -109,7 +109,7 @@ Make sure to set **Allow users to sign up and reset their password** to **ON**, 
 Use LoginWidget class to start the sign up flow.
 ```swift
 class delegate : AuthorizationDelegate {
-  public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+  public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, refreshToken: RefreshToken?, response:Response?) {
      if accessToken == nil && identityToken == nil {
       //email verification is required
       return
@@ -134,7 +134,7 @@ Make sure to set **Allow users to sign up and reset their password** and **Forgo
 Use LoginWidget class to start the forgot password flow.
 ```swift
 class delegate : AuthorizationDelegate {
-   public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+   public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, refreshToken: RefreshToken?, response:Response?) {
       //forgot password finished, in this case accessToken and identityToken will be null.
    }
 
@@ -158,7 +158,7 @@ This API can be used only when the user is logged in using Cloud Directory ident
 ```swift
 
  class delegate : AuthorizationDelegate {
-     public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+     public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, refreshToken: RefreshToken?, response:Response?) {
         //User authenticated, and fresh tokens received
      }
 
@@ -182,7 +182,7 @@ Use LoginWidget class to start the change password flow.
 This API can be used only when the user is logged in using Cloud Directory identity provider.
 ```swift
  class delegate : AuthorizationDelegate {
-     public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+     public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, refreshToken: RefreshToken?, response:Response?) {
          //User authenticated, and fresh tokens received
      }
 

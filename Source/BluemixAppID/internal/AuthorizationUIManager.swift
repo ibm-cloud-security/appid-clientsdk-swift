@@ -54,7 +54,7 @@ public class AuthorizationUIManager {
                 }
                 AuthorizationUIManager.logger.debug(message: "Obtaining tokens")
                 
-                self.oAuthManager.tokenManager?.obtainTokens(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
+                self.oAuthManager.tokenManager?.obtainTokensAuthCode(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
             })
         }
         
@@ -77,7 +77,10 @@ public class AuthorizationUIManager {
             if flow == AppIDConstants.JSON_FORGOT_PASSWORD_KEY ||  flow == AppIDConstants.JSON_SIGN_UP_KEY {
                 loginView?.dismiss(animated: true, completion: { () -> Void in
                     AuthorizationUIManager.logger.debug(message: "Finish " + flow + " flow")
-                    self.authorizationDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, response: nil)
+                    self.authorizationDelegate.onAuthorizationSuccess(accessToken: nil,
+                                                                      identityToken: nil,
+                                                                      refreshToken: nil,
+                                                                      response: nil)
                 })
                 return true
             }

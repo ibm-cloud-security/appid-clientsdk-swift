@@ -25,7 +25,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
             super.init(oAuthManager: oAuthManager)
         }
 
-        override func obtainTokens(code:String, authorizationDelegate:AuthorizationDelegate) {
+        override func obtainTokensAuthCode(code:String, authorizationDelegate:AuthorizationDelegate) {
             self.exp.fulfill()
         }
 
@@ -59,7 +59,10 @@ public class AuthorizationUIManagerTests: XCTestCase {
            XCTFail()
         }
         
-        func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, response:Response?) {
+        func onAuthorizationSuccess(accessToken: AccessToken?,
+                                    identityToken: IdentityToken?,
+                                    refreshToken: RefreshToken?,
+                                    response:Response?) {
              self.exp?.fulfill()
         }
         
@@ -103,7 +106,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
     func testApplicationErr2() {
         
         let expectation1 = expectation(description: "Obtained tokens")
-        let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: "Failed to obtain access and identity tokens"), authorizationUrl: "someurl", redirectUri: "someredirect")
+        let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: "someerr"), authorizationUrl: "someurl", redirectUri: "someredirect")
         manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
         XCTAssertFalse(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somecode&error=someerr")!, options: [:]))
         

@@ -54,7 +54,7 @@ public class AuthorizationUIManager {
                 }
                 AuthorizationUIManager.logger.debug(message: "Obtaining tokens")
                 
-                self.oAuthManager.tokenManager?.obtainTokens(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
+                self.oAuthManager.tokenManager?.obtainTokensAuthCode(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
             })
         }
         
@@ -66,10 +66,10 @@ public class AuthorizationUIManager {
                 } else {
                     let errorDescription = Utils.getParamFromQuery(url: url, paramName: "error_description")
                     let errorCode = Utils.getParamFromQuery(url: url, paramName: "error_code")
-                    AuthorizationUIManager.logger.error(message: "error: " + err)
+                    AuthorizationUIManager.logger.error(message: "Failed to obtain access and identity tokens, error: " + err)
                     AuthorizationUIManager.logger.error(message: "errorCode: " + (errorCode ?? "not available"))
                     AuthorizationUIManager.logger.error(message: "errorDescription: " + (errorDescription ?? "not available"))
-                    self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to obtain access and identity tokens"))
+                    self.authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(err))
                 }
             })
             return false
@@ -77,7 +77,10 @@ public class AuthorizationUIManager {
             if flow == AppIDConstants.JSON_FORGOT_PASSWORD_KEY ||  flow == AppIDConstants.JSON_SIGN_UP_KEY {
                 loginView?.dismiss(animated: true, completion: { () -> Void in
                     AuthorizationUIManager.logger.debug(message: "Finish " + flow + " flow")
-                    self.authorizationDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, response: nil)
+                    self.authorizationDelegate.onAuthorizationSuccess(accessToken: nil,
+                                                                      identityToken: nil,
+                                                                      refreshToken: nil,
+                                                                      response: nil)
                 })
                 return true
             }

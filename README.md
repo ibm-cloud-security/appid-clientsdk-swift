@@ -84,7 +84,7 @@ AppID.sharedInstance.loginWidget?.launch(delegate: delegate())
 ## Managing Cloud Directory with the iOS Swift SDK
 
 
-### Login using Resource Owner Password
+### Sign in using Resource Owner Password
 
 You can obtain access token and id token by supplying the end user's username and the end user's password.
   ```swift
@@ -100,7 +100,24 @@ You can obtain access token and id token by supplying the end user's username an
 
   AppID.sharedInstance.signinWithResourceOwnerPassword(username: username, password: password, delegate: delegate())
   ```
-  {: codeblock}
+
+### Sign in with refresh token
+
+It is recommended to store the refresh token locally such that it will be possible to sign in with the refresh token without requiring the user to type his credentials again.
+  ```swift
+  class delegate : TokenResponseDelegate {
+      public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, refreshToken: RefreshToken?, response:Response?) {
+      //User authenticated
+      }
+
+      public func onAuthorizationFailure(error: AuthorizationError) {
+      //Exception occurred
+      }
+  }
+
+  AppID.sharedInstance.signInWithRefreshToken(refreshTokenString: refreshTokenString, delegate: delegate())
+  ```
+
 
 ### Sign Up
 

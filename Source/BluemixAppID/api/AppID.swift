@@ -58,6 +58,12 @@ public class AppID {
         oauthManager?.authorizationManager?.signinWithResourceOwnerPassword(accessTokenString: accessTokenString, username: username, password: password, tokenResponseDelegate: tokenResponseDelegate)
     }
 
+   /**
+     Obtain new access and identity tokens using a refresh token.
+     
+     Note that the identity itself (user name/details) will not be refreshed by this operation, 
+     it will remain the same identity but in a new token (new expiration time)
+    */
     public func signinWithRefreshToken(refreshTokenString:String? = nil, tokenResponseDelegate:TokenResponseDelegate) {
         oauthManager?.authorizationManager?.signinWithRefreshToken(
             refreshTokenString: refreshTokenString,

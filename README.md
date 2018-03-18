@@ -123,7 +123,7 @@ It is recommended to store the refresh token locally such that it will be possib
 
 Make sure to set **Allow users to sign up and reset their password** to **ON**, in the settings for Cloud Directory.
 
-Use Login Widget class to start the sign up flow.
+Use LoginWidget class to start the sign up flow.
 ```swift
 class delegate : AuthorizationDelegate {
   public func onAuthorizationSuccess(accessToken: AccessToken?, identityToken: IdentityToken?, refreshToken: RefreshToken?, response:Response?) {

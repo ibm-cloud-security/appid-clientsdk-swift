@@ -27,21 +27,21 @@ public class AuthorizationUIManager {
         self.authorizationUrl = authorizationUrl
         self.redirectUri = redirectUri
     }
-    
+
     public func launch() {
         AuthorizationUIManager.logger.debug(message: "Launching safari view")
         loginView =  safariView(url: URL(string: authorizationUrl )!)
         loginView?.authorizationDelegate = authorizationDelegate
-        let rootView = UIApplication.shared.keyWindow?.rootViewController
-        let currentView = rootView?.presentedViewController
-        let view = currentView != nil ? currentView : rootView
         DispatchQueue.main.async {
+            let rootView = UIApplication.shared.keyWindow?.rootViewController
+            let currentView = rootView?.presentedViewController
+            let view = currentView != nil ? currentView : rootView
             view?.present(self.loginView!, animated: true, completion:  nil)
         }
     }
-    
+
     public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {
-        
+
         func tokenRequest(code: String?, errMsg:String?) {
             loginView?.dismiss(animated: true, completion: { () -> Void in
                 guard errMsg == nil else {
@@ -53,11 +53,11 @@ public class AuthorizationUIManager {
                     return
                 }
                 AuthorizationUIManager.logger.debug(message: "Obtaining tokens")
-                
+
                 self.oAuthManager.tokenManager?.obtainTokensAuthCode(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
             })
         }
-        
+
         if let err = Utils.getParamFromQuery(url: url, paramName: "error") {
             loginView?.dismiss(animated: true, completion: { () -> Void in
                 if err == "invalid_client" {
@@ -104,12 +104,10 @@ public class AuthorizationUIManager {
             }
             return false
         }
-        
+
     }
-    
-    
-    
-    
+
+
+
+
 }
-
-

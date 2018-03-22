@@ -11,7 +11,7 @@
 [![GithubForks][img-github-forks]][url-github-forks]
 
 ## Requirements
-* Xcode 8.1 or above
+* Xcode 8.3 or above
 * CocoaPods 1.1.0 or higher
 * MacOS 10.11.5 or higher
 * iOS 9 or higher
@@ -215,7 +215,7 @@ This API can be used only when the user is logged in using Cloud Directory ident
   AppID.sharedInstance.loginWidget?.launchChangePassword(delegate: delegate())
 ```
 
-    
+
 ## Invoking protected resources
 Add the following imports to the file in which you want to invoke a protected resource request:
 ```swift
@@ -248,8 +248,8 @@ This package contains code licensed under the Apache License, Version 2.0 (the "
 [img-github-forks]: https://img.shields.io/github/forks/ibm-cloud-security/appid-clientsdk-swift.svg?style=social&label=Fork
 [url-github-forks]: https://github.com/ibm-cloud-security/appid-clientsdk-swift/network
 
-[img-travis-master]: https://travis-ci.org/ibm-cloud-security/appid-clientsdk-swift.svg
-[url-travis-master]: https://travis-ci.org/ibm-cloud-security/appid-clientsdk-swift
+[img-travis-master]: https://travis-ci.org/ibm-cloud-security/appid-clientsdk-swift.svg?branch=master
+[url-travis-master]: https://travis-ci.org/ibm-cloud-security/appid-clientsdk-swift?branch=master
 
 [img-coveralls-master]: https://coveralls.io/repos/github/ibm-cloud-security/appid-clientsdk-swift/badge.svg
 [url-coveralls-master]: https://coveralls.io/github/ibm-cloud-security/appid-clientsdk-swift

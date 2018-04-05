@@ -11,7 +11,7 @@
 [![GithubForks][img-github-forks]][url-github-forks]
 
 ## Requirements
-* Xcode 8.3 or above
+* Xcode 8.1 or above
 * CocoaPods 1.1.0 or higher
 * MacOS 10.11.5 or higher
 * iOS 9 or higher

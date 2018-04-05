@@ -53,7 +53,7 @@ public class AuthorizationUIManager {
                     return
                 }
                 AuthorizationUIManager.logger.debug(message: "Obtaining tokens")
-
+                
                 self.oAuthManager.tokenManager?.obtainTokensAuthCode(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
             })
         }

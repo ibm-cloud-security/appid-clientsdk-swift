@@ -13,11 +13,13 @@
 import Foundation
 import SafariServices
 import BMSCore
+
 public class AppID {
 
 	private(set) var tenantId: String?
 	private(set) var bluemixRegion: String?
     private(set) var oauthManager: OAuthManager?
+    private(set) var userInfoManager: UserInfoManager?
     public var loginWidget: LoginWidgetImpl?
     public var userAttributeManager:UserAttributeManagerImpl?
     
@@ -42,6 +44,7 @@ public class AppID {
         self.tenantId = tenantId
         self.bluemixRegion = bluemixRegion
 		self.oauthManager = OAuthManager(appId: self)
+        self.userInfoManager = UserInfoManager(appId: self)
         self.loginWidget = LoginWidgetImpl(oauthManager: self.oauthManager!)
         self.userAttributeManager = UserAttributeManagerImpl(appId: self)
     }
@@ -87,6 +90,23 @@ public class AppID {
             return (self.oauthManager?.authorizationManager?.application(application, open: url, options: options))!
     }
     
+    ///
+    /// Retrieves UserInfo using the stored access and identity tokens
+    ///
+    /// - Parameter completion: The error, json profile response handler
+    ///
+    public func getUserInfo(completion: @escaping (Error?, [String: Any]?) -> Void) {
+        userInfoManager?.getUserInfo(completion: completion)
+    }
     
-       
+    ///
+    /// Retrieves UserInfo using the provided access and identity tokens
+    ///
+    /// - Parameter accessTokenString: the access token to use for authorization
+    /// - Parameter identityTokenString: the identity token to use for response validation
+    /// - Parameter completion: the (error, json profile) response handler
+    ///
+    public func getUserInfo(accessTokenString: String, identityTokenString: String, completion: @escaping (Error?, [String: Any]?) -> Void) {
+        userInfoManager?.getUserInfo(accessToken: accessTokenString, idToken: identityTokenString, completion: completion)
+    }
 }

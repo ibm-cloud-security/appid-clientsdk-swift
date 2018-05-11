@@ -62,22 +62,23 @@ public class UserInfoManagerTests: XCTestCase {
         userManager.token = AppIDConstants.APPID_ACCESS_TOKEN
         userManager.data = "{\"sub\" : \"123\"}".data(using: .utf8)
         userManager.idTokenSubject = "123"
-        userManager.getUserInfo { (err, res) in
-            if err == nil {
-                XCTAssert((res! as! [String: String]) == ["sub": "123"])
-            } else {
-                XCTFail()
+        
+        func happyFlowHandler(err: Swift.Error?, res: [String: Any]?) {
+            guard err == nil, let res = res else {
+                return XCTFail()
             }
+            XCTAssert((res as! [String: String]) == ["sub": "123"])
         }
+        
+        userManager.getUserInfo(completion: happyFlowHandler)
+        userManager.getUserInfo(accessToken: AppIDConstants.APPID_ACCESS_TOKEN, idToken: nil, completion: happyFlowHandler)
+        userManager.getUserInfo(accessToken: AppIDConstants.APPID_ACCESS_TOKEN,
+                                idToken: AppIDTestConstants.ID_TOKEN_WITH_SUBJECT,
+                                completion: happyFlowHandler)
     }
     
     func testMissingAccessToken () {
         errorHandler(expectedError: .missingAccessToken)
-    }
-    
-    func testMissingIdTokenSubject () {
-        userManager.token = "token"
-        errorHandler(expectedError: .missingOrMalformedIdToken)
     }
     
     func testUnauthorized () {
@@ -147,6 +148,15 @@ public class UserInfoManagerTests: XCTestCase {
     
     func testMalformedIdentityToken () {
         userManager.getUserInfo(accessToken: "", idToken: "bad token") { (err, resp) in
+            guard let err = err as? UserInfoManagerError else {
+                return XCTFail()
+            }
+            XCTAssert(err.description == UserInfoManagerError.missingOrMalformedIdToken.description)
+        }
+    }
+    
+    func testValidIdentityToken () {
+        userManager.getUserInfo(accessToken: "", idToken: "") { (err, resp) in
             guard let err = err as? UserInfoManagerError else {
                 return XCTFail()
             }

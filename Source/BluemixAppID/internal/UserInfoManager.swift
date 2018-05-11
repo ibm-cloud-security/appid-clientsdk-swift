@@ -36,9 +36,7 @@ internal class UserInfoManager {
             return logAndFail(err: .missingAccessToken, completion: completion)
         }
         
-        guard let sub = getLatestIdentityTokenSubject() else {
-            return logAndFail(err: .missingOrMalformedIdToken, completion: completion)
-        }
+        let sub = getLatestIdentityTokenSubject()
         
         getUserInfo(accessToken: accessToken, idTokenSub: sub, completion: completion)
     }
@@ -47,16 +45,25 @@ internal class UserInfoManager {
     /// Retrives user info using the provided tokens
     ///
     /// - Parameter accessToken {String}: the access token used for authorization
-    /// - Parameter idToken {String}: the identity token used for validation
+    /// - Parameter idToken {String}: an optional identity token to use for validation
     /// - Parameter completion {(Error?, [String: Any]?) -> Void}: result handler
     ///
-    internal func getUserInfo(accessToken: String, idToken: String, completion: @escaping jsonCompletionResponse) {
+    internal func getUserInfo(accessToken: String, idToken: String?, completion: @escaping jsonCompletionResponse) {
         
-        guard let idToken = IdentityTokenImpl(with: idToken), let sub = idToken.subject else {
-            return logAndFail(err: .missingOrMalformedIdToken, completion: completion)
+        // If provided an identityToken, we should validate user info response if possible
+        if let idToken = idToken {
+            
+            guard let identityToken = IdentityTokenImpl(with: idToken) else {
+                return logAndFail(err: .missingOrMalformedIdToken, completion: completion)
+            }
+            
+            // If subject exists, use for validation
+            if let sub = identityToken.subject {
+                return getUserInfo(accessToken: accessToken, idTokenSub: sub, completion: completion)
+            }
         }
         
-        getUserInfo(accessToken: accessToken, idTokenSub: sub, completion: completion)
+        getUserInfo(accessToken: accessToken, idTokenSub: nil, completion: completion)
     }
     
     ///
@@ -66,7 +73,7 @@ internal class UserInfoManager {
     /// - Parameter idTokenSub {String}: the subject field from the identity token used for validation
     /// - Parameter completion {(Error?, [String: Any]?) -> Void}: result handler
     ///
-    private func getUserInfo(accessToken: String, idTokenSub: String, completion: @escaping jsonCompletionResponse) {
+    private func getUserInfo(accessToken: String, idTokenSub: String?, completion: @escaping jsonCompletionResponse) {
         
         let url = Config.getServerUrl(appId: appId) + "/" + AppIDConstants.userInfoEndPoint
         
@@ -80,8 +87,10 @@ internal class UserInfoManager {
                 return self.logAndFail(err: "Expected to receive a profile", completion: completion)
             }
             
-            guard let subject = profile["sub"], let sub = subject as? String, sub == idTokenSub else {
-                return self.logAndFail(err: .responseValidationError, completion: completion)
+            if let idTokenSub = idTokenSub {
+                guard let subject = profile["sub"], let sub = subject as? String, sub == idTokenSub else {
+                    return self.logAndFail(err: .responseValidationError, completion: completion)
+                }
             }
             
             completion(nil, profile)

@@ -103,10 +103,10 @@ public class AppID {
     /// Retrieves UserInfo using the provided access and identity tokens
     ///
     /// - Parameter accessTokenString: the access token to use for authorization
-    /// - Parameter identityTokenString: the identity token to use for response validation
+    /// - Parameter identityTokenString: an optional identity token to use for response validation
     /// - Parameter completion: the (error, json profile) response handler
     ///
-    public func getUserInfo(accessTokenString: String, identityTokenString: String, completion: @escaping (Error?, [String: Any]?) -> Void) {
+    public func getUserInfo(accessTokenString: String, identityTokenString: String?, completion: @escaping (Error?, [String: Any]?) -> Void) {
         userInfoManager?.getUserInfo(accessToken: accessTokenString, idToken: identityTokenString, completion: completion)
     }
 }

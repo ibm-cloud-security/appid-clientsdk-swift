@@ -27,6 +27,7 @@ public class AppID {
     internal static let logger =  Logger.logger(name: AppIDConstants.AppIDLoggerName)
     
     static public let REGION_US_SOUTH = ".ng.bluemix.net"
+    static public let REGION_US_EAST = ".us-east.bluemix.net"
     static public let REGION_UK = ".eu-gb.bluemix.net"
     static public let REGION_SYDNEY = ".au-syd.bluemix.net"
     static public let REGION_GERMANY = ".eu-de.bluemix.net"

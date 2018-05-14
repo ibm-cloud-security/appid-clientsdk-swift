@@ -12,13 +12,15 @@
 
 import Foundation
 
-public enum UserInfoManagerError: Error {
-    case general(String)
+public enum UserProfileError: Error {
+    
     case notFound
     case unauthorized
     case missingAccessToken
     case missingOrMalformedIdToken
     case responseValidationError
+    case bodyParsingError
+    case general(String)
     
     var description: String {
         switch self {
@@ -28,6 +30,7 @@ public enum UserInfoManagerError: Error {
         case .missingAccessToken: return "Access token not found. Please login."
         case .missingOrMalformedIdToken: return "Identity token not found or is missing subject field. Please login again."
         case .responseValidationError: return "Potential token substitution attack. Rejecting: response.sub != identityToken.sub"
+        case .bodyParsingError: return "Failed to parse server body"
         }
     }
 }

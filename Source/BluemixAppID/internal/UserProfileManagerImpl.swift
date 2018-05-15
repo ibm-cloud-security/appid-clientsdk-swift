@@ -68,7 +68,7 @@ public class UserProfileManagerImpl: UserProfileManager {
 
         let sub = getLatestIdentityTokenSubject()
 
-        getUserInfo(accessToken: accessToken, idTokenSub: sub, completionHandler: completionHandler)
+        sendUserInfoRequest(accessToken: accessToken, idTokenSub: sub, completionHandler: completionHandler)
     }
 
     ///
@@ -89,11 +89,11 @@ public class UserProfileManagerImpl: UserProfileManager {
 
             // If subject exists, use for validation
             if let sub = identityToken.subject {
-                return getUserInfo(accessToken: accessToken, idTokenSub: sub, completionHandler: completionHandler)
+                return sendUserInfoRequest(accessToken: accessToken, idTokenSub: sub, completionHandler: completionHandler)
             }
         }
 
-        getUserInfo(accessToken: accessToken, idTokenSub: nil, completionHandler: completionHandler)
+        sendUserInfoRequest(accessToken: accessToken, idTokenSub: nil, completionHandler: completionHandler)
     }
 
     ///
@@ -103,25 +103,25 @@ public class UserProfileManagerImpl: UserProfileManager {
     /// - Parameter idTokenSub {String}: the subject field from the identity token used for validation
     /// - Parameter completionHandler {(Error?, [String: Any]?) -> Void}: result handler
     ///
-    private func getUserInfo(accessToken: String, idTokenSub: String? = nil, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
+    private func sendUserInfoRequest(accessToken: String, idTokenSub: String? = nil, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
 
         let url = Config.getServerUrl(appId: appId) + "/" + AppIDConstants.userInfoEndPoint
 
-        sendRequest(url: url, method: HttpMethod.GET, accessToken: accessToken) { (error, profile) in
+        sendRequest(url: url, method: HttpMethod.GET, accessToken: accessToken) { (error, info) in
 
             guard error == nil else {
                 return completionHandler(error, nil)
             }
 
-            guard let profile = profile else {
+            guard let info = info else {
                 return self.logAndFail(error: "Expected to receive a profile", completionHandler: completionHandler)
             }
 
-            if let idTokenSub = idTokenSub, let subject = profile["sub"] as? String, subject != idTokenSub {
+            if let idTokenSub = idTokenSub, let subject = info["sub"] as? String, subject != idTokenSub {
                 return self.logAndFail(error: .responseValidationError, completionHandler: completionHandler)
             }
 
-            completionHandler(nil, profile)
+            completionHandler(nil, info)
         }
     }
 
@@ -155,6 +155,7 @@ public class UserProfileManagerImpl: UserProfileManager {
     ///
     /// - Parameter url {String}: the url to make the request to
     /// - Parameter method {HTTPMethod}: the request method
+    /// - Parameter body {String}: the value to add to the request body
     /// - Parameter accessToken {String}: access token used for authorization
     /// - Parameter completionHandler {(Error?, [String: Any]?) -> Void}: result handler
     ///
@@ -170,6 +171,10 @@ public class UserProfileManagerImpl: UserProfileManager {
 
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+
+        if let value = body {
+            req.httpBody = value.data(using: .utf8)
+        }
 
         send(request: req) { (data, response, error) in
 

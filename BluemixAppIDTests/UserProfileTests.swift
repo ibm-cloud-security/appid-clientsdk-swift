@@ -55,7 +55,7 @@ public class UserProfileTests: XCTestCase {
         var passed = false
         var failureDesc : String? = nil
 
-        func onSuccess(result: [String:Any]) {
+        func onSuccess(result: [String: Any]) {
             XCTAssert(result["key"] != nil)
             let actualValue = result["key"]!
             let actualValueString = String(describing: actualValue)
@@ -213,7 +213,7 @@ public class UserProfileTests: XCTestCase {
 
 
     }
-    
+
     func testFailure () {
         let delegate = MyDelegate()
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
@@ -360,14 +360,14 @@ public class UserProfileTests: XCTestCase {
             if err != nil {
                 return XCTFail()
             }
-                 
+
             guard let dict = res as? [String: String] else {
                 return XCTFail()
             }
             XCTAssert(dict == ["sub": "1234"])
         }
     }
-    
+
     func testMalformedUserProvidedIdToken () {
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
         userProfileManager.getUserInfo(accessTokenString: "", identityTokenString: "") { (err, resp) in

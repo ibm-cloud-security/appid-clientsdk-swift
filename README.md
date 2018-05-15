@@ -215,6 +215,45 @@ This API can be used only when the user is logged in using Cloud Directory ident
   AppID.sharedInstance.loginWidget?.launchChangePassword(delegate: delegate())
 ```
 
+### User Profile
+
+Using the AppID UserProfileManager, you are able to create and retrieve attributes from a user's profile as well as retrieve additional info about a user.
+
+```swift
+let userProfileManager = AppID.sharedInstance.userProfileManager
+
+// Handle attribute response
+func attributeHandler(error: Error?, response: [String: Any]) {}
+
+/// If no tokens are passed, App ID will attempt to use the latest stored access and identity tokens
+
+// Set Attributes
+userProfileManager?.setAttribute(key: String, value: String, completionHandler: attributeHandler)
+userProfileManager?.setAttribute(key: String, value: String, accessTokenString: attributeHandler)
+
+// Get particular attribute
+userProfileManager?.getAttribute(key: String, completionHandler: attributeHandler)
+userProfileManager?.getAttribute(key: String, accessTokenString: String, completionHandler: attributeHandler)
+
+// Get all attributes
+userProfileManager?.getAttributes(completionHandler: attributeHandler)
+userProfileManager?.getAttributes(accessTokenString: String, completionHandler: attributeHandler)
+
+// Delete an Attribute
+userProfileManager?.deleteAttribute(key: String, completionHandler:attributeHandler)
+userProfileManager?.deleteAttribute(key: String, accessTokenString: String, completionHandler: attributeHandler)
+
+// Retrieve additional information about a user using the stored access/identity tokens
+userProfileManager?.getUserInfo { (error: Error?, info: [String: Any]?) in
+
+}
+
+// Retrieve additional information about a user using the provided access and identity token
+// If an identityToken is provided (recommended), we will validate the user info response
+userProfileManager?.getUserInfo(accessTokenString: String, identityTokenString: String? { (error: Error?, info: [String: Any]?) in
+
+}
+```
 
 ## Invoking protected resources
 Add the following imports to the file in which you want to invoke a protected resource request:

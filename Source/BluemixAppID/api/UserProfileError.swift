@@ -13,7 +13,7 @@
 import Foundation
 
 public enum UserProfileError: Error {
-    
+
     case notFound
     case unauthorized
     case missingAccessToken
@@ -21,7 +21,7 @@ public enum UserProfileError: Error {
     case responseValidationError
     case bodyParsingError
     case general(String)
-    
+
     var description: String {
         switch self {
         case .general(let msg) : return msg

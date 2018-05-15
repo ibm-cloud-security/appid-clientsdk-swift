@@ -79,8 +79,7 @@ internal class AppIDConstants {
     
     internal static var AppIDRequestManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDRequestManager"
     internal static var RegistrationManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDRegistrationManager"
-    internal static var UserAttributeManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDUserAttributeManager"
-    internal static var UserManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDUserManager"
+    internal static var UserProfileManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDUserProfileManager"
     internal static var TokenManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDTokenManager"
     internal static var AuthorizationManagerLoggerName = Logger.bmsLoggerPrefix + "AppIDAuthorizationManager"
     internal static var AppIDLoggerName = Logger.bmsLoggerPrefix + "AppID"
@@ -89,6 +88,7 @@ internal class AppIDConstants {
     internal static var tokenEndPoint = "token"
     internal static var clientsEndPoint = "clients"
     internal static let userInfoEndPoint = "userinfo"
+    internal static let attibutesEndpoint = "attributes"
     
     internal static var REDIRECT_URI_VALUE = Utils.getApplicationDetails().name + "://mobile/callback"
     internal static var authorizationEndPoint = "authorization"

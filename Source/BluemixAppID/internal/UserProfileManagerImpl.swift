@@ -15,43 +15,43 @@ import BMSCore
 
 public class UserProfileManagerImpl: UserProfileManager {
 
-    static var logger = Logger.logger(name: AppIDConstants.UserAttributeManagerLoggerName)
-    private let userProfileAttributesPath = "attributes"
-    private var appId:AppID
+    static var logger = Logger.logger(name: AppIDConstants.UserProfileManagerLoggerName)
 
-    init(appId:AppID) {
+    private var appId: AppID
+
+    init(appId: AppID) {
         self.appId = appId
     }
 
-    public func setAttribute(key: String, value: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+    public func setAttribute(key: String, value: String, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
         sendAttributeRequest(method: HttpMethod.PUT, key: key, value: value, accessTokenString: getLatestAccessToken(), completionHandler: completionHandler)
     }
 
-    public func setAttribute(key: String, value: String, accessTokenString: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+    public func setAttribute(key: String, value: String, accessTokenString: String, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
         sendAttributeRequest(method: HttpMethod.PUT, key: key, value: value, accessTokenString: accessTokenString, completionHandler: completionHandler)
     }
 
-    public func getAttribute(key: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+    public func getAttribute(key: String, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
         sendAttributeRequest(method: HttpMethod.GET, key: key, value: nil, accessTokenString: getLatestAccessToken(), completionHandler: completionHandler)
     }
 
-    public func getAttribute(key: String, accessTokenString: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+    public func getAttribute(key: String, accessTokenString: String, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
         sendAttributeRequest(method: HttpMethod.GET, key: key, value: nil, accessTokenString: accessTokenString, completionHandler: completionHandler)
     }
 
-    public func deleteAttribute(key: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+    public func deleteAttribute(key: String, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
         sendAttributeRequest(method: HttpMethod.DELETE, key: key, value: nil, accessTokenString: getLatestAccessToken(), completionHandler: completionHandler)
     }
 
-    public func deleteAttribute(key: String, accessTokenString: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+    public func deleteAttribute(key: String, accessTokenString: String, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
         sendAttributeRequest(method: HttpMethod.DELETE, key: key, value: nil, accessTokenString: accessTokenString, completionHandler: completionHandler)
     }
 
-    public func getAttributes(completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+    public func getAttributes(completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
         sendAttributeRequest(method: HttpMethod.GET, key: nil, value: nil, accessTokenString: getLatestAccessToken(), completionHandler: completionHandler)
     }
 
-    public func getAttributes(accessTokenString: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+    public func getAttributes(accessTokenString: String, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
         sendAttributeRequest(method: HttpMethod.GET, key: nil, value: nil, accessTokenString: accessTokenString, completionHandler: completionHandler)
     }
 
@@ -61,16 +61,16 @@ public class UserProfileManagerImpl: UserProfileManager {
     /// - Parameter completionHandler {(Error?, [String: Any]?) -> Void}: result handler
     ///
     public func getUserInfo(completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
-        
+
         guard let accessToken = getLatestAccessToken() else {
             return logAndFail(error: .missingAccessToken, completionHandler: completionHandler)
         }
-        
+
         let sub = getLatestIdentityTokenSubject()
-        
+
         getUserInfo(accessToken: accessToken, idTokenSub: sub, completionHandler: completionHandler)
     }
-    
+
     ///
     /// Retrives user info using the provided tokens
     ///
@@ -79,20 +79,20 @@ public class UserProfileManagerImpl: UserProfileManager {
     /// - Parameter completionHandler {(Error?, [String: Any]?) -> Void}: result handler
     ///
     public func getUserInfo(accessTokenString accessToken: String, identityTokenString idToken: String? = nil, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
-        
+
         // If provided an identityToken, we should validate user info response if possible
         if let idToken = idToken {
-            
+
             guard let identityToken = IdentityTokenImpl(with: idToken) else {
                 return logAndFail(error: .missingOrMalformedIdToken, completionHandler: completionHandler)
             }
-            
+
             // If subject exists, use for validation
             if let sub = identityToken.subject {
                 return getUserInfo(accessToken: accessToken, idTokenSub: sub, completionHandler: completionHandler)
             }
         }
-        
+
         getUserInfo(accessToken: accessToken, idTokenSub: nil, completionHandler: completionHandler)
     }
 
@@ -103,33 +103,40 @@ public class UserProfileManagerImpl: UserProfileManager {
     /// - Parameter idTokenSub {String}: the subject field from the identity token used for validation
     /// - Parameter completionHandler {(Error?, [String: Any]?) -> Void}: result handler
     ///
-    private func getUserInfo(accessToken: String, idTokenSub: String? = nil, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
-        
+    private func getUserInfo(accessToken: String, idTokenSub: String? = nil, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
+
         let url = Config.getServerUrl(appId: appId) + "/" + AppIDConstants.userInfoEndPoint
-        
+
         sendRequest(url: url, method: HttpMethod.GET, accessToken: accessToken) { (error, profile) in
-            
+
             guard error == nil else {
                 return completionHandler(error, nil)
             }
-            
+
             guard let profile = profile else {
                 return self.logAndFail(error: "Expected to receive a profile", completionHandler: completionHandler)
             }
-            
-            if let idTokenSub = idTokenSub {
-                guard let subject = profile["sub"], let sub = subject as? String, sub == idTokenSub else {
-                    return self.logAndFail(error: .responseValidationError, completionHandler: completionHandler)
-                }
+
+            if let idTokenSub = idTokenSub, let subject = profile["sub"] as? String, subject != idTokenSub {
+                return self.logAndFail(error: .responseValidationError, completionHandler: completionHandler)
             }
-            
+
             completionHandler(nil, profile)
         }
     }
-    
+
+    ///
+    /// Handler for an attribute request
+    ///
+    /// - Parameter method {HttpMethod}: the Http method to make the request with
+    /// - Parameter key {String?}: the optional attribute name to target
+    /// - Parameter value {String?}: the optional attribute value to set
+    /// - Parameter accessTokenString {String?}: the access token to authorize request
+    /// - Parameter completionHandler {(Error?, [String: Any]?) -> Void}: result handler
+    ///
     internal func sendAttributeRequest(method: HttpMethod, key: String?, value: String?, accessTokenString: String?, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
-        
-        var urlString = Config.getAttributesUrl(appId: appId) + userProfileAttributesPath
+
+        var urlString = Config.getAttributesUrl(appId: appId) + AppIDConstants.userInfoEndPoint
 
         if let key = key {
             urlString = urlString + "/" + Utils.urlEncode(key)
@@ -138,11 +145,11 @@ public class UserProfileManagerImpl: UserProfileManager {
         guard let accessToken = accessTokenString else {
             return completionHandler(UserProfileError.missingAccessToken, nil)
         }
-        
+
         sendRequest(url: urlString, method: method, body: value, accessToken: accessToken, completionHandler: completionHandler)
 
     }
-    
+
     ///
     /// Constructs a url request
     ///
@@ -151,26 +158,26 @@ public class UserProfileManagerImpl: UserProfileManager {
     /// - Parameter accessToken {String}: access token used for authorization
     /// - Parameter completionHandler {(Error?, [String: Any]?) -> Void}: result handler
     ///
-    private func sendRequest(url: String, method: HttpMethod, body: String? = nil, accessToken: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
-        
+    private func sendRequest(url: String, method: HttpMethod, body: String? = nil, accessToken: String, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
+
         guard let url = URL(string: url) else {
             return self.logAndFail(error: "Failed to parse URL string", completionHandler: completionHandler)
         }
-        
+
         var req = URLRequest(url: url)
         req.httpMethod = method.rawValue
         req.timeoutInterval = BMSClient.sharedInstance.requestTimeout
-        
+
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
-        
+
         send(request: req) { (data, response, error) in
-            
+
             guard error == nil else {
                 let errString = error?.localizedDescription ?? "Encountered an error"
                 return self.logAndFail(level: "error", error: errString, completionHandler: completionHandler)
             }
-            
+
             guard let resp = response, let response = resp as? HTTPURLResponse else {
                 return self.logAndFail(error: "Did not receive a response", completionHandler: completionHandler)
             }
@@ -189,31 +196,38 @@ public class UserProfileManagerImpl: UserProfileManager {
             guard let responseData = data else {
                 return self.logAndFail(error: "Failed to parse server response - no response text", completionHandler: completionHandler)
             }
-            
+
             guard let respString = String(data: responseData, encoding: .utf8),
                 let json = try? Utils.parseJsonStringtoDictionary(respString)else {
                     return self.logAndFail(error: .bodyParsingError, completionHandler: completionHandler)
             }
-            
+
             completionHandler(nil, json)
         }
     }
-    
+
     ///
     /// Error Handler
     ///
-    /// - Parameter err {UserManagerError}: the error to log
+    /// - Parameter error {String}: the error to log
     /// - Parameter completionHandler {String}: the callback handler
-    private func logAndFail(level: String = "debug", error: UserProfileError, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+    private func logAndFail(level: String = "debug", error: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
+        logAndFail(error: UserProfileError.general(error), completionHandler: completionHandler)
+    }
+
+    ///
+    /// Error Handler
+    ///
+    /// - Parameter error {UserManagerError}: the error to log
+    /// - Parameter completionHandler {String}: the callback handler
+    private func logAndFail(level: String = "debug", error: UserProfileError, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
         log(level: level, msg: error.description)
         completionHandler(error, nil)
     }
-    
-    private func logAndFail(level: String = "debug", error: String, completionHandler: @escaping (Error?, [String:Any]?) -> Void) {
-        log(level: level, msg: error)
-        completionHandler(UserProfileError.general(error), nil)
-    }
-    
+
+    ///
+    /// Logging Helper
+    ///
     private func log(level: String, msg: String) {
         switch level {
         case "warn" : UserProfileManagerImpl.logger.warn(message: msg)
@@ -222,10 +236,13 @@ public class UserProfileManagerImpl: UserProfileManager {
         }
     }
 
-    internal func send(request : URLRequest, handler : @escaping (Data?, URLResponse?, Error?) -> Void) {
+    ///
+    /// Send URLRequest Executorg
+    ///
+    internal func send(request : URLRequest, handler: @escaping (Data?, URLResponse?, Error?) -> Void) {
         URLSession.shared.dataTask(with: request, completionHandler: handler).resume()
     }
-    
+
     ///
     /// Retrieves the latest access token
     ///
@@ -233,7 +250,7 @@ public class UserProfileManagerImpl: UserProfileManager {
     internal func getLatestAccessToken() -> String? {
         return  appId.oauthManager?.tokenManager?.latestAccessToken?.raw
     }
-    
+
     ///
     /// Retrieves the latest identity token subject field
     ///
@@ -241,4 +258,5 @@ public class UserProfileManagerImpl: UserProfileManager {
     internal func getLatestIdentityTokenSubject() -> String? {
         return  appId.oauthManager?.tokenManager?.latestIdentityToken?.subject
     }
+
 }

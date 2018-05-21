@@ -93,7 +93,7 @@ internal class TokenManager {
             return
         }
         
-        let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
+        let internalCallback: BMSCompletionHandler = {(response: Response?, error: Error?) in
             if error == nil {
                 if let unWrappedResponse = response, unWrappedResponse.isSuccessful {
                     self.extractTokens(response: unWrappedResponse, tokenResponseDelegate: tokenResponseDelegate)
@@ -102,22 +102,35 @@ internal class TokenManager {
                     tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to extract tokens"))
                 }
             } else {
-                do {
-                    if response?.statusCode == 400 {
-                        let errorText = response?.responseText
-                        if  errorText != nil {
-                            if let errorJson:[String:String] = try Utils.parseJsonStringtoDictionary(errorText!) as? [String:String] {
-                                if errorJson["error"] == "invalid_grant" {
-                                    if let errorDescreption = errorJson["error_description"] {
-                                        tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(errorDescreption))
-                                        return
-                                    }
-                                }
-                            }
-                        }
-                    }
+                guard let response = response else {
                     tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
-                } catch _ {
+                    return
+                }
+                
+                guard let errorText = response.responseText,
+                    let errorJson = try? Utils.parseJsonStringtoDictionary(errorText) as? [String: String] else {
+                        tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
+                        return
+                }
+                
+                TokenManager.logger.debug(message: "Could not retrieve tokens - " +
+                                                   "Status code: \(response.statusCode ?? -1 ) " +
+                                                   "Response: \(errorText)")
+                
+                switch response.statusCode ?? 500 {
+                case 400:
+                    guard errorJson?["error"] == "invalid_grant", let errorDescription = errorJson?["error_description"] else {
+                        fallthrough
+                    }
+                    
+                    tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(errorDescription))
+                case 403:
+                    guard errorJson?["error_code"] == "FORBIDDEN", let errorDescription = errorJson?["error_description"] else {
+                        fallthrough
+                    }
+                    
+                    tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(errorDescription))
+                default:
                     tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to retrieve tokens"))
                 }
             }

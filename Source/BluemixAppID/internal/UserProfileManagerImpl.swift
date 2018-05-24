@@ -138,7 +138,7 @@ public class UserProfileManagerImpl: UserProfileManager {
     ///
     internal func sendAttributeRequest(method: HttpMethod, key: String?, value: String?, accessTokenString: String?, completionHandler: @escaping (Error?, [String: Any]?) -> Void) {
 
-        var urlString = Config.getAttributesUrl(appId: appId) + AppIDConstants.userInfoEndPoint
+        var urlString = Config.getAttributesUrl(appId: appId) + AppIDConstants.attibutesEndpoint
 
         if let key = key {
             urlString = urlString + "/" + Utils.urlEncode(key)

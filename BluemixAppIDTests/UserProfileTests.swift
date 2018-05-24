@@ -17,9 +17,12 @@ import BMSCore
 
 public class UserProfileTests: XCTestCase {
 
-    static let expectedProfileUrl = Config.getServerUrl(appId: AppID.sharedInstance) + "/" + AppIDConstants.userInfoEndPoint
     static let bearerHeader = ["Authorization": "Bearer" + AppIDTestConstants.ACCESS_TOKEN]
-
+    
+    static let expectedAttributesPathWithKey = "/api/v1/attributes/key"
+    static let expectedAttributesPath = "/api/v1/attributes"
+    static let expectedProfilePath = "/tenant/userinfo"
+    
     class MockUserProfileManger : UserProfileManagerImpl {
         var data : Data? = nil
         var response : URLResponse? = nil
@@ -28,7 +31,8 @@ public class UserProfileTests: XCTestCase {
         var idTokenSubject: String? = nil
 
         var expectMethod = "GET"
-
+        var expectedPath = expectedAttributesPath
+        
         override func send(request : URLRequest, handler : @escaping (Data?, URLResponse?, Error?) -> Void) {
             // make sure the token is put on the request:
             if let token = token {
@@ -36,6 +40,7 @@ public class UserProfileTests: XCTestCase {
             }
 
             XCTAssert(expectMethod == request.httpMethod)
+            XCTAssert(request.url?.path.hasSuffix(expectedPath) == true)
             handler(data, response, error)
         }
 
@@ -74,6 +79,10 @@ public class UserProfileTests: XCTestCase {
 
     }
 
+    override public func setUp() {
+        AppID.sharedInstance.initialize(tenantId: "tenant", bluemixRegion: AppID.REGION_US_SOUTH)
+    }
+    
     func testGetAllAttributes () {
         let delegate = MyDelegate()
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
@@ -128,6 +137,7 @@ public class UserProfileTests: XCTestCase {
         userProfileManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userProfileManager.token = "token"
         userProfileManager.expectMethod = "GET"
+        userProfileManager.expectedPath = UserProfileTests.expectedAttributesPathWithKey
         userProfileManager.getAttribute(key: "key") { (err, res) in
             if err == nil {
                 delegate.onSuccess(result: res!)
@@ -151,6 +161,7 @@ public class UserProfileTests: XCTestCase {
         userProfileManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userProfileManager.token = "token"
         userProfileManager.expectMethod = "GET"
+        userProfileManager.expectedPath = UserProfileTests.expectedAttributesPathWithKey
         userProfileManager.getAttribute(key: "key", accessTokenString: "token") { (err, res) in
             if err == nil {
                 delegate.onSuccess(result: res!)
@@ -175,6 +186,7 @@ public class UserProfileTests: XCTestCase {
         userProfileManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userProfileManager.token = "token"
         userProfileManager.expectMethod = "PUT"
+        userProfileManager.expectedPath = UserProfileTests.expectedAttributesPathWithKey
         userProfileManager.setAttribute(key: "key", value: "value") { (err, res) in
             if err == nil {
                 delegate.onSuccess(result: res!)
@@ -198,6 +210,7 @@ public class UserProfileTests: XCTestCase {
         userProfileManager.data = "{\"key\" : \"value\"}".data(using: .utf8)
         userProfileManager.token = "token"
         userProfileManager.expectMethod = "PUT"
+        userProfileManager.expectedPath = UserProfileTests.expectedAttributesPathWithKey
         userProfileManager.setAttribute(key: "key", value: "value", accessTokenString: "token") { (err, res) in
             if err == nil {
                 delegate.onSuccess(result: res!)
@@ -222,6 +235,7 @@ public class UserProfileTests: XCTestCase {
         userProfileManager.data = "{\"error\" : \"NOT_FOUND\"}".data(using: .utf8)
         userProfileManager.token = "token"
         userProfileManager.expectMethod = "PUT"
+        userProfileManager.expectedPath = UserProfileTests.expectedAttributesPathWithKey
         userProfileManager.setAttribute(key: "key", value: "value", accessTokenString: "token") { (err, res) in
             if err == nil {
                 delegate.onSuccess(result: res!)
@@ -237,8 +251,9 @@ public class UserProfileTests: XCTestCase {
 
     func testUserInfoSuccessFlow () {
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
-        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfileUrl)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
+        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfilePath)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
         userProfileManager.response = resp
+        userProfileManager.expectedPath = UserProfileTests.expectedProfilePath
         userProfileManager.token = AppIDConstants.APPID_ACCESS_TOKEN
         userProfileManager.data = "{\"sub\" : \"123\"}".data(using: .utf8)
         userProfileManager.idTokenSubject = "123"
@@ -269,38 +284,42 @@ public class UserProfileTests: XCTestCase {
 
     func testUnauthorized () {
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
-        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfileUrl)!, statusCode: 401, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
+        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfilePath)!, statusCode: 401, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
         userProfileManager.response = resp
         userProfileManager.token = "Bad token"
         userProfileManager.idTokenSubject = "123"
+        userProfileManager.expectedPath = UserProfileTests.expectedProfilePath
         userProfileErrorHandler(manager: userProfileManager, expectedError: .unauthorized)
     }
 
     func testUserNotFound () {
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
-        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfileUrl)!, statusCode: 404, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
+        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfilePath)!, statusCode: 404, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
         userProfileManager.response = resp
         userProfileManager.token = AppIDConstants.APPID_ACCESS_TOKEN
         userProfileManager.idTokenSubject = "123"
+        userProfileManager.expectedPath = UserProfileTests.expectedProfilePath
         userProfileErrorHandler(manager: userProfileManager, expectedError: .notFound)
     }
 
     func testUnexpectedResponseCode () {
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
-        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfileUrl)!, statusCode: 500, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
+        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfilePath)!, statusCode: 500, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
         userProfileManager.response = resp
         userProfileManager.token = "Bad token"
         userProfileManager.idTokenSubject = "123"
+        userProfileManager.expectedPath = UserProfileTests.expectedProfilePath
         userProfileErrorHandler(manager: userProfileManager, expectedError: .general("Unexpected"))
     }
 
     func testTokenSubstitutionAttack () {
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
-        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfileUrl)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
+        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfilePath)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
         userProfileManager.response = resp
         userProfileManager.data = "{\"sub\" : \"1234\"}".data(using: .utf8)
         userProfileManager.token = AppIDConstants.APPID_ACCESS_TOKEN
         userProfileManager.idTokenSubject = "123"
+        userProfileManager.expectedPath = UserProfileTests.expectedProfilePath
         userProfileErrorHandler(manager: userProfileManager, expectedError: .responseValidationError)
     }
 
@@ -310,15 +329,17 @@ public class UserProfileTests: XCTestCase {
         userProfileManager.data = "{\"sub\" : \"1234\"}".data(using: .utf8)
         userProfileManager.token = AppIDConstants.APPID_ACCESS_TOKEN
         userProfileManager.idTokenSubject = "123"
+        userProfileManager.expectedPath = UserProfileTests.expectedProfilePath
         userProfileErrorHandler(manager: userProfileManager, expectedError: .general("Unexpected"))
     }
 
     func testNoData () {
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
-        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfileUrl)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
+        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfilePath)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
         userProfileManager.response = resp
         userProfileManager.token = AppIDConstants.APPID_ACCESS_TOKEN
         userProfileManager.idTokenSubject = "123"
+        userProfileManager.expectedPath = UserProfileTests.expectedProfilePath
         userProfileErrorHandler(manager: userProfileManager, expectedError: .general("Failed to parse server response - no response text"))
     }
 
@@ -327,26 +348,29 @@ public class UserProfileTests: XCTestCase {
         userProfileManager.data = "{\"sub\" : \"1234\"}".data(using: .utf8)
         userProfileManager.token = AppIDConstants.APPID_ACCESS_TOKEN
         userProfileManager.idTokenSubject = "123"
+        userProfileManager.expectedPath = UserProfileTests.expectedProfilePath
         userProfileErrorHandler(manager: userProfileManager, expectedError: .general("Did not receive a response"))
     }
 
     func testMalformedJsonData () {
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
-        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfileUrl)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
+        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfilePath)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
         userProfileManager.response = resp
         userProfileManager.data = "\"sub\" : \"1234\"}".data(using: .utf8)
         userProfileManager.token = AppIDConstants.APPID_ACCESS_TOKEN
         userProfileManager.idTokenSubject = "123"
+        userProfileManager.expectedPath = UserProfileTests.expectedProfilePath
         userProfileErrorHandler(manager: userProfileManager, expectedError: .bodyParsingError)
     }
 
     func testInvalidUserInfoResponse () {
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
-        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfileUrl)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
+        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfilePath)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
         userProfileManager.response = resp
         userProfileManager.data = "{\"nosub\" : \"1234\"}".data(using: .utf8)
         userProfileManager.token = AppIDConstants.APPID_ACCESS_TOKEN
         userProfileManager.idTokenSubject = "123"
+        userProfileManager.expectedPath = UserProfileTests.expectedProfilePath
         userProfileErrorHandler(manager: userProfileManager, expectedError: .invalidUserInfoResponse)
     }
 
@@ -362,9 +386,10 @@ public class UserProfileTests: XCTestCase {
 
     func testIdentityTokenWithoutSubject () {
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
-        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfileUrl)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
+        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfilePath)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
         userProfileManager.response = resp
         userProfileManager.data = "{\"sub\" : \"1234\"}".data(using: .utf8)
+        userProfileManager.expectedPath = UserProfileTests.expectedProfilePath
         userProfileManager.getUserInfo(accessTokenString: AppIDTestConstants.ACCESS_TOKEN,
                                         identityTokenString: AppIDTestConstants.ID_TOKEN) { (err, res) in
             if err != nil {

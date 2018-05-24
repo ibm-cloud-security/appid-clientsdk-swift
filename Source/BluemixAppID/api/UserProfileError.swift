@@ -19,6 +19,7 @@ public enum UserProfileError: Error {
     case missingAccessToken
     case missingOrMalformedIdToken
     case responseValidationError
+    case invalidUserInfoResponse
     case bodyParsingError
     case general(String)
 
@@ -31,6 +32,7 @@ public enum UserProfileError: Error {
         case .missingOrMalformedIdToken: return "Identity token not found or is missing subject field. Please login again."
         case .responseValidationError: return "Potential token substitution attack. Rejecting: response.sub != identityToken.sub"
         case .bodyParsingError: return "Failed to parse server body"
+        case .invalidUserInfoResponse: return "Invalid user info response"
         }
     }
 }

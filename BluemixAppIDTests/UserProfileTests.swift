@@ -340,6 +340,16 @@ public class UserProfileTests: XCTestCase {
         userProfileErrorHandler(manager: userProfileManager, expectedError: .bodyParsingError)
     }
 
+    func testInvalidUserInfoResponse () {
+        let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
+        let resp = HTTPURLResponse(url: URL(string: UserProfileTests.expectedProfileUrl)!, statusCode: 200, httpVersion: "1.1", headerFields: UserProfileTests.bearerHeader)
+        userProfileManager.response = resp
+        userProfileManager.data = "{\"nosub\" : \"1234\"}".data(using: .utf8)
+        userProfileManager.token = AppIDConstants.APPID_ACCESS_TOKEN
+        userProfileManager.idTokenSubject = "123"
+        userProfileErrorHandler(manager: userProfileManager, expectedError: .invalidUserInfoResponse)
+    }
+
     func testMalformedIdentityToken () {
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
         userProfileManager.getUserInfo(accessTokenString: "", identityTokenString: "bad token") { (err, resp) in

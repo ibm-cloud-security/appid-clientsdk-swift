@@ -113,11 +113,13 @@ public class UserProfileManagerImpl: UserProfileManager {
                 return completionHandler(error, nil)
             }
 
-            guard let info = info else {
-                return self.logAndFail(error: "Expected to receive a profile", completionHandler: completionHandler)
+            // Validate reponse received and contains a subject
+            guard let info = info, let subject = info["sub"] as? String else {
+                return self.logAndFail(error: .invalidUserInfoResponse, completionHandler: completionHandler)
             }
 
-            if let idTokenSub = idTokenSub, let subject = info["sub"] as? String, subject != idTokenSub {
+            // If a subject was provided, attempt validation
+            if let idTokenSub = idTokenSub, subject != idTokenSub {
                 return self.logAndFail(error: .responseValidationError, completionHandler: completionHandler)
             }
 

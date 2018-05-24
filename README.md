@@ -217,7 +217,7 @@ This API can be used only when the user is logged in using Cloud Directory ident
 
 ### User Profile
 
-Using the AppID UserProfileManager, you are able to create and retrieve attributes from a user's profile as well as retrieve additional info about a user.
+Using the App ID UserProfileManager, you are able to create, read, and delate attributes in a user's profile as well as retrieve additional info about a user.
 
 ```swift
 

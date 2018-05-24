@@ -12,9 +12,9 @@
 		4D42CF8C20173BDD00EF40B6 /* RefreshTokenImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D42CF8B20173BDD00EF40B6 /* RefreshTokenImpl.swift */; };
 		686FA7AB6F9EE8ACF04FFE5B /* Pods_BluemixAppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9518D9FBE5C06EEB62E45B4 /* Pods_BluemixAppID.framework */; };
 		9178A9196CA83023A3A1FC90 /* Pods_BluemixAppIDTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D5F58BDE9E7A759720873B7 /* Pods_BluemixAppIDTests.framework */; };
-		BDC0D53F1E5EF68300444F9E /* UserProfileManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC0D53E1E5EF68300444F9E /* UserProfileManagerImpl.swift */; };
-		BDF5878B1E65736B00393C0C /* (null) in Sources */ = {isa = PBXBuildFile; };
-		BDF5878F1E66C55A00393C0C /* UserProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF5878E1E66C55A00393C0C /* UserProfileTests.swift */; };
+		BDC0D53F1E5EF68300444F9E /* UserAttributeManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC0D53E1E5EF68300444F9E /* UserAttributeManagerImpl.swift */; };
+		BDF5878B1E65736B00393C0C /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		BDF5878F1E66C55A00393C0C /* UserAttributeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF5878E1E66C55A00393C0C /* UserAttributeTests.swift */; };
 		EF3B3BE21E55C4E900DFFF13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B3BE11E55C4E900DFFF13 /* AppDelegate.swift */; };
 		EF3B3BE41E55C4E900DFFF13 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B3BE31E55C4E900DFFF13 /* ViewController.swift */; };
 		EF3B3BE71E55C4E900DFFF13 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF3B3BE51E55C4E900DFFF13 /* Main.storyboard */; };
@@ -403,7 +403,6 @@
 				EFBBC7501DF99AFA000CE39A /* Frameworks */,
 				EFBBC7511DF99AFA000CE39A /* Headers */,
 				EFBBC7521DF99AFA000CE39A /* Resources */,
-				B97F0C1B172B2DD0986CA529 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -423,7 +422,6 @@
 				EFBBC7631DF99BF6000CE39A /* Frameworks */,
 				EFBBC7641DF99BF6000CE39A /* Resources */,
 				FF35B93374897FC0DB6A9422 /* [CP] Embed Pods Frameworks */,
-				C602D46B779B62E3A73AB724 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -665,7 +663,7 @@
 				EF4994811E55F7BE008ACC27 /* SecurityUtilsTests.swift in Sources */,
 				EF4994821E55F7BE008ACC27 /* AppIDTestConstants.swift in Sources */,
 				EF4994831E55F7BE008ACC27 /* AppIDTests.swift in Sources */,
-				BDF5878B1E65736B00393C0C /* (null) in Sources */,
+				BDF5878B1E65736B00393C0C /* BuildFile in Sources */,
 				EF4994841E55F7BE008ACC27 /* AuthorizationHeaderHelperTests.swift in Sources */,
 				EF4994861E55F7BE008ACC27 /* PreferencesTests.swift in Sources */,
 				EF4994871E55F7BE008ACC27 /* TokenManagerTests.swift in Sources */,

@@ -23,7 +23,7 @@ public enum UserProfileError: Error {
     case bodyParsingError
     case general(String)
 
-    var description: String {
+    public var description: String {
         switch self {
         case .general(let msg) : return msg
         case .notFound: return "Not Found"

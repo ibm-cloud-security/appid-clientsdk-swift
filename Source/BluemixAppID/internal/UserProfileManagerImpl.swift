@@ -200,12 +200,16 @@ public class UserProfileManagerImpl: UserProfileManager {
                 }
             }
 
+            if response.statusCode == 204 {
+                return completionHandler(nil, [:])
+            }
+
             guard let responseData = data else {
                 return self.logAndFail(error: "Failed to parse server response - no response text", completionHandler: completionHandler)
             }
 
             guard let respString = String(data: responseData, encoding: .utf8),
-                let json = try? Utils.parseJsonStringtoDictionary(respString)else {
+                let json = try? Utils.parseJsonStringtoDictionary(respString) else {
                     return self.logAndFail(error: .bodyParsingError, completionHandler: completionHandler)
             }
 

@@ -227,6 +227,31 @@ public class UserProfileTests: XCTestCase {
 
     }
 
+    func testDeleteAttributeWithToken () {
+        let delegate = MyDelegate()
+        let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)
+        let resp = HTTPURLResponse(url: URL(string: "http://someurl.com")!, statusCode: 204, httpVersion: "1.1", headerFields: [:])
+        userProfileManager.response = resp
+        userProfileManager.data = "".data(using: .utf8)
+        userProfileManager.token = "token"
+        userProfileManager.expectMethod = "DELETE"
+        userProfileManager.expectedPath = UserProfileTests.expectedAttributesPathWithKey
+        userProfileManager.deleteAttribute(key: "key", accessTokenString: "token") { (err, res) in
+            guard err == nil else {
+                return delegate.onFailure(error: err!)
+            }
+            XCTAssertEqual(res!.count, 0)
+            delegate.passed = true
+        }
+
+        if delegate.failed || !delegate.passed {
+            XCTFail()
+        }
+        delegate.reset()
+
+
+    }
+
     func testFailure () {
         let delegate = MyDelegate()
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)

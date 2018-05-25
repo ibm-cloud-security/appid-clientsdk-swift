@@ -13,13 +13,14 @@
 import Foundation
 import SafariServices
 import BMSCore
+
 public class AppID {
 
 	private(set) var tenantId: String?
 	private(set) var bluemixRegion: String?
     private(set) var oauthManager: OAuthManager?
     public var loginWidget: LoginWidgetImpl?
-    public var userAttributeManager:UserAttributeManagerImpl?
+    public var userProfileManager: UserProfileManagerImpl?
     
     public static var overrideServerHost: String?
     public static var overrideAttributesHost: String?
@@ -44,7 +45,7 @@ public class AppID {
         self.bluemixRegion = bluemixRegion
 		self.oauthManager = OAuthManager(appId: self)
         self.loginWidget = LoginWidgetImpl(oauthManager: self.oauthManager!)
-        self.userAttributeManager = UserAttributeManagerImpl(appId: self)
+        self.userProfileManager = UserProfileManagerImpl(appId: self)
     }
 
     public func setPreferredLocale(_ locale: Locale) {
@@ -87,7 +88,5 @@ public class AppID {
 	public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {
             return (self.oauthManager?.authorizationManager?.application(application, open: url, options: options))!
     }
-    
-    
-       
+
 }

@@ -416,6 +416,26 @@ class TokenManagerTests: XCTestCase {
         }
     }
     
+    // Pending User Verification
+    func testObtainTokensUsingRop_403_response() {
+        
+        let expectation1 = expectation(description: "got to callback")
+        let err = AppIDError.registrationError(msg: "Failed to register OAuth client")
+        let oauthmanager = OAuthManager(appId: AppID.sharedInstance)
+        oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : TokenManagerTests.clientId])
+        
+        let response:Response = Response(responseData: "{\"error_description\":\"Pending User Verification\", \"error_code\":\"FORBIDDEN\"}".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 403, httpVersion: nil, headerFields: nil), isRedirect: false)
+        
+        let tokenManager =  MockTokenManagerWithSendRequestRop(oauthManager:oauthmanager, response: response, err: err)
+        tokenManager.obtainTokensRoP(username: "thisisusername", password: "thisispassword",tokenResponseDelegate:  delegate(exp:expectation1, msg: "Pending User Verification"))
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+    }
+    
     func testObtainTokensUsingRop_no_400() {
         
         let expectation1 = expectation(description: "got to callback")

@@ -18,11 +18,11 @@ import BMSCore
 public class UserProfileTests: XCTestCase {
 
     static let bearerHeader = ["Authorization": "Bearer" + AppIDTestConstants.ACCESS_TOKEN]
-    
+
     static let expectedAttributesPathWithKey = "/api/v1/attributes/key"
     static let expectedAttributesPath = "/api/v1/attributes"
     static let expectedProfilePath = "/tenant/userinfo"
-    
+
     class MockUserProfileManger : UserProfileManagerImpl {
         var data : Data? = nil
         var response : URLResponse? = nil
@@ -32,7 +32,7 @@ public class UserProfileTests: XCTestCase {
 
         var expectMethod = "GET"
         var expectedPath = expectedAttributesPath
-        
+
         override func send(request : URLRequest, handler : @escaping (Data?, URLResponse?, Error?) -> Void) {
             // make sure the token is put on the request:
             if let token = token {
@@ -82,7 +82,7 @@ public class UserProfileTests: XCTestCase {
     override public func setUp() {
         AppID.sharedInstance.initialize(tenantId: "tenant", bluemixRegion: AppID.REGION_US_SOUTH)
     }
-    
+
     func testGetAllAttributes () {
         let delegate = MyDelegate()
         let userProfileManager = MockUserProfileManger(appId: AppID.sharedInstance)

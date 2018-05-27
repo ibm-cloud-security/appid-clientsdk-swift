@@ -13,7 +13,7 @@
 import Foundation
 import BMSCore
 
-    public class UserAttributeManagerImpl: UserAttributeManager {
+public class UserAttributeManagerImpl: UserAttributeManager {
 
     static var logger = Logger.logger(name: AppIDConstants.UserAttributeManagerLoggerName)
     private let userProfileAttributesPath = "attributes"

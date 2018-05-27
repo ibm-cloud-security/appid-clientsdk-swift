@@ -18,7 +18,8 @@ internal class Config {
 
     private static var serverUrlPrefix = "https://appid-oauth"
     private static var attributesUrlPrefix = "https://appid-profiles"
-
+    private static var publicKeysEndpoint = "/publickeys"
+    
     internal static let logger =  Logger.logger(name: AppIDConstants.ConfigLoggerName)
 
     internal static func getServerUrl(appId:AppID) -> String {
@@ -52,4 +53,11 @@ internal class Config {
         return attributesUrl
     }
     
+    internal static func getPublicKeyEndpoint(appId: AppID) -> String {
+        return getServerUrl(appId:appId) + publicKeysEndpoint
+    }
+    
+    internal static func getIssuer(appId: AppID) ->String {
+        return getServerUrl(appId:appId).components(separatedBy: "/")[2]
+    }
 }

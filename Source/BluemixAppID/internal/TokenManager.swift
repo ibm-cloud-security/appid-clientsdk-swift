@@ -21,7 +21,6 @@ internal class TokenManager {
     internal var latestAccessToken:AccessToken?
     internal var latestIdentityToken:IdentityToken?
     internal var latestRefreshToken:RefreshToken?
-    
     internal var publicKeys: [String: SecKey] = [:]
     internal static let logger = Logger.logger(name: AppIDConstants.TokenManagerLoggerName)
     internal init(oAuthManager:OAuthManager)
@@ -165,7 +164,7 @@ internal class TokenManager {
                 tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Failed to parse server response - no access or identity token"))
                 return
             }
-            
+
             guard let accessToken = AccessTokenImpl(with: accessTokenString), let identityToken:IdentityTokenImpl = IdentityTokenImpl(with: idTokenString) else {
 
                 TokenManager.logger.error(message: "Failed to parse server response - invalid access or identity token")
@@ -193,7 +192,7 @@ internal class TokenManager {
         }
 
     }
-    
+
     public func validateToken(token: Token, tokenResponseDelegate: TokenResponseDelegate, callback: @escaping () -> Void) {
         guard let kid = token.header["kid"] as? String else {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Invalid token : Missing kid"))
@@ -204,12 +203,12 @@ internal class TokenManager {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Invalid token : Missing alg"))
             return
         }
-        
+
         if alg != "RS256" {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Invalid token : Invalid alg"))
             return
         }
-        
+
         if let key = publicKeys[kid] {
             validateToken(token: token, key: key, tokenResponseDelegate: tokenResponseDelegate, callback: callback)
         } else {
@@ -218,60 +217,60 @@ internal class TokenManager {
                     tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Could not find public key for kid"))
                     return
                 }
-                
+
                 self.validateToken(token: token, key: key, tokenResponseDelegate: tokenResponseDelegate, callback: callback)
             }
         }
     }
-    
+
     public func validateToken(token: Token, key: SecKey, tokenResponseDelegate: TokenResponseDelegate, callback: @escaping () -> Void ) {
-        
+
         guard let jws = try? JWS(compactSerialization: token.raw), let _ = try? jws.validate(with: key),
             let clientId = registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) else {
                 tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed"))
             return
         }
-        
+
         if token.issuer != Config.getIssuer(appId: appid) {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : invalid issuer"))
             return
         }
-        
+
         if token.audience != clientId {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : invalid audience"))
             return
         }
-        
+
         if token.tenant != appid.tenantId {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : invalid tenant"))
             return
         }
-        
+
         if  token.isExpired {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : expired"))
             return
         }
-        
+
         callback()
     }
-    
+
     public func retrievePublicKeys(tokenResponseDelegate: TokenResponseDelegate, callback: @escaping () -> Void) {
         let publicKeyUrl = Config.getPublicKeyEndpoint(appId: appid)
-        
+
         let request = Request(url: publicKeyUrl,method: HttpMethod.GET, headers: [:], queryParameters: nil, timeout: 0)
         request.timeout = BMSClient.sharedInstance.requestTimeout
-        
+
         sendRequest(request: request, body: nil) { (response, error) in
             guard let response = response, error == nil, let text = response.responseText else {
                 tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Failed to get public key from server"))
                 return
             }
-            
+
             guard let publicKeyJson = try? Utils.parseJsonStringtoDictionary(text), let keys = publicKeyJson["keys"] as? [[String: Any]] else {
                 tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Failed to parse public key response from server"))
                 return
             }
-            
+
             self.publicKeys = keys.reduce([String : SecKey]()) { result, key in
                 var result = result
                 guard let keyKid = key["kid"] as? String,
@@ -279,15 +278,15 @@ internal class TokenManager {
                     let rsaPublicKey = try? RSAPublicKey(data: data), let publicKey = try? rsaPublicKey.converted(to: SecKey.self) else {
                         return result
                 }
-                
+
                 result[keyKid] = publicKey
                 return result
             }
-            
+
             callback()
         }
     }
-    
+
     public func createAuthenticationHeader(clientId:String) throws -> String {
         let signed = try SecurityUtils.signString(clientId, keyIds: (AppIDConstants.publicKeyIdentifier, AppIDConstants.privateKeyIdentifier), keySize: 512)
         return AppIDConstants.BASIC_AUTHORIZATION_STRING + " " + (clientId + ":" + signed).data(using: .utf8)!.base64EncodedString()

@@ -750,7 +750,7 @@ class TokenManagerTests: XCTestCase {
     }
     
     func testExtractTokensHappyFlow() {
-         let data = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+         let data = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken    )\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"success", expectedErr: "")
         let manager:TokenManager = MockTokenManagerWithValidateAToken(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
@@ -883,6 +883,7 @@ class TokenManagerTests: XCTestCase {
             let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
             internalCallBack(response, err)
         }
+        
     }
     
     func getPublicKeys() -> [String : SecKey] {

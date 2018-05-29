@@ -57,7 +57,8 @@ internal class Config {
         return getServerUrl(appId:appId) + publicKeysEndpoint
     }
     
-    internal static func getIssuer(appId: AppID) ->String {
+    internal static func getIssuer(appId: AppID) -> String {
         return getServerUrl(appId:appId).components(separatedBy: "/")[2]
     }
+    
 }

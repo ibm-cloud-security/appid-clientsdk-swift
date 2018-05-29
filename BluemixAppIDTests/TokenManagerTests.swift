@@ -815,7 +815,7 @@ class TokenManagerTests: XCTestCase {
     
     func testRetrievePublicKeysFailsNilResponse() {
         let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to get public key from server")
-        let manager:TokenManager = MockTokenManagerWithRetrievePublicKeysFails(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        let manager:TokenManager = MockTokenManagerWithRetrievePublicKeys(response: nil, err: nil)
         manager.retrievePublicKeys(tokenResponseDelegate: tokenRespDelegate, callback: {})
         XCTAssertEqual(tokenRespDelegate.success, 0)
         XCTAssertEqual(tokenRespDelegate.fails, 1)
@@ -823,8 +823,10 @@ class TokenManagerTests: XCTestCase {
     }
     
     func testRetrievePublicKeysFailsInvalidJson() {
+        let data = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse public key response from server")
-        let manager:TokenManager = MockTokenManagerWithRetrievePublicKeysFailsInvalidJson(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        let manager:TokenManager = MockTokenManagerWithRetrievePublicKeys(response: response, err: nil)
         manager.retrievePublicKeys(tokenResponseDelegate: tokenRespDelegate, callback: {})
         XCTAssertEqual(tokenRespDelegate.success, 0)
         XCTAssertEqual(tokenRespDelegate.fails, 1)
@@ -832,10 +834,11 @@ class TokenManagerTests: XCTestCase {
     }
     
     func testRetrievePublicKeys() {
-        let respData = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
-        let response = Response(responseData: respData, httpResponse: nil, isRedirect: false)
+        let data = AppIDTestConstants.jwk.data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"success", expectedErr: "")
-        let manager:TokenManager = MockTokenManagerWithRetrievePublicKeys(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        let err:Error? = nil
+        let manager:TokenManager = MockTokenManagerWithRetrievePublicKeys(response: response, err: err)
         guard let accessToken = AccessTokenImpl(with: AppIDTestConstants.appAnonAccessToken) else {
             tokenRespDelegate.onAuthorizationFailure(error: .authorizationFailure("Error in token creation"))
             return
@@ -874,33 +877,17 @@ class TokenManagerTests: XCTestCase {
         
     }
     
-    class MockTokenManagerWithRetrievePublicKeysFails: TokenManager {
+    class MockTokenManagerWithRetrievePublicKeys: TokenManager {
         var err:Error?
         var response:Response?
         
-        override internal func sendRequest(request:Request, body registrationParamsAsData:Data?, internalCallBack: @escaping BMSCompletionHandler) {
-            internalCallBack(response, err)
+         init(oAuthManager: OAuthManager = OAuthManager(appId: AppID.sharedInstance), response:Response?, err:Error?) {
+            super.init(oAuthManager: oAuthManager)
+            self.response = response
+            self.err = err
         }
         
-    }
-    
-    class MockTokenManagerWithRetrievePublicKeysFailsInvalidJson: TokenManager {
-        var err:Error?
-        
         override internal func sendRequest(request:Request, body registrationParamsAsData:Data?, internalCallBack: @escaping BMSCompletionHandler) {
-            let data = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
-            let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
-            internalCallBack(response, err)
-        }
-        
-    }
-    
-    class MockTokenManagerWithRetrievePublicKeys: TokenManager {
-        var err:Error?
-        
-        override internal func sendRequest(request:Request, body registrationParamsAsData:Data?, internalCallBack: @escaping BMSCompletionHandler) {
-            let data = AppIDTestConstants.jwk.data(using: .utf8)
-            let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
             internalCallBack(response, err)
         }
         

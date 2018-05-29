@@ -13,6 +13,7 @@
 import Foundation
 import BMSCore
 import JOSESwift
+
 internal class TokenManager {
 
     private final var appid:AppID
@@ -176,15 +177,12 @@ internal class TokenManager {
                 self.validateToken(token: identityToken, tokenResponseDelegate: tokenResponseDelegate) {
                     self.latestAccessToken = accessToken
                     self.latestIdentityToken = identityToken
-                    let refreshTokenString = responseJson["refresh_token"] as? String
-                    var refreshToken: RefreshTokenImpl?
-                    if refreshTokenString != nil {
-                        refreshToken = RefreshTokenImpl(with: refreshTokenString!)
+                    if let refreshTokenString = responseJson["refresh_token"] as? String {
+                        self.latestRefreshToken = RefreshTokenImpl(with: refreshTokenString)
                     }
-                    self.latestRefreshToken = refreshToken
-                    tokenResponseDelegate.onAuthorizationSuccess(accessToken: accessToken,
-                                                                 identityToken: identityToken,
-                                                                 refreshToken: refreshToken,
+                    tokenResponseDelegate.onAuthorizationSuccess(accessToken: self.latestAccessToken,
+                                                                 identityToken: self.latestIdentityToken,
+                                                                 refreshToken: self.latestRefreshToken,
                                                                  response:response)
                 }
             }
@@ -276,7 +274,6 @@ internal class TokenManager {
             
             self.publicKeys = keys.reduce([String : SecKey]()) { result, key in
                 var result = result
-                print(key)
                 guard let keyKid = key["kid"] as? String,
                     let data = try? JSONSerialization.data(withJSONObject: key, options: .prettyPrinted),
                     let rsaPublicKey = try? RSAPublicKey(data: data), let publicKey = try? rsaPublicKey.converted(to: SecKey.self) else {

@@ -32,4 +32,6 @@ public class AppIDTestConstants {
     
     public static let clientId = "06a420469c4bea2a694aa7e971d15680bb69794a"
 
+    public static var ID_TOKEN_WITH_SUBJECT = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJzdWIiOiIxMjMifQ.enbXHtja8BJd9_hlIbCgwyMXl8o9s74yDlqH4_11h7xLVasDO8Yy4jNyhVmIIb8jpl4fQfjWjqaOJoD2TqgfhqwQ-tGRjzYYR-f0qAMb99pNDtLS9IFf1yHYM2y65UerZ8qTD4g2s-ZWPk7yvxPMQx-Nrvu-X2uUwvdBCBr02rXpsHdMbeLYA6iwUs58p5hMxOxf3yKrBcTpTJ4EE164BhruEU5HyHhqSM9DTVLvliuapFFIK4CGV3FjvrKnT38yWdxSWtd9ETC79bfBwWTsE0ykMzb7Nq3vA2O0C_pv5IUixkLtTCiT3s5m55WZaqxdFCvOe4BjAt6AWH7slwgZdg"
+  
 }

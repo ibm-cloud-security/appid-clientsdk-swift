@@ -1,13 +1,26 @@
 use_frameworks!
 
-
-target ‘BluemixAppID' do
-	platform :ios, '9.0'
-	pod ‘BMSCore’, '~> 2.3.1’
+def shared_pods
+	platform :ios, '10.0'
+	pod 'BMSCore', '~> 2.3.1'
+	pod 'JOSESwift', '~> 1.1.0'
 end
 
-target 'BluemixAppIDTests' do
-	platform :ios, '9.0'
-	pod ‘BMSCore’, '~> 2.3.1’
+target 'IBMCloudAppID' do
+	shared_pods
 end
 
+target 'IBMCloudAppIDTests' do
+	shared_pods
+end
+
+# Jose requires swift 4.1, but project defaults to swift 3.3
+post_install do |installer|
+	installer.pods_project.targets.each do |target|
+		if ['JOSESwift'].include? target.name
+			target.build_configurations.each do |config|
+				config.build_settings['SWIFT_VERSION'] = '4.1'
+			end
+		end
+	end
+end

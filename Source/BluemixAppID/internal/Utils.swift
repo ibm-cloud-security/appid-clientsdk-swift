@@ -76,25 +76,25 @@ public class Utils {
             return nil
         }
         
-        let intLengthFixed:Int = (objPointer.characters.count)
+        let intLengthFixed:Int = (objPointer.count)
         var result:[Int8] = [Int8](repeating: 1, count: intLengthFixed)
         
         var i:Int=0, j:Int=0, k:Int
         var count = 0
-        var intLengthMutated:Int = (objPointer.characters.count)
-        var current:Character = objPointer[objPointer.characters.index(objPointer.startIndex, offsetBy: count)]
+        var intLengthMutated:Int = (objPointer.count)
+        var current:Character = objPointer[objPointer.index(objPointer.startIndex, offsetBy: count)]
         
         while (current != "\0" && intLengthMutated > 0) {
             intLengthMutated-=1
             
             if current == "=" {
-                if  count < intLengthFixed && objPointer[objPointer.characters.index(objPointer.startIndex, offsetBy: count)] != "=" && i%4 == 1 {
+                if  count < intLengthFixed && objPointer[objPointer.index(objPointer.startIndex, offsetBy: count)] != "=" && i%4 == 1 {
                     return nil
                 }
                 if count == intLengthFixed {
                     break
                 }
-                current = objPointer[objPointer.characters.index(objPointer.startIndex, offsetBy: count)]
+                current = objPointer[objPointer.index(objPointer.startIndex, offsetBy: count)]
                 count+=1
                 continue
             }
@@ -104,7 +104,7 @@ public class Utils {
             let int8Current = isSafeUrl ?  AppIDConstants.base64DecodingTableUrlSafe[intCurrent] :AppIDConstants.base64DecodingTable[intCurrent]
             
             if int8Current == -1 {
-                current = objPointer[objPointer.characters.index(objPointer.startIndex, offsetBy: count)]
+                current = objPointer[objPointer.index(objPointer.startIndex, offsetBy: count)]
                 count+=1
                 continue
             } else if int8Current == -2 {
@@ -134,7 +134,7 @@ public class Utils {
                 break
             }
             count+=1
-            current = objPointer[objPointer.characters.index(objPointer.startIndex, offsetBy: count)]
+            current = objPointer[objPointer.index(objPointer.startIndex, offsetBy: count)]
         }
         
         // mop things up if we ended on a boundary

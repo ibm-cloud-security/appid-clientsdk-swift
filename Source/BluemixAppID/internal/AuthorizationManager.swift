@@ -242,17 +242,12 @@ public class AuthorizationManager {
     }
     
     private func extractUrlString(body: String?) -> String? {
-        if let unWrappedBody = body {
-            let r = unWrappedBody.range(of: AppIDConstants.REDIRECT_URI_VALUE)
-            if r != nil {
-                return unWrappedBody.substring(from: r!.lowerBound)
-                
-            } else {
-                return nil
-            }
-        } else {
+        guard let body = body,
+              let r = body.range(of: AppIDConstants.REDIRECT_URI_VALUE) else {
             return nil
         }
+        
+        return String(body[r.lowerBound...])
     }
     
     internal func sendRequest(request:Request, internalCallBack: @escaping BMSCompletionHandler) {

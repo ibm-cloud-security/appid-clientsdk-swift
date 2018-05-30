@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
     s.homepage     = "https://github.com/ibm-bluemix-mobile-services/appid-clientsdk-swift"
     s.license      = 'Apache License, Version 2.0'
     s.author       = { "IBM Bluemix Services Mobile SDK" => "mobilsdk@us.ibm.com" }
-
+    s.swift_version = "4.0"
     s.source       = { :git => 'https://github.com/ibm-bluemix-mobile-services/appid-clientsdk-swift.git', :tag => "#{s.version}" }
     s.dependency 'BMSCore'
     s.requires_arc = true

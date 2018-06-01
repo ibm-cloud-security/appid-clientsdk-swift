@@ -128,7 +128,7 @@ internal class TokenManager {
             }
         }
 
-        let request = Request(url: tokenUrl,method: HttpMethod.POST, headers: headers, queryParameters: nil, timeout: 0)
+        let request = Request(url: tokenUrl, method: HttpMethod.POST, headers: headers, queryParameters: nil, timeout: 0)
         request.timeout = BMSClient.sharedInstance.requestTimeout
         var body = ""
         for (index, (key: key, value: value)) in bodyParams.enumerated() {

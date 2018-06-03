@@ -292,9 +292,9 @@ public class AuthorizationManagerTests : XCTestCase {
         tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"success", expectedErr: ""))
         oAuthManager.tokenManager = tokenManager
         authManager.launchChangePasswordUI(authorizationDelegate:delegate(res:"", expectedErr:""))
-        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri as String!, "redirect")
+        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri, "redirect")
         let expectedUrl: String! = "https://appid-oauthregion2/oauth/v3/tenant1/cloud_directory/change_password?user_id=bd98e7a8-6035-4e07-9d94-04c04c9fd7ab&client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
-        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
+        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl, expectedUrl)
     }
 
     func tests_launchDetails() {
@@ -356,9 +356,9 @@ public class AuthorizationManagerTests : XCTestCase {
 
     func testLaunchChangeDetails_success(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
         authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
-        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri as String!, "redirect")
+        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri, "redirect")
         let expectedUrl: String! = "https://appid-oauthregion2/oauth/v3/tenant1/cloud_directory/change_details?code=1234&client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
-        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
+        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl, expectedUrl)
     }
 
     func testLaunchChangeDetails_no_code(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
@@ -522,7 +522,7 @@ public class AuthorizationManagerTests : XCTestCase {
         authManager.launchForgotPasswordUI(authorizationDelegate: delegate(res: "failure", expectedErr: ""))
 
         let expectedUrl: String! = "https://appid-oauth.region2/oauth/v3/tenant1/cloud_directory/forgot_password?client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
-        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
+        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl, expectedUrl)
 
     }
 

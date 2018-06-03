@@ -136,10 +136,13 @@ internal class SecurityUtils {
         
         iterator += 1 // TYPE - bit stream mod
         let mod_size : Int = derEncodingGetSizeFrom(publicKeyBits, at:&iterator)
-        if(mod_size == -1) {
+
+        //Ensure we got an exponent size
+        guard mod_size != -1, let range = Range(NSMakeRange(iterator, mod_size)) else {
             return nil
         }
-        return publicKeyBits.subdata(in: NSMakeRange(iterator, mod_size).toRange()!)
+        
+        return publicKeyBits.subdata(in: range)
     }
     
     //Return public key exponent
@@ -154,11 +157,13 @@ internal class SecurityUtils {
         
         iterator += 1 // TYPE - bit stream exp
         let exp_size : Int = derEncodingGetSizeFrom(publicKeyBits, at:&iterator)
+        
         //Ensure we got an exponent size
-        if(exp_size == -1) {
+        guard exp_size != -1, let range = Range(NSMakeRange(iterator, exp_size)) else {
             return nil
         }
-        return publicKeyBits.subdata(in: NSMakeRange(iterator, exp_size).toRange()!)
+        
+        return publicKeyBits.subdata(in: range)
     }
     
     private static func derEncodingGetSizeFrom(_ buf : Data, at iterator: inout Int) -> Int{

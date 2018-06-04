@@ -13,6 +13,7 @@
 import Foundation
 import XCTest
 import BMSCore
+import JOSESwift
 @testable import BluemixAppID
 
 class TokenManagerTests: XCTestCase {
@@ -21,8 +22,8 @@ class TokenManagerTests: XCTestCase {
     override func setUp() {
         super.setUp()
     }
-
-
+    
+    
     func testClearStoredTokens() {
         XCTAssertNil(tokenManager.latestAccessToken)
         XCTAssertNil(tokenManager.latestIdentityToken)
@@ -62,10 +63,10 @@ class TokenManagerTests: XCTestCase {
         
         override internal func createAuthenticationHeader(clientId: String) throws -> String {
             if throwExc {
-             throw AppIDError.generalError
+                throw AppIDError.generalError
             } else {
-            XCTAssertEqual(clientId, TokenManagerTests.clientId)
-            return "Bearer signature"
+                XCTAssertEqual(clientId, TokenManagerTests.clientId)
+                return "Bearer signature"
             }
         }
         
@@ -167,7 +168,7 @@ class TokenManagerTests: XCTestCase {
             XCTAssertEqual(request.headers["Authorization"], "Bearer signature")
             XCTAssertEqual(request.timeout, BMSClient.sharedInstance.requestTimeout)
             self.requestFormData = String(data: registrationParamsAsData!, encoding: .utf8)
-//            XCTAssertEqual(String(data: registrationParamsAsData!, encoding: .utf8), "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
+            //            XCTAssertEqual(String(data: registrationParamsAsData!, encoding: .utf8), "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
             
             internalCallBack(response, err)
         }
@@ -223,7 +224,7 @@ class TokenManagerTests: XCTestCase {
                 XCTFail("err: \(error)")
             }
         }
-
+        
     }
     
     
@@ -231,7 +232,7 @@ class TokenManagerTests: XCTestCase {
     func testObtainTokens10() {
         
         let expectation1 = expectation(description: "got to callback")
-       // let err = AppIDError.registrationError(msg: "Failed to create authentication header")
+        // let err = AppIDError.registrationError(msg: "Failed to create authentication header")
         let oauthmanager = OAuthManager(appId: AppID.sharedInstance)
         oauthmanager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : TokenManagerTests.clientId, AppIDConstants.JSON_REDIRECT_URIS_KEY : ["redirect"]] as [String:Any])
         
@@ -244,7 +245,7 @@ class TokenManagerTests: XCTestCase {
                 XCTFail("err: \(error)")
             }
         }
-
+        
         
     }
     
@@ -265,7 +266,7 @@ class TokenManagerTests: XCTestCase {
             }
         }
     }
-   
+    
     func testObtainTokensUsingRop_with_access_token() {
         
         let expectation1 = expectation(description: "got to callback")
@@ -282,7 +283,7 @@ class TokenManagerTests: XCTestCase {
             }
         }
         XCTAssertEqual(tokenManager.requestFormData,
-                   "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
+                       "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
     }
     
     func testObtainTokensUsingRefreshToken() {
@@ -302,7 +303,7 @@ class TokenManagerTests: XCTestCase {
         }
         XCTAssertEqual(tokenManager.requestFormData, "refresh_token=xxtt&grant_type=refresh_token")
     }
-
+    
     func testObtainTokensUsingRop2_catch() {
         
         let expectation1 = expectation(description: "got to callback")
@@ -582,10 +583,6 @@ class TokenManagerTests: XCTestCase {
         
     }
     
-    let validIdTokenPayload = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiYXVkIjoiMTdlMTI4OWI2N2E1MzIwMDQ4MTdhNWEwYmQzMTM5YjljYWM4NDE0OCIsImV4cCI6MTQ4NzA2NjMwMiwiYXV0aF9ieSI6ImZhY2Vib29rIiwidGVuYW50IjoiNGRiYTk0MzAtNTRlNi00Y2YyLWE1MTYtNmY3M2ZlYjcwMmJiIiwiaWF0IjoxNDg3MDYyNzAyLCJuYW1lIjoiRG9uIExvbiIsImVtYWlsIjoiZG9ubG9ucXdlcnR5QGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJsb2NhbGUiOiJlbl9VUyIsInBpY3R1cmUiOiJodHRwczovL3Njb250ZW50Lnh4LmZiY2RuLm5ldC92L3QxLjAtMS9wNTB4NTAvMTM1MDE1NTFfMjg2NDA3ODM4Mzc4ODkyXzE3ODU3NjYyMTE3NjY3MzA2OTdfbi5qcGc_b2g9MjQyYmMyZmI1MDU2MDliNDQyODc0ZmRlM2U5ODY1YTkmb2U9NTkwN0IxQkMiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImZhY2Vib29rIiwiaWQiOiIzNzc0NDAxNTkyNzU2NTkifV0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiT2RlZEFwcElEYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJPZGVkQXBwSURhcHBpZElEIiwic29mdHdhcmVfdmVyc2lvbiI6IjEuMCIsImRldmljZV9pZCI6Ijk5MDI0Njg4LUZGMTktNDg4Qy04RjJELUY3MTY2MDZDQTU5NCIsImRldmljZV9tb2RlbCI6ImlQaG9uZSIsImRldmljZV9vcyI6ImlQaG9uZSBPUyJ9fQ.kFPUtpi9AROmBvQqPa19LgX18aYSSbnjlea4Hg0OA4UUw8XYnuoufBWpmmzDpaqZVnN5LTWg9YK5-wtB5Hi9YwX8bhklkeciHP_1ue-fyNDLN2uCNUvBxh916mgFy8u1gFicBcCzQkVoSDSL4Pcjgo0VoTla8t36wLFRtEKmBQ-p8UOlvjD-dnAoNBDveUsNNyeaLMdVPRRfXi-RYWOH3E9bjvyhHd-Zea2OX3oC1XRpqNgrUBXQblskOi_mEll_iWAUX5oD23tOZB9cb0eph9B6_tDZutgvaY338ZD1W9St6YokIL8IltKbrX3q1_FFJSu9nfNPgILsKIAKqe9fHQ"
-    
-    let validAccessTokenPayload = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw"
-
     func testExtractTokensFailsWhenNoResponseText() {
         let response = Response(responseData: nil, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse server response - no response text")
@@ -594,7 +591,7 @@ class TokenManagerTests: XCTestCase {
         XCTAssertEqual(tokenRespDelegate.fails, 1)
         XCTAssertEqual(tokenRespDelegate.cancel, 0)
     }
-
+    
     func testExtractTokensFailsWhenNoParsableResponseText() {
         let data = "nonParsableText".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
@@ -604,9 +601,9 @@ class TokenManagerTests: XCTestCase {
         XCTAssertEqual(tokenRespDelegate.fails, 1)
         XCTAssertEqual(tokenRespDelegate.cancel, 0)
     }
-
+    
     func testExtractTokensFailsWhenNoAccessToken() {
-        let data = "{\"id_token\":\"\(validIdTokenPayload)\",\"expires_in\":3600}".data(using: .utf8)
+        let data = "{\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse server response - no access or identity token")
         tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
@@ -616,7 +613,7 @@ class TokenManagerTests: XCTestCase {
     }
     
     func testExtractTokensFailsWhenNoIdToken() {
-        let data = "{\"access_token\":\"\(validAccessTokenPayload)\",\"expires_in\":3600}".data(using: .utf8)
+        let data = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse server response - no access or identity token")
         tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
@@ -624,32 +621,161 @@ class TokenManagerTests: XCTestCase {
         XCTAssertEqual(tokenRespDelegate.fails, 1)
         XCTAssertEqual(tokenRespDelegate.cancel, 0)
     }
-
+    
     func testExtractTokensFailsWhenNoParsableAccessToken() {
-        let data = "{\"access_token\":\"nonparsable\",\"id_token\":\"\(validIdTokenPayload)\",\"expires_in\":3600}".data(using: .utf8)
+        let data = "{\"access_token\":\"nonparsable\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
-        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse tokens")
-        tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
-        XCTAssertEqual(tokenRespDelegate.success, 0)
-        XCTAssertEqual(tokenRespDelegate.fails, 1)
-        XCTAssertEqual(tokenRespDelegate.cancel, 0)
-    }
-
-    func testExtractTokensFailsWhenNoParsableIdToken() {
-        let data = "{\"access_token\":\"\(validAccessTokenPayload)\",\"id_token\":\"nonparsable\",\"expires_in\":3600}".data(using: .utf8)
-        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
-        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse tokens")
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse server response - corrupt access or identity token")
         tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
         XCTAssertEqual(tokenRespDelegate.success, 0)
         XCTAssertEqual(tokenRespDelegate.fails, 1)
         XCTAssertEqual(tokenRespDelegate.cancel, 0)
     }
     
+    func testExtractTokensFailsWhenNoParsableIdToken() {
+        let data = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"nonparsable\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse server response - corrupt access or identity token")
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+    
+    func testExtractTokensFailsMissingKid() {
+        let data = "{\"access_token\":\"\(AppIDTestConstants.ACCESS_TOKEN)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Invalid token : Missing kid")
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+    
+    func testExtractTokensFailsInvalidAlg() {
+        let data = "{\"access_token\":\"\(AppIDTestConstants.malformedAccessTokenInvalidAlg)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Invalid token : Invalid alg")
+        tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+    
+    
+    func testValidateTokenFails() {
+        let respData = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: respData, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Token verification failed")
+        let publicKeys = getPublicKeys()
+        guard let key = publicKeys[AppIDTestConstants.kid] else {
+            tokenRespDelegate.onAuthorizationFailure(error: .authorizationFailure("Failed to get public key"))
+            return
+        }
+        guard let expToken = AccessTokenImpl(with: AppIDTestConstants.expAcessToken) else {
+            tokenRespDelegate.onAuthorizationFailure(error: .authorizationFailure("Error in token creation"))
+            return
+        }
+        
+        tokenManager.validateToken(token: expToken, key: key, tokenResponseDelegate: tokenRespDelegate) {tokenRespDelegate.onAuthorizationSuccess(accessToken: expToken,identityToken: nil,refreshToken: nil,response:response)}
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+    
+    func testValidateTokenFailsInvalidIssuer() {
+        let respData = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: respData, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegatIssuer = ExtractTokensDelegate(res:"failure", expectedErr: "Token verification failed : invalid issuer")
+        let publicKeys = getPublicKeys()
+        guard let key = publicKeys[AppIDTestConstants.kid] else {
+            tokenRespDelegatIssuer.onAuthorizationFailure(error: .authorizationFailure("Failed to get public key"))
+            return
+        }
+        
+        guard let validToken = AccessTokenImpl(with: AppIDTestConstants.appAnonAccessToken) else {
+            tokenRespDelegatIssuer.onAuthorizationFailure(error: .authorizationFailure("Error in token creation"))
+            return
+        }
+        let mockAppId = MockAppId.sharedInstance
+        mockAppId.initialize(tenantId: "4dba9430-54e6-4cf2-a516", bluemixRegion: ".ng.bluemix.net")
+        let oauthManager = OAuthManager(appId: mockAppId)
+        oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : AppIDTestConstants.clientId])
+        
+        let manager:TokenManager = TokenManager(oAuthManager: OAuthManager(appId: mockAppId))
+        MockAppId.overrideServerHost = "https://app-oauth.ng.bluemix.net/oauth/v3/"
+        
+        manager.validateToken(token: validToken, key: key, tokenResponseDelegate: tokenRespDelegatIssuer) {tokenRespDelegatIssuer.onAuthorizationSuccess(accessToken: validToken,identityToken: nil,refreshToken: nil,response:response)}
+        XCTAssertEqual(tokenRespDelegatIssuer.success, 0)
+        XCTAssertEqual(tokenRespDelegatIssuer.fails, 1)
+        XCTAssertEqual(tokenRespDelegatIssuer.cancel, 0)
+    }
+    
+    func testValidateTokenFailsInvalidAud() {
+        let respData = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: respData, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Token verification failed : invalid audience")
+        let publicKeys = getPublicKeys()
+        guard let key = publicKeys[AppIDTestConstants.kid] else {
+            tokenRespDelegate.onAuthorizationFailure(error: .authorizationFailure("Failed to get public key"))
+            return
+        }
+        
+        guard let validToken = AccessTokenImpl(with: AppIDTestConstants.appAnonAccessToken) else {
+            tokenRespDelegate.onAuthorizationFailure(error: .authorizationFailure("Error in token creation"))
+            return
+        }
+        
+        let mockAppId = MockAppId.sharedInstance
+        mockAppId.initialize(tenantId: "4dba9430-54e6-4cf2-a516", bluemixRegion: ".ng.bluemix.net")
+        let oauthManager = OAuthManager(appId: mockAppId)
+        oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "clientId"])
+        let manager:TokenManager =  TokenManager(oAuthManager: oauthManager)
+        MockAppId.overrideServerHost = "https://appid-oauth.ng.bluemix.net/oauth/v3/"
+        
+        manager.validateToken(token: validToken, key: key, tokenResponseDelegate: tokenRespDelegate) {tokenRespDelegate.onAuthorizationSuccess(accessToken: validToken,identityToken: nil,refreshToken: nil,response:response)}
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+    
+    
+    
+    func testValidateTokenFailsInvalidTenant() {
+        let respData = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: respData, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegateTenant = ExtractTokensDelegate(res:"failure", expectedErr: "Token verification failed : invalid tenant")
+        let publicKeys = getPublicKeys()
+        guard let key = publicKeys[AppIDTestConstants.kid] else {
+            tokenRespDelegateTenant.onAuthorizationFailure(error: .authorizationFailure("Failed to get public key"))
+            return
+        }
+        
+        guard let validToken = AccessTokenImpl(with: AppIDTestConstants.appAnonAccessToken) else {
+            tokenRespDelegateTenant.onAuthorizationFailure(error: .authorizationFailure("Error in token creation"))
+            return
+        }
+        
+        let mockAppId = MockAppId.sharedInstance
+        mockAppId.initialize(tenantId: "4dba9430-54e6-4cf2-a516", bluemixRegion: ".ng.bluemix.net")
+        let oauthManager = OAuthManager(appId: mockAppId)
+        oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : AppIDTestConstants.clientId])
+        let manager:TokenManager = TokenManager(oAuthManager: OAuthManager(appId: mockAppId))
+        MockAppId.overrideServerHost = "https://appid-oauth.ng.bluemix.net/oauth/v3/"
+        
+        manager.validateToken(token: validToken, key: key, tokenResponseDelegate: tokenRespDelegateTenant) {tokenRespDelegateTenant.onAuthorizationSuccess(accessToken: validToken,identityToken: nil,refreshToken: nil,response:response)}
+        XCTAssertEqual(tokenRespDelegateTenant.success, 0)
+        XCTAssertEqual(tokenRespDelegateTenant.fails, 1)
+        XCTAssertEqual(tokenRespDelegateTenant.cancel, 0)
+    }
+    
     func testExtractTokensHappyFlow() {
-        let data = "{\"access_token\":\"\(validAccessTokenPayload)\",\"id_token\":\"\(validIdTokenPayload)\",\"expires_in\":3600}".data(using: .utf8)
+        let data = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken    )\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"success", expectedErr: "")
-        tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
+        let manager:TokenManager = MockTokenManagerWithValidateAToken(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        manager.extractTokens(response: response,
+                              tokenResponseDelegate: tokenRespDelegate)
         XCTAssertEqual(tokenRespDelegate.success, 1)
         XCTAssertEqual(tokenRespDelegate.fails, 0)
         XCTAssertEqual(tokenRespDelegate.cancel, 0)
@@ -657,14 +783,15 @@ class TokenManagerTests: XCTestCase {
         XCTAssertNotNil(tokenRespDelegate.identityToken)
         XCTAssertNil(tokenRespDelegate.refreshToken)
     }
-
+    
     func testExtractTokensHappyFlowWithRefreshToken() {
         let refreshTokenPayload = "no-matter-refresh-token-has-no-spec"
-        let data = "{\"access_token\":\"\(validAccessTokenPayload)\",\"id_token\":\"\(validIdTokenPayload)\",\"refresh_token\":\"\(refreshTokenPayload)\",\"expires_in\":3600}".data(using: .utf8)
+        let data = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"refresh_token\":\"\(refreshTokenPayload)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"success", expectedErr: "")
-        tokenManager.extractTokens(response: response,
-                                   tokenResponseDelegate: tokenRespDelegate)
+        let manager:TokenManager = MockTokenManagerWithValidateAToken(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        manager.extractTokens(response: response,
+                              tokenResponseDelegate: tokenRespDelegate)
         XCTAssertEqual(tokenRespDelegate.success, 1)
         XCTAssertEqual(tokenRespDelegate.fails, 0)
         XCTAssertEqual(tokenRespDelegate.cancel, 0)
@@ -673,5 +800,121 @@ class TokenManagerTests: XCTestCase {
         XCTAssertNotNil(tokenRespDelegate.identityToken)
         XCTAssertEqual(refreshTokenPayload, tokenRespDelegate.refreshToken!.raw!)
     }
-
+    
+    func testExtractTokenPublicKeyFails() {
+        let respData = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: respData, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Could not find public key for kid")
+        let manager:TokenManager = MockTokenManagerWithValidateATokenJWT(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        manager.extractTokens(response: response,
+                              tokenResponseDelegate: tokenRespDelegate)
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+    
+    func testRetrievePublicKeysFailsNilResponse() {
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to get public key from server")
+        let manager:TokenManager = MockTokenManagerWithRetrievePublicKeys(response: nil, err: nil)
+        manager.retrievePublicKeys(tokenResponseDelegate: tokenRespDelegate, callback: {})
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+    
+    func testRetrievePublicKeysFailsInvalidJson() {
+        let data = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Failed to parse public key response from server")
+        let manager:TokenManager = MockTokenManagerWithRetrievePublicKeys(response: response, err: nil)
+        manager.retrievePublicKeys(tokenResponseDelegate: tokenRespDelegate, callback: {})
+        XCTAssertEqual(tokenRespDelegate.success, 0)
+        XCTAssertEqual(tokenRespDelegate.fails, 1)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+    
+    func testRetrievePublicKeys() {
+        let data = AppIDTestConstants.jwk.data(using: .utf8)
+        let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
+        let tokenRespDelegate = ExtractTokensDelegate(res:"success", expectedErr: "")
+        let err:Error? = nil
+        let manager:TokenManager = MockTokenManagerWithRetrievePublicKeys(response: response, err: err)
+        guard let accessToken = AccessTokenImpl(with: AppIDTestConstants.appAnonAccessToken) else {
+            tokenRespDelegate.onAuthorizationFailure(error: .authorizationFailure("Error in token creation"))
+            return
+        }
+        guard let idToken = IdentityTokenImpl(with: AppIDTestConstants.appAnonAccessToken) else {
+            tokenRespDelegate.onAuthorizationFailure(error: .authorizationFailure("Error in token creation"))
+            return
+        }
+        var refreshToken: RefreshTokenImpl?
+        manager.retrievePublicKeys(tokenResponseDelegate: tokenRespDelegate) {
+            tokenRespDelegate.onAuthorizationSuccess(accessToken: accessToken , identityToken: idToken, refreshToken: refreshToken, response: response)
+            return
+        }
+        XCTAssertEqual(tokenRespDelegate.success, 1)
+        XCTAssertEqual(tokenRespDelegate.fails, 0)
+        XCTAssertEqual(tokenRespDelegate.cancel, 0)
+    }
+    
+    class MockTokenManagerWithValidateAToken: TokenManager {
+        
+        override internal func validateToken(token: Token, tokenResponseDelegate: TokenResponseDelegate, callback: @escaping () -> Void) {
+            callback()
+        }
+        
+    }
+    
+    class MockTokenManagerWithValidateATokenJWT: TokenManager {
+        
+        override internal func validateToken(token: Token, key: SecKey, tokenResponseDelegate: TokenResponseDelegate, callback: @escaping () -> Void ) {
+            callback()
+        }
+        
+        override internal  func retrievePublicKeys(tokenResponseDelegate: TokenResponseDelegate, callback: @escaping () -> Void) {
+            callback()
+        }
+        
+    }
+    
+    class MockTokenManagerWithRetrievePublicKeys: TokenManager {
+        var err:Error?
+        var response:Response?
+        
+        init(oAuthManager: OAuthManager = OAuthManager(appId: AppID.sharedInstance), response:Response?, err:Error?) {
+            super.init(oAuthManager: oAuthManager)
+            self.response = response
+            self.err = err
+        }
+        
+        override internal func sendRequest(request:Request, body registrationParamsAsData:Data?, internalCallBack: @escaping BMSCompletionHandler) {
+            internalCallBack(response, err)
+        }
+        
+    }
+    
+    func getPublicKeys() -> [String : SecKey] {
+        
+        guard let publicKeyJson = try? Utils.parseJsonStringtoDictionary(AppIDTestConstants.jwk), let keys = publicKeyJson["keys"] as? [[String: Any]] else {
+            return [:]
+        }
+        
+        let publicKeys = keys.reduce([String : SecKey]()) { result, key in
+            var result = result
+            print(key)
+            guard let keyKid = key["kid"] as? String,
+                let data = try? JSONSerialization.data(withJSONObject: key, options: .prettyPrinted),
+                let rsaPublicKey = try? RSAPublicKey(data: data), let publicKey = try? rsaPublicKey.converted(to: SecKey.self) else {
+                    return result
+            }
+            
+            result[keyKid] = publicKey
+            return result
+        }
+        return publicKeys
+    }
+    
+    class MockAppId: AppID {
+        
+    }
 }

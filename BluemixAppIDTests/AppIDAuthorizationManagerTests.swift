@@ -17,7 +17,7 @@ import BMSCore
 @testable import BluemixAppID
 
 public class AppIDAuthorizationManagerTests: XCTestCase {
-    
+
     static var appid:AppID? = nil
     static var manager:AppIDAuthorizationManager? = nil
     
@@ -80,7 +80,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
             }
         }
     }
-    
+
     
     public func testObtainAuthorizationCanceled() {
         
@@ -93,7 +93,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
         AppIDAuthorizationManagerTests.manager?.obtainAuthorization(completionHandler: callback)
         
     }
-    
+
     public func testObtainAuthorizationSuccess() {
         MockAuthorizationManager.res = "success"
         AppIDAuthorizationManagerTests.manager?.oAuthManager.authorizationManager = MockAuthorizationManager(oAuthManager: (AppIDAuthorizationManagerTests.manager?.oAuthManager)!)
@@ -135,7 +135,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
         tokenManager.shouldCallObtainWithRefresh = true
         tokenManager.obtainWithRefreshShouldFail = true
         tokenManager.latestRefreshToken = RefreshTokenImpl(with: "ststs")
-        
+ 
         let callback:BMSCompletionHandler = {(response:Response?, error:Error?) in
             XCTAssertNotNil(response)
             XCTAssertEqual(AppIDAuthorizationManagerTests.expectedResponse.statusCode, response?.statusCode)
@@ -146,8 +146,8 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
         AppIDAuthorizationManagerTests.manager?.obtainAuthorization(completionHandler: callback)
         tokenManager.verify()
     }
-    
-    
+
+
     public func testObtainAuthorizationFailure() {
         
         MockAuthorizationManager.res = "failure"
@@ -176,8 +176,8 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
         AppIDAuthorizationManagerTests.manager?.obtainAuthorization(completionHandler: callback)
         tokenManager.verify()
     }
-    
-    
+
+
     public func testGetCachedAuthorizationHeader () {
         class AppIDAuthorizationManagerMock: AppIDAuthorizationManager {
             var aToken:AccessToken?

@@ -22,8 +22,8 @@ class TokenManagerTests: XCTestCase {
     override func setUp() {
         super.setUp()
     }
-    
-    
+
+
     func testClearStoredTokens() {
         XCTAssertNil(tokenManager.latestAccessToken)
         XCTAssertNil(tokenManager.latestIdentityToken)
@@ -168,7 +168,7 @@ class TokenManagerTests: XCTestCase {
             XCTAssertEqual(request.headers["Authorization"], "Bearer signature")
             XCTAssertEqual(request.timeout, BMSClient.sharedInstance.requestTimeout)
             self.requestFormData = String(data: registrationParamsAsData!, encoding: .utf8)
-            //            XCTAssertEqual(String(data: registrationParamsAsData!, encoding: .utf8), "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
+//            XCTAssertEqual(String(data: registrationParamsAsData!, encoding: .utf8), "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
             
             internalCallBack(response, err)
         }
@@ -224,7 +224,7 @@ class TokenManagerTests: XCTestCase {
                 XCTFail("err: \(error)")
             }
         }
-        
+
     }
     
     
@@ -245,7 +245,7 @@ class TokenManagerTests: XCTestCase {
                 XCTFail("err: \(error)")
             }
         }
-        
+
         
     }
     
@@ -266,7 +266,7 @@ class TokenManagerTests: XCTestCase {
             }
         }
     }
-    
+
     func testObtainTokensUsingRop_with_access_token() {
         
         let expectation1 = expectation(description: "got to callback")
@@ -283,7 +283,7 @@ class TokenManagerTests: XCTestCase {
             }
         }
         XCTAssertEqual(tokenManager.requestFormData,
-                       "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
+                    "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
     }
     
     func testObtainTokensUsingRefreshToken() {
@@ -303,7 +303,7 @@ class TokenManagerTests: XCTestCase {
         }
         XCTAssertEqual(tokenManager.requestFormData, "refresh_token=xxtt&grant_type=refresh_token")
     }
-    
+
     func testObtainTokensUsingRop2_catch() {
         
         let expectation1 = expectation(description: "got to callback")
@@ -591,7 +591,7 @@ class TokenManagerTests: XCTestCase {
         XCTAssertEqual(tokenRespDelegate.fails, 1)
         XCTAssertEqual(tokenRespDelegate.cancel, 0)
     }
-    
+
     func testExtractTokensFailsWhenNoParsableResponseText() {
         let data = "nonParsableText".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
@@ -601,7 +601,7 @@ class TokenManagerTests: XCTestCase {
         XCTAssertEqual(tokenRespDelegate.fails, 1)
         XCTAssertEqual(tokenRespDelegate.cancel, 0)
     }
-    
+
     func testExtractTokensFailsWhenNoAccessToken() {
         let data = "{\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
@@ -621,7 +621,7 @@ class TokenManagerTests: XCTestCase {
         XCTAssertEqual(tokenRespDelegate.fails, 1)
         XCTAssertEqual(tokenRespDelegate.cancel, 0)
     }
-    
+
     func testExtractTokensFailsWhenNoParsableAccessToken() {
         let data = "{\"access_token\":\"nonparsable\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
@@ -631,7 +631,7 @@ class TokenManagerTests: XCTestCase {
         XCTAssertEqual(tokenRespDelegate.fails, 1)
         XCTAssertEqual(tokenRespDelegate.cancel, 0)
     }
-    
+
     func testExtractTokensFailsWhenNoParsableIdToken() {
         let data = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"nonparsable\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
@@ -783,7 +783,7 @@ class TokenManagerTests: XCTestCase {
         XCTAssertNotNil(tokenRespDelegate.identityToken)
         XCTAssertNil(tokenRespDelegate.refreshToken)
     }
-    
+
     func testExtractTokensHappyFlowWithRefreshToken() {
         let refreshTokenPayload = "no-matter-refresh-token-has-no-spec"
         let data = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"refresh_token\":\"\(refreshTokenPayload)\",\"expires_in\":3600}".data(using: .utf8)

@@ -15,7 +15,7 @@ import BMSCore
 import JOSESwift
 
 internal class TokenManager {
-    
+
     private final var appid:AppID
     private final var registrationManager:RegistrationManager
     internal var latestAccessToken:AccessToken?

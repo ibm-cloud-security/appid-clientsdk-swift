@@ -11,5 +11,5 @@ Pod::Spec.new do |s|
     s.dependency 'JOSESwift'
     s.requires_arc = true
     s.source_files = 'Source/**/*.swift', 'Source/Resources/BluemixAppID.h'
-    s.ios.deployment_target = '9.0'
+    s.ios.deployment_target = '10.0'
 end

@@ -30,7 +30,7 @@ public class AuthorizationManagerTests : XCTestCase {
         XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "code" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier)
 
         XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_SIGN_UP_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "sign_up" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier)
-
+        
         // no idp, no registration data, override locale
         let customLocale = Locale.init(identifier: "fr")
         authManager.preferredLocale = customLocale
@@ -66,7 +66,7 @@ public class AuthorizationManagerTests : XCTestCase {
     }
 
     func testLaunchAuthorizationUI() {
-         let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
 
         class delegate: AuthorizationDelegate {
             var res:String
@@ -78,7 +78,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 self.expectedError = expectedErr
                 self.res = res
             }
-
+            
             func onAuthorizationFailure(error: AuthorizationError) {
                 XCTAssertEqual(error.description, expectedError)
                 delegate.fails += 1
@@ -218,12 +218,12 @@ public class AuthorizationManagerTests : XCTestCase {
                     XCTFail()
                 }
             }
-
+            
         }
         //id token not from cloud directory
         let data = "{\"access_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw\",\"id_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiYXVkIjoiMTdlMTI4OWI2N2E1MzIwMDQ4MTdhNWEwYmQzMTM5YjljYWM4NDE0OCIsImV4cCI6MTQ4NzA2NjMwMiwiYXV0aF9ieSI6ImZhY2Vib29rIiwidGVuYW50IjoiNGRiYTk0MzAtNTRlNi00Y2YyLWE1MTYtNmY3M2ZlYjcwMmJiIiwiaWF0IjoxNDg3MDYyNzAyLCJuYW1lIjoiRG9uIExvbiIsImVtYWlsIjoiZG9ubG9ucXdlcnR5QGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJsb2NhbGUiOiJlbl9VUyIsInBpY3R1cmUiOiJodHRwczovL3Njb250ZW50Lnh4LmZiY2RuLm5ldC92L3QxLjAtMS9wNTB4NTAvMTM1MDE1NTFfMjg2NDA3ODM4Mzc4ODkyXzE3ODU3NjYyMTE3NjY3MzA2OTdfbi5qcGc_b2g9MjQyYmMyZmI1MDU2MDliNDQyODc0ZmRlM2U5ODY1YTkmb2U9NTkwN0IxQkMiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImZhY2Vib29rIiwiaWQiOiIzNzc0NDAxNTkyNzU2NTkifV0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiT2RlZEFwcElEYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJPZGVkQXBwSURhcHBpZElEIiwic29mdHdhcmVfdmVyc2lvbiI6IjEuMCIsImRldmljZV9pZCI6Ijk5MDI0Njg4LUZGMTktNDg4Qy04RjJELUY3MTY2MDZDQTU5NCIsImRldmljZV9tb2RlbCI6ImlQaG9uZSIsImRldmljZV9vcyI6ImlQaG9uZSBPUyJ9fQ.kFPUtpi9AROmBvQqPa19LgX18aYSSbnjlea4Hg0OA4UUw8XYnuoufBWpmmzDpaqZVnN5LTWg9YK5-wtB5Hi9YwX8bhklkeciHP_1ue-fyNDLN2uCNUvBxh916mgFy8u1gFicBcCzQkVoSDSL4Pcjgo0VoTla8t36wLFRtEKmBQ-p8UOlvjD-dnAoNBDveUsNNyeaLMdVPRRfXi-RYWOH3E9bjvyhHd-Zea2OX3oC1XRpqNgrUBXQblskOi_mEll_iWAUX5oD23tOZB9cb0eph9B6_tDZutgvaY338ZD1W9St6YokIL8IltKbrX3q1_FFJSu9nfNPgILsKIAKqe9fHQ\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
-        let tokenManager:TokenManager = TokenManager(oAuthManager: oAuthManager)
+        let tokenManager:TokenManager =  MockTokenManagerWithValidateAToken(oAuthManager: oAuthManager)
         tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"success", expectedErr: ""))
         oAuthManager.tokenManager = tokenManager
 
@@ -288,13 +288,13 @@ public class AuthorizationManagerTests : XCTestCase {
         //id token from cloud directory
         let data = "{\"access_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw\",\"id_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJvS3dTY21CRFdITjBMVEhnVDRpQjhpMjdZUjNYOF9IRWQ3Smo2RlEtcHhVIn0.eyJpc3MiOiJhcHBpZC1vYXV0aC5zdGFnZTEubXlibHVlbWl4Lm5ldCIsImF1ZCI6IjQxNDIzNzZmYjFiYjU1ZjE4ZjQxNTE0ZmU4NWNlMGQ2MjlmZjk0YmYiLCJleHAiOjE1MDA1NTE4NzUsInRlbmFudCI6IjIyOGUzMGMyLWM3ZWMtNGUwZS04ZWQxLTZhZWMwZTkzZDRlYSIsImlhdCI6MTUwMDU0ODI3NSwiZW1haWwiOiJyb3RlbUBpYm0uY29tIiwibmFtZSI6InJvdGVtQGlibS5jb20iLCJzdWIiOiI1ZWY3NjQ3Mi0xMGM0LTQ4YmItYTRlMS1iOTg1OGFhODdmODgiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImNsb3VkX2RpcmVjdG9yeSIsImlkIjoiYmQ5OGU3YTgtNjAzNS00ZTA3LTlkOTQtMDRjMDRjOWZkN2FiIn1dLCJhbXIiOlsiY2xvdWRfZGlyZWN0b3J5Il0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJjb20uaWJtLm1vYmlsZWZpcnN0cGxhdGZvcm0uYXBwaWQiLCJzb2Z0d2FyZV92ZXJzaW9uIjoiMS4wIiwiZGV2aWNlX2lkIjoiZjNhZWQ3ZWEtMGUzNC0zNGM0LWI2NDgtMTJjZTQwYmE5ZWFhIiwiZGV2aWNlX21vZGVsIjoiQW5kcm9pZCBTREsgYnVpbHQgZm9yIHg4Nl82NCIsImRldmljZV9vcyI6ImFuZHJvaWQifX0.A-cHskvxS947usTLm90DtOYh7qyyvZi61D3XUIZ2Kxtw6mJE_ShsTtsR0b1uavYVyZTXUeD6bqKKzEqDD8TDpB7KO8gAePuUdMyMPF-ObVcgF3mzHzusWOHUiVUr0sbtF-i9YbyPwO4r6cs_GhhfeY05e4sDL7Gy9l2ab9IoSOJ-zDGe4_cJjkevbZ6Sl31PcRqz89wip5ixvhhvApkusojKcO-WG-6hDLWKrlf8Iz5AP4YLN5vpB7-9nCS2Z5whRnlr9kVyott8h6AREI_pvcjUUCvA7hrhiVJv38oS6yeTMeWPj4Q5RI9iYdF3rzFVw44ODnIKtXeP9IOzJEvlqA\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
-        let tokenManager:TokenManager = TokenManager(oAuthManager: oAuthManager)
+        let tokenManager:TokenManager =  MockTokenManagerWithValidateAToken(oAuthManager: oAuthManager)
         tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"success", expectedErr: ""))
         oAuthManager.tokenManager = tokenManager
         authManager.launchChangePasswordUI(authorizationDelegate:delegate(res:"", expectedErr:""))
-        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri, "redirect")
+        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri as String!, "redirect")
         let expectedUrl: String! = "https://appid-oauthregion2/oauth/v3/tenant1/cloud_directory/change_password?user_id=bd98e7a8-6035-4e07-9d94-04c04c9fd7ab&client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
-        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl, expectedUrl)
+        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
     }
 
     func tests_launchDetails() {
@@ -321,7 +321,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 if res != "failure" {
                     XCTFail()
                 }
-
+ 
             }
 
             func onAuthorizationCanceled() {
@@ -345,10 +345,10 @@ public class AuthorizationManagerTests : XCTestCase {
         //id token from cloud directory
         let data = "{\"access_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw\",\"id_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJvS3dTY21CRFdITjBMVEhnVDRpQjhpMjdZUjNYOF9IRWQ3Smo2RlEtcHhVIn0.eyJpc3MiOiJhcHBpZC1vYXV0aC5zdGFnZTEubXlibHVlbWl4Lm5ldCIsImF1ZCI6IjQxNDIzNzZmYjFiYjU1ZjE4ZjQxNTE0ZmU4NWNlMGQ2MjlmZjk0YmYiLCJleHAiOjE1MDA1NTE4NzUsInRlbmFudCI6IjIyOGUzMGMyLWM3ZWMtNGUwZS04ZWQxLTZhZWMwZTkzZDRlYSIsImlhdCI6MTUwMDU0ODI3NSwiZW1haWwiOiJyb3RlbUBpYm0uY29tIiwibmFtZSI6InJvdGVtQGlibS5jb20iLCJzdWIiOiI1ZWY3NjQ3Mi0xMGM0LTQ4YmItYTRlMS1iOTg1OGFhODdmODgiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImNsb3VkX2RpcmVjdG9yeSIsImlkIjoiYmQ5OGU3YTgtNjAzNS00ZTA3LTlkOTQtMDRjMDRjOWZkN2FiIn1dLCJhbXIiOlsiY2xvdWRfZGlyZWN0b3J5Il0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJjb20uaWJtLm1vYmlsZWZpcnN0cGxhdGZvcm0uYXBwaWQiLCJzb2Z0d2FyZV92ZXJzaW9uIjoiMS4wIiwiZGV2aWNlX2lkIjoiZjNhZWQ3ZWEtMGUzNC0zNGM0LWI2NDgtMTJjZTQwYmE5ZWFhIiwiZGV2aWNlX21vZGVsIjoiQW5kcm9pZCBTREsgYnVpbHQgZm9yIHg4Nl82NCIsImRldmljZV9vcyI6ImFuZHJvaWQifX0.A-cHskvxS947usTLm90DtOYh7qyyvZi61D3XUIZ2Kxtw6mJE_ShsTtsR0b1uavYVyZTXUeD6bqKKzEqDD8TDpB7KO8gAePuUdMyMPF-ObVcgF3mzHzusWOHUiVUr0sbtF-i9YbyPwO4r6cs_GhhfeY05e4sDL7Gy9l2ab9IoSOJ-zDGe4_cJjkevbZ6Sl31PcRqz89wip5ixvhhvApkusojKcO-WG-6hDLWKrlf8Iz5AP4YLN5vpB7-9nCS2Z5whRnlr9kVyott8h6AREI_pvcjUUCvA7hrhiVJv38oS6yeTMeWPj4Q5RI9iYdF3rzFVw44ODnIKtXeP9IOzJEvlqA\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
-        let tokenManager:TokenManager = TokenManager(oAuthManager: oAuthManager)
+        let tokenManager:TokenManager =  MockTokenManagerWithValidateAToken(oAuthManager: oAuthManager)
         tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"success", expectedErr: ""))
         oAuthManager.tokenManager = tokenManager
-
+        
         testLaunchChangeDetails_success(authManager: authManager, delegate:delegate(res:"", expectedErr:""))
         testLaunchChangeDetails_no_code(authManager: authManagerNoCode, delegate:delegate(res:"failure", expectedErr:"Failed to extract code"))
         testLaunchChangeDetails_request_error(authManager: authManagerRequestError, delegate:delegate(res:"failure", expectedErr:"Unable to get response from server"))
@@ -356,15 +356,15 @@ public class AuthorizationManagerTests : XCTestCase {
 
     func testLaunchChangeDetails_success(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
         authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
-        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri, "redirect")
+        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri as String!, "redirect")
         let expectedUrl: String! = "https://appid-oauthregion2/oauth/v3/tenant1/cloud_directory/change_details?code=1234&client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
-        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl, expectedUrl)
+        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
     }
-
+    
     func testLaunchChangeDetails_no_code(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
         authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
     }
-
+    
     func testLaunchChangeDetails_request_error(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
         authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
     }
@@ -389,7 +389,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 if res != "failure" {
                     XCTFail()
                 }
-
+                
             }
 
             func onAuthorizationCanceled() {
@@ -398,7 +398,7 @@ public class AuthorizationManagerTests : XCTestCase {
                     XCTFail()
                 }
             }
-            
+
             func onAuthorizationSuccess(accessToken: AccessToken?,
                                         identityToken: IdentityToken?,
                                         refreshToken: RefreshToken?,
@@ -422,7 +422,7 @@ public class AuthorizationManagerTests : XCTestCase {
         // TODO:  think how to ovveride it?
         //        // no redirects
         //        authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : []] as [String:Any])
-
+        
     }
 
     func testLaunchForgotPasswordUI_registration_fails() {
@@ -454,7 +454,7 @@ public class AuthorizationManagerTests : XCTestCase {
                     XCTFail()
                 }
             }
-            
+
             func onAuthorizationSuccess(accessToken: AccessToken?,
                                         identityToken: IdentityToken?,
                                         refreshToken: RefreshToken?,
@@ -503,7 +503,7 @@ public class AuthorizationManagerTests : XCTestCase {
                     XCTFail()
                 }
             }
-            
+
             func onAuthorizationSuccess(accessToken: AccessToken?,
                                         identityToken: IdentityToken?,
                                         refreshToken: RefreshToken?,
@@ -520,9 +520,9 @@ public class AuthorizationManagerTests : XCTestCase {
         MockRegistrationManager.shouldFail = false
         authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
         authManager.launchForgotPasswordUI(authorizationDelegate: delegate(res: "failure", expectedErr: ""))
-
+        
         let expectedUrl: String! = "https://appid-oauth.region2/oauth/v3/tenant1/cloud_directory/forgot_password?client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
-        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl, expectedUrl)
+        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
 
     }
 
@@ -579,11 +579,11 @@ public class AuthorizationManagerTests : XCTestCase {
     }
 
     class MockAuthorizationManager: BluemixAppID.AuthorizationManager {
-         var response : Response? = nil
-         var error : Error? = nil
+        var response : Response? = nil
+        var error : Error? = nil
 
         override func sendRequest(request: Request, internalCallBack: @escaping BMSCompletionHandler) {
-                internalCallBack(response, error)
+            internalCallBack(response, error)
         }
     }
 
@@ -617,7 +617,7 @@ public class AuthorizationManagerTests : XCTestCase {
         authManager.appid.oauthManager?.tokenManager = MockTokenManager(oAuthManager: authManager.appid.oauthManager!)
 
         class SomeError : Error {
-
+            
         }
         class delegate: AuthorizationDelegate {
             var failed = false
@@ -625,16 +625,16 @@ public class AuthorizationManagerTests : XCTestCase {
             func onAuthorizationFailure(error: AuthorizationError) {
                 failed = true
             }
-
-            func onAuthorizationCanceled() {
-
-            }
             
+            func onAuthorizationCanceled() {
+                
+            }
+
             func onAuthorizationSuccess(accessToken: AccessToken?,
                                         identityToken: IdentityToken?,
                                         refreshToken: RefreshToken?,
                                         response:Response?) {
-               
+                
             }
 
         }
@@ -643,8 +643,8 @@ public class AuthorizationManagerTests : XCTestCase {
 
         // happy flow:
         let redirect = AppIDConstants.REDIRECT_URI_VALUE
-                let goodData = "Found. Redirecting to "+redirect+"?code=w7DClMOnf03Dg8OxeyHCrwzChDXCnsOcw4cSw4nDuU_Dqkcmdy1zwoVKw5xEQMO5CsKYVcOiRsKYw4_Ds8OsBAfCpABrw4sAwqnDr37DiMOQwq7CjXMmw4PCt1knw7vCsMOXGHnCvBQ4wq7DjzMrDAJpwoHCmcKxAxbCjcKHSg1dw4vDr8OhHzE9w57CpygtIcOGwrE_wqdjwpw-VSvDg8K-wr7DvjTCoTMhwrV1w5Y6VGNPJG5IWwFFwqzCl8OAw4TDl8OefMOzSE1ofE4OQVTDkMOnPsO5wpTDuGPDigjDjFbDnkvDrVgWw7TClzjCk8O3AsKrRXLDjMKTwrbDv8Kmd0Nlw7rCn0LDgMKRCW_DtcKJOMK4wrjDpEJ-wqs"
-let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
+        let goodData = "Found. Redirecting to "+redirect+"?code=w7DClMOnf03Dg8OxeyHCrwzChDXCnsOcw4cSw4nDuU_Dqkcmdy1zwoVKw5xEQMO5CsKYVcOiRsKYw4_Ds8OsBAfCpABrw4sAwqnDr37DiMOQwq7CjXMmw4PCt1knw7vCsMOXGHnCvBQ4wq7DjzMrDAJpwoHCmcKxAxbCjcKHSg1dw4vDr8OhHzE9w57CpygtIcOGwrE_wqdjwpw-VSvDg8K-wr7DvjTCoTMhwrV1w5Y6VGNPJG5IWwFFwqzCl8OAw4TDl8OefMOzSE1ofE4OQVTDkMOnPsO5wpTDuGPDigjDjFbDnkvDrVgWw7TClzjCk8O3AsKrRXLDjMKTwrbDv8Kmd0Nlw7rCn0LDgMKRCW_DtcKJOMK4wrjDpEJ-wqs"
+        let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         let response = Response(responseData: goodData.data(using: .utf8), httpResponse: nil, isRedirect: false)
 
         authManager.response = response
@@ -692,7 +692,7 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         authManager.appid.oauthManager?.tokenManager = originalTokenManager
 
     }
-    
+
 
     class TokenRespDelegate: TokenResponseDelegate {
         var failed = false
@@ -805,4 +805,10 @@ let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
         mockTokenManager.verify()
     }
 
+    class MockTokenManagerWithValidateAToken: TokenManager {
+
+        override internal func validateToken(token: Token, tokenResponseDelegate: TokenResponseDelegate, callback: @escaping () -> Void) {
+            callback()
+        }
+    }
 }

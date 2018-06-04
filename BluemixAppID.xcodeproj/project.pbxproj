@@ -13,7 +13,7 @@
 		686FA7AB6F9EE8ACF04FFE5B /* Pods_BluemixAppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9518D9FBE5C06EEB62E45B4 /* Pods_BluemixAppID.framework */; };
 		9178A9196CA83023A3A1FC90 /* Pods_BluemixAppIDTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D5F58BDE9E7A759720873B7 /* Pods_BluemixAppIDTests.framework */; };
 		BDC0D53F1E5EF68300444F9E /* UserProfileManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC0D53E1E5EF68300444F9E /* UserProfileManagerImpl.swift */; };
-		BDF5878B1E65736B00393C0C /* (null) in Sources */ = {isa = PBXBuildFile; };
+		BDF5878B1E65736B00393C0C /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		BDF5878F1E66C55A00393C0C /* UserProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF5878E1E66C55A00393C0C /* UserProfileTests.swift */; };
 		EF3B3BE21E55C4E900DFFF13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B3BE11E55C4E900DFFF13 /* AppDelegate.swift */; };
 		EF3B3BE41E55C4E900DFFF13 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B3BE31E55C4E900DFFF13 /* ViewController.swift */; };
@@ -562,11 +562,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-BluemixAppIDTests/Pods-BluemixAppIDTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BMSAnalyticsAPI/BMSAnalyticsAPI.framework",
 				"${BUILT_PRODUCTS_DIR}/BMSCore/BMSCore.framework",
+				"${BUILT_PRODUCTS_DIR}/JOSESwift/JOSESwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BMSAnalyticsAPI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BMSCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JOSESwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -635,7 +637,7 @@
 				EF4994811E55F7BE008ACC27 /* SecurityUtilsTests.swift in Sources */,
 				EF4994821E55F7BE008ACC27 /* AppIDTestConstants.swift in Sources */,
 				EF4994831E55F7BE008ACC27 /* AppIDTests.swift in Sources */,
-				BDF5878B1E65736B00393C0C /* (null) in Sources */,
+				BDF5878B1E65736B00393C0C /* BuildFile in Sources */,
 				EF4994841E55F7BE008ACC27 /* AuthorizationHeaderHelperTests.swift in Sources */,
 				EF4994861E55F7BE008ACC27 /* PreferencesTests.swift in Sources */,
 				EF4994871E55F7BE008ACC27 /* TokenManagerTests.swift in Sources */,
@@ -768,7 +770,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -824,7 +826,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

@@ -20,7 +20,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
 
     static var appid:AppID? = nil
     static var manager:AppIDAuthorizationManager? = nil
-        
+    
     override public func setUp() {
         super.setUp()
         AppID.sharedInstance.initialize(tenantId: "123", bluemixRegion: "123")
@@ -135,7 +135,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
         tokenManager.shouldCallObtainWithRefresh = true
         tokenManager.obtainWithRefreshShouldFail = true
         tokenManager.latestRefreshToken = RefreshTokenImpl(with: "ststs")
-
+ 
         let callback:BMSCompletionHandler = {(response:Response?, error:Error?) in
             XCTAssertNotNil(response)
             XCTAssertEqual(AppIDAuthorizationManagerTests.expectedResponse.statusCode, response?.statusCode)

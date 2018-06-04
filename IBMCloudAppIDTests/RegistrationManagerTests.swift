@@ -13,20 +13,20 @@
 import Foundation
 import XCTest
 import BMSCore
-@testable import BluemixAppID
+@testable import IBMCloudAppID
 
 
 public class RegistrationManagerTests: XCTestCase {
 
     var oauthManager = OAuthManager(appId: AppID.sharedInstance)
-    
+
     public override func setUp() {
         AppID.sharedInstance = AppID()
-        AppID.sharedInstance.initialize(tenantId: "tenant1", bluemixRegion: "region2")
+        AppID.sharedInstance.initialize(tenantId: "tenant1", region: "region2")
         oauthManager = OAuthManager(appId: AppID.sharedInstance)
         oauthManager.registrationManager?.clearRegistrationData()
     }
-    
+
     func testClearRegistrationData() {
         let manager = RegistrationManager(oauthManager:OAuthManager(appId: AppID.sharedInstance))
         manager.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).set("sometenant")
@@ -37,7 +37,7 @@ public class RegistrationManagerTests: XCTestCase {
         XCTAssertNil( manager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).get())
         XCTAssertNil( manager.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).get())
     }
-    
+
     class MockRegistrationManagerWithSendRequest: RegistrationManager {
         var err:Error?
         var response:Response?
@@ -46,15 +46,15 @@ public class RegistrationManagerTests: XCTestCase {
             self.response = response
             super.init(oauthManager:oauthManager)
         }
-        
-        
+
+
         override internal func generateKeyPair() throws {
             TestHelpers.clearDictValuesFromKeyChain([AppIDConstants.publicKeyIdentifier : kSecClassKey, AppIDConstants.privateKeyIdentifier : kSecClassKey])
             TestHelpers.savePrivateKeyDataToKeyChain(AppIDTestConstants.privateKeyData, tag: AppIDConstants.privateKeyIdentifier)
             TestHelpers.savePublicKeyDataToKeyChain(AppIDTestConstants.publicKeyData, tag: AppIDConstants.publicKeyIdentifier)
             return
         }
-        
+
         override internal func sendRequest(request:Request, registrationParamsAsData:Data?, internalCallBack: @escaping BMSCompletionHandler) {
 
             XCTAssertEqual(request.resourceUrl, Config.getServerUrl(appId: AppID.sharedInstance) + "/clients")
@@ -63,15 +63,15 @@ public class RegistrationManagerTests: XCTestCase {
             XCTAssertEqual(request.timeout, BMSClient.sharedInstance.requestTimeout)
             let dataAsDictionary = try? Utils.parseJsonStringtoDictionary(String(data: registrationParamsAsData!, encoding: .utf8)!)
             XCTAssertEqual(try? Utils.JSONStringify(dataAsDictionary as AnyObject), "{\"token_endpoint_auth_method\":\"client_secret_basic\",\"device_model\":\"iPhone\",\"software_version\":\"1.0\",\"client_type\":\"mobileapp\",\"device_os\":\"iOS\",\"software_id\":\"oded.dummyAppForKeyChain\",\"grant_types\":[\"authorization_code\",\"password\"],\"jwks\":{\"keys\":[{\"e\":\"AQAB\",\"kty\":\"RSA\",\"n\":\"AOH-nACU3cCopAz6_SzJuDtUyN4nHhnk9yfF9DFiGPctXPbwMXofZvd9WcYQqtw-w3WV_yhui9PrOVfVBhk6CmM=\"}]},\"redirect_uris\":[\"oded.dummyAppForKeyChain:\\/\\/mobile\\/callback\"],\"device_id\":\"" + (UIDevice.current.identifierForVendor?.uuidString)! + "\",\"response_types\":[\"code\"],\"device_os_version\":\"" + UIDevice.current.systemVersion + "\"}")
-            
+
             internalCallBack(response, err)
         }
-        
+
     }
 
     // send request returns error
     func testRegisterOAuthClient1() {
-        
+
         let expectation1 = expectation(description: "got to callback")
         let callback = {(error: Error?) in
             XCTAssertEqual((error as? AppIDError)?.description, "Failed to register OAuth client")
@@ -83,7 +83,7 @@ public class RegistrationManagerTests: XCTestCase {
         let err = AppIDError.registrationError(msg: "Failed to register OAuth client")
         let regManager =  MockRegistrationManagerWithSendRequest(oauthManager:OAuthManager(appId: AppID.sharedInstance), response: nil, err: err)
         regManager.registerOAuthClient(callback: callback)
-        
+
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("err: \(error)")
@@ -91,41 +91,41 @@ public class RegistrationManagerTests: XCTestCase {
         }
     }
 
-    
+
     // happy flow
     func testRegisterOAuthClient2() {
-        
+
         let expectation1 = expectation(description: "got to callback")
-       
+
         let callback = {(error: Error?) in
             XCTAssertNil(error)
             XCTAssertNotNil(self.oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).get())
             XCTAssertEqual(self.oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).get(), try? Utils.JSONStringify(["key1": "val1", "key2": "val2"] as AnyObject))
             XCTAssertEqual(self.oauthManager.registrationManager?.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).get(), "tenant1")
-            
+
             expectation1.fulfill()
         }
-        
-        
+
+
         let response:Response = Response(responseData: try! Utils.JSONStringify(["key1": "val1", "key2": "val2"] as AnyObject).data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 200, httpVersion: nil, headerFields: nil), isRedirect: false)
-        
+
         let regManager =  MockRegistrationManagerWithSendRequest(oauthManager:oauthManager, response: response, err: nil)
         regManager.registerOAuthClient(callback: callback)
-        
+
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("err: \(error)")
             }
         }
-        
-        
-    }
-    
 
-    
+
+    }
+
+
+
     // send request returns unsuccessful response
     func testRegisterOAuthClient3() {
-        
+
         let expectation1 = expectation(description: "got to callback")
         let callback = {(error: Error?) in
             XCTAssertEqual((error as? AppIDError)?.description, "Could not register client")
@@ -134,23 +134,23 @@ public class RegistrationManagerTests: XCTestCase {
 
             expectation1.fulfill()
         }
-        
+
          let response:Response = Response(responseData: "some text".data(using: .utf8), httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 401, httpVersion: nil, headerFields: nil), isRedirect: false)
-        
+
         let regManager =  MockRegistrationManagerWithSendRequest(oauthManager:OAuthManager(appId: AppID.sharedInstance), response: response, err: nil)
         regManager.registerOAuthClient(callback: callback)
-        
+
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("err: \(error)")
             }
         }
     }
-    
-    
+
+
     // no error and no response
     func testRegisterOAuthClient4() {
-        
+
         let expectation1 = expectation(description: "got to callback")
         let callback = {(error: Error?) in
             XCTAssertEqual((error as? AppIDError)?.description, "Could not register client")
@@ -159,10 +159,10 @@ public class RegistrationManagerTests: XCTestCase {
 
             expectation1.fulfill()
         }
-        
+
         let regManager =  MockRegistrationManagerWithSendRequest(oauthManager:OAuthManager(appId: AppID.sharedInstance), response: nil, err: nil)
         regManager.registerOAuthClient(callback: callback)
-        
+
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("err: \(error)")
@@ -170,10 +170,10 @@ public class RegistrationManagerTests: XCTestCase {
         }
     }
 
-    
+
     // no response text
     func testRegisterOAuthClient5() {
-        
+
         let expectation1 = expectation(description: "got to callback")
         let callback = {(error: Error?) in
             XCTAssertEqual((error as? AppIDError)?.description, "Could not register client")
@@ -182,12 +182,12 @@ public class RegistrationManagerTests: XCTestCase {
 
             expectation1.fulfill()
         }
-        
+
         let response:Response = Response(responseData: nil, httpResponse: HTTPURLResponse(url: URL(string: "ADS")!, statusCode: 401, httpVersion: nil, headerFields: nil), isRedirect: false)
-        
+
         let regManager =  MockRegistrationManagerWithSendRequest(oauthManager:OAuthManager(appId: AppID.sharedInstance), response: response, err: nil)
         regManager.registerOAuthClient(callback: callback)
-        
+
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("err: \(error)")
@@ -202,7 +202,7 @@ public class RegistrationManagerTests: XCTestCase {
                 self.success = success
                 super.init(oauthManager:oauthManager)
             }
-            
+
             override internal func registerOAuthClient(callback :@escaping (Error?) -> Void) {
                 if success == true {
                     callback(nil)
@@ -210,18 +210,18 @@ public class RegistrationManagerTests: XCTestCase {
                     callback(AppIDError.registrationError(msg: "Failed to register OAuth client"))
                 }
             }
-            
+
         }
         // registration success
         MockRegistrationManager(oauthManager:OAuthManager(appId: AppID.sharedInstance), success: true).ensureRegistered(callback: {(error: Error?) -> Void in
             XCTAssertNil(error)
         })
-        AppID.sharedInstance.initialize(tenantId: "sometenant", bluemixRegion: "region")
+        AppID.sharedInstance.initialize(tenantId: "sometenant", region: "region")
         // registraiton failure
         MockRegistrationManager(oauthManager:OAuthManager(appId: AppID.sharedInstance), success: false).ensureRegistered(callback: {(error: Error?) -> Void in
             XCTAssertNotNil(error)
         })
-        
+
         // already registered
         var regManager =  MockRegistrationManager(oauthManager:OAuthManager(appId: AppID.sharedInstance), success: false)
         regManager.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).set("sometenant")
@@ -229,7 +229,7 @@ public class RegistrationManagerTests: XCTestCase {
         regManager.ensureRegistered(callback: {(error: Error?) -> Void in
             XCTAssertNil(error)
         })
-        
+
         // already registered - different tenant
         regManager =  MockRegistrationManager(oauthManager:OAuthManager(appId: AppID.sharedInstance), success: false)
         regManager.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).set("someothertenant")
@@ -237,6 +237,6 @@ public class RegistrationManagerTests: XCTestCase {
         regManager.ensureRegistered(callback: {(error: Error?) -> Void in
             XCTAssertNotNil(error)
         })
-        
+
     }
 }

@@ -17,32 +17,32 @@ import BMSCore
 public class AppID {
 
 	private(set) var tenantId: String?
-	private(set) var bluemixRegion: String?
+	private(set) var region: String?
     private(set) var oauthManager: OAuthManager?
     public var loginWidget: LoginWidgetImpl?
     public var userProfileManager: UserProfileManagerImpl?
-    
+
     public static var overrideServerHost: String?
     public static var overrideAttributesHost: String?
     public static var sharedInstance = AppID()
     internal static let logger =  Logger.logger(name: AppIDConstants.AppIDLoggerName)
-    
+
     static public let REGION_US_SOUTH = ".ng.bluemix.net"
     static public let REGION_US_EAST = ".us-east.bluemix.net"
     static public let REGION_UK = ".eu-gb.bluemix.net"
     static public let REGION_SYDNEY = ".au-syd.bluemix.net"
     static public let REGION_GERMANY = ".eu-de.bluemix.net"
-    
+
     internal init() {}
-    
+
     /**
         Intializes the App ID instance
         @param tenantId The tenant Id.
-        @param bluemixRegion The bluemix region.
+        @param region The IBm Cloud region.
     */
-    public func initialize(tenantId: String, bluemixRegion: String) {
+    public func initialize(tenantId: String, region: String) {
         self.tenantId = tenantId
-        self.bluemixRegion = bluemixRegion
+        self.region = region
 		self.oauthManager = OAuthManager(appId: self)
         self.loginWidget = LoginWidgetImpl(oauthManager: self.oauthManager!)
         self.userProfileManager = UserProfileManagerImpl(appId: self)
@@ -51,7 +51,7 @@ public class AppID {
     public func setPreferredLocale(_ locale: Locale) {
         self.oauthManager?.setPreferredLocale(locale)
     }
-    
+
     public func signinAnonymously(accessTokenString:String? = nil, allowCreateNewAnonymousUsers: Bool = true, authorizationDelegate:AuthorizationDelegate) {
         oauthManager?.authorizationManager?.loginAnonymously(accessTokenString: accessTokenString, allowCreateNewAnonymousUsers: allowCreateNewAnonymousUsers, authorizationDelegate: authorizationDelegate)
     }
@@ -62,8 +62,8 @@ public class AppID {
 
    /**
      Obtain new access and identity tokens using a refresh token.
-     
-     Note that the identity itself (user name/details) will not be refreshed by this operation, 
+
+     Note that the identity itself (user name/details) will not be refreshed by this operation,
      it will remain the same identity but in a new token (new expiration time)
     */
     public func signinWithRefreshToken(refreshTokenString:String? = nil, tokenResponseDelegate:TokenResponseDelegate) {
@@ -71,20 +71,20 @@ public class AppID {
             refreshTokenString: refreshTokenString,
             tokenResponseDelegate: tokenResponseDelegate)
     }
-    
+
     @available(*, deprecated: 3.0, renamed: "signinAnonymously")
     public func loginAnonymously(accessTokenString:String? = nil, allowCreateNewAnonymousUsers: Bool = true, authorizationDelegate:AuthorizationDelegate) {
         self.signinAnonymously(accessTokenString: accessTokenString, allowCreateNewAnonymousUsers: allowCreateNewAnonymousUsers, authorizationDelegate: authorizationDelegate)
     }
-    
+
     @available(*, deprecated: 3.0, renamed: "signinWithResourceOwnerPassword")
     public func obtainTokensWithROP(_ accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
         self.signinWithResourceOwnerPassword(accessTokenString, username: username,
                                              password: password, tokenResponseDelegate: tokenResponseDelegate)
     }
 
-    
-    
+
+
 	public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {
             return (self.oauthManager?.authorizationManager?.application(application, open: url, options: options))!
     }

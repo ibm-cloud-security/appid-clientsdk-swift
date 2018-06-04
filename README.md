@@ -1,6 +1,6 @@
 # IBM Cloud App ID iOS Swift SDK
 
-[![Bluemix powered][img-bluemix-powered]][url-bluemix]
+[![IBM Cloud powered][img-ibmcloud-powered]][url-ibmcloud]
 [![Travis][img-travis-master]][url-travis-master]
 [![Coveralls][img-coveralls-master]][url-coveralls-master]
 [![Codacy][img-codacy]][url-codacy]
@@ -18,12 +18,12 @@
 
 ## Installing the SDK:
 
-1. Add the 'BluemixAppID' dependency to your Podfile, for example:
+1. Add the 'IBMCloudAppID' dependency to your Podfile, for example:
 
     ```swift
     target <yourTarget> do
        use_frameworks!
-	     pod 'BluemixAppID'
+	     pod 'IBMCloudAppID'
     end
     ```  
 2. From the terminal, run:  
@@ -36,11 +36,11 @@
 2. Under project setting > info > Url Types, Add $(PRODUCT_BUNDLE_IDENTIFIER) as a URL Scheme
 3. Add the following import to your AppDelegate.swift file:
 	```swift
-	import BluemixAppID
+	import
 	```
 4. Initialize the client SDK by passing the tenantId and region parameters to the initialize method. A common, though not mandatory, place to put the initialization code is in the application:didFinishLaunchingWithOptions: method of the AppDelegate in your Swift application.
     ```swift
-    AppID.sharedInstance.initialize(tenantId: <tenantId>, bluemixRegion: AppID.REGION_UK)
+    AppID.sharedInstance.initialize(tenantId: <tenantId>, region: AppID.REGION_UK)
     ```
     * Replace "tenantId" with the App ID service tenantId.
     * Replace the AppID.REGION_UK with the your App ID region (AppID.REGION_US_SOUTH, AppID.REGION_SYDNEY).
@@ -56,7 +56,7 @@
 After the App ID client SDK is initialized, you can start authenticating users by launching the Login Widget.
 1. Add the following import to the file in which you want to use with the login Widget:
 ```swift
-import BluemixAppID
+import
 ```
 2. Add the following code to the same file:
 ```swift
@@ -265,11 +265,11 @@ userProfileManager?.getUserInfo(accessTokenString: accessToken, identityTokenStr
 Add the following imports to the file in which you want to invoke a protected resource request:
 ```swift
 import BMSCore
-import BluemixAppID
+import
 ```
 Then add the following code:
 ```swift
-BMSClient.sharedInstance.initialize(bluemixRegion: AppID.REGION_UK)
+BMSClient.sharedInstance.initialize(region: AppID.REGION_UK)
 BMSClient.sharedInstance.authorizationManager = AppIDAuthorizationManager(appid:AppID.sharedInstance)
 var request:Request =  Request(url: "<your protected resource url>")
 request.send(completionHandler: {(response:Response?, error:Error?) in
@@ -280,8 +280,8 @@ request.send(completionHandler: {(response:Response?, error:Error?) in
 ## License
 This package contains code licensed under the Apache License, Version 2.0 (the "License"). You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 and may also view the License in the LICENSE file within this package.
 
-[img-bluemix-powered]: https://img.shields.io/badge/bluemix-powered-blue.svg
-[url-bluemix]: http://bluemix.net
+[img-ibmcloud-powered]: https://img.shields.io/badge/ibmcloud-powered-blue.svg
+[url-ibmcloud]: https://www.ibm.com/cloud/
 [url-bintray]: https://bintray.com/ibmcloudsecurity/appid-clientsdk-swift
 [img-license]: https://img.shields.io/github/license/ibm-cloud-security/appid-clientsdk-swift.svg
 [img-version]: https://img.shields.io/bintray/v/ibmcloudsecurity/maven/appid-clientsdk-swift.svg

@@ -13,12 +13,12 @@ import Foundation
 
 import XCTest
 import BMSCore
-@testable import BluemixAppID
+@testable import IBMCloudAppID
 
 public class AuthorizationManagerTests : XCTestCase {
 
     func testGetAuthorizationUrl() {
-        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        let authManager = IBMCloudAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
         authManager.registrationManager.preferenceManager.getStringPreference(name: AppIDConstants.client_id_String).clear()
         authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).clear()
         let defaultLocale = Locale.current
@@ -30,7 +30,7 @@ public class AuthorizationManagerTests : XCTestCase {
         XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "code" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier)
 
         XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_SIGN_UP_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "sign_up" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier)
-        
+
         // no idp, no registration data, override locale
         let customLocale = Locale.init(identifier: "fr")
         authManager.preferredLocale = customLocale
@@ -66,7 +66,7 @@ public class AuthorizationManagerTests : XCTestCase {
     }
 
     func testLaunchAuthorizationUI() {
-        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        let authManager = IBMCloudAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
 
         class delegate: AuthorizationDelegate {
             var res:String
@@ -78,7 +78,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 self.expectedError = expectedErr
                 self.res = res
             }
-            
+
             func onAuthorizationFailure(error: AuthorizationError) {
                 XCTAssertEqual(error.description, expectedError)
                 delegate.fails += 1
@@ -123,7 +123,7 @@ public class AuthorizationManagerTests : XCTestCase {
     }
 
     func testNoId() {
-        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        let authManager = IBMCloudAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
 
         class delegate: AuthorizationDelegate {
             var res:String
@@ -167,12 +167,12 @@ public class AuthorizationManagerTests : XCTestCase {
         testLaunchChangeDetailsAuthorizationUI_NO_IDToken(authManager: authManager, delegate:delegate(res: "failure", expectedErr: "No identity token found."))
     }
 
-    func testLaunchChangePasswordAuthorizationUI_NO_IDToken(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+    func testLaunchChangePasswordAuthorizationUI_NO_IDToken(authManager: IBMCloudAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
         authManager.launchChangePasswordUI(authorizationDelegate: delegate)
 
     }
 
-    func testLaunchChangeDetailsAuthorizationUI_NO_IDToken(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+    func testLaunchChangeDetailsAuthorizationUI_NO_IDToken(authManager: IBMCloudAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
         authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
 
     }
@@ -180,7 +180,7 @@ public class AuthorizationManagerTests : XCTestCase {
 
     func test_ID_Token_Not_Of_CD() {
         let oAuthManager = OAuthManager(appId: AppID.sharedInstance)
-        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: oAuthManager)
+        let authManager = IBMCloudAppID.AuthorizationManager(oAuthManager: oAuthManager)
 
         class delegate: AuthorizationDelegate {
             var res:String
@@ -218,7 +218,7 @@ public class AuthorizationManagerTests : XCTestCase {
                     XCTFail()
                 }
             }
-            
+
         }
         //id token not from cloud directory
         let data = "{\"access_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw\",\"id_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiYXVkIjoiMTdlMTI4OWI2N2E1MzIwMDQ4MTdhNWEwYmQzMTM5YjljYWM4NDE0OCIsImV4cCI6MTQ4NzA2NjMwMiwiYXV0aF9ieSI6ImZhY2Vib29rIiwidGVuYW50IjoiNGRiYTk0MzAtNTRlNi00Y2YyLWE1MTYtNmY3M2ZlYjcwMmJiIiwiaWF0IjoxNDg3MDYyNzAyLCJuYW1lIjoiRG9uIExvbiIsImVtYWlsIjoiZG9ubG9ucXdlcnR5QGdtYWlsLmNvbSIsImdlbmRlciI6Im1hbGUiLCJsb2NhbGUiOiJlbl9VUyIsInBpY3R1cmUiOiJodHRwczovL3Njb250ZW50Lnh4LmZiY2RuLm5ldC92L3QxLjAtMS9wNTB4NTAvMTM1MDE1NTFfMjg2NDA3ODM4Mzc4ODkyXzE3ODU3NjYyMTE3NjY3MzA2OTdfbi5qcGc_b2g9MjQyYmMyZmI1MDU2MDliNDQyODc0ZmRlM2U5ODY1YTkmb2U9NTkwN0IxQkMiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImZhY2Vib29rIiwiaWQiOiIzNzc0NDAxNTkyNzU2NTkifV0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiT2RlZEFwcElEYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJPZGVkQXBwSURhcHBpZElEIiwic29mdHdhcmVfdmVyc2lvbiI6IjEuMCIsImRldmljZV9pZCI6Ijk5MDI0Njg4LUZGMTktNDg4Qy04RjJELUY3MTY2MDZDQTU5NCIsImRldmljZV9tb2RlbCI6ImlQaG9uZSIsImRldmljZV9vcyI6ImlQaG9uZSBPUyJ9fQ.kFPUtpi9AROmBvQqPa19LgX18aYSSbnjlea4Hg0OA4UUw8XYnuoufBWpmmzDpaqZVnN5LTWg9YK5-wtB5Hi9YwX8bhklkeciHP_1ue-fyNDLN2uCNUvBxh916mgFy8u1gFicBcCzQkVoSDSL4Pcjgo0VoTla8t36wLFRtEKmBQ-p8UOlvjD-dnAoNBDveUsNNyeaLMdVPRRfXi-RYWOH3E9bjvyhHd-Zea2OX3oC1XRpqNgrUBXQblskOi_mEll_iWAUX5oD23tOZB9cb0eph9B6_tDZutgvaY338ZD1W9St6YokIL8IltKbrX3q1_FFJSu9nfNPgILsKIAKqe9fHQ\",\"expires_in\":3600}".data(using: .utf8)
@@ -232,20 +232,20 @@ public class AuthorizationManagerTests : XCTestCase {
 
     }
 
-    func testLaunchChangePassword_ID_Token_Not_Of_CD(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+    func testLaunchChangePassword_ID_Token_Not_Of_CD(authManager: IBMCloudAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
         authManager.launchChangePasswordUI(authorizationDelegate: delegate)
 
     }
 
-    func testLaunchChangeDetails_ID_Token_Not_Of_CD(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+    func testLaunchChangeDetails_ID_Token_Not_Of_CD(authManager: IBMCloudAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
         authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
 
     }
 
     func testLaunchChangePassword_success() {
         let oAuthManager = OAuthManager(appId: AppID.sharedInstance)
-        AppID.sharedInstance.initialize(tenantId: "tenant1", bluemixRegion: "region2")
-        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: oAuthManager)
+        AppID.sharedInstance.initialize(tenantId: "tenant1", region: "region2")
+        let authManager = IBMCloudAppID.AuthorizationManager(oAuthManager: oAuthManager)
 
         class delegate: AuthorizationDelegate {
             var res:String
@@ -299,7 +299,7 @@ public class AuthorizationManagerTests : XCTestCase {
 
     func tests_launchDetails() {
         let oAuthManager = OAuthManager(appId: AppID.sharedInstance)
-        AppID.sharedInstance.initialize(tenantId: "tenant1", bluemixRegion: "region2")
+        AppID.sharedInstance.initialize(tenantId: "tenant1", region: "region2")
         let authManager = MockAuthorizationManagerWithGoodResponse(oAuthManager: oAuthManager)
         let authManagerNoCode = MockAuthorizationManager(oAuthManager: oAuthManager)
         let authManagerRequestError = MockAuthorizationManagerWithRequestError(oAuthManager: oAuthManager)
@@ -321,7 +321,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 if res != "failure" {
                     XCTFail()
                 }
- 
+
             }
 
             func onAuthorizationCanceled() {
@@ -348,29 +348,29 @@ public class AuthorizationManagerTests : XCTestCase {
         let tokenManager:TokenManager =  MockTokenManagerWithValidateAToken(oAuthManager: oAuthManager)
         tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"success", expectedErr: ""))
         oAuthManager.tokenManager = tokenManager
-        
+
         testLaunchChangeDetails_success(authManager: authManager, delegate:delegate(res:"", expectedErr:""))
         testLaunchChangeDetails_no_code(authManager: authManagerNoCode, delegate:delegate(res:"failure", expectedErr:"Failed to extract code"))
         testLaunchChangeDetails_request_error(authManager: authManagerRequestError, delegate:delegate(res:"failure", expectedErr:"Unable to get response from server"))
     }
 
-    func testLaunchChangeDetails_success(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+    func testLaunchChangeDetails_success(authManager: IBMCloudAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
         authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
         XCTAssertEqual(authManager.authorizationUIManager?.redirectUri as String!, "redirect")
         let expectedUrl: String! = "https://appid-oauthregion2/oauth/v3/tenant1/cloud_directory/change_details?code=1234&client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
         XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
     }
-    
-    func testLaunchChangeDetails_no_code(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+
+    func testLaunchChangeDetails_no_code(authManager: IBMCloudAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
         authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
     }
-    
-    func testLaunchChangeDetails_request_error(authManager: BluemixAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
+
+    func testLaunchChangeDetails_request_error(authManager: IBMCloudAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
         authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
     }
 
     func testLaunchSignUpAuthorizationUI() {
-        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        let authManager = IBMCloudAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
 
         class delegate: AuthorizationDelegate {
             var res:String
@@ -389,7 +389,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 if res != "failure" {
                     XCTFail()
                 }
-                
+
             }
 
             func onAuthorizationCanceled() {
@@ -422,11 +422,11 @@ public class AuthorizationManagerTests : XCTestCase {
         // TODO:  think how to ovveride it?
         //        // no redirects
         //        authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : []] as [String:Any])
-        
+
     }
 
     func testLaunchForgotPasswordUI_registration_fails() {
-        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        let authManager = IBMCloudAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
 
         class delegate: AuthorizationDelegate {
             var res:String
@@ -475,7 +475,7 @@ public class AuthorizationManagerTests : XCTestCase {
     }
 
     func testLaunchForgotPasswordUI_registration_success() {
-        let authManager = BluemixAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
+        let authManager = IBMCloudAppID.AuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
 
         class delegate: AuthorizationDelegate {
             var res:String
@@ -516,11 +516,11 @@ public class AuthorizationManagerTests : XCTestCase {
 
         }
 
-        AppID.sharedInstance.initialize(tenantId: "tenant1", bluemixRegion: ".region2")
+        AppID.sharedInstance.initialize(tenantId: "tenant1", region: ".region2")
         MockRegistrationManager.shouldFail = false
         authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
         authManager.launchForgotPasswordUI(authorizationDelegate: delegate(res: "failure", expectedErr: ""))
-        
+
         let expectedUrl: String! = "https://appid-oauth.region2/oauth/v3/tenant1/cloud_directory/forgot_password?client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
         XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
 
@@ -578,7 +578,7 @@ public class AuthorizationManagerTests : XCTestCase {
         }
     }
 
-    class MockAuthorizationManager: BluemixAppID.AuthorizationManager {
+    class MockAuthorizationManager: IBMCloudAppID.AuthorizationManager {
         var response : Response? = nil
         var error : Error? = nil
 
@@ -587,7 +587,7 @@ public class AuthorizationManagerTests : XCTestCase {
         }
     }
 
-    class MockAuthorizationManagerWithGoodResponse: BluemixAppID.AuthorizationManager {
+    class MockAuthorizationManagerWithGoodResponse: IBMCloudAppID.AuthorizationManager {
 
         var response : Response? = Response(responseData: "1234".data(using: .utf8), httpResponse: nil, isRedirect: false)
         var error : Error? = nil
@@ -597,7 +597,7 @@ public class AuthorizationManagerTests : XCTestCase {
         }
     }
 
-    class MockAuthorizationManagerWithRequestError: BluemixAppID.AuthorizationManager {
+    class MockAuthorizationManagerWithRequestError: IBMCloudAppID.AuthorizationManager {
 
         var response : Response? = nil
         class SomeError : Error {
@@ -617,7 +617,7 @@ public class AuthorizationManagerTests : XCTestCase {
         authManager.appid.oauthManager?.tokenManager = MockTokenManager(oAuthManager: authManager.appid.oauthManager!)
 
         class SomeError : Error {
-            
+
         }
         class delegate: AuthorizationDelegate {
             var failed = false
@@ -625,16 +625,16 @@ public class AuthorizationManagerTests : XCTestCase {
             func onAuthorizationFailure(error: AuthorizationError) {
                 failed = true
             }
-            
+
             func onAuthorizationCanceled() {
-                
+
             }
 
             func onAuthorizationSuccess(accessToken: AccessToken?,
                                         identityToken: IdentityToken?,
                                         refreshToken: RefreshToken?,
                                         response:Response?) {
-                
+
             }
 
         }

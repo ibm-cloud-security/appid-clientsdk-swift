@@ -10,7 +10,7 @@ import Foundation
 
 import XCTest
 import BMSCore
-@testable import BluemixAppID
+@testable import IBMCloudAppID
 class TokenTests: XCTestCase {
 
 
@@ -51,7 +51,7 @@ class TokenTests: XCTestCase {
         XCTAssertNotNil(token?.payload)
         XCTAssertNotNil(token?.signature)
         XCTAssertEqual(token?.issuer, "mobileclientaccess.stage1.ng.bluemix.net")
-        
+
         XCTAssertNil(token?.subject)
         XCTAssertEqual(token?.audience, "26cb012eb327c612d90a6819163b6bcbd4849cbb")
         XCTAssertTrue(token?.issuedAt == Date(timeIntervalSince1970: 1487081278 as Double))
@@ -59,7 +59,7 @@ class TokenTests: XCTestCase {
         XCTAssertEqual(token?.authenticationMethods?[0], nil)
         XCTAssertTrue(token!.isExpired)
         XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1487084878 as Double))
-        
+
     }
-    
+
 }

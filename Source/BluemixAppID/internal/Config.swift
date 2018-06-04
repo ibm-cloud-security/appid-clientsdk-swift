@@ -24,7 +24,7 @@ internal class Config {
 
     internal static func getServerUrl(appId:AppID) -> String {
 
-        guard let region = appId.bluemixRegion, let tenant = appId.tenantId else {
+        guard let region = appId.region, let tenant = appId.tenantId else {
             logger.error(message: "Could not set server url properly, no tenantId or no region set")
             return serverUrlPrefix
         }
@@ -33,30 +33,30 @@ internal class Config {
         if let overrideServerHost = AppID.overrideServerHost {
             serverUrl = overrideServerHost
         }
-        
+
         serverUrl = serverUrl + tenant
         return serverUrl
     }
-    
+
     internal static func getAttributesUrl(appId:AppID) -> String {
-        
-        guard let region = appId.bluemixRegion else {
+
+        guard let region = appId.region else {
             logger.error(message: "Could not set server url properly, no region set")
             return serverUrlPrefix
         }
-        
+
         var attributesUrl = Config.attributesUrlPrefix + region + "/api/v1/"
         if let overrideHost = AppID.overrideAttributesHost {
             attributesUrl = overrideHost
         }
-        
+
         return attributesUrl
     }
 
     internal static func getPublicKeyEndpoint(appId: AppID) -> String {
         return getServerUrl(appId:appId) + publicKeysEndpoint
     }
-    
+
     internal static func getIssuer(appId: AppID) -> String? {
         guard let url = URL(string: getServerUrl(appId:appId)) else {
             return nil

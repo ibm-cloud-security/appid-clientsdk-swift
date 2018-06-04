@@ -13,7 +13,7 @@
 import Foundation
 import XCTest
 import BMSCore
-@testable import BluemixAppID
+@testable import IBMCloudAppID
 
 public class UserProfileTests: XCTestCase {
 
@@ -80,7 +80,7 @@ public class UserProfileTests: XCTestCase {
     }
 
     override public func setUp() {
-        AppID.sharedInstance.initialize(tenantId: "tenant", bluemixRegion: AppID.REGION_US_SOUTH)
+        AppID.sharedInstance.initialize(tenantId: "tenant", region: AppID.REGION_US_SOUTH)
     }
 
     func testGetAllAttributes () {

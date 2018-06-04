@@ -13,7 +13,7 @@
 import XCTest
 
 import BMSCore
-@testable import BluemixAppID
+@testable import IBMCloudAppID
 class PreferencesTests: XCTestCase {
 
     override func setUp() {
@@ -28,9 +28,9 @@ class PreferencesTests: XCTestCase {
         XCTAssertEqual(s.get(), "testValue")
         s.clear()
         XCTAssertNil(s.get())
-        
+
     }
-    
+
     func testJSONPreference() {
         let manager = PreferenceManager()
         let s = manager.getJSONPreference(name: "testJSONPref")
@@ -49,6 +49,5 @@ class PreferencesTests: XCTestCase {
         XCTAssertEqual(s.getAsJSON()?["key3"] as? String, "val3")
 
     }
-    
+
 }
-    

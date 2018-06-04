@@ -13,10 +13,10 @@ import Foundation
 
 import XCTest
 import BMSCore
-@testable import BluemixAppID
+@testable import IBMCloudAppID
 
 public class OAuthClientTests: XCTestCase {
-    
+
     func testOAuthClient() {
         let idToken = IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)
         let client = OAuthClientImpl(with: idToken!)
@@ -42,7 +42,7 @@ public class OAuthClientTests: XCTestCase {
         XCTAssertNil(client?.deviceModel)
         client?.oauthClient?["device_os"] = [:]
         XCTAssertNil(client?.deviceOS)
-        
+
     }
-    
+
 }

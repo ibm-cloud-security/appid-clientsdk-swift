@@ -14,7 +14,7 @@
 * Xcode 9.0 or above
 * CocoaPods 1.1.0 or higher
 * MacOS 10.11.5 or higher
-* iOS 9 or higher
+* iOS 10.0 or higher
 
 ## Installing the SDK:
 
@@ -36,7 +36,7 @@
 2. Under project setting > info > Url Types, Add $(PRODUCT_BUNDLE_IDENTIFIER) as a URL Scheme
 3. Add the following import to your AppDelegate.swift file:
 	```swift
-	import
+	import IBMCloudAppID
 	```
 4. Initialize the client SDK by passing the tenantId and region parameters to the initialize method. A common, though not mandatory, place to put the initialization code is in the application:didFinishLaunchingWithOptions: method of the AppDelegate in your Swift application.
     ```swift
@@ -56,7 +56,7 @@
 After the App ID client SDK is initialized, you can start authenticating users by launching the Login Widget.
 1. Add the following import to the file in which you want to use with the login Widget:
 ```swift
-import
+import IBMCloudAppID
 ```
 2. Add the following code to the same file:
 ```swift
@@ -265,7 +265,7 @@ userProfileManager?.getUserInfo(accessTokenString: accessToken, identityTokenStr
 Add the following imports to the file in which you want to invoke a protected resource request:
 ```swift
 import BMSCore
-import
+import IBMCloudAppID
 ```
 Then add the following code:
 ```swift

@@ -38,7 +38,7 @@ public class AppID {
     /**
         Intializes the App ID instance
         @param tenantId The tenant Id.
-        @param region The IBm Cloud region.
+        @param region The IBM Cloud region.
     */
     public func initialize(tenantId: String, region: String) {
         self.tenantId = tenantId

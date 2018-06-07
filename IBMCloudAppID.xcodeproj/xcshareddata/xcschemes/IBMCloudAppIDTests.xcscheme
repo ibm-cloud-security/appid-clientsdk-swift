@@ -18,9 +18,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EFBBC7651DF99BF6000CE39A"
-               BuildableName = "BluemixAppIDTests.xctest"
-               BlueprintName = "BluemixAppIDTests"
-               ReferencedContainer = "container:BluemixAppID.xcodeproj">
+               BuildableName = "IBMCloudAppIDTests.xctest"
+               BlueprintName = "IBMCloudAppIDTests"
+               ReferencedContainer = "container:IBMCloudAppID.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

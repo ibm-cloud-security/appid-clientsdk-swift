@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
-               BuildableName = "BluemixAppID.framework"
-               BlueprintName = "BluemixAppID"
-               ReferencedContainer = "container:BluemixAppID.xcodeproj">
+               BuildableName = "IBMCloudAppID.framework"
+               BlueprintName = "IBMCloudAppID"
+               ReferencedContainer = "container:IBMCloudAppID.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,9 +34,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "EFBBC7651DF99BF6000CE39A"
-               BuildableName = "BluemixAppIDTests.xctest"
-               BlueprintName = "BluemixAppIDTests"
-               ReferencedContainer = "container:BluemixAppID.xcodeproj">
+               BuildableName = "IBMCloudAppIDTests.xctest"
+               BlueprintName = "IBMCloudAppIDTests"
+               ReferencedContainer = "container:IBMCloudAppID.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -44,9 +44,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
-            BuildableName = "BluemixAppID.framework"
-            BlueprintName = "BluemixAppID"
-            ReferencedContainer = "container:BluemixAppID.xcodeproj">
+            BuildableName = "IBMCloudAppID.framework"
+            BlueprintName = "IBMCloudAppID"
+            ReferencedContainer = "container:IBMCloudAppID.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -66,9 +66,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
-            BuildableName = "BluemixAppID.framework"
-            BlueprintName = "BluemixAppID"
-            ReferencedContainer = "container:BluemixAppID.xcodeproj">
+            BuildableName = "IBMCloudAppID.framework"
+            BlueprintName = "IBMCloudAppID"
+            ReferencedContainer = "container:IBMCloudAppID.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -84,9 +84,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "EFBBC7531DF99AFA000CE39A"
-            BuildableName = "BluemixAppID.framework"
-            BlueprintName = "BluemixAppID"
-            ReferencedContainer = "container:BluemixAppID.xcodeproj">
+            BuildableName = "IBMCloudAppID.framework"
+            BlueprintName = "IBMCloudAppID"
+            ReferencedContainer = "container:IBMCloudAppID.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

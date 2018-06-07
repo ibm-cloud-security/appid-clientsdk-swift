@@ -6,10 +6,10 @@ def shared_pods
 	pod 'JOSESwift', '~> 1.1.0'
 end
 
-target 'BluemixAppID' do
+target 'IBMCloudAppID' do
 	shared_pods
 end
 
-target 'BluemixAppIDTests' do
+target 'IBMCloudAppIDTests' do
 	shared_pods
 end

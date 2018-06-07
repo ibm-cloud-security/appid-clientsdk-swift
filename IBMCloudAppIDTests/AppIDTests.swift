@@ -23,12 +23,12 @@
 //    static var  callbackErr = false;
 //    static var  callbackResponse = false;
 //    var pref = AppIDPreferences()
-//    
+//
 //    static let defaultCallBack : BMSCompletionHandler = {(response: Response?, error: Error?) in
-//        
+//
 //    }
-//    
-//    
+//
+//
 //    class MockRegistrationManager : RegistrationManager {
 //        var response:Response? = nil
 //        var err:Error? = nil
@@ -40,7 +40,7 @@
 //        }
 //    }
 //    var mockRegistrationManager:MockRegistrationManager?
-//    
+//
 //    class MockTokenManager : TokenManager {
 //        var response:Response? = nil
 //        var err:Error? = nil
@@ -48,18 +48,18 @@
 //            callback?(response,err)
 //        }
 //    }
-//    
+//
 //    // var mockTokenManager:MockTokenManager?
-//    
+//
 //    override func setUp() {
 //        mockRegistrationManager = MockRegistrationManager(preferences: pref)
-//        AppIDTests.appId.initialize(tenantId: AppIDTests.tenantId, bluemixRegion: BMSClient.Region.usSouth)
+//        AppIDTests.appId.initialize(tenantId: AppIDTests.tenantId, region: BMSClient.Region.usSouth)
 //        AppIDTests.appId.registrationManager = mockRegistrationManager!
 //        AppIDTests.appId.preferences.clientId.set(nil)
 //        //   appId.tokenManager = mockTokenManager!
 //        super.setUp();
 //    }
-//    
+//
 //    func testLoginRegisterSuccess() {
 //        let defaultCallBack:BMSCompletionHandler = {(response: Response?, error: Error?) in
 //            }
@@ -70,24 +70,24 @@
 //            AppIDConstants.JSON_SCOPE_KEY : AppIDConstants.OPEN_ID_VALUE,
 //            AppIDConstants.JSON_USE_LOGIN_WIDGET : AppIDConstants.TRUE_VALUE,
 //            ]
-//        
+//
 //        let url = AppID.sharedInstance.serverUrl + "/" + AppIDConstants.V3_AUTH_PATH + AppIDTests.tenantId + "/" + AppIDConstants.authorizationEndPoint + Utils.getQueryString(params: params)
-//        
-//        
+//
+//
 //        let response = HTTPURLResponse(url: URL(string : "SOMEurl")!, statusCode: 200, httpVersion: nil, headerFields: nil)
-//        
+//
 //        mockRegistrationManager?.response = Response(responseData: nil, httpResponse: response, isRedirect: false)
 //        mockRegistrationManager?.err = nil
-//        
+//
 //        AppIDTests.appId.login(onTokenCompletion: defaultCallBack)
-//        
-//        
+//
+//
 //        var viewUrl = AppIDTests.appId.loginView!.url!.absoluteString
 //        let firstPart = viewUrl.components(separatedBy: "state=")[0]
 //        var secondPart = ""
 //        let comp = viewUrl.components(separatedBy:  "state=")[1].components(separatedBy: "&")
 //        for i in 1...comp.count - 1 {
-//            
+//
 //            secondPart += comp[i] + (i == comp.count - 1 ? "" : "&")
 //        }
 //        viewUrl = firstPart + secondPart
@@ -96,12 +96,12 @@
 //        XCTAssertNotNil(AppIDTests.appId.tokenRequest)
 //        XCTAssertNotNil(AppIDTests.appId.loginView?.callback)
 //    }
-//    
-//    
-//    
-//    
+//
+//
+//
+//
 //    func testLoginRegisterFailed() {
-//        
+//
 //        //no saved client id tests
 //        var callbackCalled = 0
 //        mockRegistrationManager?.response = nil
@@ -124,7 +124,7 @@
 //            expectation2.fulfill()
 //        }
 //        AppIDTests.appId.login(onTokenCompletion: testCallBack2)
-//        
+//
 //        //saved client different tenant
 //        pref.clientId.set("1")
 //        pref.registrationTenantId.set("2")
@@ -140,13 +140,13 @@
 //            }
 //        }
 //    }
-//    
+//
 //    class mockLoginView : safariView {
 //        override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
 //            completion?()
 //        }
 //    }
-//    
+//
 //    func testTokens() {
 //        let accessToken = "thisIsAccessToken"
 //        let idToken = "thisIsAccessToken"
@@ -159,7 +159,7 @@
 // //        XCTAssertEqual(AppIDTests.appId.accessToken, accessToken)
 // //        XCTAssertEqual(AppIDTests.appId.idToken, idToken)
 //    }
-//    
+//
 //    func testApplication() {
 //        //happy flow
 //        let testcode = "testcode"
@@ -184,7 +184,7 @@
 //            expectation2.fulfill()
 //        }
 //        XCTAssertTrue(AppIDTests.appId.application(UIApplication.shared, open: URL(string: AppIDConstants.REDIRECT_URI_VALUE + "?notgrantcode=" + testcode)!, options: [:]))
-//        
+//
 //        waitForExpectations(timeout: 1) { error in
 //            if let error = error {
 //                XCTFail("err: \(error)")
@@ -192,9 +192,9 @@
 //        }
 //        //non happy flow
 //        XCTAssertFalse(AppIDTests.appId.application(UIApplication.shared, open: URL(string: "someurl" + "?notgrantcode=" + testcode)!, options: [:]))
-//        
+//
 //    }
-//    
-//    
+//
+//
 // }
 //

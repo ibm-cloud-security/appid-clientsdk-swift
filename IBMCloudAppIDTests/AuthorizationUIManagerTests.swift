@@ -13,7 +13,7 @@ import Foundation
 
 import XCTest
 import BMSCore
-@testable import BluemixAppID
+@testable import IBMCloudAppID
 
 public class AuthorizationUIManagerTests: XCTestCase {
 
@@ -30,18 +30,18 @@ public class AuthorizationUIManagerTests: XCTestCase {
         }
 
     }
-    
+
     class MockSafariView: safariView {
-        
+
         override func dismiss(animated flag: Bool, completion: (() -> Swift.Void)? = nil) {
             completion!()
         }
-        
+
     }
-    
+
 
     let oauthManager = OAuthManager(appId: AppID.sharedInstance)
-    
+
     class delegate: AuthorizationDelegate {
         var exp: XCTestExpectation?
         var errMsg: String?
@@ -49,47 +49,47 @@ public class AuthorizationUIManagerTests: XCTestCase {
             self.exp = exp
             self.errMsg = errMsg
         }
-        
+
         func onAuthorizationFailure(error: AuthorizationError) {
             XCTAssertEqual(error.description, errMsg)
             self.exp?.fulfill()
         }
-        
+
         func onAuthorizationCanceled() {
            XCTFail()
         }
-        
+
         func onAuthorizationSuccess(accessToken: AccessToken?,
                                     identityToken: IdentityToken?,
                                     refreshToken: RefreshToken?,
                                     response:Response?) {
              self.exp?.fulfill()
         }
-        
+
     }
-    
+
     // happy flow
     func testApplicationHappyFlow() {
-        
+
         let expectation1 = expectation(description: "Obtained tokens")
         oauthManager.tokenManager = MockTokenManager(oAuthManager: oauthManager, exp: expectation1)
         let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: nil, errMsg: nil), authorizationUrl: "someurl", redirectUri: "someredirect")
         manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
         // happy flow
         XCTAssertTrue(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode")!, options: [:]))
-        
+
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("err: \(error)")
             }
         }
-        
+
     }
-    
-    
+
+
     // no code no err
     func testApplicationErr() {
-        
+
         let expectation1 = expectation(description: "Obtained tokens")
         let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: "Failed to extract grant code"), authorizationUrl: "someurl", redirectUri: "someredirect")
         manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
@@ -100,16 +100,16 @@ public class AuthorizationUIManagerTests: XCTestCase {
             }
         }
     }
-    
-    
+
+
     // with err msg
     func testApplicationErr2() {
-        
+
         let expectation1 = expectation(description: "Obtained tokens")
         let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: "someerr"), authorizationUrl: "someurl", redirectUri: "someredirect")
         manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
         XCTAssertFalse(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somecode&error=someerr")!, options: [:]))
-        
+
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("err: \(error)")
@@ -117,7 +117,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
         }
 
     }
-    
+
     func testApplicationErr3() {
         class MockRegistrationManager:RegistrationManager {
             static var expectation:XCTestExpectation?
@@ -125,8 +125,8 @@ public class AuthorizationUIManagerTests: XCTestCase {
                 MockRegistrationManager.expectation?.fulfill()
             }
         }
-        
-        class MockAuthorizationManager:BluemixAppID.AuthorizationManager {
+
+        class MockAuthorizationManager:IBMCloudAppID.AuthorizationManager {
             static var expectation:XCTestExpectation?
             public override func launchAuthorizationUI(accessTokenString: String?, authorizationDelegate: AuthorizationDelegate) {
                 XCTAssertNil(accessTokenString)
@@ -139,11 +139,11 @@ public class AuthorizationUIManagerTests: XCTestCase {
         MockRegistrationManager.expectation = expectation1
         oauthManager.authorizationManager = MockAuthorizationManager(oAuthManager: oauthManager)
         MockAuthorizationManager.expectation = expectation2
-        
+
         let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: "Failed to obtain access and identity tokens"), authorizationUrl: "someurl", redirectUri: "someredirect")
         manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
         XCTAssertFalse(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somecode&error=invalid_client")!, options: [:]))
-        
+
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("err: \(error)")
@@ -184,5 +184,5 @@ public class AuthorizationUIManagerTests: XCTestCase {
     }
 
 
-    
+
 }

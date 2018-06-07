@@ -13,7 +13,7 @@
 import Foundation
 import XCTest
 import BMSCore
-@testable import BluemixAppID
+@testable import IBMCloudAppID
 class SecurityUtilsTest: XCTestCase {
 
     var itemLabel = "itemLabel"
@@ -21,29 +21,29 @@ class SecurityUtilsTest: XCTestCase {
     var keySize = 512
     var publicKeyTag = AppIDConstants.publicKeyIdentifier
     var privateKeyTag = AppIDConstants.privateKeyIdentifier
- 
+
     override func setUp() {
         super.setUp()
         TestHelpers.clearDictValuesFromKeyChain([publicKeyTag : kSecClassKey, privateKeyTag : kSecClassKey])
         TestHelpers.savePublicKeyDataToKeyChain(AppIDTestConstants.publicKeyData, tag: publicKeyTag)
         TestHelpers.savePrivateKeyDataToKeyChain(AppIDTestConstants.privateKeyData, tag: privateKeyTag)
     }
-    
-    
+
+
     func testKeyPairGeneration() {
         TestHelpers.clearDictValuesFromKeyChain([publicKeyTag : kSecClassKey, privateKeyTag : kSecClassKey])
         XCTAssertNotNil(try? SecurityUtils.generateKeyPair(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag))
     }
-    
-    
+
+
     func testSaveItemToKeyChain() {
         _ = SecurityUtils.saveItemToKeyChain(itemData, label: itemLabel)
         XCTAssertEqual(SecurityUtils.getItemFromKeyChain(itemLabel), itemData)
         _ = SecurityUtils.removeItemFromKeyChain(itemLabel)
         XCTAssertNil(SecurityUtils.getItemFromKeyChain(itemLabel))
     }
-    
-    
+
+
     func testGetJwksHeader() {
         // happy flow
         var jwks:[String:Any]? = try? SecurityUtils.getJWKSHeader()
@@ -51,7 +51,7 @@ class SecurityUtilsTest: XCTestCase {
         XCTAssertEqual(jwks?["e"] as? String, "AQAB")
         XCTAssertEqual(jwks?["kty"] as? String, "RSA")
         XCTAssertEqual(jwks?["n"] as? String, "AOH-nACU3cCopAz6_SzJuDtUyN4nHhnk9yfF9DFiGPctXPbwMXofZvd9WcYQqtw-w3WV_yhui9PrOVfVBhk6CmM=")
-        
+
         // no public key
         TestHelpers.clearDictValuesFromKeyChain([AppIDConstants.publicKeyIdentifier : kSecClassKey])
         do {
@@ -61,13 +61,13 @@ class SecurityUtilsTest: XCTestCase {
             XCTAssertEqual((e as? AppIDError)?.description, "General Error")
         }
     }
-    
+
     func testSignString() {
-        
+
         // happy flow
         let signature = try? SecurityUtils.signString("somepayload", keyIds: (publicKeyTag, privateKeyTag), keySize: keySize)
         XCTAssertEqual(signature, "ODT3jvWINoDIYrdMPMB-n548VKXnVT7wAg378q3vV4b20gkZq66DOPrkM9JmyOsVcrKO7FWCa0VaLu418rkC3w==")
     }
-    
-        
+
+
 }

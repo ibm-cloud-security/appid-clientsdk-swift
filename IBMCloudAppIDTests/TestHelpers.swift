@@ -13,7 +13,7 @@ import Foundation
 import BMSCore
 import XCTest
 
-@testable import BluemixAppID
+@testable import IBMCloudAppID
 
 public class TestHelpers {
 
@@ -24,11 +24,11 @@ public class TestHelpers {
             kSecAttrApplicationTag: tag as AnyObject,
             kSecAttrKeyType : kSecAttrKeyTypeRSA,
             kSecAttrKeyClass : kSecAttrKeyClassPublic
-            
+
         ]
         SecItemAdd(publicKeyAttr as CFDictionary, nil)
     }
-    
+
     public static func savePrivateKeyDataToKeyChain(_ key:Data,tag:String) {
         let publicKeyAttr : [NSString:AnyObject] = [
             kSecValueData: key as AnyObject,
@@ -36,11 +36,11 @@ public class TestHelpers {
             kSecAttrApplicationTag: tag as AnyObject,
             kSecAttrKeyType : kSecAttrKeyTypeRSA,
             kSecAttrKeyClass : kSecAttrKeyClassPrivate
-            
+
         ]
         SecItemAdd(publicKeyAttr as CFDictionary, nil)
     }
-    
+
     public static func clearDictValuesFromKeyChain(_ dict : [String : NSString]) {
         for (tag, kSecClassName) in dict {
             if kSecClassName == kSecClassKey {
@@ -55,7 +55,7 @@ public class TestHelpers {
         var shouldCallObtainWithRefresh = false
         var obtainWithRefreshShouldFail = false
         var obtainWithRefreshCalled = false
-        
+
         override public func obtainTokensRefreshToken(refreshTokenString: String, tokenResponseDelegate: TokenResponseDelegate) {
             obtainWithRefreshCalled = true
             if !shouldCallObtainWithRefresh {
@@ -68,13 +68,13 @@ public class TestHelpers {
                 }
             }
         }
-        
+
         func verify() {
             if shouldCallObtainWithRefresh && !obtainWithRefreshCalled {
                 XCTFail("Should have called obtainTokensRefreshToken but it wasn't called")
             }
         }
-        
+
     }
 
 

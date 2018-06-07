@@ -121,17 +121,21 @@ public class AuthorizationUIManagerTests: XCTestCase {
     func testApplicationErr3() {
         class MockRegistrationManager:RegistrationManager {
             static var expectation:XCTestExpectation?
+            
             public override func clearRegistrationData() {
                 MockRegistrationManager.expectation?.fulfill()
             }
+            
         }
 
         class MockAuthorizationManager:IBMCloudAppID.AuthorizationManager {
             static var expectation:XCTestExpectation?
+            
             public override func launchAuthorizationUI(accessTokenString: String?, authorizationDelegate: AuthorizationDelegate) {
                 XCTAssertNil(accessTokenString)
                 MockAuthorizationManager.expectation?.fulfill()
             }
+            
         }
         let expectation1 = expectation(description: "clear data")
         let expectation2 = expectation(description: "invoke registration")

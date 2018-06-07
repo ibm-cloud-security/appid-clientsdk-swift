@@ -121,7 +121,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
     func testApplicationErr3() {
         class MockRegistrationManager:RegistrationManager {
             static var expectation:XCTestExpectation?
- 
+
             public override func clearRegistrationData() {
                 MockRegistrationManager.expectation?.fulfill()
             }

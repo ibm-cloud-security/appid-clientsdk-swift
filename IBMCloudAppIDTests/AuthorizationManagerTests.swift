@@ -604,7 +604,7 @@ public class AuthorizationManagerTests : XCTestCase {
         class SomeError : Error {
 
         }
-        
+
         var error : Error? = SomeError()
         override func sendRequest(request: Request, internalCallBack: @escaping BMSCompletionHandler) {
             internalCallBack(response, error)

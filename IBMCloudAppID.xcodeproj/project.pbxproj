@@ -253,20 +253,20 @@
 		EFBA1FF11E51F7D9000EB3F5 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				EFBA1FF21E51F7D9000EB3F5 /* BluemixAppID */,
+				EFBA1FF21E51F7D9000EB3F5 /* IBMCloudAppID */,
 				EFBA20161E51F7D9000EB3F5 /* Info.plist */,
 				EFBA20171E51F7D9000EB3F5 /* Resources */,
 			);
 			path = Source;
 			sourceTree = "<group>";
 		};
-		EFBA1FF21E51F7D9000EB3F5 /* BluemixAppID */ = {
+		EFBA1FF21E51F7D9000EB3F5 /* IBMCloudAppID */ = {
 			isa = PBXGroup;
 			children = (
 				EFBA1FF31E51F7D9000EB3F5 /* api */,
 				EFBA20001E51F7D9000EB3F5 /* internal */,
 			);
-			path = BluemixAppID;
+			path = IBMCloudAppID;
 			sourceTree = "<group>";
 		};
 		EFBA1FF31E51F7D9000EB3F5 /* api */ = {

@@ -280,7 +280,7 @@ request.send(completionHandler: {(response:Response?, error:Error?) in
 ## License
 This package contains code licensed under the Apache License, Version 2.0 (the "License"). You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 and may also view the License in the LICENSE file within this package.
 
-[img-ibmcloud-powered]: https://img.shields.io/badge/ibmcloud-powered-blue.svg
+[img-ibmcloud-powered]: https://img.shields.io/badge/ibm%20cloud-powered-blue.svg
 [url-ibmcloud]: https://www.ibm.com/cloud/
 [url-bintray]: https://bintray.com/ibmcloudsecurity/appid-clientsdk-swift
 [img-license]: https://img.shields.io/github/license/ibm-cloud-security/appid-clientsdk-swift.svg

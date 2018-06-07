@@ -115,7 +115,7 @@ public class AuthorizationManagerTests : XCTestCase {
         authManager.launchAuthorizationUI(authorizationDelegate:delegate(res: "failure", expectedErr: "Failed to register OAuth client"))
 //        //mock with not error
 //        authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : ["redirect"]] as [String:Any])
-//        // TODO: think how to ovveride it?
+          // TODO: think how to ovveride it?
 //        // no redirects
 //        authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : []] as [String:Any])
 
@@ -576,7 +576,7 @@ public class AuthorizationManagerTests : XCTestCase {
                 XCTFail("Should have called obtainTokensRefreshToken but it wasn't called")
             }
         }
-        
+
     }
 
     class MockAuthorizationManager: IBMCloudAppID.AuthorizationManager {
@@ -621,7 +621,7 @@ public class AuthorizationManagerTests : XCTestCase {
         class SomeError : Error {
 
         }
-        
+
         class delegate: AuthorizationDelegate {
             var failed = false
 

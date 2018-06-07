@@ -23,7 +23,6 @@ internal class SecurityUtils {
             kSecReturnData : true as AnyObject
         ]
         var result: AnyObject?
-
         let status = SecItemCopyMatching(keyAttr as CFDictionary, &result)
 
         guard status == errSecSuccess else {
@@ -98,7 +97,6 @@ internal class SecurityUtils {
         if status == errSecSuccess {
             let data = results as! Data
             let password = String(data: data, encoding: String.Encoding.utf8)!
-
             return password
         }
 
@@ -124,7 +122,6 @@ internal class SecurityUtils {
             "n" : mod as AnyObject,
             "kty" : AppIDConstants.JSON_RSA_VALUE
         ]
-
         return publicKeyJSON
 
     }
@@ -133,7 +130,6 @@ internal class SecurityUtils {
         var iterator : Int = 0
         iterator += 1 // TYPE - bit stream - mod + exp
         _ = derEncodingGetSizeFrom(publicKeyBits, at:&iterator) // Total size
-
         iterator += 1 // TYPE - bit stream mod
         let mod_size : Int = derEncodingGetSizeFrom(publicKeyBits, at:&iterator)
 
@@ -150,7 +146,6 @@ internal class SecurityUtils {
         var iterator : Int = 0
         iterator += 1 // TYPE - bit stream - mod + exp
         _ = derEncodingGetSizeFrom(publicKeyBits, at:&iterator) // Total size
-
         iterator += 1// TYPE - bit stream mod
         let mod_size : Int = derEncodingGetSizeFrom(publicKeyBits, at:&iterator)
         iterator += mod_size
@@ -162,7 +157,6 @@ internal class SecurityUtils {
         guard exp_size != -1, let range = Range(NSMakeRange(iterator, exp_size)) else {
             return nil
         }
-
         return publicKeyBits.subdata(in: range)
     }
 
@@ -211,7 +205,6 @@ internal class SecurityUtils {
         }
     }
 
-
     private static func signData(_ data:Data, privateKey:SecKey) throws -> Data {
         func doSha256(_ dataIn:Data) throws -> Data {
             var hash = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
@@ -220,7 +213,6 @@ internal class SecurityUtils {
             }
             return Data(bytes: hash)
         }
-
         guard let digest:Data = try? doSha256(data), let signedData: NSMutableData = NSMutableData(length: SecKeyGetBlockSize(privateKey))  else {
             throw AppIDError.generalError
         }
@@ -265,7 +257,6 @@ internal class SecurityUtils {
             kSecClass: kSecClassGenericPassword,
             kSecAttrService: label as AnyObject
         ]
-
         let delStatus:OSStatus = SecItemDelete(delQuery as CFDictionary)
         return delStatus == errSecSuccess
 

@@ -16,6 +16,7 @@ import Foundation
 import BMSCore
 public class AuthorizationManager {
 
+
     static var logger = Logger.logger(name: AppIDConstants.RegistrationManagerLoggerName)
     var registrationManager:RegistrationManager
     var appid:AppID
@@ -106,7 +107,6 @@ public class AuthorizationManager {
             self.authorizationUIManager = AuthorizationUIManager(oAuthManager: self.oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: signUpAuthorizationUrl, redirectUri: redirectUri!)
             self.authorizationUIManager?.launch()
         })
-
     }
 
     internal func launchChangePasswordUI(authorizationDelegate:AuthorizationDelegate) {
@@ -177,7 +177,6 @@ public class AuthorizationManager {
             }
 
             let accessTokenToUse = accessTokenString != nil ? accessTokenString : self.oAuthManager.tokenManager?.latestAccessToken?.raw
-
             if accessTokenToUse == nil && !allowCreateNewAnonymousUsers {
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Not allowed to create new anonymous users"))
                 return
@@ -193,7 +192,6 @@ public class AuthorizationManager {
                             let url = URL(string: urlString!)
 
                             if url != nil {
-
                                 if let err = Utils.getParamFromQuery(url: url!, paramName: "error") {
                                     // authorization endpoint returned error
                                     let errorDescription = Utils.getParamFromQuery(url: url!, paramName: "error_description")

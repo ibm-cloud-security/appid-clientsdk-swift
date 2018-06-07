@@ -16,6 +16,7 @@ import BMSAnalyticsAPI
 
 internal class AppIDConstants {
 
+
     internal static let  base64EncodingTable:[Character] = [
         "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P",
         "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f",
@@ -67,10 +68,7 @@ internal class AppIDConstants {
         -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
         -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
         -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2
-    ]
-
-
-
+    ]    
 
     internal static let nameAndVer = Utils.getApplicationDetails()
 
@@ -111,6 +109,7 @@ internal class AppIDConstants {
     internal static var JSON_PROVIDER = "provider"
     internal static var JSON_CLOUD_DIRECTORY = "cloud_directory"
     internal static var JSON_USER_ID = "user_id"
+
     internal static let changePasswordPath = "/cloud_directory/change_password"
     internal static let generateCodePath = "/cloud_directory/generate_code"
     internal static let changeDetailsPath = "/cloud_directory/change_details"
@@ -138,6 +137,7 @@ internal class AppIDConstants {
     internal static let AUTH_SERVER_NAME = "imf-authserver"
     internal static let V3_AUTH_PATH = "oauth/v3/"
     internal static let OAUTH_AUTHORIZATION_PATH = "/authorization"
+
 
 
     /**
@@ -168,8 +168,6 @@ internal class AppIDConstants {
     internal static let CLIENT_SECRET_BASIC = "client_secret_basic"
     internal static let PASSWORD_STRING = "password"
 
-
-
     internal static let tenantPrefName = "com.ibm.bluemix.appid.swift.tenantid"
     internal static let registrationDataPref = "com.ibm.bluemix.appid.swift.REGISTRATION_DATA"
 
@@ -182,6 +180,7 @@ internal class AppIDConstants {
     internal static var JSON_STATE_KEY = "state"
     internal static var OPEN_ID_VALUE = "openid"
     internal static var TRUE_VALUE = "true"
+
 
     // label names
     internal static let KEY_CHAIN_PREFIX = "com.ibm.mobilefirstplatform.clientsdk.swift.bmssecurity"

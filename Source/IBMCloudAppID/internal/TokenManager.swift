@@ -23,8 +23,7 @@ internal class TokenManager {
     internal var latestRefreshToken:RefreshToken?
     internal var publicKeys: [String: SecKey] = [:]
     internal static let logger = Logger.logger(name: AppIDConstants.TokenManagerLoggerName)
-    internal init(oAuthManager:OAuthManager)
-    {
+    internal init(oAuthManager:OAuthManager) {
         self.appid = oAuthManager.appId
         self.registrationManager = oAuthManager.registrationManager!
     }
@@ -88,7 +87,7 @@ internal class TokenManager {
         do {
             headers = [AppIDConstants.AUTHORIZATION_HEADER : try createAuthenticationHeader(clientId: clientId),
                        Request.contentType : "application/x-www-form-urlencoded"]
-        } catch (_) {
+        } catch _ {
             TokenManager.logger.error(message: "Failed to create authentication header")
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Failed to create authentication header"))
             return
@@ -159,7 +158,7 @@ internal class TokenManager {
         do {
             var responseJson =  try Utils.parseJsonStringtoDictionary(responseText)
 
-            guard let accessTokenString = (responseJson["access_token"] as? String), let idTokenString = (responseJson["id_token"] as? String) else {
+            guard let accessTokenString = responseJson["access_token"] as? String, let idTokenString = responseJson["id_token"] as? String else {
                 TokenManager.logger.error(message: "Failed to parse server response - no access or identity token")
                 tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Failed to parse server response - no access or identity token"))
                 return

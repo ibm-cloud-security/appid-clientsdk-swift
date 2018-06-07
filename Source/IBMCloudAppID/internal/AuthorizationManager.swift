@@ -15,7 +15,8 @@
 import Foundation
 import BMSCore
 public class AuthorizationManager {
-    
+
+
     static var logger = Logger.logger(name: AppIDConstants.RegistrationManagerLoggerName)
     var registrationManager:RegistrationManager
     var appid:AppID
@@ -27,7 +28,7 @@ public class AuthorizationManager {
         self.appid = oAuthManager.appId
         self.registrationManager = oAuthManager.registrationManager!
     }
-    
+
     internal func getAuthorizationUrl(idpName : String?, accessToken : String?, responseType : String) -> String {
         var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + responseType
         if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
@@ -47,9 +48,9 @@ public class AuthorizationManager {
 
         return url
     }
-    
-    internal func getChangePasswordUrl(userId : String, redirectUri : String) -> String{
-        var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.CHANGE_PASSWORD_PATH + "?" + AppIDConstants.JSON_USER_ID + "=" + userId
+
+    internal func getChangePasswordUrl(userId : String, redirectUri : String) -> String {
+        var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.changePasswordPath + "?" + AppIDConstants.JSON_USER_ID + "=" + userId
         if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
             url += "&" + AppIDConstants.client_id_String + "=" + clientId
         }
@@ -58,9 +59,9 @@ public class AuthorizationManager {
 
         return url
     }
-    
-    internal func getChangeDetailsUrl(code : String, redirectUri : String) -> String{
-        var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.CHANGE_DETAILS_PATH + "?" + AppIDConstants.JSON_CODE_KEY + "=" + code
+
+    internal func getChangeDetailsUrl(code : String, redirectUri : String) -> String {
+        var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.changeDetailsPath + "?" + AppIDConstants.JSON_CODE_KEY + "=" + code
         if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
             url += "&" + AppIDConstants.client_id_String + "=" + clientId
         }
@@ -69,7 +70,7 @@ public class AuthorizationManager {
 
         return url
     }
-    
+
     internal func getForgotPasswordUrl(redirectUri: String) -> String {
         var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.FORGOT_PASSWORD_PATH
         if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
@@ -79,7 +80,7 @@ public class AuthorizationManager {
 
         return url
     }
-    
+
     internal func launchAuthorizationUI(accessTokenString:String? = nil, authorizationDelegate:AuthorizationDelegate) {
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {
@@ -93,7 +94,7 @@ public class AuthorizationManager {
             self.authorizationUIManager?.launch()
         })
     }
-    
+
     internal func launchSignUpAuthorizationUI(authorizationDelegate:AuthorizationDelegate) {
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {
@@ -106,9 +107,8 @@ public class AuthorizationManager {
             self.authorizationUIManager = AuthorizationUIManager(oAuthManager: self.oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: signUpAuthorizationUrl, redirectUri: redirectUri!)
             self.authorizationUIManager?.launch()
         })
-        
     }
-    
+
     internal func launchChangePasswordUI(authorizationDelegate:AuthorizationDelegate) {
         let currentIdToken:IdentityToken? = self.oAuthManager.tokenManager?.latestIdentityToken
         if currentIdToken == nil {
@@ -123,7 +123,7 @@ public class AuthorizationManager {
             self.authorizationUIManager?.launch()
         }
     }
-    
+
     internal func launchChangeDetailsUI(authorizationDelegate:AuthorizationDelegate) {
         let currentIdToken:IdentityToken? = self.oAuthManager.tokenManager?.latestIdentityToken
         if currentIdToken == nil {
@@ -131,7 +131,7 @@ public class AuthorizationManager {
         } else if currentIdToken?.identities?.first?[AppIDConstants.JSON_PROVIDER] as? String != AppIDConstants.JSON_CLOUD_DIRECTORY {
             authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("The identity token was not retrieved using cloud directory idp."))
         } else {
-            let generateCodeURL = Config.getServerUrl(appId: self.appid) + AppIDConstants.GENERATE_CODE_PATH
+            let generateCodeURL = Config.getServerUrl(appId: self.appid) + AppIDConstants.generateCodePath
             let request:Request =  Request(url: generateCodeURL)
             self.sendRequest(request: request, internalCallBack: {(response:Response?, error:Error?) in
                 if error == nil {
@@ -152,7 +152,7 @@ public class AuthorizationManager {
             })
         }
     }
-    
+
     internal func launchForgotPasswordUI(authorizationDelegate:AuthorizationDelegate) {
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {
@@ -160,14 +160,14 @@ public class AuthorizationManager {
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
-            
+
             let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0)
             let forgotPasswordUrl = self.getForgotPasswordUrl(redirectUri: redirectUri!)
             self.authorizationUIManager = AuthorizationUIManager(oAuthManager:self.oAuthManager, authorizationDelegate:authorizationDelegate, authorizationUrl: forgotPasswordUrl, redirectUri: redirectUri!)
             self.authorizationUIManager?.launch()
         })
     }
-    
+
     internal func loginAnonymously(accessTokenString:String?, allowCreateNewAnonymousUsers: Bool, authorizationDelegate:AuthorizationDelegate) {
         self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
             guard error == nil else {
@@ -175,25 +175,23 @@ public class AuthorizationManager {
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
-            
+
             let accessTokenToUse = accessTokenString != nil ? accessTokenString : self.oAuthManager.tokenManager?.latestAccessToken?.raw
-            
             if accessTokenToUse == nil && !allowCreateNewAnonymousUsers {
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Not allowed to create new anonymous users"))
                 return
             }
-            
+
             let authorizationUrl = self.getAuthorizationUrl(idpName: AppIDConstants.AnonymousIdpName, accessToken:accessTokenToUse, responseType: AppIDConstants.JSON_CODE_KEY)
-            
+
             let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
                 if error == nil {
                     if let unWrapperResponse = response {
                         let urlString = self.extractUrlString(body : unWrapperResponse.responseText)
                         if urlString != nil {
                             let url = URL(string: urlString!)
-                            
+
                             if url != nil {
-                                
                                 if let err = Utils.getParamFromQuery(url: url!, paramName: "error") {
                                     // authorization endpoint returned error
                                     let errorDescription = Utils.getParamFromQuery(url: url!, paramName: "error_description")
@@ -203,7 +201,7 @@ public class AuthorizationManager {
                                     AuthorizationManager.logger.error(message: "errorDescription: " + (errorDescription ?? "not available"))
                                     authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to obtain access and identity tokens"))
                                     return
-                                    
+
                                 } else {
                                     // authorization endpoint success
                                     if urlString!.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
@@ -221,14 +219,14 @@ public class AuthorizationManager {
                     self.logAndFail(message: "Unable to get response from server", delegate: authorizationDelegate)
                 }
             }
-            
+
             let request = Request(url: authorizationUrl,method: HttpMethod.GET, headers: nil, queryParameters: nil, timeout: 0)
             request.timeout = BMSClient.sharedInstance.requestTimeout
             request.allowRedirects = false
             self.sendRequest(request: request, internalCallBack: internalCallback)
-            
+
         })
-        
+
     }
 
     private func addLocaleQueryParam(_ url : String) -> String {
@@ -240,20 +238,20 @@ public class AuthorizationManager {
         AuthorizationManager.logger.debug(message : message)
         delegate.onAuthorizationFailure( error: AuthorizationError.authorizationFailure(message))
     }
-    
+
     private func extractUrlString(body: String?) -> String? {
         guard let body = body,
               let r = body.range(of: AppIDConstants.REDIRECT_URI_VALUE) else {
             return nil
         }
-        
+
         return String(body[r.lowerBound...])
     }
-    
+
     internal func sendRequest(request:Request, internalCallBack: @escaping BMSCompletionHandler) {
         request.send(completionHandler: internalCallBack)
     }
-    
+
     internal func signinWithResourceOwnerPassword(accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
         var accessTokenToUse = accessTokenString
         if accessTokenToUse == nil {
@@ -272,9 +270,9 @@ public class AuthorizationManager {
             return
         })
     }
-    
+
     internal func signinWithRefreshToken(refreshTokenString: String? = nil, tokenResponseDelegate: TokenResponseDelegate) {
-        
+
         var refreshTokenToUse = refreshTokenString
         if refreshTokenToUse == nil {
             let latestRefreshToken = self.oAuthManager.tokenManager?.latestRefreshToken
@@ -299,12 +297,9 @@ public class AuthorizationManager {
         })
 
     }
-    
+
     public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey : Any]) -> Bool {
         return (self.authorizationUIManager?.application(application, open: url, options: options))!
     }
-    
-    
-    
-    
+
 }

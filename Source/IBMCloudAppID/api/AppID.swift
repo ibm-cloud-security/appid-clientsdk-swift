@@ -27,11 +27,11 @@ public class AppID {
     public static var sharedInstance = AppID()
     internal static let logger =  Logger.logger(name: AppIDConstants.AppIDLoggerName)
 
-    static public let regionUSSouth = ".ng.bluemix.net"
-    static public let regionUSEast = ".us-east.bluemix.net"
-    static public let regionUK = ".eu-gb.bluemix.net"
-    static public let regionSydney = ".au-syd.bluemix.net"
-    static public let regionGermany = ".eu-de.bluemix.net"
+    static public let REGION_US_SOUTH = ".ng.bluemix.net"
+    static public let REGION_US_EAST = ".us-east.bluemix.net"
+    static public let REGION_UK = ".eu-gb.bluemix.net"
+    static public let REGION_SYDNEY = ".au-syd.bluemix.net"
+    static public let REGION_GERMANY = ".eu-de.bluemix.net"
 
     internal init() {}
 

@@ -80,7 +80,7 @@ public class UserProfileTests: XCTestCase {
     }
 
     override public func setUp() {
-        AppID.sharedInstance.initialize(tenantId: "tenant", region: AppID.regionUSSouth)
+        AppID.sharedInstance.initialize(tenantId: "tenant", region: AppID.REGION_US_SOUTH)
     }
 
     func testGetAllAttributes () {

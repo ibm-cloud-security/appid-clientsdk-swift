@@ -68,7 +68,7 @@ internal class AppIDConstants {
         -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
         -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2,
         -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2
-    ]    
+    ]
 
     internal static let nameAndVer = Utils.getApplicationDetails()
 

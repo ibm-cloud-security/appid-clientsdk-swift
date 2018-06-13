@@ -342,7 +342,7 @@ public class AuthorizationManagerTests : XCTestCase {
             }
 
         }
-        //id token from cloud directory
+        // id token from cloud directory
         let data = "{\"access_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UifQ.eyJpc3MiOiJtb2JpbGVjbGllbnRhY2Nlc3Muc3RhZ2UxLm5nLmJsdWVtaXgubmV0IiwiZXhwIjoxNDg3MDY2MzAyLCJhdWQiOiIxN2UxMjg5YjY3YTUzMjAwNDgxN2E1YTBiZDMxMzliOWNhYzg0MTQ4IiwiaWF0IjoxNDg3MDYyNzAyLCJhdXRoX2J5IjoiZmFjZWJvb2siLCJ0ZW5hbnQiOiI0ZGJhOTQzMC01NGU2LTRjZjItYTUxNi02ZjczZmViNzAyYmIiLCJzY29wZSI6ImFwcGlkX2RlZmF1bHQgYXBwaWRfcmVhZHByb2ZpbGUgYXBwaWRfcmVhZHVzZXJhdHRyIGFwcGlkX3dyaXRldXNlcmF0dHIifQ.enUpEwjdXGJYF9VHolYcKpT8yViYBCbcxp7p7e3n2JamUx68EDEwVPX3qQTyFCz4cXhGmhF8d3rsNGNxMuglor_LRhHDIzHtN5CPi0aqCh3QuF1dQrRBbmjOk2zjinP6pp5WaZvpbush8LEVa8CiZ3Cy2l9IHdY5f4ApKuh29oOj860wwrauYovX2M0f7bDLSwgwXTXydb9-ooawQI7NKkZOlVDI_Bxawmh34VLgAwepyqOR_38YEWyJm7mocJEkT4dqKMaGQ5_WW564JHtqy8D9kIsoN6pufIyr427ApsCdcj_KcYdCdZtJAgiP5x9J5aNmKLsyJYNZKtk2HTMmlw\",\"id_token\":\"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpPU0UiLCJraWQiOiJvS3dTY21CRFdITjBMVEhnVDRpQjhpMjdZUjNYOF9IRWQ3Smo2RlEtcHhVIn0.eyJpc3MiOiJhcHBpZC1vYXV0aC5zdGFnZTEubXlibHVlbWl4Lm5ldCIsImF1ZCI6IjQxNDIzNzZmYjFiYjU1ZjE4ZjQxNTE0ZmU4NWNlMGQ2MjlmZjk0YmYiLCJleHAiOjE1MDA1NTE4NzUsInRlbmFudCI6IjIyOGUzMGMyLWM3ZWMtNGUwZS04ZWQxLTZhZWMwZTkzZDRlYSIsImlhdCI6MTUwMDU0ODI3NSwiZW1haWwiOiJyb3RlbUBpYm0uY29tIiwibmFtZSI6InJvdGVtQGlibS5jb20iLCJzdWIiOiI1ZWY3NjQ3Mi0xMGM0LTQ4YmItYTRlMS1iOTg1OGFhODdmODgiLCJpZGVudGl0aWVzIjpbeyJwcm92aWRlciI6ImNsb3VkX2RpcmVjdG9yeSIsImlkIjoiYmQ5OGU3YTgtNjAzNS00ZTA3LTlkOTQtMDRjMDRjOWZkN2FiIn1dLCJhbXIiOlsiY2xvdWRfZGlyZWN0b3J5Il0sIm9hdXRoX2NsaWVudCI6eyJuYW1lIjoiYXBwaWQiLCJ0eXBlIjoibW9iaWxlYXBwIiwic29mdHdhcmVfaWQiOiJjb20uaWJtLm1vYmlsZWZpcnN0cGxhdGZvcm0uYXBwaWQiLCJzb2Z0d2FyZV92ZXJzaW9uIjoiMS4wIiwiZGV2aWNlX2lkIjoiZjNhZWQ3ZWEtMGUzNC0zNGM0LWI2NDgtMTJjZTQwYmE5ZWFhIiwiZGV2aWNlX21vZGVsIjoiQW5kcm9pZCBTREsgYnVpbHQgZm9yIHg4Nl82NCIsImRldmljZV9vcyI6ImFuZHJvaWQifX0.A-cHskvxS947usTLm90DtOYh7qyyvZi61D3XUIZ2Kxtw6mJE_ShsTtsR0b1uavYVyZTXUeD6bqKKzEqDD8TDpB7KO8gAePuUdMyMPF-ObVcgF3mzHzusWOHUiVUr0sbtF-i9YbyPwO4r6cs_GhhfeY05e4sDL7Gy9l2ab9IoSOJ-zDGe4_cJjkevbZ6Sl31PcRqz89wip5ixvhhvApkusojKcO-WG-6hDLWKrlf8Iz5AP4YLN5vpB7-9nCS2Z5whRnlr9kVyott8h6AREI_pvcjUUCvA7hrhiVJv38oS6yeTMeWPj4Q5RI9iYdF3rzFVw44ODnIKtXeP9IOzJEvlqA\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenManager:TokenManager =  MockTokenManagerWithValidateAToken(oAuthManager: oAuthManager)
@@ -419,7 +419,7 @@ public class AuthorizationManagerTests : XCTestCase {
         authManager.launchSignUpAuthorizationUI(authorizationDelegate:delegate(res: "failure", expectedErr: "Failed to register OAuth client"))
         //        //mock with not error
         //        authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : ["redirect"]] as [String:Any])
-        // TODO:  think how to ovveride it?
+        // TODO: think how to ovveride it?
         //        // no redirects
         //        authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : []] as [String:Any])
 
@@ -586,6 +586,7 @@ public class AuthorizationManagerTests : XCTestCase {
         override func sendRequest(request: Request, internalCallBack: @escaping BMSCompletionHandler) {
             internalCallBack(response, error)
         }
+
     }
 
     class MockAuthorizationManagerWithGoodResponse: IBMCloudAppID.AuthorizationManager {
@@ -606,9 +607,11 @@ public class AuthorizationManagerTests : XCTestCase {
         }
 
         var error : Error? = SomeError()
+
         override func sendRequest(request: Request, internalCallBack: @escaping BMSCompletionHandler) {
             internalCallBack(response, error)
         }
+
     }
 
 

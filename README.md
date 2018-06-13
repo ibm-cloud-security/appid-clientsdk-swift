@@ -40,10 +40,10 @@
 	```
 4. Initialize the client SDK by passing the tenantId and region parameters to the initialize method. A common, though not mandatory, place to put the initialization code is in the application:didFinishLaunchingWithOptions: method of the AppDelegate in your Swift application.
     ```swift
-    AppID.sharedInstance.initialize(tenantId: <tenantId>, region: AppID.regionUK)
+    AppID.sharedInstance.initialize(tenantId: <tenantId>, region: AppID.REGION_UK)
     ```
     * Replace "tenantId" with the App ID service tenantId.
-    * Replace the AppID.regionUK with the your App ID region (AppID.regionUSSouth, AppID.regionSydney).
+    * Replace the AppID.REGION_UK with the your App ID region (AppID.REGION_US_SOUTH, AppID.REGION_SYDNEY).
 
 5. Add the following code to you AppDelegate file
     ```swift
@@ -269,7 +269,7 @@ import IBMCloudAppID
 ```
 Then add the following code:
 ```swift
-BMSClient.sharedInstance.initialize(region: AppID.regionUK)
+BMSClient.sharedInstance.initialize(region: AppID.REGION_UK)
 BMSClient.sharedInstance.authorizationManager = AppIDAuthorizationManager(appid:AppID.sharedInstance)
 var request:Request =  Request(url: "<your protected resource url>")
 request.send(completionHandler: {(response:Response?, error:Error?) in

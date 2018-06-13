@@ -28,7 +28,7 @@ class UtilsTest: XCTestCase {
         let jsonStringOption4 = "{\"second\":3,\"third\":[\"item1\",\"item2\",[\"item3\",\"item4\"],\"item5\"],\"first\":true}"
         let jsonStringOption5 = "{\"second\":3,\"first\":true,\"third\":[\"item1\",\"item2\",[\"item3\",\"item4\"],\"item5\"]}"
         let jsonStringOption6 = "{\"third\":[\"item1\",\"item2\",[\"item3\",\"item4\"],\"item5\"],\"second\":3,\"first\":true}"
-        let cond = (jsonStringOption1 == json || jsonStringOption2 == json || jsonStringOption3 == json || jsonStringOption4 == json || jsonStringOption5 == json || jsonStringOption6 == json)
+        let cond = jsonStringOption1 == json || jsonStringOption2 == json || jsonStringOption3 == json || jsonStringOption4 == json || jsonStringOption5 == json || jsonStringOption6 == json
         XCTAssertTrue(cond)
     }
 
@@ -72,7 +72,7 @@ class UtilsTest: XCTestCase {
 //        XCTAssertEqual(dictionary[AppIDConstants.JSON_APPLICATION_VERSION_KEY] as? String, appIdentity.version)
 //        XCTAssertEqual(dictionary[AppIDConstants.JSON_ENVIRONMENT_KEY] as? String, AppIDConstants.JSON_IOS_ENVIRONMENT_VALUE)
 //    }
-    func testDecodeBase64WithString(){
+    func testDecodeBase64WithString() {
         let str = "VGhpcyBpcyBhIFV0aWxzIHVuaXRUZXN0IHR+c/Q="
         let strSafe = "VGhpcyBpcyBhIFV0aWxzIHVuaXRUZXN0IHR-c_Q="
         guard let data = Utils.decodeBase64WithString(str, isSafeUrl: false) else {

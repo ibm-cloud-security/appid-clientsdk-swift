@@ -79,6 +79,7 @@ public class AppIDAuthorizationManagerTests: XCTestCase {
                 XCTFail("Should have called obtainTokensRefreshToken, but the function wasn't called")
             }
         }
+
     }
 
 

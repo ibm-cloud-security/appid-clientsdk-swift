@@ -43,7 +43,7 @@
     AppID.sharedInstance.initialize(tenantId: <tenantId>, region: AppID.REGION_UK)
     ```
     * Replace "tenantId" with the App ID service tenantId.
-    * Replace the AppID.regionUK with the your App ID region (AppID.regionUSSouth, AppID.regionSydney).
+    * Replace the `AppID.REGION_UK` with the your App ID region (`AppID.REGION_US_SOUTH`, `AppID.REGION_SYDNEY`).
 
 5. Add the following code to you AppDelegate file
     ```swift

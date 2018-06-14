@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name         = "IBMCloudAppID"
-    s.version      = '4.0.0'
+    s.version      = '4.0.1'
     s.summary      = "AppID Swift SDK"
     s.homepage     = "https://github.com/ibm-cloud-security/appid-clientsdk-swift"
     s.license      = 'Apache License, Version 2.0'

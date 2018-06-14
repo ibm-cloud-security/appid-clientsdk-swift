@@ -15,13 +15,13 @@ import BMSCore
 
 
 public class Utils {
-    
-    
+
+
     public static func JSONStringify(_ value: AnyObject, prettyPrinted:Bool = false) throws -> String{
-        
+
         let options = prettyPrinted ? JSONSerialization.WritingOptions.prettyPrinted : JSONSerialization.WritingOptions(rawValue: 0)
-        
-        
+
+
         if JSONSerialization.isValidJSONObject(value) {
             do {
                 let data = try JSONSerialization.data(withJSONObject: value, options: options)
@@ -35,7 +35,7 @@ public class Utils {
         }
         return ""
     }
-    
+
     public static func parseJsonStringtoDictionary(_ jsonString:String) throws ->[String:Any] {
         do {
             guard let data = jsonString.data(using: String.Encoding.utf8), let responseJson =  try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] else {
@@ -44,9 +44,9 @@ public class Utils {
             return responseJson as [String:Any]
         }
     }
-    
+
     // TODO: did not delete this method as it is used in appidconstants
-    
+
     //Return the App Name and Version
     internal static func getApplicationDetails() -> (name:String, version:String) {
         var version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
@@ -58,35 +58,35 @@ public class Utils {
             version = "nil"
         }
         return (name!, version!)
-        
+
     }
-    
-        
+
+
     /**
      Decode base64 code
-     
+
      - parameter strBase64: strBase64 the String to decode
-     
+
      - returns: return decoded String
      */
-    
+
     public static func decodeBase64WithString(_ strBase64:String, isSafeUrl:Bool) -> Data? {
-        
+
         guard let objPointerHelper = strBase64.cString(using: String.Encoding.ascii), let objPointer = String(validatingUTF8: objPointerHelper) else {
             return nil
         }
-        
-        let intLengthFixed:Int = (objPointer.count)
+
+        let intLengthFixed:Int = objPointer.count
         var result:[Int8] = [Int8](repeating: 1, count: intLengthFixed)
-        
+
         var i:Int=0, j:Int=0, k:Int
         var count = 0
-        var intLengthMutated:Int = (objPointer.count)
+        var intLengthMutated:Int = objPointer.count
         var current:Character = objPointer[objPointer.index(objPointer.startIndex, offsetBy: count)]
-        
+
         while (current != "\0" && intLengthMutated > 0) {
             intLengthMutated-=1
-            
+
             if current == "=" {
                 if  count < intLengthFixed && objPointer[objPointer.index(objPointer.startIndex, offsetBy: count)] != "=" && i%4 == 1 {
                     return nil
@@ -102,7 +102,7 @@ public class Utils {
             let singleValueArrayCurrent: [UInt8] = Array(stringCurrent.utf8)
             let intCurrent:Int = Int(singleValueArrayCurrent[0])
             let int8Current = isSafeUrl ?  AppIDConstants.base64DecodingTableUrlSafe[intCurrent] :AppIDConstants.base64DecodingTable[intCurrent]
-            
+
             if int8Current == -1 {
                 current = objPointer[objPointer.index(objPointer.startIndex, offsetBy: count)]
                 count+=1
@@ -110,7 +110,7 @@ public class Utils {
             } else if int8Current == -2 {
                 return nil
             }
-            
+
             switch (i % 4) {
             case 0:
                 result[j] = int8Current << 2
@@ -127,16 +127,16 @@ public class Utils {
                 j+=1
             default:  break
             }
-            
+
             i+=1
-            
+
             if count == intLengthFixed - 1 {
                 break
             }
             count+=1
             current = objPointer[objPointer.index(objPointer.startIndex, offsetBy: count)]
         }
-        
+
         // mop things up if we ended on a boundary
         k = j
         if current == "=" {
@@ -153,11 +153,11 @@ public class Utils {
                 break
             }
         }
-        
+
         // Setup the return NSData
         return Data(bytes: UnsafeRawPointer(result), count: j)
     }
-    
+
     internal static func base64StringFromData(_ data:Data, length:Int, isSafeUrl:Bool) -> String {
         var ixtext:Int = 0
         var ctremaining:Int
@@ -196,44 +196,44 @@ public class Utils {
                 ctcopy = 3
             default: break
             }
-            
+
             for i in 0..<ctcopy {
                 let toAppend = isSafeUrl ? AppIDConstants.base64EncodingTableUrlSafe[output[i]]: AppIDConstants.base64EncodingTable[output[i]]
                 result.append(toAppend)
             }
-            
+
             for _ in ctcopy..<4 {
                 result += "="
             }
-            
+
             ixtext += 3
             charsonline += 4
-            
+
             if (length > 0) && (charsonline >= length) {
                 charsonline = 0
             }
-            
+
         }
-        
+
         return result
     }
-    
+
     internal static func base64StringFromData(_ data:Data, isSafeUrl:Bool) -> String {
         let length = data.count
         return base64StringFromData(data, length: length, isSafeUrl: isSafeUrl)
     }
-    
+
     internal static func urlEncode(_ str:String) -> String{
         var encodedString = ""
         var unchangedCharacters = ""
         let FORM_ENCODE_SET = " \"':;<=>@[]^`{}|/\\?#&!$(),~%"
-        
+
         for element: Int in 0x20..<0x7f {
             if !FORM_ENCODE_SET.contains(String(describing: UnicodeScalar(element))) {
                 unchangedCharacters += String(Character(UnicodeScalar(element)!))
             }
         }
-        
+
         encodedString = str.trimmingCharacters(in: CharacterSet(charactersIn: "\n\r\t"))
         let charactersToRemove = ["\n", "\r", "\t"]
         for char in charactersToRemove {
@@ -246,11 +246,11 @@ public class Utils {
             return "nil"
         }
     }
-    
-    
+
+
     public static func getParamFromQuery(url:URL, paramName: String) -> String? {
         return url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(paramName)}).first?.components(separatedBy: "=")[1]
     }
- 
-    
+
+
 }

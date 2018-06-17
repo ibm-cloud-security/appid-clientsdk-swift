@@ -110,7 +110,6 @@ internal class RegistrationManager {
             params[AppIDConstants.JSON_MODEL_KEY] = deviceIdentity.model
             params[AppIDConstants.JSON_OS_KEY] = deviceIdentity.OS
             params[AppIDConstants.jsonOsVersionKey] = deviceIdentity.OSVersion
-            
             params[AppIDConstants.JSON_CLIENT_TYPE_KEY] = AppIDConstants.MOBILE_APP_TYPE
             
             let jwks : [[String:Any]] = [try SecurityUtils.getJWKSHeader()]

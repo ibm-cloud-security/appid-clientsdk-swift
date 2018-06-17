@@ -15,20 +15,21 @@ import BMSCore
 internal class RegistrationManager {
     private var appId:AppID
     internal var preferenceManager:PreferenceManager
-
+    
     internal static let logger = Logger.logger(name: AppIDConstants.RegistrationManagerLoggerName)
-
-
-    internal init(oauthManager:OAuthManager) {
+    
+    
+    internal init(oauthManager:OAuthManager)
+    {
         self.appId = oauthManager.appId
         self.preferenceManager = oauthManager.preferenceManager
     }
-
-
+    
+    
     public func ensureRegistered(callback : @escaping (AppIDError?) -> Void) {
         let storedClientId:String? = self.getRegistrationDataString(name: AppIDConstants.client_id_String)
         let storedTenantId:String? = self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).get()
-        if storedClientId != nil && self.appId.tenantId == storedTenantId {
+        if(storedClientId != nil && self.appId.tenantId == storedTenantId && privateKeyExist() ) {
             RegistrationManager.logger.debug(message: "OAuth client is already registered.")
             callback(nil)
         } else {
@@ -39,14 +40,22 @@ internal class RegistrationManager {
                     callback(AppIDError.registrationError(msg: "Failed to register OAuth client"))
                     return
                 }
-
+                
                 RegistrationManager.logger.info(message: "OAuth client successfully registered.")
                 callback(nil)
             })
         }
-
     }
-
+    
+    internal func privateKeyExist() -> Bool {
+        do {
+            try SecurityUtils.getKeyRefFromKeyChain(AppIDConstants.privateKeyIdentifier)
+            return true;
+        } catch {
+            return false;
+        }
+    }
+    
     internal func registerOAuthClient(callback :@escaping (Error?) -> Void) {
         guard let registrationParams = try? createRegistrationParams() else {
             callback(AppIDError.registrationError(msg: "Could not create registration params"))
@@ -65,25 +74,25 @@ internal class RegistrationManager {
                 callback(error)
             }
         }
-
+        
         let request:Request = Request(url: Config.getServerUrl(appId: self.appId) + "/clients",method: HttpMethod.POST, headers: [Request.contentType : "application/json"], queryParameters: nil, timeout: 0)
         request.timeout = BMSClient.sharedInstance.requestTimeout
         let registrationParamsAsData = try? Utils.urlEncode(Utils.JSONStringify(registrationParams as AnyObject)).data(using: .utf8) ?? Data()
         sendRequest(request: request, registrationParamsAsData: registrationParamsAsData, internalCallBack: internalCallBack)
-
+       
     }
-
-
+    
+    
     internal func sendRequest(request:Request, registrationParamsAsData:Data?, internalCallBack: @escaping BMSCompletionHandler) {
         request.urlSession.isBMSAuthorizationRequest = true
         request.send(requestBody: registrationParamsAsData, completionHandler: internalCallBack)
     }
-
+    
     internal func generateKeyPair() throws {
         try SecurityUtils.generateKeyPair(512, publicTag: AppIDConstants.publicKeyIdentifier, privateTag: AppIDConstants.privateKeyIdentifier)
     }
-
-
+    
+    
     private func createRegistrationParams() throws -> [String:Any] {
         do {
             try generateKeyPair()
@@ -102,60 +111,59 @@ internal class RegistrationManager {
             params[AppIDConstants.JSON_OS_KEY] = deviceIdentity.OS
             params[AppIDConstants.jsonOsVersionKey] = deviceIdentity.OSVersion
             params[AppIDConstants.JSON_CLIENT_TYPE_KEY] = AppIDConstants.MOBILE_APP_TYPE
-
+            
             let jwks : [[String:Any]] = [try SecurityUtils.getJWKSHeader()]
-
+            
             let keys = [
                 AppIDConstants.JSON_KEYS_KEY : jwks
             ]
-
+            
             params[AppIDConstants.JSON_JWKS_KEY] =  keys
             return params
         } catch {
             throw AppIDError.registrationError(msg: "Failed to create registration params")
         }
     }
-
-
+    
+    
     public func getRegistrationData() -> [String:Any]? {
         return self.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).getAsJSON()
     }
-
+    
     public func getRegistrationDataString(name:String) -> String? {
         guard let registrationData = self.getRegistrationData() else {
             return nil
         }
         return registrationData[name] as? String
     }
-
+    
     public func getRegistrationDataString(arrayName:String, arrayIndex:Int) -> String? {
         guard let registrationData = self.getRegistrationData() else {
             return nil
         }
         return (registrationData[arrayName] as? NSArray)?[arrayIndex] as? String
     }
-
-
+    
+    
     public func getRegistrationDataObject(name:String) -> [String:Any]? {
         guard let registrationData = self.getRegistrationData() else {
             return nil
         }
         return registrationData[name] as? [String:Any]
     }
-
     public func getRegistrationDataArray(name:String) -> NSArray? {
         guard let registrationData = self.getRegistrationData() else {
             return nil
         }
         return registrationData[name] as? NSArray
     }
-
-
+    
+    
     public func clearRegistrationData() {
         self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).clear()
         self.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).clear()
-
+        
     }
-
-
+    
+    
 }

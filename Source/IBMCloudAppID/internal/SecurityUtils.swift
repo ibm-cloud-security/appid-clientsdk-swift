@@ -66,7 +66,7 @@ internal class SecurityUtils {
         }
     }
 
-    private static func getKeyRefFromKeyChain(_ tag:String) throws -> SecKey {
+    static func getKeyRefFromKeyChain(_ tag:String) throws -> SecKey {
         let keyAttr : [NSString:AnyObject] = [
             kSecClass : kSecClassKey,
             kSecAttrApplicationTag: tag as AnyObject,

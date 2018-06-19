@@ -1,5 +1,5 @@
 # IBM Cloud App ID iOS Swift SDK
-
+ 
 [![IBM Cloud powered][img-ibmcloud-powered]][url-ibmcloud]
 [![Travis][img-travis-master]][url-travis-master]
 [![Coveralls][img-coveralls-master]][url-coveralls-master]

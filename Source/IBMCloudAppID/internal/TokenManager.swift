@@ -175,6 +175,7 @@ internal class TokenManager {
                 self.validateToken(token: identityToken, tokenResponseDelegate: tokenResponseDelegate) {
                     self.latestAccessToken = accessToken
                     self.latestIdentityToken = identityToken
+                    self.latestRefreshToken = nil
                     if let refreshTokenString = responseJson["refresh_token"] as? String {
                         self.latestRefreshToken = RefreshTokenImpl(with: refreshTokenString)
                     }

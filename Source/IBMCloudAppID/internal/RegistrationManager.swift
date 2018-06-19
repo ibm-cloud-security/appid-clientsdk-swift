@@ -15,12 +15,11 @@ import BMSCore
 internal class RegistrationManager {
     private var appId:AppID
     internal var preferenceManager:PreferenceManager
-    
+
     internal static let logger = Logger.logger(name: AppIDConstants.RegistrationManagerLoggerName)
     
     
-    internal init(oauthManager:OAuthManager)
-    {
+    internal init(oauthManager:OAuthManager) {
         self.appId = oauthManager.appId
         self.preferenceManager = oauthManager.preferenceManager
     }
@@ -29,7 +28,7 @@ internal class RegistrationManager {
     public func ensureRegistered(callback : @escaping (AppIDError?) -> Void) {
         let storedClientId:String? = self.getRegistrationDataString(name: AppIDConstants.client_id_String)
         let storedTenantId:String? = self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).get()
-        if(storedClientId != nil && self.appId.tenantId == storedTenantId && privateKeyExist() ) {
+        if storedClientId != nil && self.appId.tenantId == storedTenantId && privateKeyExist() {
             RegistrationManager.logger.debug(message: "OAuth client is already registered.")
             callback(nil)
         } else {
@@ -50,9 +49,9 @@ internal class RegistrationManager {
     internal func privateKeyExist() -> Bool {
         do {
             try SecurityUtils.getKeyRefFromKeyChain(AppIDConstants.privateKeyIdentifier)
-            return true;
+            return true
         } catch {
-            return false;
+            return false
         }
     }
     

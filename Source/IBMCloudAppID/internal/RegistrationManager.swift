@@ -28,7 +28,7 @@ internal class RegistrationManager {
     public func ensureRegistered(callback : @escaping (AppIDError?) -> Void) {
         let storedClientId:String? = self.getRegistrationDataString(name: AppIDConstants.client_id_String)
         let storedTenantId:String? = self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).get()
-        if storedClientId != nil && self.appId.tenantId == storedTenantId {
+        if storedClientId != nil && self.appId.tenantId == storedTenantId && privateKeyExist() {
             RegistrationManager.logger.debug(message: "OAuth client is already registered.")
             callback(nil)
         } else {
@@ -44,7 +44,15 @@ internal class RegistrationManager {
                 callback(nil)
             })
         }
+    }
 
+    internal func privateKeyExist() -> Bool {
+        do {
+            try SecurityUtils.getKeyRefFromKeyChain(AppIDConstants.privateKeyIdentifier)
+            return true
+        } catch {
+            return false
+        }
     }
 
     internal func registerOAuthClient(callback :@escaping (Error?) -> Void) {
@@ -142,7 +150,6 @@ internal class RegistrationManager {
         }
         return registrationData[name] as? [String:Any]
     }
-
     public func getRegistrationDataArray(name:String) -> NSArray? {
         guard let registrationData = self.getRegistrationData() else {
             return nil

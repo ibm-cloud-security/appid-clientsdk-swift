@@ -54,7 +54,7 @@ internal class RegistrationManager {
             return false
         }
     }
-    
+
     internal func registerOAuthClient(callback :@escaping (Error?) -> Void) {
         guard let registrationParams = try? createRegistrationParams() else {
             callback(AppIDError.registrationError(msg: "Could not create registration params"))
@@ -161,7 +161,7 @@ internal class RegistrationManager {
     public func clearRegistrationData() {
         self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).clear()
         self.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).clear()
-        
+
     }
 
 

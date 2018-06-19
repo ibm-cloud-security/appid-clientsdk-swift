@@ -45,7 +45,7 @@ internal class RegistrationManager {
             })
         }
     }
-    
+
     internal func privateKeyExist() -> Bool {
         do {
             try SecurityUtils.getKeyRefFromKeyChain(AppIDConstants.privateKeyIdentifier)

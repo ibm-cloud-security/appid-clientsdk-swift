@@ -89,9 +89,24 @@ public class AuthorizationUIManagerTests: XCTestCase {
                 XCTFail("err: \(error)")
             }
         }
-
     }
 
+    func testApplicationHappyFlowAnon() {
+ 
+        let expectation1 = expectation(description: "Happy Flow Anon")
+        oauthManager.tokenManager = MockTokenManager(oAuthManager: oauthManager, exp: expectation1)
+        let manager = MockAuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: nil, errMsg: nil), authorizationUrl: "someurl&idp=appid_anon", redirectUri: "someredirect")
+        manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
+        // happy flow
+        XCTAssertTrue(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode&state=validstate")!, options: [:]))
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }  
+    }
+    
     func testApplicationInvalidState() {
         
         let expectation1 = expectation(description: "Invalid state")
@@ -99,6 +114,21 @@ public class AuthorizationUIManagerTests: XCTestCase {
         manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
 
         XCTAssertFalse(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode&state=invalidstate")!, options: [:]))
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+    }
+    
+    func testApplicationNoState() {
+        
+        let expectation1 = expectation(description: "No state")
+        let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: "Failed to extract state"), authorizationUrl: "someurl", redirectUri: "someredirect")
+        manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
+        
+        XCTAssertFalse(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode")!, options: [:]))
         
         waitForExpectations(timeout: 1) { error in
             if let error = error {

@@ -39,7 +39,13 @@ public class AuthorizationUIManagerTests: XCTestCase {
 
     }
 
-
+    class MockAuthorizationUIManager: AuthorizationUIManager {
+        
+        init(state: String = "validstate", oAuthManager: OAuthManager, authorizationDelegate: AuthorizationDelegate, authorizationUrl: String, redirectUri: String) {
+            super.init(oAuthManager: oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: authorizationUrl, redirectUri: redirectUri)
+            self.state = state
+        }
+    }
     let oauthManager = OAuthManager(appId: AppID.sharedInstance)
 
     class delegate: AuthorizationDelegate {
@@ -73,10 +79,10 @@ public class AuthorizationUIManagerTests: XCTestCase {
 
         let expectation1 = expectation(description: "Obtained tokens")
         oauthManager.tokenManager = MockTokenManager(oAuthManager: oauthManager, exp: expectation1)
-        let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: nil, errMsg: nil), authorizationUrl: "someurl", redirectUri: "someredirect")
+        let manager = MockAuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: nil, errMsg: nil), authorizationUrl: "someurl", redirectUri: "someredirect")
         manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
         // happy flow
-        XCTAssertTrue(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode")!, options: [:]))
+        XCTAssertTrue(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode&state=validstate")!, options: [:]))
 
         waitForExpectations(timeout: 1) { error in
             if let error = error {
@@ -86,7 +92,21 @@ public class AuthorizationUIManagerTests: XCTestCase {
 
     }
 
+    func testApplicationInvalidState() {
+        
+        let expectation1 = expectation(description: "Invalid state")
+        let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: "Mismatched state parameter"), authorizationUrl: "someurl", redirectUri: "someredirect")
+        manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
 
+        XCTAssertFalse(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode&state=invalidstate")!, options: [:]))
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+    }
+    
     // no code no err
     func testApplicationErr() {
 

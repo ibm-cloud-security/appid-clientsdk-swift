@@ -15,11 +15,13 @@ import Foundation
 import BMSCore
 
 public class AuthorizationUIManager {
-    var oAuthManager:OAuthManager
-    var authorizationDelegate:AuthorizationDelegate
-    var authorizationUrl:String
-    var redirectUri:String
-    private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationUIManager")
+    var oAuthManager: OAuthManager
+    var authorizationDelegate: AuthorizationDelegate
+    var authorizationUrl: String
+    var redirectUri: String
+    var state: String?
+    
+    private static let logger = Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationUIManager")
     var loginView:safariView?
     init(oAuthManager: OAuthManager, authorizationDelegate: AuthorizationDelegate, authorizationUrl: String, redirectUri: String) {
         self.oAuthManager = oAuthManager
@@ -29,8 +31,10 @@ public class AuthorizationUIManager {
     }
 
     public func launch() {
+        let state = Utils.generateStateParameter(of: 15)
+        self.state = state
         AuthorizationUIManager.logger.debug(message: "Launching safari view")
-        loginView =  safariView(url: URL(string: authorizationUrl )!)
+        loginView =  safariView(url: URL(string: authorizationUrl + "&state=\(state)" )!)
         loginView?.authorizationDelegate = authorizationDelegate
         DispatchQueue.main.async {
             let rootView = UIApplication.shared.keyWindow?.rootViewController
@@ -90,24 +94,38 @@ public class AuthorizationUIManager {
             })
             return false
         } else {
+            
+            defer {
+                // In case, we reuse Authorization manager.
+                // Reset the state parameter on scope exit.
+                self.state = nil
+            }
+
             let urlString = url.absoluteString
-            if urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
-                // gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
-                if let code =  Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) {
-                    tokenRequest(code: code, errMsg: nil)
-                    return true
-                } else {
+            guard urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) else {
+                return false
+            }
+            
+            // Gets "code" and "state" url query parameters
+            guard let code = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY),
+                let state = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_STATE_KEY) else {
                     AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")
                     tokenRequest(code: nil, errMsg: "Failed to extract grant code")
                     return false
-                }
             }
-            return false
+            
+            // Validates state matches original
+            guard self.state == state else {
+                AuthorizationUIManager.logger.debug(message: "Mismatched state parameter")
+                tokenRequest(code: nil, errMsg: "Mismatched state parameter")
+                return false
+            }
+            
+            tokenRequest(code: code, errMsg: nil)
+            return true
+
         }
 
     }
-
-
-
 
 }

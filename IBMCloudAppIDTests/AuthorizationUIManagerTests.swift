@@ -40,7 +40,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
     }
 
     class MockAuthorizationUIManager: AuthorizationUIManager {
-        
+
         init(state: String = "validstate", oAuthManager: OAuthManager, authorizationDelegate: AuthorizationDelegate, authorizationUrl: String, redirectUri: String) {
             super.init(oAuthManager: oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: authorizationUrl, redirectUri: redirectUri)
             self.state = state
@@ -104,7 +104,7 @@ public class AuthorizationUIManagerTests: XCTestCase {
             if let error = error {
                 XCTFail("err: \(error)")
             }
-        }  
+        }
     }
     
     func testApplicationInvalidState() {

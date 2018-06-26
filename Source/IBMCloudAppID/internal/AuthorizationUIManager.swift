@@ -110,7 +110,7 @@ public class AuthorizationUIManager {
                 tokenRequest(code: nil, errMsg: "Failed to extract state")
                 return false
             }
-            
+
             // Validates state matches the original
             guard getStoredState() == state else {
                 AuthorizationUIManager.logger.debug(message: "Mismatched state parameter")
@@ -128,4 +128,5 @@ public class AuthorizationUIManager {
     internal func getStoredState() -> String? {
         return self.oAuthManager.authorizationManager?.state
     }
+
 }

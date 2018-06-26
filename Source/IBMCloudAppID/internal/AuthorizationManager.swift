@@ -23,6 +23,8 @@ public class AuthorizationManager {
     var oAuthManager:OAuthManager
     var authorizationUIManager:AuthorizationUIManager?
     var preferredLocale:Locale?
+    var state: String?
+    
     init(oAuthManager:OAuthManager) {
         self.oAuthManager = oAuthManager
         self.appid = oAuthManager.appId
@@ -44,7 +46,13 @@ public class AuthorizationManager {
         if let unWrappedAccessToken = accessToken {
             url += "&appid_access_token=" + unWrappedAccessToken
         }
+
         url = addLocaleQueryParam(url)
+
+        let state = Utils.generateStateParameter(of: 15)
+        self.state = state
+        
+        url += "&state=" + state
 
         return url
     }

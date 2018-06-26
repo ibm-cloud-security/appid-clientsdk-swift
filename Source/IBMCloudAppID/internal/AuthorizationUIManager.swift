@@ -19,7 +19,6 @@ public class AuthorizationUIManager {
     var authorizationDelegate: AuthorizationDelegate
     var authorizationUrl: String
     var redirectUri: String
-    var state: String
 
     private static let logger = Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationUIManager")
     var loginView:safariView?
@@ -27,13 +26,12 @@ public class AuthorizationUIManager {
         self.oAuthManager = oAuthManager
         self.authorizationDelegate = authorizationDelegate
         self.authorizationUrl = authorizationUrl
-        self.state = Utils.generateStateParameter(of: 15)
         self.redirectUri = redirectUri
     }
 
     public func launch() {
         AuthorizationUIManager.logger.debug(message: "Launching safari view")
-        loginView =  safariView(url: URL(string: authorizationUrl + "&state=\(state)" )!)
+        loginView =  safariView(url: URL(string: authorizationUrl)!)
         loginView?.authorizationDelegate = authorizationDelegate
         DispatchQueue.main.async {
             let rootView = UIApplication.shared.keyWindow?.rootViewController
@@ -99,26 +97,25 @@ public class AuthorizationUIManager {
                 return false
             }
 
-            // Gets "code" and "state" url query parameters
+            // Gets "code" url query parameters
             guard let code = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) else {
                     AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")
                     tokenRequest(code: nil, errMsg: "Failed to extract grant code")
                     return false
             }
 
-            // Currently, the anonymous flow does not support the state parameter.
-            if authorizationUrl.range(of: "idp=appid_anon") == nil {
-                // Validates state matches the original
-                guard let state = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_STATE_KEY) else {
-                    AuthorizationUIManager.logger.debug(message: "Failed to extract state")
-                    tokenRequest(code: nil, errMsg: "Failed to extract state")
-                    return false
-                }
-                guard self.state == state else {
-                    AuthorizationUIManager.logger.debug(message: "Mismatched state parameter")
-                    tokenRequest(code: nil, errMsg: "Mismatched state parameter")
-                    return false
-                }
+            // Get "state" url query parameters
+            guard let state = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_STATE_KEY) else {
+                AuthorizationUIManager.logger.debug(message: "Failed to extract state")
+                tokenRequest(code: nil, errMsg: "Failed to extract state")
+                return false
+            }
+            
+            // Validates state matches the original
+            guard getStoredState() == state else {
+                AuthorizationUIManager.logger.debug(message: "Mismatched state parameter")
+                tokenRequest(code: nil, errMsg: "Mismatched state parameter")
+                return false
             }
 
             tokenRequest(code: code, errMsg: nil)
@@ -128,4 +125,7 @@ public class AuthorizationUIManager {
 
     }
 
+    internal func getStoredState() -> String? {
+        return self.oAuthManager.authorizationManager?.state
+    }
 }

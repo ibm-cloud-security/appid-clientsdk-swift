@@ -40,12 +40,12 @@ public class AuthorizationUIManagerTests: XCTestCase {
     }
 
     class MockAuthorizationUIManager: AuthorizationUIManager {
-
-        init(state: String = "validstate", oAuthManager: OAuthManager, authorizationDelegate: AuthorizationDelegate, authorizationUrl: String, redirectUri: String) {
-            super.init(oAuthManager: oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: authorizationUrl, redirectUri: redirectUri)
-            self.state = state
+        
+        override func getStoredState() -> String {
+            return "validstate"
         }
     }
+    
     let oauthManager = OAuthManager(appId: AppID.sharedInstance)
 
     class delegate: AuthorizationDelegate {
@@ -84,22 +84,6 @@ public class AuthorizationUIManagerTests: XCTestCase {
         // happy flow
         XCTAssertTrue(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode&state=validstate")!, options: [:]))
 
-        waitForExpectations(timeout: 1) { error in
-            if let error = error {
-                XCTFail("err: \(error)")
-            }
-        }
-    }
-
-    func testApplicationHappyFlowAnon() {
- 
-        let expectation1 = expectation(description: "Happy Flow Anon")
-        oauthManager.tokenManager = MockTokenManager(oAuthManager: oauthManager, exp: expectation1)
-        let manager = MockAuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: nil, errMsg: nil), authorizationUrl: "someurl&idp=appid_anon", redirectUri: "someredirect")
-        manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
-        // happy flow
-        XCTAssertTrue(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode&state=validstate")!, options: [:]))
-        
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("err: \(error)")

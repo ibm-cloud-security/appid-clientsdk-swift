@@ -20,7 +20,7 @@ public class AuthorizationUIManager {
     var authorizationUrl: String
     var redirectUri: String
     var state: String
-    
+
     private static let logger = Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationUIManager")
     var loginView:safariView?
     init(oAuthManager: OAuthManager, authorizationDelegate: AuthorizationDelegate, authorizationUrl: String, redirectUri: String) {
@@ -56,7 +56,7 @@ public class AuthorizationUIManager {
                     return
                 }
                 AuthorizationUIManager.logger.debug(message: "Obtaining tokens")
-                
+
                 self.oAuthManager.tokenManager?.obtainTokensAuthCode(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
             })
         }
@@ -98,14 +98,14 @@ public class AuthorizationUIManager {
             guard urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) else {
                 return false
             }
-            
+
             // Gets "code" and "state" url query parameters
             guard let code = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) else {
                     AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")
                     tokenRequest(code: nil, errMsg: "Failed to extract grant code")
                     return false
             }
-            
+
             // Currently, the anonymous flow does not support the state parameter.
             if authorizationUrl.range(of: "idp=appid_anon") == nil {
                 // Validates state matches the original
@@ -120,7 +120,7 @@ public class AuthorizationUIManager {
                     return false
                 }
             }
-            
+
             tokenRequest(code: code, errMsg: nil)
             return true
 

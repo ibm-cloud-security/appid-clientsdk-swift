@@ -253,16 +253,17 @@ public class Utils {
     }
 
     public static func generateStateParameter(of length: Int) -> String? {
-        guard let nonce = NSMutableData(length: length) else {
-            return nil
-        }
+        var bytes = [UInt8](repeating: 0, count: length)
+        let result = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
 
-        let result = SecRandomCopyBytes(kSecRandomDefault, nonce.length, nonce.mutableBytes)
         guard result == errSecSuccess else {
             return nil
         }
 
-        return nonce.base64EncodedString(options: .lineLength64Characters)
+        return Data(bytes: bytes)
+            .base64EncodedString()
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
             .trimmingCharacters(in: CharacterSet(charactersIn: "="))
     }
 

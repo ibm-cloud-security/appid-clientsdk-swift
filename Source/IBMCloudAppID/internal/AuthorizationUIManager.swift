@@ -103,7 +103,7 @@ public class AuthorizationUIManager {
                     tokenRequest(code: nil, errMsg: "Failed to extract grant code")
                     return false
             }
-
+            
             // Get "state" url query parameters
             guard let state = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_STATE_KEY) else {
                 AuthorizationUIManager.logger.debug(message: "Failed to extract state")

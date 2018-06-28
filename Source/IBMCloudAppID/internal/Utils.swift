@@ -252,20 +252,18 @@ public class Utils {
         return url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(paramName)}).first?.components(separatedBy: "=")[1]
     }
 
-    public static func generateStateParameter(of length: Int) -> String {
-
-        let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        let allowedCharsCount = allowedChars.count
-        var randomString = ""
-
-        for _ in 0..<length {
-            let randomNum = Int(arc4random_uniform(UInt32(allowedCharsCount)))
-            let randomIndex = allowedChars.index(allowedChars.startIndex, offsetBy: randomNum)
-            let newCharacter = allowedChars[randomIndex]
-            randomString += String(newCharacter)
+    public static func generateStateParameter(of length: Int) -> String? {
+        guard let nonce = NSMutableData(length: length) else {
+            return nil
         }
 
-        return randomString
+        let result = SecRandomCopyBytes(kSecRandomDefault, nonce.length, nonce.mutableBytes)
+        guard result == errSecSuccess else {
+            return nil
+        }
+
+        return nonce.base64EncodedString(options: .lineLength64Characters)
+            .trimmingCharacters(in: CharacterSet(charactersIn: "="))
     }
 
 }

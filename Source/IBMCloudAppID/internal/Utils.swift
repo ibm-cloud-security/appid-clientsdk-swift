@@ -259,7 +259,8 @@ public class Utils {
         guard result == errSecSuccess else {
             return nil
         }
-
+        /// This Base64 url encodes the state parameter and removes extra padding
+        /// When the urlencode utility method is cleaned up this can be replaced.
         return Data(bytes: bytes)
             .base64EncodedString()
             .replacingOccurrences(of: "+", with: "-")

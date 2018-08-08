@@ -208,15 +208,13 @@ public class AuthorizationManager {
             let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
                 if error == nil {
                     if let unWrapperResponse = response {
-                        let urlString = self.extractUrlString(body : unWrapperResponse.responseText)
-                        if urlString != nil {
-                            let url = URL(string: urlString!)
+                        if let urlString = self.extractUrlString(body : unWrapperResponse.responseText) {
 
-                            if url != nil {
-                                if let err = Utils.getParamFromQuery(url: url!, paramName: "error") {
+                            if let url = URL(string: urlString) {
+                                if let err = Utils.getParamFromQuery(url: url, paramName: "error") {
                                     // authorization endpoint returned error
-                                    let errorDescription = Utils.getParamFromQuery(url: url!, paramName: "error_description")
-                                    let errorCode = Utils.getParamFromQuery(url: url!, paramName: "error_code")
+                                    let errorDescription = Utils.getParamFromQuery(url: url, paramName: "error_description")
+                                    let errorCode = Utils.getParamFromQuery(url: url, paramName: "error_code")
                                     AuthorizationManager.logger.error(message: "error: " + err)
                                     AuthorizationManager.logger.error(message: "errorCode: " + (errorCode ?? "not available"))
                                     AuthorizationManager.logger.error(message: "errorDescription: " + (errorDescription ?? "not available"))
@@ -225,11 +223,24 @@ public class AuthorizationManager {
 
                                 } else {
                                     // authorization endpoint success
-                                    if urlString!.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
-                                        if let code =  Utils.getParamFromQuery(url: url!, paramName: AppIDConstants.JSON_CODE_KEY) {
-                                            self.oAuthManager.tokenManager?.obtainTokensAuthCode(code: code, authorizationDelegate: authorizationDelegate)
-                                            return
-                                        }
+                                    guard let code = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) else {
+                                        self.logAndFail(message: "Failed to extract grant code", delegate: authorizationDelegate)
+                                        return
+                                    }
+
+                                    guard let state = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_STATE_KEY) else {
+                                        self.logAndFail(message: "Failed to extract state", delegate: authorizationDelegate)
+                                        return
+                                    }
+
+                                    guard self.state == state else {
+                                        self.logAndFail(message: "Mismatched state parameter", delegate: authorizationDelegate)
+                                        return
+                                    }
+
+                                    if urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) {
+                                        self.oAuthManager.tokenManager?.obtainTokensAuthCode(code: code, authorizationDelegate: authorizationDelegate)
+                                        return
                                     }
                                 }
                             }

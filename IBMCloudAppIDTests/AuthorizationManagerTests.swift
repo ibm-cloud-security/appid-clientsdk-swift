@@ -629,9 +629,11 @@ public class AuthorizationManagerTests : XCTestCase {
     }
 
     class MockOauthManager: OAuthManager {
+
         func updateValues() -> Void {
             self.tokenManager = MockTokenManager1(oAuthManager: self)
         }
+
     }
 
     func testLoginAnonymouslySuccess() {
@@ -670,8 +672,7 @@ public class AuthorizationManagerTests : XCTestCase {
 
         authManager.response = response
         authManager.error = nil
-        //MockRegistrationManager.shouldFail = false
-        authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
+        authManager.loginAnonymously(accessTokenString: nil, allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
 
         if del.failed {
             XCTFail()
@@ -684,7 +685,6 @@ public class AuthorizationManagerTests : XCTestCase {
         authManager.registrationManager = MockRegistrationManager(oauthManager: OAuthManager(appId:AppID.sharedInstance))
         let originalTokenManager = authManager.appid.oauthManager?.tokenManager
         authManager.appid.oauthManager?.tokenManager = MockTokenManager(oAuthManager: authManager.appid.oauthManager!)
-        //authManager.oauthManager?.tokenManager = MockTokenManager(oAuthManager: authManager.appid.oauthManager!)
         class SomeError : Error {
 
         }

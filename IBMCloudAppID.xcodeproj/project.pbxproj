@@ -95,15 +95,12 @@
 		4D42CF8920173BD200EF40B6 /* RefreshToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshToken.swift; sourceTree = "<group>"; };
 		4D42CF8B20173BDD00EF40B6 /* RefreshTokenImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshTokenImpl.swift; sourceTree = "<group>"; };
 		650D1FFAD2CCE197FAA0DE4F /* Pods-IBMCloudAppIDTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBMCloudAppIDTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBMCloudAppIDTests/Pods-IBMCloudAppIDTests.release.xcconfig"; sourceTree = "<group>"; };
-		66E951CC5B401814BE794DBE /* Pods-BluemixAppIDTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppIDTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppIDTests/Pods-BluemixAppIDTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8B1AE9343AB77B8B9C396E21 /* Pods_IBMCloudAppID.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IBMCloudAppID.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5F58BDE9E7A759720873B7 /* Pods_BluemixAppIDTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BluemixAppIDTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A59C9CA3B04FBE6AC2A4D28C /* Pods-IBMCloudAppID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBMCloudAppID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBMCloudAppID/Pods-IBMCloudAppID.debug.xcconfig"; sourceTree = "<group>"; };
 		BDC0D53E1E5EF68300444F9E /* UserProfileManagerImpl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileManagerImpl.swift; sourceTree = "<group>"; };
 		BDF5878E1E66C55A00393C0C /* UserProfileTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileTests.swift; sourceTree = "<group>"; };
 		CB32128A91C6C77CEBDAC128 /* Pods_IBMCloudAppIDTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IBMCloudAppIDTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		D419D8062637A352B06716FC /* Pods-BluemixAppIDTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppIDTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppIDTests/Pods-BluemixAppIDTests.release.xcconfig"; sourceTree = "<group>"; };
-		D7C1B0698BAAA534E21A1C51 /* Pods-BluemixAppID.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppID.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppID/Pods-BluemixAppID.debug.xcconfig"; sourceTree = "<group>"; };
 		EAB745E0C2A5F53D2FA7CC32 /* Pods-IBMCloudAppIDTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBMCloudAppIDTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-IBMCloudAppIDTests/Pods-IBMCloudAppIDTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationUIManagerTests.swift; sourceTree = "<group>"; };
 		EF37F8BB1E5487C40020E998 /* TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestHelpers.swift; sourceTree = "<group>"; };
@@ -115,7 +112,6 @@
 		EF3B3BEB1E55C4E900DFFF13 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF3B3BED1E55C4E900DFFF13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EF77D5371E52085800C4B87F /* RegistrationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManagerTests.swift; sourceTree = "<group>"; };
-		EFB619554546A4A1C879BF50 /* Pods-BluemixAppID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BluemixAppID.release.xcconfig"; path = "Pods/Target Support Files/Pods-BluemixAppID/Pods-BluemixAppID.release.xcconfig"; sourceTree = "<group>"; };
 		EFB7F3B11E5307F20099BEDC /* AuthorizationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManagerTests.swift; sourceTree = "<group>"; };
 		EFB876361E533E9400E017FA /* ConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
 		EFB876381E53434800E017FA /* OAuthClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthClientTests.swift; sourceTree = "<group>"; };
@@ -200,10 +196,6 @@
 		52AD538B40EAAC9A3BBD7B9E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				D7C1B0698BAAA534E21A1C51 /* Pods-BluemixAppID.debug.xcconfig */,
-				EFB619554546A4A1C879BF50 /* Pods-BluemixAppID.release.xcconfig */,
-				66E951CC5B401814BE794DBE /* Pods-BluemixAppIDTests.debug.xcconfig */,
-				D419D8062637A352B06716FC /* Pods-BluemixAppIDTests.release.xcconfig */,
 				A59C9CA3B04FBE6AC2A4D28C /* Pods-IBMCloudAppID.debug.xcconfig */,
 				3A523D88E31CC7EC37CAFA1D /* Pods-IBMCloudAppID.release.xcconfig */,
 				EAB745E0C2A5F53D2FA7CC32 /* Pods-IBMCloudAppIDTests.debug.xcconfig */,
@@ -910,7 +902,7 @@
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = IBMCloudAppIDTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = oded.IBMCloudAppIDTests;
+				PRODUCT_BUNDLE_IDENTIFIER = IBMCloudAppIDTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
@@ -926,7 +918,7 @@
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = IBMCloudAppIDTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = oded.IBMCloudAppIDTests;
+				PRODUCT_BUNDLE_IDENTIFIER = IBMCloudAppIDTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;

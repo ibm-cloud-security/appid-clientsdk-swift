@@ -4,7 +4,7 @@ matrix:
     - osx_image: xcode9.4
 install:
   - gem install jazzy
-  - gem install slather
+  - gem install slather -v 2.4.5
 before_script:
   - rm -rf ~/Library/Developer/Xcode/DerivedData
 script:
@@ -12,8 +12,8 @@ script:
   - travis_wait pod update
   - pod lib lint --allow-warnings
   - xcodebuild -workspace 'IBMCloudAppID.xcworkspace' -scheme 'IBMCloudAppID' clean build CODE_SIGN_IDENTITY= CODE_SIGNING_REQUIRED=NO
-  - travis_retry xcodebuild -workspace 'IBMCloudAppID.xcworkspace' test -scheme 'IBMCloudAppIDTests' -destination 'platform=iOS Simulator,name=iPhone 6' -enableCodeCoverage YES ONLY_ACTIVE_ARCH=YES VALID_ARCHS=x86_64
-  #- slather coverage --coveralls --binary-basename IBMCloudAppID.framework -v
+  - travis_retry xcodebuild -workspace 'IBMCloudAppID.xcworkspace' test -scheme 'IBMCloudAppIDTests' -destination 'platform=iOS Simulator,name=iPhone 6' -enableCodeCoverage YES
+  - slather coverage --coveralls --binary-basename IBMCloudAppID.framework -v
   # When merging or pushing to the master branch, release a new version and publish the API documentation
   #- if [ "${TRAVIS_PULL_REQUEST}" = "false" ] && [ "${TRAVIS_BRANCH}" = "master" ] ; then
   #    bash scripts/release.sh;

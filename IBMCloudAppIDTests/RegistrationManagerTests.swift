@@ -200,10 +200,13 @@ public class RegistrationManagerTests: XCTestCase {
             var success:Bool
             init(oauthManager:OAuthManager, success:Bool) {
                 self.success = success
+                print("MockRegistrationManager initialized to:\(success)")
                 super.init(oauthManager:oauthManager)
+                print("MockRegistrationManager super initialized to:\(success)")
             }
 
             override internal func registerOAuthClient(callback :@escaping (Error?) -> Void) {
+                print("MockRegistrationManager is about to:\(success)")
                 if success == true {
                     callback(nil)
                 } else {

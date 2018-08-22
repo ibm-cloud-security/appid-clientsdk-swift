@@ -7,7 +7,6 @@ install:
   - gem install slather -v 2.4.5
 before_script:
   - rm -rf ~/Library/Developer/Xcode/DerivedData
-after_success: slather
 script:
   # Test that the framework can be installed and built, and passes all unit tests
   - travis_wait pod update

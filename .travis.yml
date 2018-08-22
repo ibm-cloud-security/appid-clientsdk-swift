@@ -4,7 +4,7 @@ matrix:
     - osx_image:  xcode9.3
 install:
   - gem install jazzy
-  - gem install slather
+  - gem install slather -v 2.4.5
 before_script:
   - rm -rf ~/Library/Developer/Xcode/DerivedData
 after_success: slather

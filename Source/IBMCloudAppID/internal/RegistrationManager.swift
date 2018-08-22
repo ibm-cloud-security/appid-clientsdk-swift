@@ -26,11 +26,8 @@ internal class RegistrationManager {
 
 
     public func ensureRegistered(callback : @escaping (AppIDError?) -> Void) {
-        print("Checking registration status")
         let storedClientId:String? = self.getRegistrationDataString(name: AppIDConstants.client_id_String)
-        print("Stored client ID:" + (storedClientId ?? "No client id"))
         let storedTenantId:String? = self.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).get()
-        print("Stored client ID:" + (storedTenantId ?? "No client id"))
         if storedClientId != nil && self.appId.tenantId == storedTenantId && privateKeyExist() {
             RegistrationManager.logger.debug(message: "OAuth client is already registered.")
             callback(nil)

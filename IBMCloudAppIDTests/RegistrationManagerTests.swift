@@ -200,13 +200,10 @@ public class RegistrationManagerTests: XCTestCase {
             var success:Bool
             init(oauthManager:OAuthManager, success:Bool) {
                 self.success = success
-                print("MockRegistrationManager initialized to:\(success)")
                 super.init(oauthManager:oauthManager)
-                print("MockRegistrationManager super initialized to:\(success)")
             }
 
             override internal func registerOAuthClient(callback :@escaping (Error?) -> Void) {
-                print("MockRegistrationManager is about to:\(success)")
                 if success == true {
                     callback(nil)
                 } else {
@@ -226,7 +223,7 @@ public class RegistrationManagerTests: XCTestCase {
         })
 
         // already registered
-        var regManager =  MockRegistrationManager(oauthManager:OAuthManager(appId: AppID.sharedInstance), success: true)
+        var regManager =  MockRegistrationManager(oauthManager:OAuthManager(appId: AppID.sharedInstance), success: false)
         regManager.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).set("sometenant")
         regManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "some client id"] as [String:Any])
         regManager.ensureRegistered(callback: {(error: Error?) -> Void in

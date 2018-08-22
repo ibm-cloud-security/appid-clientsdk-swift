@@ -226,7 +226,7 @@ public class RegistrationManagerTests: XCTestCase {
         })
 
         // already registered
-        var regManager =  MockRegistrationManager(oauthManager:OAuthManager(appId: AppID.sharedInstance), success: false)
+        var regManager =  MockRegistrationManager(oauthManager:OAuthManager(appId: AppID.sharedInstance), success: true)
         regManager.preferenceManager.getStringPreference(name: AppIDConstants.tenantPrefName).set("sometenant")
         regManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "some client id"] as [String:Any])
         regManager.ensureRegistered(callback: {(error: Error?) -> Void in

@@ -23,21 +23,21 @@ public class AuthorizationManagerTests : XCTestCase {
         authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).clear()
         let defaultLocale = Locale.current
         // with idp, no registration data
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp" + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier)
+        XCTAssertTrue(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY)!.hasPrefix(Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp" + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier))
 
         // no idp, no registration data
 
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "code" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier)
+        XCTAssertTrue(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY)!.hasPrefix(Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "code" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier))
 
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_SIGN_UP_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "sign_up" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier)
+        XCTAssertTrue(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_SIGN_UP_KEY)!.hasPrefix(Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "sign_up" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier))
 
         // no idp, no registration data, override locale
         let customLocale = Locale.init(identifier: "fr")
         authManager.preferredLocale = customLocale
 
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "code" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&" + AppIDConstants.localeParamName + "=" + customLocale.identifier)
+        XCTAssertTrue(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY)!.hasPrefix(Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "code" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&" + AppIDConstants.localeParamName + "=" + customLocale.identifier))
 
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_SIGN_UP_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "sign_up" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&" + AppIDConstants.localeParamName + "=" + customLocale.identifier)
+        XCTAssertTrue(authManager.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType:  AppIDConstants.JSON_SIGN_UP_KEY)!.hasPrefix(Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + "sign_up" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&" + AppIDConstants.localeParamName + "=" + customLocale.identifier))
 
 
         // revert locale change:
@@ -47,9 +47,9 @@ public class AuthorizationManagerTests : XCTestCase {
 
         authManager.registrationManager.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "someclient", AppIDConstants.JSON_REDIRECT_URIS_KEY : ["redirect"]] as [String:Any])
 
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.client_id_String + "=someclient" + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=redirect" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp" + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier)
+        XCTAssertTrue(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: nil, responseType:  AppIDConstants.JSON_CODE_KEY)!.hasPrefix(Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.client_id_String + "=someclient" + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=redirect" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp" + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier))
 
-        XCTAssertEqual(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: "token", responseType:  AppIDConstants.JSON_CODE_KEY), Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.client_id_String + "=someclient" + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=redirect" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp" + "&appid_access_token=token" + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier)
+        XCTAssertTrue(authManager.getAuthorizationUrl(idpName: "someidp", accessToken: "token", responseType:  AppIDConstants.JSON_CODE_KEY)!.hasPrefix(Config.getServerUrl(appId: AppID.sharedInstance) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + AppIDConstants.JSON_CODE_KEY + "&" + AppIDConstants.client_id_String + "=someclient" + "&" + AppIDConstants.JSON_REDIRECT_URI_KEY + "=redirect" + "&" + AppIDConstants.JSON_SCOPE_KEY + "=" + AppIDConstants.OPEN_ID_VALUE + "&idp=someidp" + "&appid_access_token=token" + "&" + AppIDConstants.localeParamName + "=" + defaultLocale.identifier))
     }
 
     class MockRegistrationManager: RegistrationManager {
@@ -587,6 +587,12 @@ public class AuthorizationManagerTests : XCTestCase {
             internalCallBack(response, error)
         }
 
+        override func getAuthorizationUrl(idpName: String?, accessToken: String?, responseType: String) -> String? {
+            let originalURL = super.getAuthorizationUrl(idpName: idpName, accessToken: accessToken, responseType: responseType)
+            self.state = "state"
+            return originalURL
+        }
+
     }
 
     class MockAuthorizationManagerWithGoodResponse: IBMCloudAppID.AuthorizationManager {
@@ -614,13 +620,71 @@ public class AuthorizationManagerTests : XCTestCase {
 
     }
 
+    class MockTokenManager1: TokenManager {
+
+        override func obtainTokensAuthCode(code: String, authorizationDelegate: AuthorizationDelegate) {
+            authorizationDelegate.onAuthorizationSuccess(accessToken: nil, identityToken: nil, refreshToken: nil, response: nil)
+        }
+
+    }
+
+    class MockOauthManager: OAuthManager {
+
+        func updateValues() -> Void {
+            self.tokenManager = MockTokenManager1(oAuthManager: self)
+        }
+
+    }
+
+    func testLoginAnonymouslySuccess() {
+        let oauthManager = MockOauthManager(appId: AppID.sharedInstance)
+        oauthManager.updateValues()
+        let authManager = MockAuthorizationManager(oAuthManager: oauthManager)
+        authManager.registrationManager = MockRegistrationManager(oauthManager: oauthManager)
+        MockRegistrationManager.shouldFail = false
+
+        class delegate: AuthorizationDelegate {
+            var failed = true
+
+            func onAuthorizationFailure(error: AuthorizationError) {
+                failed = false
+            }
+
+            func onAuthorizationCanceled() {
+
+            }
+
+            func onAuthorizationSuccess(accessToken: AccessToken?,
+                                        identityToken: IdentityToken?,
+                                        refreshToken: RefreshToken?,
+                                        response:Response?) {
+                 failed = false
+            }
+
+        }
+
+        let del = delegate()
+
+        // happy flow:
+        let redirect = AppIDConstants.REDIRECT_URI_VALUE
+        let goodData = "Found. Redirecting to "+redirect+"?code=w7DClMOnf03Dg8OxeyHCrwzChDXCnsOcw4cSw4nDuU_Dqkcmdy1zwoVKw5xEQMO5CsKYVcOiRsKYw4_Ds8OsBAfCpABrw4sAwqnDr37DiMOQwq7CjXMmw4PCt1knw7vCsMOXGHnCvBQ4wq7DjzMrDAJpwoHCmcKxAxbCjcKHSg1dw4vDr8OhHzE9w57CpygtIcOGwrE_wqdjwpw-VSvDg8K-wr7DvjTCoTMhwrV1w5Y6VGNPJG5IWwFFwqzCl8OAw4TDl8OefMOzSE1ofE4OQVTDkMOnPsO5wpTDuGPDigjDjFbDnkvDrVgWw7TClzjCk8O3AsKrRXLDjMKTwrbDv8Kmd0Nlw7rCn0LDgMKRCW_DtcKJOMK4wrjDpEJ-wqs&state=state"
+        let response = Response(responseData: goodData.data(using: .utf8), httpResponse: nil, isRedirect: false)
+
+        authManager.response = response
+        authManager.error = nil
+        authManager.loginAnonymously(accessTokenString: nil, allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
+
+        if del.failed {
+            XCTFail()
+        }
+
+    }
 
     func testLoginAnonymously() {
         let authManager = MockAuthorizationManager(oAuthManager: OAuthManager(appId: AppID.sharedInstance))
-        authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
+        authManager.registrationManager = MockRegistrationManager(oauthManager: OAuthManager(appId:AppID.sharedInstance))
         let originalTokenManager = authManager.appid.oauthManager?.tokenManager
         authManager.appid.oauthManager?.tokenManager = MockTokenManager(oAuthManager: authManager.appid.oauthManager!)
-
         class SomeError : Error {
 
         }
@@ -647,20 +711,11 @@ public class AuthorizationManagerTests : XCTestCase {
 
         let del = delegate()
 
-        // happy flow:
         let redirect = AppIDConstants.REDIRECT_URI_VALUE
-        let goodData = "Found. Redirecting to "+redirect+"?code=w7DClMOnf03Dg8OxeyHCrwzChDXCnsOcw4cSw4nDuU_Dqkcmdy1zwoVKw5xEQMO5CsKYVcOiRsKYw4_Ds8OsBAfCpABrw4sAwqnDr37DiMOQwq7CjXMmw4PCt1knw7vCsMOXGHnCvBQ4wq7DjzMrDAJpwoHCmcKxAxbCjcKHSg1dw4vDr8OhHzE9w57CpygtIcOGwrE_wqdjwpw-VSvDg8K-wr7DvjTCoTMhwrV1w5Y6VGNPJG5IWwFFwqzCl8OAw4TDl8OefMOzSE1ofE4OQVTDkMOnPsO5wpTDuGPDigjDjFbDnkvDrVgWw7TClzjCk8O3AsKrRXLDjMKTwrbDv8Kmd0Nlw7rCn0LDgMKRCW_DtcKJOMK4wrjDpEJ-wqs"
         let badData = "Found. Redirecting to "+redirect+"?error=ERROR1"
-        let response = Response(responseData: goodData.data(using: .utf8), httpResponse: nil, isRedirect: false)
-
-        authManager.response = response
-        authManager.error = nil
-        MockRegistrationManager.shouldFail = false
-        authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
-
-        // sad flow 1: registration error
         MockRegistrationManager.shouldFail = true
         authManager.loginAnonymously(accessTokenString: nil,allowCreateNewAnonymousUsers: true, authorizationDelegate: del)
+
         if !del.failed {
             XCTFail()
         }

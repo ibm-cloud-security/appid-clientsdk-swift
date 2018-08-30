@@ -252,5 +252,20 @@ public class Utils {
         return url.query?.components(separatedBy: "&").filter({(item) in item.hasPrefix(paramName)}).first?.components(separatedBy: "=")[1]
     }
 
+    public static func generateStateParameter(of length: Int) -> String? {
+        var bytes = [UInt8](repeating: 0, count: length)
+        let result = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
+
+        guard result == errSecSuccess else {
+            return nil
+        }
+        /// This Base64 url encodes the state parameter and removes extra padding
+        /// When the urlencode utility method is cleaned up this can be replaced.
+        return Data(bytes: bytes)
+            .base64EncodedString()
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .trimmingCharacters(in: CharacterSet(charactersIn: "="))
+    }
 
 }

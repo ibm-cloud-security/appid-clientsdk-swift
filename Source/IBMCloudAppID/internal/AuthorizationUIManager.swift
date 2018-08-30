@@ -15,11 +15,12 @@ import Foundation
 import BMSCore
 
 public class AuthorizationUIManager {
-    var oAuthManager:OAuthManager
-    var authorizationDelegate:AuthorizationDelegate
-    var authorizationUrl:String
-    var redirectUri:String
-    private static let logger =  Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationUIManager")
+    var oAuthManager: OAuthManager
+    var authorizationDelegate: AuthorizationDelegate
+    var authorizationUrl: String
+    var redirectUri: String
+
+    private static let logger = Logger.logger(name: Logger.bmsLoggerPrefix + "AppIDAuthorizationUIManager")
     var loginView:safariView?
     init(oAuthManager: OAuthManager, authorizationDelegate: AuthorizationDelegate, authorizationUrl: String, redirectUri: String) {
         self.oAuthManager = oAuthManager
@@ -30,7 +31,7 @@ public class AuthorizationUIManager {
 
     public func launch() {
         AuthorizationUIManager.logger.debug(message: "Launching safari view")
-        loginView =  safariView(url: URL(string: authorizationUrl )!)
+        loginView =  safariView(url: URL(string: authorizationUrl)!)
         loginView?.authorizationDelegate = authorizationDelegate
         DispatchQueue.main.async {
             let rootView = UIApplication.shared.keyWindow?.rootViewController
@@ -53,7 +54,7 @@ public class AuthorizationUIManager {
                     return
                 }
                 AuthorizationUIManager.logger.debug(message: "Obtaining tokens")
-                
+
                 self.oAuthManager.tokenManager?.obtainTokensAuthCode(code: unwrappedCode, authorizationDelegate: self.authorizationDelegate)
             })
         }
@@ -90,24 +91,42 @@ public class AuthorizationUIManager {
             })
             return false
         } else {
+
             let urlString = url.absoluteString
-            if urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
-                // gets the query, then sepertes it to params, then filters the one the is "code" then takes its value
-                if let code =  Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) {
-                    tokenRequest(code: code, errMsg: nil)
-                    return true
-                } else {
+            guard urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) else {
+                return false
+            }
+
+            // Gets "code" url query parameters
+            guard let code = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) else {
                     AuthorizationUIManager.logger.debug(message: "Failed to extract grant code")
                     tokenRequest(code: nil, errMsg: "Failed to extract grant code")
                     return false
-                }
             }
-            return false
+            
+            // Get "state" url query parameters
+            guard let state = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_STATE_KEY) else {
+                AuthorizationUIManager.logger.debug(message: "Failed to extract state")
+                tokenRequest(code: nil, errMsg: "Failed to extract state")
+                return false
+            }
+
+            // Validates state matches the original
+            guard getStoredState() == state else {
+                AuthorizationUIManager.logger.debug(message: "Mismatched state parameter")
+                tokenRequest(code: nil, errMsg: "Mismatched state parameter")
+                return false
+            }
+
+            tokenRequest(code: code, errMsg: nil)
+            return true
+
         }
 
     }
 
-
-
+    internal func getStoredState() -> String? {
+        return self.oAuthManager.authorizationManager?.state
+    }
 
 }

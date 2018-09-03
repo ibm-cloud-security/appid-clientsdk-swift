@@ -44,20 +44,23 @@ internal class SecurityUtils {
         let privateKeyAttr : [NSString:AnyObject] = [
             kSecAttrIsPermanent : true as AnyObject,
             kSecAttrApplicationTag : privateTag as AnyObject,
-            kSecAttrKeyClass : kSecAttrKeyClassPrivate
+            kSecAttrKeyClass : kSecAttrKeyClassPrivate,
+            kSecAttrAccessible: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
         ]
 
         let publicKeyAttr : [NSString:AnyObject] = [
             kSecAttrIsPermanent : true as AnyObject,
             kSecAttrApplicationTag : publicTag as AnyObject,
             kSecAttrKeyClass : kSecAttrKeyClassPublic,
+            kSecAttrAccessible: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
             ]
 
         let keyPairAttr : [NSString:AnyObject] = [
             kSecAttrKeyType : kSecAttrKeyTypeRSA,
             kSecAttrKeySizeInBits : keySize as AnyObject,
             kSecPublicKeyAttrs : publicKeyAttr as AnyObject,
-            kSecPrivateKeyAttrs : privateKeyAttr as AnyObject
+            kSecPrivateKeyAttrs : privateKeyAttr as AnyObject,
+            kSecAttrAccessible: kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
         ]
 
         status = SecKeyGeneratePair(keyPairAttr as CFDictionary, &publicKey, &privateKey)

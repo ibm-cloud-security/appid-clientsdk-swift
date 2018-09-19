@@ -19,8 +19,8 @@ public enum SecAttrAccessible: RawRepresentable {
     case accessibleAfterFirstUnlock                 // kSecAttrAccessibleAfterFirstUnlock
     case accessibleAfterFirstUnlockThisDeviceOnly   // kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
     case accessibleWhenUnlocked                     // kSecAttrAccessibleWhenUnlocked
-    case whenUnlockedThisDeviceOnly                 // kSecAttrAccessibleWhenUnlockedThisDeviceOnly
-    case whenPasscodeSetThisDeviceOnly              // kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+    case accessibleWhenUnlockedThisDeviceOnly       // kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+    case accessibleWhenPasscodeSetThisDeviceOnly    // kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
 
     public init?(rawValue: CFString) {
         switch rawValue {
@@ -29,8 +29,8 @@ public enum SecAttrAccessible: RawRepresentable {
         case kSecAttrAccessibleAfterFirstUnlock: self = .accessibleAfterFirstUnlock
         case kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly: self = .accessibleAfterFirstUnlockThisDeviceOnly
         case kSecAttrAccessibleWhenUnlocked: self = .accessibleWhenUnlocked
-        case kSecAttrAccessibleWhenUnlockedThisDeviceOnly: self = .whenUnlockedThisDeviceOnly
-        case kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly: self = .whenPasscodeSetThisDeviceOnly
+        case kSecAttrAccessibleWhenUnlockedThisDeviceOnly: self = .accessibleWhenUnlockedThisDeviceOnly
+        case kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly: self = .accessibleWhenPasscodeSetThisDeviceOnly
         default: self = .accessibleAfterFirstUnlock
         }
     }
@@ -42,8 +42,8 @@ public enum SecAttrAccessible: RawRepresentable {
         case .accessibleAfterFirstUnlock: return kSecAttrAccessibleAfterFirstUnlock
         case .accessibleAfterFirstUnlockThisDeviceOnly: return kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
         case .accessibleWhenUnlocked: return kSecAttrAccessibleWhenUnlocked
-        case .whenUnlockedThisDeviceOnly: return kSecAttrAccessibleWhenUnlockedThisDeviceOnly
-        case .whenPasscodeSetThisDeviceOnly: return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+        case .accessibleWhenUnlockedThisDeviceOnly: return kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+        case .accessibleWhenPasscodeSetThisDeviceOnly: return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
         }
     }
 }

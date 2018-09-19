@@ -30,7 +30,7 @@ public class TestHelpers {
     }
 
     public static func savePrivateKeyDataToKeyChain(_ key:Data,tag:String) {
-        let publicKeyAttr : [NSString:AnyObject] = [
+        let privateKeyAttr : [NSString:AnyObject] = [
             kSecValueData: key as AnyObject,
             kSecClass : kSecClassKey,
             kSecAttrApplicationTag: tag as AnyObject,
@@ -38,7 +38,7 @@ public class TestHelpers {
             kSecAttrKeyClass : kSecAttrKeyClassPrivate
 
         ]
-        SecItemAdd(publicKeyAttr as CFDictionary, nil)
+        SecItemAdd(privateKeyAttr as CFDictionary, nil)
     }
 
     public static func clearDictValuesFromKeyChain(_ dict : [String : NSString]) {

@@ -36,21 +36,21 @@ class SecurityUtilsTest: XCTestCase {
 
     func testGenerateKeyPairAttrsPrivate() {
         let keyPair = SecurityUtils.generateKeyPairAttrs(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag)
-        let privateAttrs = keyPair["private"] as! [NSString: AnyObject]
+        let privateAttrs = keyPair["private"] as! [NSString: AnyObject] // tailor:disable
         let accessibility = privateAttrs[kSecAttrAccessible]
-        XCTAssertEqual(accessibility as! CFString, AppID.secAttrAccess.rawValue)
+        XCTAssertEqual(accessibility as! CFString, AppID.secAttrAccess.rawValue) // tailor:disable
     }
 
     func testGenerateKeyPairAttrsPublic() {
         let keyPair = SecurityUtils.generateKeyPairAttrs(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag)
-        let publicAttrs = keyPair["public"] as! [NSString: AnyObject]
+        let publicAttrs = keyPair["public"] as! [NSString: AnyObject] // tailor:disable
         let accessibility = publicAttrs[kSecAttrAccessible]
-        XCTAssertEqual(accessibility as! CFString, AppID.secAttrAccess.rawValue)
+        XCTAssertEqual(accessibility as! CFString, AppID.secAttrAccess.rawValue) // tailor:disable
     }
 
     func testGenerateKeyPairAttrs() {
         let keyPair = SecurityUtils.generateKeyPairAttrs(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag)
-        XCTAssertEqual(keyPair[kSecAttrAccessible] as! CFString, AppID.secAttrAccess.rawValue)
+        XCTAssertEqual(keyPair[kSecAttrAccessible] as! CFString, AppID.secAttrAccess.rawValue) // tailor:disable
     }
 
     func testKeyPairGeneration() {

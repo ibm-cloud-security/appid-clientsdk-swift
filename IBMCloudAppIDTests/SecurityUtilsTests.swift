@@ -30,15 +30,27 @@ class SecurityUtilsTest: XCTestCase {
     }
 
     func testSecAttrAccessible() {
-        AppID.secAttrAccess = .alwaysAccessible
+        AppID.secAttrAccess = .accessibleAlways
         XCTAssertEqual(AppID.secAttrAccess.rawValue, kSecAttrAccessibleAlways)
     }
 
-    func testGenerateKeyPairAttrs() {
+    func testGenerateKeyPairAttrsPrivate() {
         let keyPair = SecurityUtils.generateKeyPairAttrs(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag)
         let privateAttrs = keyPair["private"] as! [NSString: AnyObject]
         let accessibility = privateAttrs[kSecAttrAccessible]
         XCTAssertEqual(accessibility as! CFString, AppID.secAttrAccess.rawValue)
+    }
+
+    func testGenerateKeyPairAttrsPublic() {
+        let keyPair = SecurityUtils.generateKeyPairAttrs(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag)
+        let publicAttrs = keyPair["public"] as! [NSString: AnyObject]
+        let accessibility = publicAttrs[kSecAttrAccessible]
+        XCTAssertEqual(accessibility as! CFString, AppID.secAttrAccess.rawValue)
+    }
+
+    func testGenerateKeyPairAttrs() {
+        let keyPair = SecurityUtils.generateKeyPairAttrs(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag)
+        XCTAssertEqual(keyPair[kSecAttrAccessible] as! CFString, AppID.secAttrAccess.rawValue)
     }
 
     func testKeyPairGeneration() {

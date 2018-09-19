@@ -14,36 +14,36 @@ import Foundation
 
 public enum SecAttrAccessible: RawRepresentable {
 
-    case alwaysAccessible               // kSecAttrAccessibleAlways
-    case alwaysAccessibleDeviceOnly     // kSecAttrAccessibleAlwaysThisDeviceOnly
-    case afterFristUnlock               // kSecAttrAccessibleAfterFirstUnlock
-    case afterFirstUnlockDeviceOnly     // kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-    case whenUnlocked                   // kSecAttrAccessibleWhenUnlocked
-    case whenUnlockedDeviceOnly         // kSecAttrAccessibleWhenUnlockedThisDeviceOnly
-    case passcodeSet                    // kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+    case accessibleAlways                           // kSecAttrAccessibleAlways
+    case accessibleAlwaysThisDeviceOnly             // kSecAttrAccessibleAlwaysThisDeviceOnly
+    case accessibleAfterFirstUnlock                 // kSecAttrAccessibleAfterFirstUnlock
+    case accessibleAfterFirstUnlockThisDeviceOnly   // kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+    case accessibleWhenUnlocked                     // kSecAttrAccessibleWhenUnlocked
+    case whenUnlockedThisDeviceOnly                 // kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+    case whenPasscodeSetThisDeviceOnly              // kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
 
     public init?(rawValue: CFString) {
         switch rawValue {
-        case kSecAttrAccessibleAlways: self = .alwaysAccessible
-        case kSecAttrAccessibleAlwaysThisDeviceOnly: self = .alwaysAccessibleDeviceOnly
-        case kSecAttrAccessibleAfterFirstUnlock: self = .afterFristUnlock
-        case kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly: self = .afterFirstUnlockDeviceOnly
-        case kSecAttrAccessibleWhenUnlocked: self = .whenUnlocked
-        case kSecAttrAccessibleWhenUnlockedThisDeviceOnly: self = .whenUnlockedDeviceOnly
-        case kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly: self = .passcodeSet
-        default: self = .afterFristUnlock
+        case kSecAttrAccessibleAlways: self = .accessibleAlways
+        case kSecAttrAccessibleAlwaysThisDeviceOnly: self = .accessibleAlwaysThisDeviceOnly
+        case kSecAttrAccessibleAfterFirstUnlock: self = .accessibleAfterFirstUnlock
+        case kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly: self = .accessibleAfterFirstUnlockThisDeviceOnly
+        case kSecAttrAccessibleWhenUnlocked: self = .accessibleWhenUnlocked
+        case kSecAttrAccessibleWhenUnlockedThisDeviceOnly: self = .whenUnlockedThisDeviceOnly
+        case kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly: self = .whenPasscodeSetThisDeviceOnly
+        default: self = .accessibleAfterFirstUnlock
         }
     }
 
     public var rawValue: CFString {
         switch self {
-        case .alwaysAccessible: return kSecAttrAccessibleAlways
-        case .alwaysAccessibleDeviceOnly: return kSecAttrAccessibleAlwaysThisDeviceOnly
-        case .afterFristUnlock: return kSecAttrAccessibleAfterFirstUnlock
-        case .afterFirstUnlockDeviceOnly: return kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
-        case .whenUnlocked: return kSecAttrAccessibleWhenUnlocked
-        case .whenUnlockedDeviceOnly: return kSecAttrAccessibleWhenUnlockedThisDeviceOnly
-        case .passcodeSet: return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
+        case .accessibleAlways: return kSecAttrAccessibleAlways
+        case .accessibleAlwaysThisDeviceOnly: return kSecAttrAccessibleAlwaysThisDeviceOnly
+        case .accessibleAfterFirstUnlock: return kSecAttrAccessibleAfterFirstUnlock
+        case .accessibleAfterFirstUnlockThisDeviceOnly: return kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+        case .accessibleWhenUnlocked: return kSecAttrAccessibleWhenUnlocked
+        case .whenUnlockedThisDeviceOnly: return kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+        case .whenPasscodeSetThisDeviceOnly: return kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
         }
     }
 }

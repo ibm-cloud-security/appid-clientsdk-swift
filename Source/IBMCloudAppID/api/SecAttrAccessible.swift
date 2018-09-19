@@ -14,13 +14,13 @@ import Foundation
 
 public enum SecAttrAccessible: RawRepresentable {
 
-    case alwaysAccessible
-    case alwaysAccessibleDeviceOnly
-    case afterFristUnlock
-    case afterFirstUnlockDeviceOnly
-    case whenUnlocked
-    case whenUnlockedDeviceOnly
-    case passcodeSet
+    case alwaysAccessible               // kSecAttrAccessibleAlways
+    case alwaysAccessibleDeviceOnly     // kSecAttrAccessibleAlwaysThisDeviceOnly
+    case afterFristUnlock               // kSecAttrAccessibleAfterFirstUnlock
+    case afterFirstUnlockDeviceOnly     // kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
+    case whenUnlocked                   // kSecAttrAccessibleWhenUnlocked
+    case whenUnlockedDeviceOnly         // kSecAttrAccessibleWhenUnlockedThisDeviceOnly
+    case passcodeSet                    // kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly
 
     public init?(rawValue: CFString) {
         switch rawValue {

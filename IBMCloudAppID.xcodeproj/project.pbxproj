@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0987DBB8214C5E3600C01812 /* SecurityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200D1E51F7D9000EB3F5 /* SecurityUtils.swift */; };
+		0987DBBB2151865D00C01812 /* SecAttrAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0987DBBA2151865D00C01812 /* SecAttrAccessible.swift */; };
 		181050421EE1BD9200AAA443 /* TokenResponseDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181050411EE1BD9200AAA443 /* TokenResponseDelegate.swift */; };
 		4D42CF8A20173BD200EF40B6 /* RefreshToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D42CF8920173BD200EF40B6 /* RefreshToken.swift */; };
 		4D42CF8C20173BDD00EF40B6 /* RefreshTokenImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D42CF8B20173BDD00EF40B6 /* RefreshTokenImpl.swift */; };
@@ -58,7 +60,6 @@
 		EFBA20561E51F7D9000EB3F5 /* PreferenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200A1E51F7D9000EB3F5 /* PreferenceManager.swift */; };
 		EFBA20581E51F7D9000EB3F5 /* RegistrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200B1E51F7D9000EB3F5 /* RegistrationManager.swift */; };
 		EFBA205A1E51F7D9000EB3F5 /* safariView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200C1E51F7D9000EB3F5 /* safariView.swift */; };
-		EFBA205C1E51F7D9000EB3F5 /* SecurityUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200D1E51F7D9000EB3F5 /* SecurityUtils.swift */; };
 		EFBA205E1E51F7D9000EB3F5 /* StringPreference.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200E1E51F7D9000EB3F5 /* StringPreference.swift */; };
 		EFBA20601E51F7D9000EB3F5 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA200F1E51F7D9000EB3F5 /* TokenManager.swift */; };
 		EFBA20621E51F7D9000EB3F5 /* AbstractToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA20111E51F7D9000EB3F5 /* AbstractToken.swift */; };
@@ -90,6 +91,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0987DBBA2151865D00C01812 /* SecAttrAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecAttrAccessible.swift; sourceTree = "<group>"; };
 		181050411EE1BD9200AAA443 /* TokenResponseDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenResponseDelegate.swift; sourceTree = "<group>"; };
 		3A523D88E31CC7EC37CAFA1D /* Pods-IBMCloudAppID.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IBMCloudAppID.release.xcconfig"; path = "Pods/Target Support Files/Pods-IBMCloudAppID/Pods-IBMCloudAppID.release.xcconfig"; sourceTree = "<group>"; };
 		4D42CF8920173BD200EF40B6 /* RefreshToken.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshToken.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				EFBA1FFA1E51F7D9000EB3F5 /* Tokens */,
 				EFBA1FFE1E51F7D9000EB3F5 /* UserProfileError.swift */,
 				EFBA1FFF1E51F7D9000EB3F5 /* UserProfileManager.swift */,
+				0987DBBA2151865D00C01812 /* SecAttrAccessible.swift */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -602,8 +605,8 @@
 				EFBA205E1E51F7D9000EB3F5 /* StringPreference.swift in Sources */,
 				EFBA20661E51F7D9000EB3F5 /* IdentityTokenImpl.swift in Sources */,
 				EFBA20441E51F7D9000EB3F5 /* AppIDConstants.swift in Sources */,
-				EFBA205C1E51F7D9000EB3F5 /* SecurityUtils.swift in Sources */,
 				EFBA20461E51F7D9000EB3F5 /* AppIDError.swift in Sources */,
+				0987DBB8214C5E3600C01812 /* SecurityUtils.swift in Sources */,
 				EFBA20561E51F7D9000EB3F5 /* PreferenceManager.swift in Sources */,
 				EFBA206A1E51F7D9000EB3F5 /* Utils.swift in Sources */,
 				EFBA20501E51F7D9000EB3F5 /* JSONPreference.swift in Sources */,
@@ -617,6 +620,7 @@
 				EFBA201E1E51F7D9000EB3F5 /* AppIDTestConstants.swift in Sources */,
 				EFBA20521E51F7D9000EB3F5 /* LoginWidgetImpl.swift in Sources */,
 				EFBA204A1E51F7D9000EB3F5 /* AuthorizationManager.swift in Sources */,
+				0987DBBB2151865D00C01812 /* SecAttrAccessible.swift in Sources */,
 				EFBA20541E51F7D9000EB3F5 /* OAuthManager.swift in Sources */,
 				181050421EE1BD9200AAA443 /* TokenResponseDelegate.swift in Sources */,
 				EFBA20641E51F7D9000EB3F5 /* AccessTokenImpl.swift in Sources */,

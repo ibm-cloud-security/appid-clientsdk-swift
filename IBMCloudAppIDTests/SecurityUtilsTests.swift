@@ -29,12 +29,22 @@ class SecurityUtilsTest: XCTestCase {
         TestHelpers.savePrivateKeyDataToKeyChain(AppIDTestConstants.privateKeyData, tag: privateKeyTag)
     }
 
+    func testSecAttrAccessible() {
+        AppID.secAttrAccess = .alwaysAccessible
+        XCTAssertEqual(AppID.secAttrAccess.rawValue, kSecAttrAccessibleAlways)
+    }
+
+    func testGenerateKeyPairAttrs() {
+        let keyPair = SecurityUtils.generateKeyPairAttrs(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag)
+        let privateAttrs = keyPair["private"] as! [NSString: AnyObject]
+        let accessibility = privateAttrs[kSecAttrAccessible]
+        XCTAssertEqual(accessibility as! CFString, AppID.secAttrAccess.rawValue)
+    }
 
     func testKeyPairGeneration() {
         TestHelpers.clearDictValuesFromKeyChain([publicKeyTag : kSecClassKey, privateKeyTag : kSecClassKey])
         XCTAssertNotNil(try? SecurityUtils.generateKeyPair(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag))
     }
-
 
     func testSaveItemToKeyChain() {
         _ = SecurityUtils.saveItemToKeyChain(itemData, label: itemLabel)
@@ -68,6 +78,4 @@ class SecurityUtilsTest: XCTestCase {
         let signature = try? SecurityUtils.signString("somepayload", keyIds: (publicKeyTag, privateKeyTag), keySize: keySize)
         XCTAssertEqual(signature, "ODT3jvWINoDIYrdMPMB-n548VKXnVT7wAg378q3vV4b20gkZq66DOPrkM9JmyOsVcrKO7FWCa0VaLu418rkC3w==")
     }
-
-
 }

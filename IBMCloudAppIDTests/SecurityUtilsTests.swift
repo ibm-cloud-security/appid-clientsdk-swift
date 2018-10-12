@@ -29,12 +29,34 @@ class SecurityUtilsTest: XCTestCase {
         TestHelpers.savePrivateKeyDataToKeyChain(AppIDTestConstants.privateKeyData, tag: privateKeyTag)
     }
 
+    func testSecAttrAccessible() {
+        AppID.secAttrAccess = .accessibleAlways
+        XCTAssertEqual(AppID.secAttrAccess.rawValue, kSecAttrAccessibleAlways)
+    }
+
+    func testGenerateKeyPairAttrsPrivate() {
+        let keyPair = SecurityUtils.generateKeyPairAttrs(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag)
+        let privateAttrs = keyPair["private"] as! [NSString: AnyObject] // tailor:disable
+        let accessibility = privateAttrs[kSecAttrAccessible]
+        XCTAssertEqual(accessibility as! CFString, AppID.secAttrAccess.rawValue) // tailor:disable
+    }
+
+    func testGenerateKeyPairAttrsPublic() {
+        let keyPair = SecurityUtils.generateKeyPairAttrs(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag)
+        let publicAttrs = keyPair["public"] as! [NSString: AnyObject] // tailor:disable
+        let accessibility = publicAttrs[kSecAttrAccessible]
+        XCTAssertEqual(accessibility as! CFString, AppID.secAttrAccess.rawValue) // tailor:disable
+    }
+
+    func testGenerateKeyPairAttrs() {
+        let keyPair = SecurityUtils.generateKeyPairAttrs(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag)
+        XCTAssertEqual(keyPair[kSecAttrAccessible] as! CFString, AppID.secAttrAccess.rawValue) // tailor:disable
+    }
 
     func testKeyPairGeneration() {
         TestHelpers.clearDictValuesFromKeyChain([publicKeyTag : kSecClassKey, privateKeyTag : kSecClassKey])
         XCTAssertNotNil(try? SecurityUtils.generateKeyPair(keySize, publicTag: publicKeyTag, privateTag: privateKeyTag))
     }
-
 
     func testSaveItemToKeyChain() {
         _ = SecurityUtils.saveItemToKeyChain(itemData, label: itemLabel)
@@ -68,6 +90,4 @@ class SecurityUtilsTest: XCTestCase {
         let signature = try? SecurityUtils.signString("somepayload", keyIds: (publicKeyTag, privateKeyTag), keySize: keySize)
         XCTAssertEqual(signature, "ODT3jvWINoDIYrdMPMB-n548VKXnVT7wAg378q3vV4b20gkZq66DOPrkM9JmyOsVcrKO7FWCa0VaLu418rkC3w==")
     }
-
-
 }

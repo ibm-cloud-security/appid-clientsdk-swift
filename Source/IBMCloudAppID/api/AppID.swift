@@ -24,6 +24,7 @@ public class AppID {
 
     public static var overrideServerHost: String?
     public static var overrideAttributesHost: String?
+    public static var secAttrAccess: SecAttrAccessible = .accessibleAfterFirstUnlock
     public static var sharedInstance = AppID()
     internal static let logger =  Logger.logger(name: AppIDConstants.AppIDLoggerName)
 

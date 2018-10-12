@@ -1,5 +1,5 @@
 # IBM Cloud App ID iOS Swift SDK
- 
+
 [![IBM Cloud powered][img-ibmcloud-powered]][url-ibmcloud]
 [![Travis][img-travis-master]][url-travis-master]
 [![Coveralls][img-coveralls-master]][url-coveralls-master]
@@ -277,6 +277,12 @@ request.send(completionHandler: {(response:Response?, error:Error?) in
 })
 ```
 
+## Setting Keychain Accessibility
+In a rare case your application requires refreshing App ID tokens while running in the background you can use this API to set the required keychain permissions.
+```
+AppID.secAttrAccess = .accessibleAlways
+```
+
 ## License
 This package contains code licensed under the Apache License, Version 2.0 (the "License"). You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 and may also view the License in the LICENSE file within this package.
 
@@ -301,4 +307,3 @@ This package contains code licensed under the Apache License, Version 2.0 (the "
 
 [img-codacy]: https://api.codacy.com/project/badge/Grade/d41f8f069dd343769fcbdb55089561fc
 [url-codacy]: https://www.codacy.com/app/ibm-cloud-security/appid-clientsdk-swift
-

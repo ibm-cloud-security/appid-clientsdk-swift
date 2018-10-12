@@ -32,6 +32,31 @@ internal class SecurityUtils {
 
     }
 
+    internal static func generateKeyPairAttrs(_ keySize:Int, publicTag:String, privateTag:String) -> [NSString:AnyObject] {
+        let privateKeyAttr : [NSString:AnyObject] = [
+            kSecAttrIsPermanent : true as AnyObject,
+            kSecAttrApplicationTag : privateTag as AnyObject,
+            kSecAttrKeyClass : kSecAttrKeyClassPrivate,
+            kSecAttrAccessible: AppID.secAttrAccess.rawValue
+        ]
+
+        let publicKeyAttr : [NSString:AnyObject] = [
+            kSecAttrIsPermanent : true as AnyObject,
+            kSecAttrApplicationTag : publicTag as AnyObject,
+            kSecAttrKeyClass : kSecAttrKeyClassPublic,
+            kSecAttrAccessible: AppID.secAttrAccess.rawValue
+            ]
+
+        let keyPairAttr : [NSString:AnyObject] = [
+            kSecAttrKeyType : kSecAttrKeyTypeRSA,
+            kSecAttrAccessible: AppID.secAttrAccess.rawValue,
+            kSecAttrKeySizeInBits : keySize as AnyObject,
+            kSecPublicKeyAttrs : publicKeyAttr as AnyObject,
+            kSecPrivateKeyAttrs : privateKeyAttr as AnyObject
+        ]
+        return keyPairAttr
+    }
+
     internal static func generateKeyPair(_ keySize:Int, publicTag:String, privateTag:String) throws {
         //make sure keys are deleted
         _ = SecurityUtils.deleteKeyFromKeyChain(publicTag)
@@ -40,26 +65,7 @@ internal class SecurityUtils {
         var status:OSStatus = noErr
         var privateKey:SecKey?
         var publicKey:SecKey?
-
-        let privateKeyAttr : [NSString:AnyObject] = [
-            kSecAttrIsPermanent : true as AnyObject,
-            kSecAttrApplicationTag : privateTag as AnyObject,
-            kSecAttrKeyClass : kSecAttrKeyClassPrivate
-        ]
-
-        let publicKeyAttr : [NSString:AnyObject] = [
-            kSecAttrIsPermanent : true as AnyObject,
-            kSecAttrApplicationTag : publicTag as AnyObject,
-            kSecAttrKeyClass : kSecAttrKeyClassPublic,
-            ]
-
-        let keyPairAttr : [NSString:AnyObject] = [
-            kSecAttrKeyType : kSecAttrKeyTypeRSA,
-            kSecAttrKeySizeInBits : keySize as AnyObject,
-            kSecPublicKeyAttrs : publicKeyAttr as AnyObject,
-            kSecPrivateKeyAttrs : privateKeyAttr as AnyObject
-        ]
-
+        let keyPairAttr = generateKeyPairAttrs(keySize, publicTag: publicTag, privateTag: privateTag)
         status = SecKeyGeneratePair(keyPairAttr as CFDictionary, &publicKey, &privateKey)
         if (status != errSecSuccess) {
             throw AppIDError.generalError
@@ -73,6 +79,7 @@ internal class SecurityUtils {
             kSecAttrKeyType : kSecAttrKeyTypeRSA,
             kSecReturnRef : kCFBooleanTrue
         ]
+
         var result: AnyObject?
 
         let status = SecItemCopyMatching(keyAttr as CFDictionary, &result)

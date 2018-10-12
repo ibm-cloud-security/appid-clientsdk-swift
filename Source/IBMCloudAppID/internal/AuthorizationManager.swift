@@ -16,20 +16,27 @@ import Foundation
 import BMSCore
 public class AuthorizationManager {
 
-
     static var logger = Logger.logger(name: AppIDConstants.RegistrationManagerLoggerName)
+
     var registrationManager:RegistrationManager
     var appid:AppID
     var oAuthManager:OAuthManager
     var authorizationUIManager:AuthorizationUIManager?
     var preferredLocale:Locale?
+    var state: String?
+
     init(oAuthManager:OAuthManager) {
         self.oAuthManager = oAuthManager
         self.appid = oAuthManager.appId
         self.registrationManager = oAuthManager.registrationManager!
     }
 
-    internal func getAuthorizationUrl(idpName : String?, accessToken : String?, responseType : String) -> String {
+    internal func getAuthorizationUrl(idpName : String?, accessToken : String?, responseType : String) -> String? {
+        guard let state = Utils.generateStateParameter(of: 24) else {
+            return nil
+        }
+        self.state = state
+
         var url = Config.getServerUrl(appId: self.appid) + AppIDConstants.OAUTH_AUTHORIZATION_PATH + "?" + AppIDConstants.JSON_RESPONSE_TYPE_KEY + "=" + responseType
         if let clientId = self.registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) {
             url += "&" + AppIDConstants.client_id_String + "=" + clientId
@@ -44,7 +51,9 @@ public class AuthorizationManager {
         if let unWrappedAccessToken = accessToken {
             url += "&appid_access_token=" + unWrappedAccessToken
         }
+
         url = addLocaleQueryParam(url)
+        url += "&state=" + state
 
         return url
     }
@@ -82,31 +91,39 @@ public class AuthorizationManager {
     }
 
     internal func launchAuthorizationUI(accessTokenString:String? = nil, authorizationDelegate:AuthorizationDelegate) {
-        self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
+        self.registrationManager.ensureRegistered { (error: AppIDError?) in
             guard error == nil else {
                 AuthorizationManager.logger.error(message: error!.description)
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
-            let authorizationUrl = self.getAuthorizationUrl(idpName: nil, accessToken:accessTokenString, responseType: AppIDConstants.JSON_CODE_KEY)
+            guard let authorizationUrl = self.getAuthorizationUrl(idpName: nil, accessToken: accessTokenString, responseType: AppIDConstants.JSON_CODE_KEY) else {
+                AuthorizationManager.logger.error(message: "Could not generate authorization url")
+                authorizationDelegate.onAuthorizationFailure(error: .authorizationFailure("Could not generate authorization url"))
+                return
+            }
             let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0)
             self.authorizationUIManager = AuthorizationUIManager(oAuthManager: self.oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: authorizationUrl, redirectUri: redirectUri!)
             self.authorizationUIManager?.launch()
-        })
+        }
     }
 
     internal func launchSignUpAuthorizationUI(authorizationDelegate:AuthorizationDelegate) {
-        self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
+        self.registrationManager.ensureRegistered { (error: AppIDError?) in
             guard error == nil else {
                 AuthorizationManager.logger.error(message: error!.description)
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
                 return
             }
-            let signUpAuthorizationUrl = self.getAuthorizationUrl(idpName: nil, accessToken:nil, responseType: AppIDConstants.JSON_SIGN_UP_KEY)
+            guard let signUpAuthorizationUrl = self.getAuthorizationUrl(idpName: nil, accessToken: nil, responseType: AppIDConstants.JSON_SIGN_UP_KEY) else {
+                AuthorizationManager.logger.error(message: "Could not generate authorization url")
+                authorizationDelegate.onAuthorizationFailure(error: .authorizationFailure("Could not generate authorization url"))
+                return
+            }
             let redirectUri = self.registrationManager.getRegistrationDataString(arrayName: AppIDConstants.JSON_REDIRECT_URIS_KEY, arrayIndex: 0)
             self.authorizationUIManager = AuthorizationUIManager(oAuthManager: self.oAuthManager, authorizationDelegate: authorizationDelegate, authorizationUrl: signUpAuthorizationUrl, redirectUri: redirectUri!)
             self.authorizationUIManager?.launch()
-        })
+        }
     }
 
     internal func launchChangePasswordUI(authorizationDelegate:AuthorizationDelegate) {
@@ -169,7 +186,7 @@ public class AuthorizationManager {
     }
 
     internal func loginAnonymously(accessTokenString:String?, allowCreateNewAnonymousUsers: Bool, authorizationDelegate:AuthorizationDelegate) {
-        self.registrationManager.ensureRegistered(callback: {(error:AppIDError?) in
+        self.registrationManager.ensureRegistered { (error: AppIDError?) in
             guard error == nil else {
                 AuthorizationManager.logger.error(message: error!.description)
                 authorizationDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure(error!.description))
@@ -182,20 +199,22 @@ public class AuthorizationManager {
                 return
             }
 
-            let authorizationUrl = self.getAuthorizationUrl(idpName: AppIDConstants.AnonymousIdpName, accessToken:accessTokenToUse, responseType: AppIDConstants.JSON_CODE_KEY)
+            guard let authorizationUrl = self.getAuthorizationUrl(idpName: AppIDConstants.AnonymousIdpName, accessToken: accessTokenToUse, responseType: AppIDConstants.JSON_CODE_KEY) else {
+                AuthorizationManager.logger.error(message: "Could not generate authorization url")
+                authorizationDelegate.onAuthorizationFailure(error: .authorizationFailure("Could not generate authorization url"))
+                return
+            }
 
             let internalCallback:BMSCompletionHandler = {(response: Response?, error: Error?) in
                 if error == nil {
                     if let unWrapperResponse = response {
-                        let urlString = self.extractUrlString(body : unWrapperResponse.responseText)
-                        if urlString != nil {
-                            let url = URL(string: urlString!)
+                        if let urlString = self.extractUrlString(body : unWrapperResponse.responseText) {
 
-                            if url != nil {
-                                if let err = Utils.getParamFromQuery(url: url!, paramName: "error") {
+                            if let url = URL(string: urlString) {
+                                if let err = Utils.getParamFromQuery(url: url, paramName: "error") {
                                     // authorization endpoint returned error
-                                    let errorDescription = Utils.getParamFromQuery(url: url!, paramName: "error_description")
-                                    let errorCode = Utils.getParamFromQuery(url: url!, paramName: "error_code")
+                                    let errorDescription = Utils.getParamFromQuery(url: url, paramName: "error_description")
+                                    let errorCode = Utils.getParamFromQuery(url: url, paramName: "error_code")
                                     AuthorizationManager.logger.error(message: "error: " + err)
                                     AuthorizationManager.logger.error(message: "errorCode: " + (errorCode ?? "not available"))
                                     AuthorizationManager.logger.error(message: "errorDescription: " + (errorDescription ?? "not available"))
@@ -204,11 +223,24 @@ public class AuthorizationManager {
 
                                 } else {
                                     // authorization endpoint success
-                                    if urlString!.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) == true {
-                                        if let code =  Utils.getParamFromQuery(url: url!, paramName: AppIDConstants.JSON_CODE_KEY) {
-                                            self.oAuthManager.tokenManager?.obtainTokensAuthCode(code: code, authorizationDelegate: authorizationDelegate)
-                                            return
-                                        }
+                                    guard let code = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_CODE_KEY) else {
+                                        self.logAndFail(message: "Failed to extract grant code", delegate: authorizationDelegate)
+                                        return
+                                    }
+
+                                    guard let state = Utils.getParamFromQuery(url: url, paramName: AppIDConstants.JSON_STATE_KEY) else {
+                                        self.logAndFail(message: "Failed to extract state", delegate: authorizationDelegate)
+                                        return
+                                    }
+
+                                    guard self.state == state else {
+                                        self.logAndFail(message: "Mismatched state parameter", delegate: authorizationDelegate)
+                                        return
+                                    }
+
+                                    if urlString.lowercased().hasPrefix(AppIDConstants.REDIRECT_URI_VALUE.lowercased()) {
+                                        self.oAuthManager.tokenManager?.obtainTokensAuthCode(code: code, authorizationDelegate: authorizationDelegate)
+                                        return
                                     }
                                 }
                             }
@@ -224,8 +256,7 @@ public class AuthorizationManager {
             request.timeout = BMSClient.sharedInstance.requestTimeout
             request.allowRedirects = false
             self.sendRequest(request: request, internalCallBack: internalCallback)
-
-        })
+        }
 
     }
 

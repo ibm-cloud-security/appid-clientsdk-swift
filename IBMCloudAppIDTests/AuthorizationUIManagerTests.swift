@@ -39,6 +39,13 @@ public class AuthorizationUIManagerTests: XCTestCase {
 
     }
 
+    class MockAuthorizationUIManager: AuthorizationUIManager {
+
+        override func getStoredState() -> String {
+            return "validstate"
+        }
+
+    }
 
     let oauthManager = OAuthManager(appId: AppID.sharedInstance)
 
@@ -73,19 +80,47 @@ public class AuthorizationUIManagerTests: XCTestCase {
 
         let expectation1 = expectation(description: "Obtained tokens")
         oauthManager.tokenManager = MockTokenManager(oAuthManager: oauthManager, exp: expectation1)
-        let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: nil, errMsg: nil), authorizationUrl: "someurl", redirectUri: "someredirect")
+        let manager = MockAuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: nil, errMsg: nil), authorizationUrl: "someurl", redirectUri: "someredirect")
         manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
         // happy flow
-        XCTAssertTrue(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode")!, options: [:]))
+        XCTAssertTrue(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode&state=validstate")!, options: [:]))
 
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("err: \(error)")
             }
         }
-
     }
 
+    func testApplicationInvalidState() {
+
+        let expectation1 = expectation(description: "Invalid state")
+        let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: "Mismatched state parameter"), authorizationUrl: "someurl", redirectUri: "someredirect")
+        manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
+
+        XCTAssertFalse(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode&state=invalidstate")!, options: [:]))
+
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+    }
+
+    func testApplicationNoState() {
+
+        let expectation1 = expectation(description: "No state")
+        let manager = AuthorizationUIManager(oAuthManager: oauthManager, authorizationDelegate: delegate(exp: expectation1, errMsg: "Failed to extract state"), authorizationUrl: "someurl", redirectUri: "someredirect")
+        manager.loginView = MockSafariView(url:URL(string: "http://www.someurl.com")!)
+
+        XCTAssertFalse(manager.application(UIApplication.shared, open: URL(string:AppIDConstants.REDIRECT_URI_VALUE.lowercased() + "?code=somegrantcode")!, options: [:]))
+
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("err: \(error)")
+            }
+        }
+    }
 
     // no code no err
     func testApplicationErr() {

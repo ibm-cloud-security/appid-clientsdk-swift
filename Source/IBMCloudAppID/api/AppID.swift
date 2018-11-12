@@ -33,6 +33,7 @@ public class AppID {
     static public let REGION_UK = ".eu-gb.bluemix.net"
     static public let REGION_SYDNEY = ".au-syd.bluemix.net"
     static public let REGION_GERMANY = ".eu-de.bluemix.net"
+    static public let REGION_TOKYO = ".jp-tok.bluemix.net"
 
     internal init() {}
 

@@ -323,7 +323,7 @@ internal class TokenManager {
 
         let internalCallback: BMSCompletionHandler = {(response: Response?, error: Error?) in
             if error != nil {
-                TokenManager.logger.debug(message: "Error sending logging request");
+                TokenManager.logger.error(message: "Error sending logging request");
             } else {
                 TokenManager.logger.debug(message: "OK sending logging request");
             }

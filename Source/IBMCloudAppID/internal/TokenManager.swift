@@ -297,9 +297,8 @@ internal class TokenManager {
         self.latestIdentityToken = nil
         self.latestRefreshToken = nil
     }
-
-    internal func sendLoggingRequest(aToken:AccessToken?, iToken:IdentityToken?, activity:String) {
-        if (aToken == nil || iToken == nil) {
+    internal func sendLoggingRequest(accessToken:AccessToken?, idToken:IdentityToken?, eventName:String) {
+        if (accessToken == nil || idToken == nil) {
             TokenManager.logger.debug(message: "No tokens found for sending logging request");
             return;
         }
@@ -307,12 +306,12 @@ internal class TokenManager {
         let loggingUrl = Config.getServerUrl(appId: self.appid) + "/activity_logging"
 
         let headers : [String: String] = [
-            "Authorization" : "Bearer " + aToken!.raw,
+            "Authorization" : "Bearer " + accessToken!.raw,
             "Content-Type" : "application/json"
         ]
         let jsonObject: [String: String] = [
-            "eventName" : activity,
-            "id_token" :  iToken!.raw
+            "eventName" : eventName,
+            "id_token" :  idToken!.raw
         ]
         var body : Data
         do {
@@ -338,6 +337,6 @@ internal class TokenManager {
     }
     public func notifyLogout() {
 
-        sendLoggingRequest(aToken:self.latestAccessToken, iToken:self.latestIdentityToken, activity:"logout");
+        sendLoggingRequest(accessToken:self.latestAccessToken, idToken:self.latestIdentityToken, eventName:"logout");
     }
 }

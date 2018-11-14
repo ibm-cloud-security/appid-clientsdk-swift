@@ -298,4 +298,46 @@ internal class TokenManager {
         self.latestRefreshToken = nil
     }
 
+    internal func sendLoggingRequest(aToken:AccessToken?, iToken:IdentityToken?, activity:String) {
+        if (aToken == nil || iToken == nil) {
+            TokenManager.logger.debug(message: "No tokens found for sending logging request");
+            return;
+        }
+
+        let loggingUrl = Config.getServerUrl(appId: self.appid) + "/activity_logging"
+
+        let headers : [String: String] = [
+            "Authorization" : "Bearer " + aToken!.raw,
+            "Content-Type" : "application/json"
+        ]
+        let jsonObject: [String: String] = [
+            "eventName" : activity,
+            "id_token" :  iToken!.raw
+        ]
+        var body : Data
+        do {
+            body = try JSONSerialization.data(withJSONObject: jsonObject)
+        } catch {
+            TokenManager.logger.debug(message:"JSON error while creating logging request")
+            return;
+        }
+
+        let internalCallback: BMSCompletionHandler = {(response: Response?, error: Error?) in
+            if error != nil {
+                TokenManager.logger.debug(message: "Error sending logging request");
+            } else {
+                TokenManager.logger.debug(message: "OK sending logging request");
+            }
+        }
+
+        let request = Request(url: loggingUrl, method: HttpMethod.POST, headers: headers, queryParameters: nil, timeout: 0)
+        request.timeout = BMSClient.sharedInstance.requestTimeout
+
+        // body.data(using: .utf8)*/
+        sendRequest(request: request, body: body, internalCallBack: internalCallback)
+    }
+    public func notifyLogout() {
+
+        sendLoggingRequest(aToken:self.latestAccessToken, iToken:self.latestIdentityToken, activity:"logout");
+    }
 }

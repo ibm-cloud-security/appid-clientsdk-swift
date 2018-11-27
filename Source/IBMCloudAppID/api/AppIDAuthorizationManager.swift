@@ -121,6 +121,7 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
     
     public func clearAuthorizationData() {
         AppIDAuthorizationManager.logger.debug(message: "clearAuthorizationData")
+        self.oAuthManager.tokenManager?.notifyLogout();
         self.oAuthManager.tokenManager?.clearStoredToken()
     }
     
@@ -203,6 +204,7 @@ public class AppIDAuthorizationManager: BMSCore.AuthorizationManager {
      Removes saved tokens
      */
     public func logout() {
+        self.oAuthManager.tokenManager?.notifyLogout();
         self.clearAuthorizationData()
     }
     

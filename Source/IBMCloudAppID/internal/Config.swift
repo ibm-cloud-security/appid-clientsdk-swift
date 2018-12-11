@@ -29,7 +29,7 @@ internal class Config {
             return serverUrlPrefix
         }
 
-        var serverUrl = Config.serverUrlPrefix + region + "/oauth/v3/"
+        var serverUrl = region + "/oauth/v3/"
         if let overrideServerHost = AppID.overrideServerHost {
             serverUrl = overrideServerHost
         }
@@ -45,7 +45,7 @@ internal class Config {
             return serverUrlPrefix
         }
 
-        var attributesUrl = Config.attributesUrlPrefix + region + "/api/v1/"
+        var attributesUrl = region + "/api/v1/"
         if let overrideHost = AppID.overrideAttributesHost {
             attributesUrl = overrideHost
         }

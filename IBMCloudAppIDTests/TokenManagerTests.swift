@@ -698,12 +698,12 @@ class TokenManagerTests: XCTestCase {
             return
         }
         let mockAppId = MockAppId.sharedInstance
-        mockAppId.initialize(tenantId: "4dba9430-54e6-4cf2-a516", region: ".ng.bluemix.net")
+        mockAppId.initialize(tenantId: "4dba9430-54e6-4cf2-a516", region: "https://us-south.appid.cloud.ibm.com")
         let oauthManager = OAuthManager(appId: mockAppId)
         oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : AppIDTestConstants.clientId])
 
         let manager:TokenManager = TokenManager(oAuthManager: OAuthManager(appId: mockAppId))
-        MockAppId.overrideServerHost = "https://app-oauth.ng.bluemix.net/oauth/v3/"
+        MockAppId.overrideServerHost = "https://us-south.appid.cloud.ibm.com/oauth/v3/"
 
         manager.validateToken(token: validToken, key: key, tokenResponseDelegate: tokenRespDelegatIssuer) {tokenRespDelegatIssuer.onAuthorizationSuccess(accessToken: validToken,identityToken: nil,refreshToken: nil,response:response)}
         XCTAssertEqual(tokenRespDelegatIssuer.success, 0)
@@ -727,11 +727,11 @@ class TokenManagerTests: XCTestCase {
         }
 
         let mockAppId = MockAppId.sharedInstance
-        mockAppId.initialize(tenantId: "4dba9430-54e6-4cf2-a516", region: ".ng.bluemix.net")
+        mockAppId.initialize(tenantId: "4dba9430-54e6-4cf2-a516", region: "https://us-south.appid.cloud.ibm.com")
         let oauthManager = OAuthManager(appId: mockAppId)
         oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "clientId"])
         let manager:TokenManager =  TokenManager(oAuthManager: oauthManager)
-        MockAppId.overrideServerHost = "https://appid-oauth.ng.bluemix.net/oauth/v3/"
+        MockAppId.overrideServerHost = "https://appid-oauth.ng.bluemix.net/"
 
         manager.validateToken(token: validToken, key: key, tokenResponseDelegate: tokenRespDelegate) {tokenRespDelegate.onAuthorizationSuccess(accessToken: validToken,identityToken: nil,refreshToken: nil,response:response)}
         XCTAssertEqual(tokenRespDelegate.success, 0)
@@ -757,11 +757,11 @@ class TokenManagerTests: XCTestCase {
         }
 
         let mockAppId = MockAppId.sharedInstance
-        mockAppId.initialize(tenantId: "4dba9430-54e6-4cf2-a516", region: ".ng.bluemix.net")
+        mockAppId.initialize(tenantId: "4dba9430-54e6-4cf2-a516", region: "https://appid-oauth.ng.bluemix.net")
         let oauthManager = OAuthManager(appId: mockAppId)
         oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : AppIDTestConstants.clientId])
         let manager:TokenManager = TokenManager(oAuthManager: OAuthManager(appId: mockAppId))
-        MockAppId.overrideServerHost = "https://appid-oauth.ng.bluemix.net/oauth/v3/"
+        MockAppId.overrideServerHost = "https://appid-oauth.ng.bluemix.net"
 
         manager.validateToken(token: validToken, key: key, tokenResponseDelegate: tokenRespDelegateTenant) {tokenRespDelegateTenant.onAuthorizationSuccess(accessToken: validToken,identityToken: nil,refreshToken: nil,response:response)}
         XCTAssertEqual(tokenRespDelegateTenant.success, 0)

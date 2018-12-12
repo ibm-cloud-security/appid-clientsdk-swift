@@ -51,6 +51,12 @@ public class TestHelpers {
         }
     }
 
+    public static func validateFormData(expected: String, found: String) -> Void {
+        let expParamsSet = Set(expected.split(separator: "&").map { String($0) })
+        let fndParamsSet = Set(found.split(separator: "&").map { String($0) })
+        XCTAssertFalse(expParamsSet.isDisjoint(with: fndParamsSet))
+    }
+    
     public class MockTokenManager: TokenManager {
         var shouldCallObtainWithRefresh = false
         var obtainWithRefreshShouldFail = false

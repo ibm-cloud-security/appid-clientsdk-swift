@@ -78,8 +78,9 @@ class TokenManagerTests: XCTestCase {
             XCTAssertEqual(request.headers["Content-Type"], "application/x-www-form-urlencoded")
             XCTAssertEqual(request.headers["Authorization"], "Bearer signature")
             XCTAssertEqual(request.timeout, BMSClient.sharedInstance.requestTimeout)
-            XCTAssertEqual(String(data: registrationParamsAsData!, encoding: .utf8), "grant_type=authorization_code&code=thisisgrantcode&client_id=someclient&redirect_uri=redirect")
-
+            TestHelpers.validateFormData(
+                expected: "grant_type=authorization_code&code=thisisgrantcode&client_id=someclient&redirect_uri=redirect",
+                found: String(data: registrationParamsAsData!, encoding: .utf8)!)
             internalCallBack(response, err)
         }
 
@@ -122,8 +123,9 @@ class TokenManagerTests: XCTestCase {
             XCTAssertEqual(request.headers["Content-Type"], "application/x-www-form-urlencoded")
             XCTAssertEqual(request.headers["Authorization"], "Bearer signature")
             XCTAssertEqual(request.timeout, BMSClient.sharedInstance.requestTimeout)
-            XCTAssertEqual(String(data: registrationParamsAsData!, encoding: .utf8), "grant_type=password&username=thisisusername&password=thisispassword")
-
+            TestHelpers.validateFormData(
+                expected: "grant_type=password&username=thisisusername&password=thisispassword",
+                found: String(data: registrationParamsAsData!, encoding: .utf8)!)
             internalCallBack(response, err)
         }
 
@@ -282,8 +284,9 @@ class TokenManagerTests: XCTestCase {
                 XCTFail("err: \(error)")
             }
         }
-        XCTAssertEqual(tokenManager.requestFormData,
-                    "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
+        TestHelpers.validateFormData(
+            expected: tokenManager.requestFormData!,
+            found: "grant_type=password&appid_access_token=testAccessToken&username=thisisusername&password=thisispassword")
     }
 
     func testObtainTokensUsingRefreshToken() {
@@ -301,7 +304,9 @@ class TokenManagerTests: XCTestCase {
                 XCTFail("err: \(error)")
             }
         }
-        XCTAssertEqual(tokenManager.requestFormData, "refresh_token=xxtt&grant_type=refresh_token")
+        TestHelpers.validateFormData(
+            expected: tokenManager.requestFormData!,
+            found: "refresh_token=xxtt&grant_type=refresh_token")
     }
 
     func testObtainTokensUsingRop2_catch() {
@@ -761,7 +766,7 @@ class TokenManagerTests: XCTestCase {
         let oauthManager = OAuthManager(appId: mockAppId)
         oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : AppIDTestConstants.clientId])
         let manager:TokenManager = TokenManager(oAuthManager: OAuthManager(appId: mockAppId))
-        MockAppId.overrideServerHost = "https://appid-oauth.ng.bluemix.net"
+        MockAppId.overrideServerHost = "https://appid-oauth.ng.bluemix.net/"
 
         manager.validateToken(token: validToken, key: key, tokenResponseDelegate: tokenRespDelegateTenant) {tokenRespDelegateTenant.onAuthorizationSuccess(accessToken: validToken,identityToken: nil,refreshToken: nil,response:response)}
         XCTAssertEqual(tokenRespDelegateTenant.success, 0)

@@ -16,9 +16,12 @@ import BMSCore
 
 internal class Config {
 
+    private static var oauthEndpoint = "/oauth/v3/"
+    private static var attributesEndpoint = "/api/v1/"
     private static var serverUrlPrefix = "https://appid-oauth"
     private static var attributesUrlPrefix = "https://appid-profiles"
     private static var publicKeysEndpoint = "/publickeys"
+    private static var urlProtocol = "http"
 
     internal static let logger =  Logger.logger(name: AppIDConstants.ConfigLoggerName)
 
@@ -29,7 +32,7 @@ internal class Config {
             return serverUrlPrefix
         }
 
-        var serverUrl = region + "/oauth/v3/"
+        var serverUrl = region.starts(with: urlProtocol) ? region + oauthEndpoint : serverUrlPrefix + region + oauthEndpoint
         if let overrideServerHost = AppID.overrideServerHost {
             serverUrl = overrideServerHost
         }
@@ -45,7 +48,7 @@ internal class Config {
             return serverUrlPrefix
         }
 
-        var attributesUrl = region + "/api/v1/"
+        var attributesUrl = region.starts(with: urlProtocol) ? region + attributesEndpoint : attributesUrlPrefix + region + attributesEndpoint
         if let overrideHost = AppID.overrideAttributesHost {
             attributesUrl = overrideHost
         }

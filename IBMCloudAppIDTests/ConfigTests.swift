@@ -28,8 +28,18 @@ public class ConfigTests: XCTestCase {
         XCTAssertEqual("https://region/oauth/v3/sometenant", Config.getServerUrl(appId: appid))
 
         XCTAssertEqual("https://region/oauth/v3/sometenant/publickeys", Config.getPublicKeyEndpoint(appId: appid))
+        XCTAssertEqual("https://region/api/v1/", Config.getAttributesUrl(appId: appid))
+        
 
         XCTAssertEqual("region", Config.getIssuer(appId: appid))
+        
+        // with OLD .region and tenant
+        appid.initialize(tenantId: "sometenant", region: ".region")
+        XCTAssertEqual("https://appid-oauth.region/oauth/v3/sometenant", Config.getServerUrl(appId: appid))
+        XCTAssertEqual("https://appid-oauth.region/oauth/v3/sometenant/publickeys", Config.getPublicKeyEndpoint(appId: appid))
+        XCTAssertEqual("https://appid-profiles.region/api/v1/", Config.getAttributesUrl(appId: appid))
+        
+        XCTAssertEqual("appid-oauth.region", Config.getIssuer(appId: appid))
 
         // with overrideserverhost
         AppID.overrideServerHost = "somehost/"

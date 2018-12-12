@@ -28,12 +28,14 @@ public class AppID {
     public static var sharedInstance = AppID()
     internal static let logger =  Logger.logger(name: AppIDConstants.AppIDLoggerName)
 
-    static public let REGION_US_SOUTH = ".ng.bluemix.net"
-    static public let REGION_US_EAST = ".us-east.bluemix.net"
-    static public let REGION_UK = ".eu-gb.bluemix.net"
-    static public let REGION_SYDNEY = ".au-syd.bluemix.net"
-    static public let REGION_GERMANY = ".eu-de.bluemix.net"
-    static public let REGION_TOKYO = ".jp-tok.bluemix.net"
+    static public let REGION_US_SOUTH = "https://us-south.appid.cloud.ibm.com"
+    static public let REGION_US_SOUTH_STAGE1 = "https://us-south.appid.test.cloud.ibm.com"
+    static public let REGION_US_EAST = "https://us-east.appid.cloud.ibm.com"
+    static public let REGION_UK = "https://eu-gb.appid.cloud.ibm.com"
+    static public let REGION_UK_STAGE1 = "https://eu-gb.appid.test.cloud.ibm.com"
+    static public let REGION_SYDNEY = "https://au-syd.appid.cloud.ibm.com"
+    static public let REGION_GERMANY = "https://eu-de.appid.cloud.ibm.com"
+    static public let REGION_TOKYO = "https://jp-tok.appid.cloud.ibm.com"
 
     internal init() {}
 

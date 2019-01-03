@@ -59,11 +59,12 @@ public class RegistrationManagerTests: XCTestCase {
 
             XCTAssertEqual(request.resourceUrl, Config.getServerUrl(appId: AppID.sharedInstance) + "/clients")
             XCTAssertEqual(request.httpMethod, HttpMethod.POST)
-             XCTAssertEqual(request.headers, [Request.contentType : "application/json"])
+            XCTAssertEqual(request.headers, [Request.contentType : "application/json"])
             XCTAssertEqual(request.timeout, BMSClient.sharedInstance.requestTimeout)
-            let dataAsDictionary = try? Utils.parseJsonStringtoDictionary(String(data: registrationParamsAsData!, encoding: .utf8)!)
-            XCTAssertEqual(try? Utils.JSONStringify(dataAsDictionary as AnyObject), "{\"token_endpoint_auth_method\":\"client_secret_basic\",\"device_model\":\"iPhone\",\"software_version\":\"1.0\",\"client_type\":\"mobileapp\",\"device_os\":\"iOS\",\"software_id\":\"oded.dummyAppForKeyChain\",\"grant_types\":[\"authorization_code\",\"password\"],\"jwks\":{\"keys\":[{\"e\":\"AQAB\",\"kty\":\"RSA\",\"n\":\"AOH-nACU3cCopAz6_SzJuDtUyN4nHhnk9yfF9DFiGPctXPbwMXofZvd9WcYQqtw-w3WV_yhui9PrOVfVBhk6CmM=\"}]},\"redirect_uris\":[\"oded.dummyAppForKeyChain:\\/\\/mobile\\/callback\"],\"device_id\":\"" + (UIDevice.current.identifierForVendor?.uuidString)! + "\",\"response_types\":[\"code\"],\"device_os_version\":\"" + UIDevice.current.systemVersion + "\"}")
-
+            let expectedString = "{\"token_endpoint_auth_method\":\"client_secret_basic\",\"device_model\":\"iPhone\",\"software_version\":\"1.0\",\"client_type\":\"mobileapp\",\"device_os\":\"iOS\",\"software_id\":\"oded.dummyAppForKeyChain\",\"grant_types\":[\"authorization_code\",\"password\"],\"jwks\":{\"keys\":[{\"e\":\"AQAB\",\"kty\":\"RSA\",\"n\":\"AOH-nACU3cCopAz6_SzJuDtUyN4nHhnk9yfF9DFiGPctXPbwMXofZvd9WcYQqtw-w3WV_yhui9PrOVfVBhk6CmM=\"}]},\"redirect_uris\":[\"oded.dummyAppForKeyChain:\\/\\/mobile\\/callback\"],\"device_id\":\"" + (UIDevice.current.identifierForVendor?.uuidString)! + "\",\"response_types\":[\"code\"],\"device_os_version\":\"" + UIDevice.current.systemVersion + "\"}"
+            let actual = try! Utils.parseJsonStringtoDictionary(String(data: registrationParamsAsData!, encoding: .utf8)!)
+            let expected = try! Utils.parseJsonStringtoDictionary(expectedString)
+            XCTAssertTrue(NSDictionary(dictionary: actual).isEqual(to: expected))
             internalCallBack(response, err)
         }
 

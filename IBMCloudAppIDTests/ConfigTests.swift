@@ -15,27 +15,52 @@ import XCTest
 import BMSCore
 @testable import IBMCloudAppID
 
+internal var newRegion = "https://us-south.appid.cloud.ibm.com" //full url with https
+internal var oldRegion = ".ng.bluemix.net"
+internal var customRegion = ".custom"
+
+
+
 public class ConfigTests: XCTestCase {
 
-    func testGetServerUrl() {
+    
+    func testConfig() {
         AppID.sharedInstance = AppID()
+        
         // no region and tenant
         let appid = AppID.sharedInstance
         XCTAssertEqual("https://appid-oauth", Config.getServerUrl(appId: appid))
+        XCTAssertEqual("appid-oauth", Config.getIssuer(appId: appid))
 
         // with region and tenant
-        appid.initialize(tenantId: "sometenant", region: ".region")
-        XCTAssertEqual("https://appid-oauth.region/oauth/v3/sometenant", Config.getServerUrl(appId: appid))
+        appid.initialize(tenantId: "sometenant", region: newRegion)
+        XCTAssertEqual( newRegion + "/oauth/v3/sometenant", Config.getServerUrl(appId: appid))
 
-        XCTAssertEqual("https://appid-oauth.region/oauth/v3/sometenant/publickeys", Config.getPublicKeyEndpoint(appId: appid))
+        XCTAssertEqual( newRegion + "/oauth/v3/sometenant/publickeys", Config.getPublicKeyEndpoint(appId: appid))
+        XCTAssertEqual( newRegion + "/api/v1/", Config.getAttributesUrl(appId: appid))
+        XCTAssertEqual("appid-oauth.ng.bluemix.net", Config.getIssuer(appId: appid))
+        
+        // with OLD .region and tenant
+        appid.initialize(tenantId: "sometenant", region: oldRegion)
+        XCTAssertEqual("https://appid-oauth" + oldRegion + "/oauth/v3/sometenant", Config.getServerUrl(appId: appid))
+        XCTAssertEqual("https://appid-oauth" + oldRegion + "/oauth/v3/sometenant/publickeys", Config.getPublicKeyEndpoint(appId: appid))
+        XCTAssertEqual("https://appid-profiles" + oldRegion + "/api/v1/", Config.getAttributesUrl(appId: appid))
+        XCTAssertEqual("appid-oauth" + oldRegion, Config.getIssuer(appId: appid))
 
-        XCTAssertEqual("appid-oauth.region", Config.getIssuer(appId: appid))
-
+        //with custom region
+        appid.initialize(tenantId: "sometenant", region: customRegion)
+        XCTAssertEqual("https://appid-oauth" + customRegion + "/oauth/v3/sometenant", Config.getServerUrl(appId: appid))
+        XCTAssertEqual("https://appid-oauth" + customRegion + "/oauth/v3/sometenant/publickeys", Config.getPublicKeyEndpoint(appId: appid))
+        XCTAssertEqual("https://appid-profiles" + customRegion + "/api/v1/", Config.getAttributesUrl(appId: appid))
+        XCTAssertEqual("appid-oauth" + customRegion, Config.getIssuer(appId: appid))
+    
         // with overrideserverhost
         AppID.overrideServerHost = "somehost/"
         XCTAssertEqual("somehost/sometenant", Config.getServerUrl(appId: appid))
-
-
+        XCTAssertEqual("somehost/", Config.getIssuer(appId: appid))
+        
     }
+    
+    
 
 }

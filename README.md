@@ -77,7 +77,7 @@ class delegate : AuthorizationDelegate {
 AppID.sharedInstance.loginWidget?.launch(delegate: delegate())
 ```
 **Note**:
-* The Login widget default configuration use Facebook and Google as authentication options. If you configure only one of them the login widget will *not* launch and the user is redirected to the configured identity provder authentication screen.
+* By default, App ID is configured to use Facebook, Google, and Cloud Directory as identity providers. If you change your identity provider settings to provide only one option, then the Login Widget is not needed and will not display. The user is directed to your chosen identity provider's authentication screen.
 * When using Cloud Directory, and "Email verification" is configured to *not* allow users to sign-in without email verification, then the "onAuthorizationSuccess" of the "AuthorizationListener" will be invoked without tokens.
 
 

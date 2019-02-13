@@ -37,7 +37,7 @@ public class AppID {
     static public let REGION_GERMANY = "https://eu-de.appid.cloud.ibm.com"
     static public let REGION_TOKYO = "https://jp-tok.appid.cloud.ibm.com"
 
-    internal init() {}
+    public init() {}
 
     /**
         Intializes the App ID instance

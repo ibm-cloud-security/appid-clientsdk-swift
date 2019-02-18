@@ -135,7 +135,7 @@ internal class AppIDConstants {
      * Parts of the path to authorization endpoint.
      */
     internal static let AUTH_SERVER_NAME = "imf-authserver"
-    internal static let V3_AUTH_PATH = "oauth/v3/"
+    internal static let V4_AUTH_PATH = "oauth/v4/"
     internal static let OAUTH_AUTHORIZATION_PATH = "/authorization"
 
 

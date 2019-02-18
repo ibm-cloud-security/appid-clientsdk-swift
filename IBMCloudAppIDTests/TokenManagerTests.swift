@@ -648,7 +648,7 @@ class TokenManagerTests: XCTestCase {
     }
 
     func testExtractTokensFailsMissingKid() {
-        let data = "{\"access_token\":\"\(AppIDTestConstants.ACCESS_TOKEN)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+        let data = "{\"access_token\":\"\(AppIDTestConstants.malformedAccessTokenMissingKid)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: data, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Invalid token : Missing kid")
         tokenManager.extractTokens(response: response, tokenResponseDelegate: tokenRespDelegate)
@@ -708,7 +708,7 @@ class TokenManagerTests: XCTestCase {
         oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : AppIDTestConstants.clientId])
 
         let manager:TokenManager = TokenManager(oAuthManager: OAuthManager(appId: mockAppId))
-        MockAppId.overrideServerHost = "https://us-south.appid.cloud.ibm.com/oauth/v3/"
+        MockAppId.overrideServerHost = "https://us-south.appid.cloud.ibm.com/oauth/v4/"
 
         manager.validateToken(token: validToken, key: key, tokenResponseDelegate: tokenRespDelegatIssuer) {tokenRespDelegatIssuer.onAuthorizationSuccess(accessToken: validToken,identityToken: nil,refreshToken: nil,response:response)}
         XCTAssertEqual(tokenRespDelegatIssuer.success, 0)
@@ -717,7 +717,7 @@ class TokenManagerTests: XCTestCase {
     }
 
     func testValidateTokenFailsInvalidAud() {
-        let respData = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+        let respData = "{\"access_token\":\"\(AppIDTestConstants.ACCESS_TOKEN)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: respData, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Token verification failed : invalid audience")
         let publicKeys = getPublicKeys()
@@ -726,17 +726,17 @@ class TokenManagerTests: XCTestCase {
             return
         }
 
-        guard let validToken = AccessTokenImpl(with: AppIDTestConstants.appAnonAccessToken) else {
+        guard let validToken = AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN) else {
             tokenRespDelegate.onAuthorizationFailure(error: .authorizationFailure("Error in token creation"))
             return
         }
 
         let mockAppId = MockAppId.sharedInstance
-        mockAppId.initialize(tenantId: "4dba9430-54e6-4cf2-a516", region: "https://us-south.appid.cloud.ibm.com")
+        mockAppId.initialize(tenantId: "bd9fb8c8-e8d7-4671-a7bb-48e2ed5fcb77", region: "https://eu-gb.appid.test.cloud.ibm.com")
         let oauthManager = OAuthManager(appId: mockAppId)
         oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "clientId"])
         let manager:TokenManager =  TokenManager(oAuthManager: oauthManager)
-        MockAppId.overrideServerHost = "https://appid-oauth.ng.bluemix.net/"
+        MockAppId.overrideServerHost = "https://appid-oauth.stage1.eu-gb.bluemix.net"
 
         manager.validateToken(token: validToken, key: key, tokenResponseDelegate: tokenRespDelegate) {tokenRespDelegate.onAuthorizationSuccess(accessToken: validToken,identityToken: nil,refreshToken: nil,response:response)}
         XCTAssertEqual(tokenRespDelegate.success, 0)
@@ -762,12 +762,12 @@ class TokenManagerTests: XCTestCase {
         }
 
         let mockAppId = MockAppId.sharedInstance
-        mockAppId.initialize(tenantId: "4dba9430-54e6-4cf2-a516", region: "https://appid-oauth.ng.bluemix.net")
+        mockAppId.initialize(tenantId: "4dba9430-54e6-4cf2-a516", region: "https://eu-gb.appid.test.cloud.ibm.com")
         let oauthManager = OAuthManager(appId: mockAppId)
         oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : AppIDTestConstants.clientId])
         let manager:TokenManager = TokenManager(oAuthManager: OAuthManager(appId: mockAppId))
-        MockAppId.overrideServerHost = "https://appid-oauth.ng.bluemix.net/"
-
+        MockAppId.overrideServerHost = "https://appid-oauth.stage1.eu-gb.bluemix.net"
+        
         manager.validateToken(token: validToken, key: key, tokenResponseDelegate: tokenRespDelegateTenant) {tokenRespDelegateTenant.onAuthorizationSuccess(accessToken: validToken,identityToken: nil,refreshToken: nil,response:response)}
         XCTAssertEqual(tokenRespDelegateTenant.success, 0)
         XCTAssertEqual(tokenRespDelegateTenant.fails, 1)

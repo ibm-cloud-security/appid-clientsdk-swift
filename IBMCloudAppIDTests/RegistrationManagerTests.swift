@@ -61,7 +61,9 @@ public class RegistrationManagerTests: XCTestCase {
             XCTAssertEqual(request.httpMethod, HttpMethod.POST)
             XCTAssertEqual(request.headers, [Request.contentType : "application/json"])
             XCTAssertEqual(request.timeout, BMSClient.sharedInstance.requestTimeout)
-            let expectedString = "{\"token_endpoint_auth_method\":\"client_secret_basic\",\"device_model\":\"iPhone\",\"software_version\":\"1.0\",\"client_type\":\"mobileapp\",\"device_os\":\"iOS\",\"software_id\":\"oded.dummyAppForKeyChain\",\"grant_types\":[\"authorization_code\",\"password\"],\"jwks\":{\"keys\":[{\"e\":\"AQAB\",\"kty\":\"RSA\",\"n\":\"AOH-nACU3cCopAz6_SzJuDtUyN4nHhnk9yfF9DFiGPctXPbwMXofZvd9WcYQqtw-w3WV_yhui9PrOVfVBhk6CmM=\"}]},\"redirect_uris\":[\"oded.dummyAppForKeyChain:\\/\\/mobile\\/callback\"],\"device_id\":\"" + (UIDevice.current.identifierForVendor?.uuidString)! + "\",\"response_types\":[\"code\"],\"device_os_version\":\"" + UIDevice.current.systemVersion + "\"}"
+            let expectedString =
+            "{\"grant_types\":[\"authorization_code\",\"password\"],\"device_os\":\"iOS\",\"device_os_version\":\"" + UIDevice.current.systemVersion + "\",\"client_type\":\"mobileapp\",\"device_id\":\"" + (UIDevice.current.identifierForVendor?.uuidString)! + "\",\"device_model\":\"iPhone\",\"jwks\":{\"keys\":[{\"n\":\"AOH-nACU3cCopAz6_SzJuDtUyN4nHhnk9yfF9DFiGPctXPbwMXofZvd9WcYQqtw-w3WV_yhui9PrOVfVBhk6CmM=\",\"kty\":\"RSA\",\"e\":\"AQAB\"}]},\"software_version\":\"1.0\",\"token_endpoint_auth_method\":\"client_secret_basic\",\"response_types\":[\"code\"],\"redirect_uris\":[\"oded.dummyAppForKeyChain:\\/\\/mobile\\/callback\"],\"software_id\":\"oded.dummyAppForKeyChain\"}"
+            let actualString = String(data: registrationParamsAsData!, encoding: .utf8)
             let actual = try! Utils.parseJsonStringtoDictionary(String(data: registrationParamsAsData!, encoding: .utf8)!)
             let expected = try! Utils.parseJsonStringtoDictionary(expectedString)
             XCTAssertTrue(NSDictionary(dictionary: actual).isEqual(to: expected))

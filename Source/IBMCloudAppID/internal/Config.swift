@@ -16,12 +16,12 @@ import BMSCore
 
 internal class Config {
     
-    private static var oauthEndpoint = "/oauth/v3/"
+    private static var oauthEndpoint = "/oauth/v4/"
     private static var attributesEndpoint = "/api/v1/"
     private static var serverUrlPrefix = "https://appid-oauth"
     private static var attributesUrlPrefix = "https://appid-profiles"
     private static var publicKeysEndpoint = "/publickeys"
-    private static var urlProtocol = "http"
+    private static var urlProtocol = "https"
     
     
     private static var REGION_US_SOUTH_OLD = ".ng.bluemix.net";
@@ -42,7 +42,7 @@ internal class Config {
         
         var serverUrl = region.starts(with: urlProtocol) ? region + oauthEndpoint : serverUrlPrefix + region + oauthEndpoint
         if let overrideServerHost = AppID.overrideServerHost {
-            serverUrl = overrideServerHost
+            serverUrl = overrideServerHost + "/"
         }
         
         serverUrl = serverUrl + tenant
@@ -71,13 +71,13 @@ internal class Config {
     internal static func getIssuer(appId: AppID) -> String? {
         
         if let overrideServerHost = AppID.overrideServerHost {
-            return  URL(string: overrideServerHost)?.host ?? AppID.overrideServerHost
+            return  AppID.overrideServerHost
         }
         
         let region = appId.region ?? ""
-        let issuer =  region.range(of:"cloud.ibm.com") == nil ? getServerUrl(appId:appId) : serverUrlPrefix + suffixFromRegion(region: region)
+        let issuer =  serverUrlPrefix + suffixFromRegion(region: region)
         
-        return URL(string: issuer)?.host ?? issuer
+        return URL(string: issuer)?.absoluteString
     }
     
     internal static func suffixFromRegion(region: String) -> String {

@@ -230,14 +230,10 @@ internal class TokenManager {
                 tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed"))
                 return
         }
-
+        let iss = token.issuer
+        let conf = Config.getIssuer(appId: appid)
         if token.issuer != Config.getIssuer(appId: appid) {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : invalid issuer"))
-            return
-        }
-
-        if token.audience != clientId {
-            tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : invalid audience"))
             return
         }
 
@@ -246,6 +242,11 @@ internal class TokenManager {
             return
         }
 
+        if token.audience?.contains(clientId) == false {
+            tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : invalid audience"))
+            return
+        }
+        
         if  token.isExpired {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : expired"))
             return

@@ -34,7 +34,6 @@
 		EF49948A1E55F7BE008ACC27 /* RegistrationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF77D5371E52085800C4B87F /* RegistrationManagerTests.swift */; };
 		EF49948B1E55F7BE008ACC27 /* AuthorizationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB7F3B11E5307F20099BEDC /* AuthorizationManagerTests.swift */; };
 		EF49948C1E55F7BE008ACC27 /* ConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB876361E533E9400E017FA /* ConfigTests.swift */; };
-		EF49948D1E55F7BE008ACC27 /* OAuthClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB876381E53434800E017FA /* OAuthClientTests.swift */; };
 		EF49948E1E55F7BE008ACC27 /* AuthorizationUIManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */; };
 		EF49948F1E55F7BE008ACC27 /* TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF37F8BB1E5487C40020E998 /* TestHelpers.swift */; };
 		EFBA201E1E51F7D9000EB3F5 /* AppIDTestConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */; };
@@ -115,7 +114,6 @@
 		EF77D5371E52085800C4B87F /* RegistrationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistrationManagerTests.swift; sourceTree = "<group>"; };
 		EFB7F3B11E5307F20099BEDC /* AuthorizationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManagerTests.swift; sourceTree = "<group>"; };
 		EFB876361E533E9400E017FA /* ConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigTests.swift; sourceTree = "<group>"; };
-		EFB876381E53434800E017FA /* OAuthClientTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OAuthClientTests.swift; sourceTree = "<group>"; };
 		EFBA1FE71E51F7D9000EB3F5 /* AppIDAuthorizationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDAuthorizationManagerTests.swift; sourceTree = "<group>"; };
 		EFBA1FE81E51F7D9000EB3F5 /* SecurityUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecurityUtilsTests.swift; sourceTree = "<group>"; };
 		EFBA1FE91E51F7D9000EB3F5 /* AppIDTestConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIDTestConstants.swift; sourceTree = "<group>"; };
@@ -235,7 +233,6 @@
 				EF77D5371E52085800C4B87F /* RegistrationManagerTests.swift */,
 				EFB7F3B11E5307F20099BEDC /* AuthorizationManagerTests.swift */,
 				EFB876361E533E9400E017FA /* ConfigTests.swift */,
-				EFB876381E53434800E017FA /* OAuthClientTests.swift */,
 				EF37F8B91E534C2D0020E998 /* AuthorizationUIManagerTests.swift */,
 				BDF5878E1E66C55A00393C0C /* UserProfileTests.swift */,
 				EF37F8BB1E5487C40020E998 /* TestHelpers.swift */,
@@ -652,7 +649,6 @@
 				EF49948A1E55F7BE008ACC27 /* RegistrationManagerTests.swift in Sources */,
 				EF49948B1E55F7BE008ACC27 /* AuthorizationManagerTests.swift in Sources */,
 				EF49948C1E55F7BE008ACC27 /* ConfigTests.swift in Sources */,
-				EF49948D1E55F7BE008ACC27 /* OAuthClientTests.swift in Sources */,
 				BDF5878F1E66C55A00393C0C /* UserProfileTests.swift in Sources */,
 				EF49948E1E55F7BE008ACC27 /* AuthorizationUIManagerTests.swift in Sources */,
 				EF49948F1E55F7BE008ACC27 /* TestHelpers.swift in Sources */,

@@ -9,7 +9,7 @@ public protocol Token {
 	
 	var issuer: String? {get}
 	var subject: String? {get}
-	var audience: String? {get}
+    var audience: [String]? {get}
 	var expiration: Date? {get}
 	var issuedAt: Date? {get}
 	var tenant: String? {get}
@@ -77,8 +77,8 @@ internal class AbstractToken: Token {
 		return payload[AbstractToken.SUBJECT] as? String
 	}
 	
-	var audience: String? {
-		return payload[AbstractToken.AUDIENCE] as? String
+	var audience: [String]? {
+		return payload[AbstractToken.AUDIENCE] as? [String]
 	}
 	
     var expiration: Date? {

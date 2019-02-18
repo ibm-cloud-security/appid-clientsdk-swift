@@ -230,8 +230,7 @@ internal class TokenManager {
                 tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed"))
                 return
         }
-        let iss = token.issuer
-        let conf = Config.getIssuer(appId: appid)
+        
         if token.issuer != Config.getIssuer(appId: appid) {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : invalid issuer"))
             return

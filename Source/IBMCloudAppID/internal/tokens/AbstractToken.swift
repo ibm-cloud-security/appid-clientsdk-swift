@@ -10,6 +10,7 @@ public protocol Token {
 	var issuer: String? {get}
 	var subject: String? {get}
     var audience: [String]? {get}
+    var authorizedParty: String? {get}
 	var expiration: Date? {get}
 	var issuedAt: Date? {get}
 	var tenant: String? {get}
@@ -27,6 +28,7 @@ internal class AbstractToken: Token {
 	private static let ISSUED_AT = "iat"
 	private static let TENANT = "tenant"
 	private static let AUTH_METHODS = "amr"
+    private static let AZP = "azp"
 
 	var raw: String
 	var header: Dictionary<String, Any>
@@ -81,6 +83,10 @@ internal class AbstractToken: Token {
 		return payload[AbstractToken.AUDIENCE] as? [String]
 	}
 	
+    var authorizedParty: String? {
+        return payload[AbstractToken.AZP] as? String
+    }
+    
     var expiration: Date? {
         guard let exp = payload[AbstractToken.EXPIRATION] as? Double else {
             return nil

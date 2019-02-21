@@ -231,21 +231,31 @@ internal class TokenManager {
                 return
         }
         
+        // Issuer must be cloud.ibm
         if token.issuer != Config.getIssuer(appId: appid) {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : invalid issuer"))
             return
         }
 
+        // Tenants should match
         if token.tenant != appid.tenantId {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : invalid tenant"))
             return
         }
 
+        // The client ID must be the audience array
         if token.audience?.contains(clientId) == false {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : invalid audience"))
             return
         }
         
+        // The AZP must be the client ID
+        if token.authorizedParty != clientId {
+            tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : invalid audience"))
+            return
+        }
+        
+        // Token must be valid
         if  token.isExpired {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : expired"))
             return

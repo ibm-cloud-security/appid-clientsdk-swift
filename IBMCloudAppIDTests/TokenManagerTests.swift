@@ -732,12 +732,12 @@ class TokenManagerTests: XCTestCase {
         }
 
         let mockAppId = MockAppId.sharedInstance
-        mockAppId.initialize(tenantId: "bd9fb8c8-e8d7-4671-a7bb-48e2ed5fcb77", region: "https://eu-gb.appid.test.cloud.ibm.com")
+        mockAppId.initialize(tenantId: AppIDTestConstants.tenantId, region: AppIDTestConstants.region)
         let oauthManager = OAuthManager(appId: mockAppId)
         oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "clientId"])
         let manager:TokenManager =  TokenManager(oAuthManager: oauthManager)
-        MockAppId.overrideServerHost = "https://appid-oauth.stage1.eu-gb.bluemix.net"
-
+        MockAppId.overrideServerHost = nil
+        
         manager.validateToken(token: validToken, key: key, tokenResponseDelegate: tokenRespDelegate) {tokenRespDelegate.onAuthorizationSuccess(accessToken: validToken,identityToken: nil,refreshToken: nil,response:response)}
         XCTAssertEqual(tokenRespDelegate.success, 0)
         XCTAssertEqual(tokenRespDelegate.fails, 1)
@@ -746,10 +746,10 @@ class TokenManagerTests: XCTestCase {
 
 
 
-    func testValidateTokenFailsInvalidTenant() {
+    func testValidateTokenFailsInvalidIssuerDifferentTenant() {
         let respData = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: respData, httpResponse: nil, isRedirect: false)
-        let tokenRespDelegateTenant = ExtractTokensDelegate(res:"failure", expectedErr: "Token verification failed : invalid tenant")
+        let tokenRespDelegateTenant = ExtractTokensDelegate(res:"failure", expectedErr: "Token verification failed : invalid issuer")
         let publicKeys = getPublicKeys()
         guard let key = publicKeys[AppIDTestConstants.kid] else {
             tokenRespDelegateTenant.onAuthorizationFailure(error: .authorizationFailure("Failed to get public key"))
@@ -766,7 +766,7 @@ class TokenManagerTests: XCTestCase {
         let oauthManager = OAuthManager(appId: mockAppId)
         oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : AppIDTestConstants.clientId])
         let manager:TokenManager = TokenManager(oAuthManager: OAuthManager(appId: mockAppId))
-        MockAppId.overrideServerHost = "https://appid-oauth.stage1.eu-gb.bluemix.net"
+        MockAppId.overrideServerHost = "https://eu-gb.appid.test.cloud.ibm.com"
         
         manager.validateToken(token: validToken, key: key, tokenResponseDelegate: tokenRespDelegateTenant) {tokenRespDelegateTenant.onAuthorizationSuccess(accessToken: validToken,identityToken: nil,refreshToken: nil,response:response)}
         XCTAssertEqual(tokenRespDelegateTenant.success, 0)

@@ -23,16 +23,16 @@ class TokenTests: XCTestCase {
         XCTAssertNotNil(token?.header)
         XCTAssertNotNil(token?.payload)
         XCTAssertNotNil(token?.signature)
-        XCTAssertEqual(token?.issuer, "https://appid-oauth.stage1.eu-gb.bluemix.net")
-
-        XCTAssertEqual(token?.subject,  "c74da57d-e9b9-4867-a80e-0a4476e8b9df")
-        XCTAssertEqual(token?.audience, ["e2646605f5b43e44c53c7028bac659f23ffb5e39"])
-        XCTAssertTrue(token?.issuedAt == Date(timeIntervalSince1970: 1550455907 as Double))
-        XCTAssertEqual(token?.tenant, "bd9fb8c8-e8d7-4671-a7bb-48e2ed5fcb77")
+        XCTAssertEqual(token?.issuer, AppIDTestConstants.region + "/oauth/v4/" + AppIDTestConstants.tenantId)
+        
+        XCTAssertEqual(token?.subject,  "f4bb7733-6e4e-4a53-9a4a-8c5d2cee06ea")
+        XCTAssertEqual(token?.audience, [AppIDTestConstants.clientId])
+        XCTAssertTrue(token?.issuedAt == Date(timeIntervalSince1970: 1550869474 as Double))
+        XCTAssertEqual(token?.tenant, AppIDTestConstants.tenantId)
         XCTAssertEqual(token?.authenticationMethods?[0], "cloud_directory")
         XCTAssertTrue(token!.isExpired)
         XCTAssertFalse(token!.isAnonymous)
-        XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1550456207 as Double))
+        XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1550873074 as Double))
 
     }
 
@@ -40,23 +40,23 @@ class TokenTests: XCTestCase {
     func testValidIdToken() {
         let token = IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)
 
-        XCTAssertNil(token?.email)
+        XCTAssertEqual(token?.email, "testuser@ibm.com")
         XCTAssertNil(token?.gender)
         XCTAssertNil(token?.locale)
-        XCTAssertNil(token?.name)
+        XCTAssertEqual(token?.name, "testuser")
         XCTAssertEqual(token?.raw, AppIDTestConstants.ID_TOKEN)
         XCTAssertNotNil(token?.header)
         XCTAssertNotNil(token?.payload)
         XCTAssertNotNil(token?.signature)
-        XCTAssertEqual(token?.issuer, "https://appid-oauth.stage1.eu-gb.bluemix.net")
+        XCTAssertEqual(token?.issuer, AppIDTestConstants.region + "/oauth/v4/" + AppIDTestConstants.tenantId)
 
-        XCTAssertNil(token?.subject)
-        XCTAssertEqual(token?.audience, ["e2646605f5b43e44c53c7028bac659f23ffb5e39"])
-        XCTAssertTrue(token?.issuedAt == Date(timeIntervalSince1970: 1550456270 as Double))
-        XCTAssertEqual(token?.tenant, "bd9fb8c8-e8d7-4671-a7bb-48e2ed5fcb77")
-        XCTAssertEqual(token?.authenticationMethods?[0], "facebook")
+        XCTAssertEqual(token?.subject,  "f4bb7733-6e4e-4a53-9a4a-8c5d2cee06ea")
+        XCTAssertEqual(token?.audience, [AppIDTestConstants.clientId])
+        XCTAssertTrue(token?.issuedAt == Date(timeIntervalSince1970: 1550869474 as Double))
+        XCTAssertEqual(token?.tenant, AppIDTestConstants.tenantId)
+        XCTAssertEqual(token?.authenticationMethods?[0], "cloud_directory")
         XCTAssertTrue(token!.isExpired)
-        XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1550456570 as Double))
+        XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1550873074 as Double))
 
     }
 

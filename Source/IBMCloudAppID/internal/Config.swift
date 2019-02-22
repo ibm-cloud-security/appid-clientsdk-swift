@@ -67,20 +67,11 @@ internal class Config {
     }
 
     internal static func getIssuer(appId: AppID) -> String? {
-        
-        if let overrideServerHost = AppID.overrideServerHost {
-            return overrideServerHost
-        }
-        
-        guard let issuer = convertOldRegionToNewURL(region: appId.region) else {
-            return nil
-        }
-        
-        return URL(string: issuer)?.absoluteString
+        return getServerUrl(appId: appId)
+
     }
     
     internal static func convertOldRegionToNewURL(region: String?) -> String? {
-        logger.error(message: "Compare2: \(region == AppID.REGION_UK_STAGE1)")
         switch region {
         case REGION_US_SOUTH_OLD: return AppID.REGION_US_SOUTH
         case REGION_US_EAST_OLD: return AppID.REGION_US_EAST

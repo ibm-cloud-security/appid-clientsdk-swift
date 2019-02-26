@@ -416,7 +416,7 @@ public class UserProfileTests: XCTestCase {
         userProfileManager.data = "{\"sub\" : \"1234\"}".data(using: .utf8)
         userProfileManager.expectedPath = UserProfileTests.expectedProfilePath
         userProfileManager.getUserInfo(accessTokenString: AppIDTestConstants.ACCESS_TOKEN,
-                                        identityTokenString: AppIDTestConstants.ID_TOKEN) { (err, res) in
+                                        identityTokenString: AppIDTestConstants.malformedIdTokenNoSubject) { (err, res) in
             if err != nil {
                 return XCTFail()
             }

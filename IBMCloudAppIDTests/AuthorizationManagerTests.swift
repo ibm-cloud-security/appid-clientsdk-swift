@@ -244,7 +244,7 @@ public class AuthorizationManagerTests : XCTestCase {
 
     func testLaunchChangePassword_success() {
         let oAuthManager = OAuthManager(appId: AppID.sharedInstance)
-        AppID.sharedInstance.initialize(tenantId: "tenant1", region: "https://region2")
+        AppID.sharedInstance.initialize(tenantId: "tenant1", region: AppID.REGION_UK)
         let authManager = IBMCloudAppID.AuthorizationManager(oAuthManager: oAuthManager)
 
         class delegate: AuthorizationDelegate {
@@ -292,14 +292,14 @@ public class AuthorizationManagerTests : XCTestCase {
         tokenManager.extractTokens(response: response, tokenResponseDelegate: delegate(res:"success", expectedErr: ""))
         oAuthManager.tokenManager = tokenManager
         authManager.launchChangePasswordUI(authorizationDelegate:delegate(res:"", expectedErr:""))
-        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri as String!, "redirect")
-        let expectedUrl: String! = "https://region2/oauth/v3/tenant1/cloud_directory/change_password?user_id=bd98e7a8-6035-4e07-9d94-04c04c9fd7ab&client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
-        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
+        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri, "redirect")
+        let expectedUrl: String = AppID.REGION_UK + "/oauth/v4/tenant1/cloud_directory/change_password?user_id=bd98e7a8-6035-4e07-9d94-04c04c9fd7ab&client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
+        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl, expectedUrl)
     }
 
     func tests_launchDetails() {
         let oAuthManager = OAuthManager(appId: AppID.sharedInstance)
-        AppID.sharedInstance.initialize(tenantId: "tenant1", region: "https://region2")
+        AppID.sharedInstance.initialize(tenantId: "tenant1", region: AppID.REGION_UK)
         let authManager = MockAuthorizationManagerWithGoodResponse(oAuthManager: oAuthManager)
         let authManagerNoCode = MockAuthorizationManager(oAuthManager: oAuthManager)
         let authManagerRequestError = MockAuthorizationManagerWithRequestError(oAuthManager: oAuthManager)
@@ -356,9 +356,9 @@ public class AuthorizationManagerTests : XCTestCase {
 
     func testLaunchChangeDetails_success(authManager: IBMCloudAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
         authManager.launchChangeDetailsUI(authorizationDelegate:delegate)
-        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri as String!, "redirect")
-        let expectedUrl: String! = "https://region2/oauth/v3/tenant1/cloud_directory/change_details?code=1234&client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
-        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
+        XCTAssertEqual(authManager.authorizationUIManager?.redirectUri, "redirect")
+        let expectedUrl: String = AppID.REGION_UK + "/oauth/v4/tenant1/cloud_directory/change_details?code=1234&client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
+        XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl, expectedUrl)
     }
 
     func testLaunchChangeDetails_no_code(authManager: IBMCloudAppID.AuthorizationManager, delegate: AuthorizationDelegate) {
@@ -516,12 +516,12 @@ public class AuthorizationManagerTests : XCTestCase {
 
         }
 
-        AppID.sharedInstance.initialize(tenantId: "tenant1", region: "https://region2")
+        AppID.sharedInstance.initialize(tenantId: "tenant1", region: AppID.REGION_UK)
         MockRegistrationManager.shouldFail = false
         authManager.registrationManager = MockRegistrationManager(oauthManager:OAuthManager(appId:AppID.sharedInstance))
         authManager.launchForgotPasswordUI(authorizationDelegate: delegate(res: "failure", expectedErr: ""))
 
-        let expectedUrl: String! = "https://region2/oauth/v3/tenant1/cloud_directory/forgot_password?client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
+        let expectedUrl: String! = AppID.REGION_UK + "/oauth/v4/tenant1/cloud_directory/forgot_password?client_id=someclient&redirect_uri=redirect&language=" + Locale.current.identifier
         XCTAssertEqual(authManager.authorizationUIManager?.authorizationUrl as String!, expectedUrl)
 
     }

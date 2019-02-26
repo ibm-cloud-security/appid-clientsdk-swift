@@ -16,12 +16,12 @@ import BMSCore
 
 internal class Config {
     
-    private static var oauthEndpoint = "/oauth/v3/"
+    private static var oauthEndpoint = "/oauth/v4/"
     private static var attributesEndpoint = "/api/v1/"
     private static var serverUrlPrefix = "https://appid-oauth"
     private static var attributesUrlPrefix = "https://appid-profiles"
     private static var publicKeysEndpoint = "/publickeys"
-    private static var urlProtocol = "http"
+    private static var urlProtocol = "https"
     
     
     private static var REGION_US_SOUTH_OLD = ".ng.bluemix.net";
@@ -33,74 +33,62 @@ internal class Config {
     
     internal static let logger =  Logger.logger(name: AppIDConstants.ConfigLoggerName)
     
-    internal static func getServerUrl(appId:AppID) -> String {
+    internal static func getServerUrl(appId: AppID) -> String {
         
-        guard let region = appId.region, let tenant = appId.tenantId else {
+        guard var serverUrl = convertOldRegionToNewURL(region: appId.region), let tenant = appId.tenantId else {
             logger.error(message: "Could not set server url properly, no tenantId or no region set")
             return serverUrlPrefix
         }
         
-        var serverUrl = region.starts(with: urlProtocol) ? region + oauthEndpoint : serverUrlPrefix + region + oauthEndpoint
+        serverUrl = serverUrl + oauthEndpoint
         if let overrideServerHost = AppID.overrideServerHost {
-            serverUrl = overrideServerHost
+            serverUrl = overrideServerHost + "/"
         }
         
-        serverUrl = serverUrl + tenant
-        return serverUrl
+        return serverUrl + tenant
     }
     
-    internal static func getAttributesUrl(appId:AppID) -> String {
+    internal static func getAttributesUrl(appId: AppID) -> String {
         
-        guard let region = appId.region else {
+        guard var attributesUrl = convertOldRegionToNewURL(region: appId.region) else {
             logger.error(message: "Could not set server url properly, no region set")
-            return serverUrlPrefix
+            return attributesUrlPrefix
         }
         
-        var attributesUrl = region.starts(with: urlProtocol) ? region + attributesEndpoint : attributesUrlPrefix + region + attributesEndpoint
         if let overrideHost = AppID.overrideAttributesHost {
             attributesUrl = overrideHost
         }
         
-        return attributesUrl
+        return attributesUrl + attributesEndpoint
     }
     
     internal static func getPublicKeyEndpoint(appId: AppID) -> String {
-        return getServerUrl(appId:appId) + publicKeysEndpoint
+        return getServerUrl(appId: appId) + publicKeysEndpoint
     }
 
     internal static func getIssuer(appId: AppID) -> String? {
-        
-        if let overrideServerHost = AppID.overrideServerHost {
-            return  URL(string: overrideServerHost)?.host ?? AppID.overrideServerHost
-        }
-        
-        let region = appId.region ?? ""
-        let issuer =  region.range(of:"cloud.ibm.com") == nil ? getServerUrl(appId:appId) : serverUrlPrefix + suffixFromRegion(region: region)
-        
-        return URL(string: issuer)?.host ?? issuer
+        return getServerUrl(appId: appId)
+
     }
     
-    internal static func suffixFromRegion(region: String) -> String {
+    internal static func convertOldRegionToNewURL(region: String?) -> String? {
         switch region {
-        case AppID.REGION_UK_STAGE1:
-            return ".stage1" + REGION_UK_OLD;
-        case AppID.REGION_US_SOUTH_STAGE1:
-            return ".stage1" + REGION_US_SOUTH_OLD;
-        case AppID.REGION_US_SOUTH:
-            return REGION_US_SOUTH_OLD;
-        case AppID.REGION_UK:
-            return REGION_UK_OLD;
-        case AppID.REGION_SYDNEY:
-            return REGION_SYDNEY_OLD;
-        case AppID.REGION_GERMANY:
-            return REGION_GERMANY_OLD;
-        case AppID.REGION_US_EAST:
-            return REGION_US_EAST_OLD;
-        case AppID.REGION_TOKYO:
-            return REGION_TOKYO_OLD;
-        default:
-            return region;
+        case REGION_US_SOUTH_OLD: return AppID.REGION_US_SOUTH
+        case REGION_US_EAST_OLD: return AppID.REGION_US_EAST
+        case REGION_UK_OLD: return AppID.REGION_UK
+        case REGION_SYDNEY_OLD: return AppID.REGION_SYDNEY
+        case REGION_GERMANY_OLD: return AppID.REGION_GERMANY
+        case REGION_TOKYO_OLD: return AppID.REGION_TOKYO
+        case AppID.REGION_US_SOUTH: return AppID.REGION_US_SOUTH
+        case AppID.REGION_US_EAST: return AppID.REGION_US_EAST
+        case AppID.REGION_UK: return AppID.REGION_UK
+        case AppID.REGION_UK_STAGE1: return AppID.REGION_UK_STAGE1
+        case AppID.REGION_US_SOUTH_STAGE1: return AppID.REGION_US_SOUTH_STAGE1
+        case AppID.REGION_SYDNEY: return AppID.REGION_SYDNEY
+        case AppID.REGION_GERMANY: return AppID.REGION_GERMANY
+        case AppID.REGION_TOKYO: return AppID.REGION_TOKYO
+        default: return nil;
         }
-        
     }
+    
 }

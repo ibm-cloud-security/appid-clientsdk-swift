@@ -32,8 +32,4 @@ internal class IdentityTokenImpl: AbstractToken, IdentityToken {
 	var identities: Array<Dictionary<String, Any>>? {
         return payload[IdentityTokenImpl.IDENTITIES] as? Array<Dictionary<String, Any>>
 	}
-	
-	var oauthClient: OAuthClient? {
-		return OAuthClientImpl(with: self)
-	}
 }

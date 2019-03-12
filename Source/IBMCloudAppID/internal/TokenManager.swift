@@ -249,12 +249,6 @@ internal class TokenManager {
             return
         }
         
-        // The AZP must be the client ID
-        if token.authorizedParty != clientId {
-            tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : invalid audience"))
-            return
-        }
-        
         // Token must be valid
         if  token.isExpired {
             tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed : expired"))

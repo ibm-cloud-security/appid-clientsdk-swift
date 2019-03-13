@@ -717,7 +717,7 @@ class TokenManagerTests: XCTestCase {
     }
 
     func testValidateTokenFailsInvalidAud() {
-        let respData = "{\"access_token\":\"\(AppIDTestConstants.ACCESS_TOKEN)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)
+        let respData = "{\"access_token\":\"\(AppIDTestConstants.ACCESS_TOKEN_INVALID_AUD)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN_INVALID_AUD)\",\"expires_in\":3600}".data(using: .utf8)
         let response = Response(responseData: respData, httpResponse: nil, isRedirect: false)
         let tokenRespDelegate = ExtractTokensDelegate(res:"failure", expectedErr: "Token verification failed : invalid audience")
         let publicKeys = getPublicKeys()
@@ -726,13 +726,13 @@ class TokenManagerTests: XCTestCase {
             return
         }
 
-        guard let validToken = AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN) else {
+        guard let validToken = AccessTokenImpl(with: AppIDTestConstants.ACCESS_TOKEN_INVALID_AUD) else {
             tokenRespDelegate.onAuthorizationFailure(error: .authorizationFailure("Error in token creation"))
             return
         }
 
         let mockAppId = MockAppId.sharedInstance
-        mockAppId.initialize(tenantId: AppIDTestConstants.tenantId, region: AppIDTestConstants.region)
+        mockAppId.initialize(tenantId: AppIDTestConstants.invalidAudtenantId, region: AppIDTestConstants.region)
         let oauthManager = OAuthManager(appId: mockAppId)
         oauthManager.registrationManager?.preferenceManager.getJSONPreference(name: AppIDConstants.registrationDataPref).set([AppIDConstants.client_id_String : "clientId"])
         let manager:TokenManager =  TokenManager(oAuthManager: oauthManager)
@@ -743,8 +743,6 @@ class TokenManagerTests: XCTestCase {
         XCTAssertEqual(tokenRespDelegate.fails, 1)
         XCTAssertEqual(tokenRespDelegate.cancel, 0)
     }
-
-
 
     func testValidateTokenFailsInvalidIssuerDifferentTenant() {
         let respData = "{\"access_token\":\"\(AppIDTestConstants.appAnonAccessToken)\",\"id_token\":\"\(AppIDTestConstants.ID_TOKEN)\",\"expires_in\":3600}".data(using: .utf8)

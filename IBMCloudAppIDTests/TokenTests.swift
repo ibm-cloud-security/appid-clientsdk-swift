@@ -25,14 +25,14 @@ class TokenTests: XCTestCase {
         XCTAssertNotNil(token?.signature)
         XCTAssertEqual(token?.issuer, AppIDTestConstants.region + "/oauth/v4/" + AppIDTestConstants.tenantId)
         
-        XCTAssertEqual(token?.subject,  "f4bb7733-6e4e-4a53-9a4a-8c5d2cee06ea")
+        XCTAssertEqual(token?.subject, AppIDTestConstants.subject)
         XCTAssertEqual(token?.audience, [AppIDTestConstants.clientId])
-        XCTAssertTrue(token?.issuedAt == Date(timeIntervalSince1970: 1550869474 as Double))
+        XCTAssertTrue(token?.issuedAt == Date(timeIntervalSince1970: 1552502422 as Double))
         XCTAssertEqual(token?.tenant, AppIDTestConstants.tenantId)
-        XCTAssertEqual(token?.authenticationMethods?[0], "cloud_directory")
+        XCTAssertEqual(token?.authenticationMethods?[0], "google")
         XCTAssertTrue(token!.isExpired)
         XCTAssertFalse(token!.isAnonymous)
-        XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1550873074 as Double))
+        XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1552502424 as Double))
 
     }
 
@@ -40,23 +40,23 @@ class TokenTests: XCTestCase {
     func testValidIdToken() {
         let token = IdentityTokenImpl(with: AppIDTestConstants.ID_TOKEN)
 
-        XCTAssertEqual(token?.email, "testuser@ibm.com")
+        XCTAssertEqual(token?.email, "donlonqwerty@gmail.com")
         XCTAssertNil(token?.gender)
-        XCTAssertNil(token?.locale)
-        XCTAssertEqual(token?.name, "testuser")
+        XCTAssertEqual(token?.locale, "en")
+        XCTAssertEqual(token?.name, "Lon Don")
         XCTAssertEqual(token?.raw, AppIDTestConstants.ID_TOKEN)
         XCTAssertNotNil(token?.header)
         XCTAssertNotNil(token?.payload)
         XCTAssertNotNil(token?.signature)
         XCTAssertEqual(token?.issuer, AppIDTestConstants.region + "/oauth/v4/" + AppIDTestConstants.tenantId)
 
-        XCTAssertEqual(token?.subject,  "f4bb7733-6e4e-4a53-9a4a-8c5d2cee06ea")
+        XCTAssertEqual(token?.subject, AppIDTestConstants.subject)
         XCTAssertEqual(token?.audience, [AppIDTestConstants.clientId])
-        XCTAssertTrue(token?.issuedAt == Date(timeIntervalSince1970: 1550869474 as Double))
+        XCTAssertTrue(token?.issuedAt == Date(timeIntervalSince1970: 1552502422 as Double))
         XCTAssertEqual(token?.tenant, AppIDTestConstants.tenantId)
-        XCTAssertEqual(token?.authenticationMethods?[0], "cloud_directory")
+        XCTAssertEqual(token?.authenticationMethods?[0], "google")
         XCTAssertTrue(token!.isExpired)
-        XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1550873074 as Double))
+        XCTAssertTrue(token?.expiration == Date(timeIntervalSince1970: 1552502424 as Double))
 
     }
 

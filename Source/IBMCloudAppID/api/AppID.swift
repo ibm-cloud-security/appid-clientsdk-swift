@@ -76,12 +76,12 @@ public class AppID {
             tokenResponseDelegate: tokenResponseDelegate)
     }
 
-    @available(*, deprecated: 3.0, renamed: "signinAnonymously")
+    @available(swift, deprecated: 3.0, renamed: "signinAnonymously")
     public func loginAnonymously(accessTokenString:String? = nil, allowCreateNewAnonymousUsers: Bool = true, authorizationDelegate:AuthorizationDelegate) {
         self.signinAnonymously(accessTokenString: accessTokenString, allowCreateNewAnonymousUsers: allowCreateNewAnonymousUsers, authorizationDelegate: authorizationDelegate)
     }
 
-    @available(*, deprecated: 3.0, renamed: "signinWithResourceOwnerPassword")
+    @available(swift, deprecated: 3.0, renamed: "signinWithResourceOwnerPassword")
     public func obtainTokensWithROP(_ accessTokenString:String? = nil, username: String, password: String, tokenResponseDelegate:TokenResponseDelegate) {
         self.signinWithResourceOwnerPassword(accessTokenString, username: username,
                                              password: password, tokenResponseDelegate: tokenResponseDelegate)

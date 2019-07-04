@@ -225,7 +225,8 @@ internal class TokenManager {
 
     public func validateToken(token: Token, key: SecKey, tokenResponseDelegate: TokenResponseDelegate, callback: @escaping () -> Void ) {
 
-        guard let jws = try? JWS(compactSerialization: token.raw), let _ = try? jws.validate(with: key),
+        let verifier = Verifier(verifyingAlgorithm: .RS256, publicKey: key)!
+        guard let jws = try? JWS(compactSerialization: token.raw), let _ = try? jws.validate(using: verifier),
             let clientId = registrationManager.getRegistrationDataString(name: AppIDConstants.client_id_String) else {
                 tokenResponseDelegate.onAuthorizationFailure(error: .authorizationFailure("Token verification failed"))
                 return

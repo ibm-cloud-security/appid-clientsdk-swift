@@ -15,7 +15,7 @@
 		6749E62C81CCD62984862D58 /* Pods_IBMCloudAppID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B1AE9343AB77B8B9C396E21 /* Pods_IBMCloudAppID.framework */; };
 		9539BBDF532A13A970EB051F /* Pods_IBMCloudAppIDTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB32128A91C6C77CEBDAC128 /* Pods_IBMCloudAppIDTests.framework */; };
 		BDC0D53F1E5EF68300444F9E /* UserProfileManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDC0D53E1E5EF68300444F9E /* UserProfileManagerImpl.swift */; };
-		BDF5878B1E65736B00393C0C /* (null) in Sources */ = {isa = PBXBuildFile; };
+		BDF5878B1E65736B00393C0C /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		BDF5878F1E66C55A00393C0C /* UserProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF5878E1E66C55A00393C0C /* UserProfileTests.swift */; };
 		EF3B3BE21E55C4E900DFFF13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B3BE11E55C4E900DFFF13 /* AppDelegate.swift */; };
 		EF3B3BE41E55C4E900DFFF13 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF3B3BE31E55C4E900DFFF13 /* ViewController.swift */; };
@@ -555,7 +555,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-IBMCloudAppIDTests/Pods-IBMCloudAppIDTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-IBMCloudAppIDTests/Pods-IBMCloudAppIDTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BMSAnalyticsAPI/BMSAnalyticsAPI.framework",
 				"${BUILT_PRODUCTS_DIR}/BMSCore/BMSCore.framework",
 				"${BUILT_PRODUCTS_DIR}/JOSESwift/JOSESwift.framework",
@@ -568,7 +568,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-IBMCloudAppIDTests/Pods-IBMCloudAppIDTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-IBMCloudAppIDTests/Pods-IBMCloudAppIDTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -632,7 +632,7 @@
 				EF4994811E55F7BE008ACC27 /* SecurityUtilsTests.swift in Sources */,
 				EF4994821E55F7BE008ACC27 /* AppIDTestConstants.swift in Sources */,
 				EF4994831E55F7BE008ACC27 /* AppIDTests.swift in Sources */,
-				BDF5878B1E65736B00393C0C /* (null) in Sources */,
+				BDF5878B1E65736B00393C0C /* BuildFile in Sources */,
 				EF4994841E55F7BE008ACC27 /* AuthorizationHeaderHelperTests.swift in Sources */,
 				EF4994861E55F7BE008ACC27 /* PreferencesTests.swift in Sources */,
 				EF4994871E55F7BE008ACC27 /* TokenManagerTests.swift in Sources */,

@@ -2,8 +2,8 @@ use_frameworks!
 
 def shared_pods
 	platform :ios, '10.0'
-	pod 'BMSCore', '~> 2.3.1'
-	pod 'JOSESwift', '~> 1.1.0'
+	pod 'BMSCore', '~> 2.4.0'
+	pod 'JOSESwift', '~> 1.8.0'
 end
 
 target 'IBMCloudAppID' do

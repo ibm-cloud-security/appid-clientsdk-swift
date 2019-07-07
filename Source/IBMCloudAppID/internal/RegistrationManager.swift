@@ -48,7 +48,7 @@ internal class RegistrationManager {
 
     internal func privateKeyExist() -> Bool {
         do {
-            try SecurityUtils.getKeyRefFromKeyChain(AppIDConstants.privateKeyIdentifier)
+            try _ = SecurityUtils.getKeyRefFromKeyChain(AppIDConstants.privateKeyIdentifier)
             return true
         } catch {
             return false

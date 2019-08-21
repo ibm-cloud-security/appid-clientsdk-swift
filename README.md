@@ -221,7 +221,6 @@ This API can be used only when the user is logged in using Cloud Directory ident
  AppID.sharedInstance.logout()
 ```
 
-
 ### User Profile
 
 Using the App ID UserProfileManager, you are able to create, read, and delate attributes in a user's profile as well as retrieve additional info about a user.

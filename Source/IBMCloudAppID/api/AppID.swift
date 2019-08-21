@@ -93,4 +93,8 @@ public class AppID {
             return (self.oauthManager?.authorizationManager?.application(application, open: url, options: options))!
     }
 
+    public func logout(){
+        let appIDAuthorizationManager = AppIDAuthorizationManager(appid: self)
+        appIDAuthorizationManager.logout()
+    }
 }

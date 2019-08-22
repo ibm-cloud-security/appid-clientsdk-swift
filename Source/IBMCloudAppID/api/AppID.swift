@@ -95,4 +95,5 @@ public class AppID {
         let appIDAuthorizationManager = AppIDAuthorizationManager(appid: self)
         appIDAuthorizationManager.logout()
     }
+	
 }

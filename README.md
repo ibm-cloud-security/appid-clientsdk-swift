@@ -289,6 +289,9 @@ In a rare case your application requires refreshing App ID tokens while running 
 AppID.secAttrAccess = .accessibleAlways
 ```
 
+## Got Questions?
+Join us on [Slack](https://www.ibm.com/cloud/blog/announcements/get-help-with-ibm-cloud-app-id-related-questions-on-slack) and chat with our dev team.
+
 ## License
 This package contains code licensed under the Apache License, Version 2.0 (the "License"). You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 and may also view the License in the LICENSE file within this package.
 

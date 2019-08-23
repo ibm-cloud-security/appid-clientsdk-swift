@@ -216,7 +216,7 @@ This API can be used only when the user is logged in using Cloud Directory ident
 ```
 
 ### Logout
-
+Call the logout function in order to clear the stored tokens.
 ```swift
  AppID.sharedInstance.logout()
 ```

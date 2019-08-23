@@ -87,10 +87,13 @@ public class AppID {
                                              password: password, tokenResponseDelegate: tokenResponseDelegate)
     }
 
-
-
-	public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {
+    public func application(_ application: UIApplication, open url: URL, options :[UIApplicationOpenURLOptionsKey: Any]) -> Bool {
             return (self.oauthManager?.authorizationManager?.application(application, open: url, options: options))!
     }
 
+    public func logout() {
+        let appIDAuthorizationManager = AppIDAuthorizationManager(appid: self)
+        appIDAuthorizationManager.logout()
+    }
+	
 }

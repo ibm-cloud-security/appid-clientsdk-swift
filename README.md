@@ -215,6 +215,12 @@ This API can be used only when the user is logged in using Cloud Directory ident
   AppID.sharedInstance.loginWidget?.launchChangePassword(delegate: delegate())
 ```
 
+### Logout
+
+```swift
+ AppID.sharedInstance.logout()
+```
+
 ### User Profile
 
 Using the App ID UserProfileManager, you are able to create, read, and delate attributes in a user's profile as well as retrieve additional info about a user.
@@ -282,6 +288,9 @@ In a rare case your application requires refreshing App ID tokens while running 
 ```
 AppID.secAttrAccess = .accessibleAlways
 ```
+
+## Got Questions?
+Join us on [Slack](https://www.ibm.com/cloud/blog/announcements/get-help-with-ibm-cloud-app-id-related-questions-on-slack) and chat with our dev team.
 
 ## License
 This package contains code licensed under the Apache License, Version 2.0 (the "License"). You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 and may also view the License in the LICENSE file within this package.

@@ -4,7 +4,7 @@ matrix:
     - osx_image: xcode10.2
 install:
   - gem install jazzy
-  - gem install slather -v 2.4.5
+  - gem install slather -v 2.4.7
 before_script:
   - rm -rf ~/Library/Developer/Xcode/DerivedData
 script:

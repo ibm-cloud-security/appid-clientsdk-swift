@@ -72,6 +72,15 @@ class UtilsTest: XCTestCase {
 //        XCTAssertEqual(dictionary[AppIDConstants.JSON_APPLICATION_VERSION_KEY] as? String, appIdentity.version)
 //        XCTAssertEqual(dictionary[AppIDConstants.JSON_ENVIRONMENT_KEY] as? String, AppIDConstants.JSON_IOS_ENVIRONMENT_VALUE)
 //    }
+
+    func testURLEncoding() {
+        let strToEncode = "test+test@test.com"
+        let exceptedStr = "test%2Btest%40test.com"
+
+        let resultStr = Utils.urlEncode(strToEncode)
+        XCTAssertEqual(resultStr, exceptedStr, "Could not url Encoded")
+    }
+
     func testDecodeBase64WithString() {
         let str = "VGhpcyBpcyBhIFV0aWxzIHVuaXRUZXN0IHR+c/Q="
         let strSafe = "VGhpcyBpcyBhIFV0aWxzIHVuaXRUZXN0IHR-c_Q="

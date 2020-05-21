@@ -76,7 +76,7 @@ internal class RegistrationManager {
 
         let request:Request = Request(url: Config.getServerUrl(appId: self.appId) + "/clients",method: HttpMethod.POST, headers: [Request.contentType : "application/json"], queryParameters: nil, timeout: 0)
         request.timeout = BMSClient.sharedInstance.requestTimeout
-        let registrationParamsAsData = try? Utils.urlEncode(Utils.JSONStringify(registrationParams as AnyObject)).data(using: .utf8) ?? Data()
+        let registrationParamsAsData = try? Utils.JSONStringify(registrationParams as AnyObject).data(using: .utf8) ?? Data()
         sendRequest(request: request, registrationParamsAsData: registrationParamsAsData, internalCallBack: internalCallBack)
 
     }

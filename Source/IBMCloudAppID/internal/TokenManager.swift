@@ -26,8 +26,6 @@ internal class TokenManager {
     internal init(oAuthManager:OAuthManager) {
         self.appid = oAuthManager.appId
         self.registrationManager = oAuthManager.registrationManager!
-        
-        logger.isInternalDebugLoggingEnabled = true
     }
 
     public func obtainTokensAuthCode(code:String, authorizationDelegate:AuthorizationDelegate) {

@@ -45,11 +45,11 @@ public class Utils {
     public static func parseJsonStringtoDictionary(_ jsonString:String) throws ->[String:Any] {
         do {
             Utils.Log(message: "enter: parseJsonStringtoDictionary", component: Utils.componentName)
-            Utils.Log(message: jsonString, component: Utils.componentNam)
+            Utils.Log(message: jsonString, component: Utils.componentName)
             guard let data = jsonString.data(using: String.Encoding.utf8), let responseJson =  try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] else {
                 throw AppIDError.jsonUtilsError(msg: "Json is malformed")
             }
-            Utils.Log(message: "dictionary size \(responseJson.count)", component: Utils.componentNam)
+            Utils.Log(message: "dictionary size \(responseJson.count)", component: Utils.componentName)
             return responseJson as [String:Any]
         }
     }

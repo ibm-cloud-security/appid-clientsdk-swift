@@ -36,6 +36,8 @@ internal class AbstractToken: Token {
     var signature: String
     
     internal init? (with raw: String) {
+        AbstractToken.logger.isInternalDebugLoggingEnabled = true
+        
         AbstractToken.logger.debug(message: "enter: init")
         self.raw = raw
         let tokenComponents = self.raw.components(separatedBy: ".")

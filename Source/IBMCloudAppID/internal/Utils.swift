@@ -39,6 +39,8 @@ public class Utils {
     }
 
     public static func parseJsonStringtoDictionary(_ jsonString:String) throws ->[String:Any] {
+        Utils.logger.isInternalDebugLoggingEnabled = true
+        
         do {
             Utils.logger.debug(message: "enter: parseJsonStringtoDictionary")
             Utils.logger.debug(message: jsonString)

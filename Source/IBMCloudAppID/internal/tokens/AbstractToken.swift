@@ -1,4 +1,5 @@
 import Foundation
+import BMSCore
 
 public protocol Token {
     
@@ -27,6 +28,7 @@ internal class AbstractToken: Token {
     private static let ISSUED_AT = "iat"
     private static let TENANT = "tenant"
     private static let AUTH_METHODS = "amr"
+    private static let logger = Logger.logger(name: "AbstractToken")
     
     var raw: String
     var header: Dictionary<String, Any>
@@ -34,36 +36,65 @@ internal class AbstractToken: Token {
     var signature: String
     
     internal init? (with raw: String) {
+        AbstractToken.logger.debug(message: "enter: init")
         self.raw = raw
         let tokenComponents = self.raw.components(separatedBy: ".")
         guard tokenComponents.count==3 else {
             return nil
         }
+        AbstractToken.logger.debug(message: "token has 3 parts")
         
         let headerComponent = tokenComponents[0]
         let payloadComponent = tokenComponents[1]
         self.signature = tokenComponents[2]
         
+        AbstractToken.logger.debug(message: "before: decodeBase64 header")
         guard
-            let headerDecodedData = Utils.decodeBase64WithString(headerComponent, isSafeUrl: true),
+            let headerDecodedData = Utils.decodeBase64WithString(headerComponent, isSafeUrl: true)
+            else {
+                return nil
+        }
+        AbstractToken.logger.debug(message: "after: decodeBase64 header ")
+        
+        AbstractToken.logger.debug(message: "before: decodeBase64 payload")
+        guard
             let payloadDecodedData = Utils.decodeBase64WithString(payloadComponent, isSafeUrl: true)
             else {
                 return nil
         }
+        AbstractToken.logger.debug(message: "after: decodeBase64 payload")
         
+        AbstractToken.logger.debug(message: "before: to string header")
         guard
-            let headerDecodedString = String(data: headerDecodedData, encoding: String.Encoding.utf8),
+            let headerDecodedString = String(data: headerDecodedData, encoding: String.Encoding.utf8)
+            else {
+                return nil
+        }
+        AbstractToken.logger.debug(message: "after: to string header")
+        
+        AbstractToken.logger.debug(message: "before: to string payload")
+        guard
             let payloadDecodedString = String(data: payloadDecodedData, encoding: String.Encoding.utf8)
             else {
                 return nil
         }
+        AbstractToken.logger.debug(message: "after: to string payload")
         
+        AbstractToken.logger.debug(message: "before: to dictionary header")
         guard
-            let headerDictionary = try? Utils.parseJsonStringtoDictionary(headerDecodedString),
+            let headerDictionary = try? Utils.parseJsonStringtoDictionary(headerDecodedString)
+            else {
+                return nil
+        }
+        AbstractToken.logger.debug(message: "after: to dictionary header")
+        
+        AbstractToken.logger.debug(message: "before: to dictionary payload")
+        guard
             let payloadDictionary = try? Utils.parseJsonStringtoDictionary(payloadDecodedString)
             else {
                 return nil
         }
+        AbstractToken.logger.debug(message: "after: to dictionary payload")
         
         self.header = headerDictionary
         self.payload = payloadDictionary

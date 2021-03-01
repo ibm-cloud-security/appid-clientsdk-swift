@@ -15,6 +15,8 @@ import BMSCore
 
 
 public class Utils {
+    
+    private static let logger = Logger.logger(name: "Utils")
 
 
     public static func JSONStringify(_ value: AnyObject, prettyPrinted:Bool = false) throws -> String{
@@ -38,9 +40,12 @@ public class Utils {
 
     public static func parseJsonStringtoDictionary(_ jsonString:String) throws ->[String:Any] {
         do {
+            Utils.logger.debug(message: "enter: parseJsonStringtoDictionary")
+            Utils.logger.debug(message: jsonString)
             guard let data = jsonString.data(using: String.Encoding.utf8), let responseJson =  try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] else {
                 throw AppIDError.jsonUtilsError(msg: "Json is malformed")
             }
+            Utils.logger.debug(message: "dictionary size \(responseJson.count)")
             return responseJson as [String:Any]
         }
     }

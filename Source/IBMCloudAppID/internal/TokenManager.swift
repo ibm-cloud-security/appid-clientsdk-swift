@@ -22,7 +22,7 @@ internal class TokenManager {
     internal var latestIdentityToken:IdentityToken?
     internal var latestRefreshToken:RefreshToken?
     internal var publicKeys: [String: SecKey] = [:]
-    internal static let logger = Logger.logger(name: AppIDConstants.TokenManagerLoggerName)
+    internal static let logger = Logger.logger(name: "TokenManager")
     internal init(oAuthManager:OAuthManager) {
         self.appid = oAuthManager.appId
         self.registrationManager = oAuthManager.registrationManager!
@@ -157,6 +157,9 @@ internal class TokenManager {
         }
         do {
             var responseJson =  try Utils.parseJsonStringtoDictionary(responseText)
+            
+            TokenManager.logger.debug(message: "About to parse token response")
+            TokenManager.logger.debug(message: responseText)
 
             guard let accessTokenString = responseJson["access_token"] as? String, let idTokenString = responseJson["id_token"] as? String else {
                 TokenManager.logger.error(message: "Failed to parse server response - no access or identity token")
@@ -164,12 +167,23 @@ internal class TokenManager {
                 return
             }
 
-            guard let accessToken = AccessTokenImpl(with: accessTokenString), let identityToken:IdentityTokenImpl = IdentityTokenImpl(with: idTokenString) else {
-
-                TokenManager.logger.error(message: "Failed to parse server response - invalid access or identity token")
-                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response - corrupt access or identity token"))
+            TokenManager.logger.debug(message: "before: decoding access token")
+            guard let accessToken = AccessTokenImpl(with: accessTokenString) else {
+                TokenManager.logger.error(message: "Invalid access token")
+                TokenManager.logger.error(message: accessTokenString)
+                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response - corrupt access token"))
                 return
             }
+            TokenManager.logger.debug(message: "before: decoding access token")
+            
+            TokenManager.logger.debug(message: "before: decoding id token")
+            guard let identityToken:IdentityTokenImpl = IdentityTokenImpl(with: idTokenString) else {
+                TokenManager.logger.error(message: "Failed to parse server response - invalid identity token")
+                TokenManager.logger.error(message: idTokenString)
+                tokenResponseDelegate.onAuthorizationFailure(error: AuthorizationError.authorizationFailure("Failed to parse server response - corrupt identity token"))
+                return
+            }
+            TokenManager.logger.debug(message: "after: decoding id token")
 
             validateToken(token: accessToken, tokenResponseDelegate: tokenResponseDelegate) {
                 self.validateToken(token: identityToken, tokenResponseDelegate: tokenResponseDelegate) {

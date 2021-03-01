@@ -30,71 +30,73 @@ internal class AbstractToken: Token {
     private static let AUTH_METHODS = "amr"
     private static let logger = Logger.logger(name: "AbstractToken")
     
+    private let componentName = "AbstractToken"
+    
     var raw: String
     var header: Dictionary<String, Any>
     var payload: Dictionary<String, Any>
     var signature: String
     
     internal init? (with raw: String) {
-        AbstractToken.logger.debug(message: "enter: init")
+        Utils.Log(message: "enter: init", component: componentName)
         self.raw = raw
         let tokenComponents = self.raw.components(separatedBy: ".")
         guard tokenComponents.count==3 else {
             return nil
         }
-        AbstractToken.logger.debug(message: "token has 3 parts")
+        Utils.Log(message: "token has 3 parts", component: componentName)
         
         let headerComponent = tokenComponents[0]
         let payloadComponent = tokenComponents[1]
         self.signature = tokenComponents[2]
         
-        AbstractToken.logger.debug(message: "before: decodeBase64 header")
+        Utils.Log(message: "before: decodeBase64 header", component: componentName)
         guard
             let headerDecodedData = Utils.decodeBase64WithString(headerComponent, isSafeUrl: true)
             else {
                 return nil
         }
-        AbstractToken.logger.debug(message: "after: decodeBase64 header ")
+        Utils.Log(message: "after: decodeBase64 header ", component: componentName)
         
-        AbstractToken.logger.debug(message: "before: decodeBase64 payload")
+        Utils.Log(message: "before: decodeBase64 payload", component: componentName)
         guard
             let payloadDecodedData = Utils.decodeBase64WithString(payloadComponent, isSafeUrl: true)
             else {
                 return nil
         }
-        AbstractToken.logger.debug(message: "after: decodeBase64 payload")
+        Utils.Log(message: "after: decodeBase64 payload", component: componentName)
         
-        AbstractToken.logger.debug(message: "before: to string header")
+        Utils.Log(message: "before: to string header", component: componentName)
         guard
             let headerDecodedString = String(data: headerDecodedData, encoding: String.Encoding.utf8)
             else {
                 return nil
         }
-        AbstractToken.logger.debug(message: "after: to string header")
+        Utils.Log(message: "after: to string header", component: componentName)
         
-        AbstractToken.logger.debug(message: "before: to string payload")
+        Utils.Log(message: "before: to string payload", component: componentName)
         guard
             let payloadDecodedString = String(data: payloadDecodedData, encoding: String.Encoding.utf8)
             else {
                 return nil
         }
-        AbstractToken.logger.debug(message: "after: to string payload")
+        Utils.Log(message: "after: to string payload", component: componentName)
         
-        AbstractToken.logger.debug(message: "before: to dictionary header")
+        Utils.Log(message: "before: to dictionary header", component: componentName)
         guard
             let headerDictionary = try? Utils.parseJsonStringtoDictionary(headerDecodedString)
             else {
                 return nil
         }
-        AbstractToken.logger.debug(message: "after: to dictionary header")
+        Utils.Log(message: "after: to dictionary header", component: componentName)
         
-        AbstractToken.logger.debug(message: "before: to dictionary payload")
+        Utils.Log(message: "before: to dictionary payload", component: componentName)
         guard
             let payloadDictionary = try? Utils.parseJsonStringtoDictionary(payloadDecodedString)
             else {
                 return nil
         }
-        AbstractToken.logger.debug(message: "after: to dictionary payload")
+        Utils.Log(message: "after: to dictionary payload", component: componentName)
         
         self.header = headerDictionary
         self.payload = payloadDictionary

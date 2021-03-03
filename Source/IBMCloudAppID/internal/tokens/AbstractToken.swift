@@ -52,7 +52,7 @@ internal class AbstractToken: Token {
         
         Utils.Log(message: "before: decodeBase64 header", component: componentName)
         guard
-            let headerDecodedData = Utils.decodeBase64WithString(headerComponent, isSafeUrl: true)
+            let headerDecodedData = Data(base64Encoded: Utils.base64urlToBase64(base64url: headerComponent))
             else {
                 return nil
         }
@@ -60,7 +60,7 @@ internal class AbstractToken: Token {
         
         Utils.Log(message: "before: decodeBase64 payload", component: componentName)
         guard
-            let payloadDecodedData = Utils.decodeBase64WithString(payloadComponent, isSafeUrl: true)
+            let payloadDecodedData = Data(base64Encoded: Utils.base64urlToBase64(base64url: payloadComponent))
             else {
                 return nil
         }

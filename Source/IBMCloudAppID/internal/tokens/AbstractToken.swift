@@ -45,8 +45,8 @@ internal class AbstractToken: Token {
         self.signature = tokenComponents[2]
         
         guard
-            let headerDecodedData = Utils.decodeBase64WithString(headerComponent, isSafeUrl: true),
-            let payloadDecodedData = Utils.decodeBase64WithString(payloadComponent, isSafeUrl: true)
+            let headerDecodedData = Data(base64Encoded: Utils.base64urlToBase64(base64url: headerComponent)),
+            let payloadDecodedData = Data(base64Encoded: Utils.base64urlToBase64(base64url: payloadComponent))
             else {
                 return nil
         }

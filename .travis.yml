@@ -1,7 +1,7 @@
 language: objective-c
 matrix:
   include:
-    - osx_image: xcode10.2
+    - osx_image: xcode12.3
 install:
   - gem install jazzy
   - gem install slather -v 2.4.5

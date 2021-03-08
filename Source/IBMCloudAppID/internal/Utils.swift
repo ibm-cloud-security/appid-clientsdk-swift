@@ -235,10 +235,10 @@ public class Utils {
     internal static func urlEncode(_ str:String) -> String{
         var encodedString = ""
         var unchangedCharacters = ""
-        let FORM_ENCODE_SET = " \"':;<=>@[]^`{}|/\\?#&!$(),~%"
+        let FORM_ENCODE_SET = " \"':;<=>@[]^`{}|/\\?#&!$(),~%+".unicodeScalars
 
         for element: Int in 0x20..<0x7f {
-            if !FORM_ENCODE_SET.contains(String(describing: UnicodeScalar(element))) {
+            if !FORM_ENCODE_SET.contains(UnicodeScalar(element)!) {
                 unchangedCharacters += String(Character(UnicodeScalar(element)!))
             }
         }
